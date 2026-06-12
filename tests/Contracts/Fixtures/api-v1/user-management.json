@@ -1,0 +1,36 @@
+{
+    "_meta": {
+        "source": "Legacy Laravel 7 code",
+        "date": "2026-06-05",
+        "controller": "Api\\UserController"
+    },
+    "store_validation": {
+        "name": "required|string|max:255",
+        "email": "required|email|max:255|unique:users",
+        "password": "required|string|min:8",
+        "role": "required|in:super_admin,admin,spectator,user",
+        "alamat": "nullable|string",
+        "no_telp": "nullable|string|max:20",
+        "gudangs": "required|array|min:1 (for admin/spectator)",
+        "gudangs.*": "exists:gudangs,id",
+        "gudang_id": "required|exists:gudangs,id (for user role)",
+        "can_export_pdf": "nullable|boolean (admin only)",
+        "can_export_excel": "nullable|boolean (admin only)"
+    },
+    "messages": {
+        "store_success": "User berhasil dibuat.",
+        "update_success": "User berhasil diupdate.",
+        "destroy_success": "User berhasil dihapus.",
+        "forbidden": "Unauthorized",
+        "cannot_delete_self": "Tidak bisa menghapus akun sendiri.",
+        "has_transactions": "Tidak dapat menghapus user karena masih memiliki transaksi."
+    },
+    "destroy_check_transactions": {
+        "penjualanCount": "<int>",
+        "pembelianCount": "<int>",
+        "kunjunganCount": "<int>"
+    },
+    "permissions": "super_admin ONLY for ALL operations",
+    "eager_loads": "gudang:id,nama_gudang; gudangs:id,nama_gudang; spectatorGudangs:id,nama_gudang",
+    "sort_order": "FIELD(role, super_admin, spectator, admin, user) then name"
+}

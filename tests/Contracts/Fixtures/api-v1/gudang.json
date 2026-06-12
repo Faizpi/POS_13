@@ -1,0 +1,112 @@
+{
+    "_meta": {
+        "source": "Captured from legacy Laravel 7 controller code analysis",
+        "date": "2026-06-05",
+        "controller": "App\\Http\\Controllers\\Api\\GudangController"
+    },
+    "index": {
+        "endpoint": "GET /api/v1/gudang",
+        "middleware": "api.token",
+        "validation": "none",
+        "success": {
+            "status": 200,
+            "body": "<array of Gudang models: [{id, nama_gudang, alamat_gudang, created_at, updated_at}]>"
+        },
+        "role_scoping": {
+            "super_admin": "All gudangs",
+            "admin": "$user->gudangs (pivot admin_gudang)",
+            "spectator": "$user->spectatorGudangs (pivot spectator_gudang)",
+            "user": "Single $user->gudang or empty collection"
+        }
+    },
+    "switch_gudang": {
+        "endpoint": "POST /api/v1/gudang/switch",
+        "middleware": "api.token",
+        "validation": {
+            "gudang_id": "required|exists:gudangs,id"
+        },
+        "success": {
+            "status": 200,
+            "body": {
+                "message": "Gudang berhasil diganti.",
+                "current_gudang": "<full Gudang model object>"
+            }
+        },
+        "failure_forbidden": {
+            "status": 403,
+            "body": {
+                "message": "Tidak memiliki akses ke gudang ini."
+            }
+        },
+        "side_effects": "Updates users.current_gudang_id"
+    },
+    "stok": {
+        "endpoint": "GET /api/v1/gudang/stok",
+        "middleware": "api.token",
+        "validation": "none (optional query: gudang_id for super_admin)",
+        "success": {
+            "status": 200,
+            "body": "<array of GudangProduk with produk:id,nama_produk,item_code,satuan and gudang:id,nama_gudang>"
+        },
+        "success_empty": {
+            "status": 200,
+            "body": {
+                "data": []
+            }
+        },
+        "failure_forbidden": {
+            "status": 403,
+            "body": {
+                "message": "Unauthorized"
+            }
+        },
+        "permissions": "admin, spectator, super_admin only",
+        "role_scoping": {
+            "super_admin": "all or filtered by gudang_id param",
+            "admin/spectator": "current gudang only"
+        }
+    },
+    "stok_log": {
+        "endpoint": "GET /api/v1/gudang/stok-log",
+        "middleware": "api.token",
+        "validation": "none (optional per_page, default 50)",
+        "success": {
+            "status": 200,
+            "body": "<Laravel paginated JSON with StokLog + produk:id,nama_produk + gudang:id,nama_gudang + user:id,name>"
+        },
+        "failure_forbidden": {
+            "status": 403,
+            "body": {
+                "message": "Unauthorized"
+            }
+        },
+        "permissions": "admin, spectator, super_admin only"
+    },
+    "export_stok": {
+        "endpoint": "GET /api/v1/gudang/stok/export",
+        "middleware": "api.token",
+        "validation": {
+            "gudang_id": "required|exists:gudangs,id"
+        },
+        "success": {
+            "status": 200,
+            "headers": {
+                "content-type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                "content-disposition": "attachment; filename=Stok_{nama_gudang}_{date}.xlsx"
+            }
+        },
+        "failure_forbidden": {
+            "status": 403,
+            "body": {
+                "message": "Unauthorized"
+            }
+        },
+        "failure_no_access": {
+            "status": 403,
+            "body": {
+                "message": "Tidak memiliki akses ke gudang ini."
+            }
+        },
+        "permissions": "admin, spectator, super_admin; canAccessGudang check for non-super"
+    }
+}

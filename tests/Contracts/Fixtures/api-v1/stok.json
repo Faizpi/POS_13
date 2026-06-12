@@ -1,0 +1,33 @@
+{
+    "_meta": {
+        "source": "Legacy Laravel 7 code",
+        "date": "2026-06-05",
+        "controller": "Api\\StokController"
+    },
+    "store_validation": {
+        "gudang_id": "required|exists:gudangs,id",
+        "produk_id": "required|exists:produks,id",
+        "stok_penjualan": "required|integer|min:0",
+        "stok_gratis": "required|integer|min:0",
+        "stok_sample": "required|integer|min:0",
+        "keterangan": "nullable|string|max:500"
+    },
+    "messages": {
+        "store_success": "Stok berhasil diperbarui.",
+        "forbidden_non_super": "Hanya Super Admin yang boleh mengubah stok manual.",
+        "forbidden_no_access": "Tidak memiliki akses ke gudang ini.",
+        "forbidden_unauthorized": "Unauthorized"
+    },
+    "index_behavior": {
+        "normalization": "stok = stok_penjualan + stok_gratis + stok_sample (overrides legacy stok column)",
+        "scoping": "super_admin all; admin by own gudangs; spectator by own spectatorGudangs"
+    },
+    "store_side_effects": {
+        "values_are_absolute": "NOT delta - sets absolute values for stok_penjualan/gratis/sample",
+        "stok_total": "Calculated as sum of three fields",
+        "stok_log_created": "Only if total stok changes (selisih != 0)",
+        "stok_log_fields": "gudang_produk_id, produk_id, gudang_id, user_id, produk_nama, gudang_nama, user_nama, stok_sebelum, stok_sesudah, selisih, keterangan"
+    },
+    "log_filters": "gudang_id, produk_id, tanggal_dari, tanggal_sampai, per_page (default 50)",
+    "log_permissions": "admin (scoped to own gudangs), super_admin"
+}

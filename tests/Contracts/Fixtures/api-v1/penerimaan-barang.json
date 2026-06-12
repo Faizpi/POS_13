@@ -1,0 +1,69 @@
+{
+    "_meta": {
+        "source": "Legacy Laravel 7 code",
+        "date": "2026-06-05",
+        "controller": "Api\\PenerimaanBarangController"
+    },
+    "store_validation": {
+        "gudang_id": "required|exists:gudangs,id",
+        "pembelian_id": "required|exists:pembelians,id",
+        "tgl_penerimaan": "required|date",
+        "no_surat_jalan": "nullable|string|max:100",
+        "keterangan": "nullable|string",
+        "items": "required|array|min:1",
+        "items.*.produk_id": "required|exists:produks,id",
+        "items.*.qty_diterima": "required|integer|min:0",
+        "items.*.qty_reject": "nullable|integer|min:0",
+        "items.*.tipe_stok": "nullable|in:penjualan,gratis,sample",
+        "items.*.batch_number": "nullable|string|max:100",
+        "items.*.expired_date": "nullable|date"
+    },
+    "messages": {
+        "store_success": "Penerimaan barang berhasil dibuat.",
+        "approve_success": "Penerimaan barang berhasil di-approve dan stok ditambahkan.",
+        "cancel_success": "Penerimaan barang berhasil dibatalkan.",
+        "error_gudang_mismatch": "Pembelian tidak valid untuk gudang yang dipilih.",
+        "error_not_pending": "Hanya transaksi Pending yang bisa di-approve.",
+        "error_already_canceled": "Transaksi sudah dibatalkan.",
+        "forbidden_cancel_approved": "Hanya Super Admin yang dapat membatalkan transaksi yang sudah disetujui.",
+        "error_server_store": "Gagal membuat penerimaan barang.",
+        "error_server_approve": "Gagal approve penerimaan barang.",
+        "error_server_cancel": "Gagal membatalkan penerimaan barang."
+    },
+    "pembelian_by_gudang_response_shape": [
+        {
+            "id": "<int>",
+            "nomor": "<string>",
+            "tgl_transaksi": "<Y-m-d|null>",
+            "status": "<string>",
+            "total_items": "<int>"
+        }
+    ],
+    "pembelian_detail_response_shape": {
+        "id": "<int>",
+        "nomor": "<string>",
+        "tgl_transaksi": "<Y-m-d|null>",
+        "items": [
+            {
+                "produk_id": "<int>",
+                "nama_produk": "<string>",
+                "item_code": "<string|null>",
+                "qty_pesan": "<int>",
+                "qty_diterima": "<int>",
+                "qty_sisa": "<int>",
+                "satuan": "<string>"
+            }
+        ]
+    },
+    "state_machine": {
+        "create_super": "-> Approved (adds stock immediately)",
+        "create_others": "-> Pending",
+        "approve": "Pending -> Approved (adds stock)",
+        "cancel_pending": "Pending -> Canceled",
+        "cancel_approved_super": "Approved -> Canceled (REVERSES stock)"
+    },
+    "stock_side_effects": {
+        "tambahStok": "Increments gudang_produk.stok AND gudang_produk.stok_{tipe} by qty_diterima",
+        "kurangiStok": "Decrements gudang_produk.stok AND gudang_produk.stok_{tipe} by qty_diterima (floor 0)"
+    }
+}

@@ -1,0 +1,5 @@
+﻿@extends('errors.layout')
+@section('title', 'Permintaan Tidak Valid')
+@section('code', '400')
+@section('icon', '🔍')
+@section('description', 'Maaf, permintaan yang Anda kirim tidak dapat diproses karena format data tidak sesuai. Silakan periksa kembali input Anda.')

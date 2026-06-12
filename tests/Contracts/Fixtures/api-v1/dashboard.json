@@ -1,0 +1,116 @@
+{
+    "_meta": {
+        "source": "Legacy Laravel 7 code",
+        "date": "2026-06-05",
+        "controller": "Api\\DashboardController"
+    },
+    "index_response_keys": {
+        "super_admin_only": [
+            "total_produk",
+            "total_user",
+            "total_gudang"
+        ],
+        "admin_spectator_only": [
+            "current_gudang",
+            "total_produk"
+        ],
+        "common": [
+            "penjualan_bulan_ini",
+            "total_penjualan_bulan_ini",
+            "pembelian_bulan_ini",
+            "total_pembelian_bulan_ini",
+            "biaya_masuk_bulan_ini",
+            "biaya_keluar_bulan_ini",
+            "biaya_bulan_ini",
+            "kunjungan_bulan_ini",
+            "canceled_bulan_ini",
+            "daily_penjualan",
+            "daily_penjualan_count",
+            "daily_biaya",
+            "daily_biaya_count",
+            "daily_pembayaran",
+            "daily_pembayaran_count",
+            "total_pembayaran_bulan_ini",
+            "pembayaran_bulan_ini",
+            "penjualan_count_bulan_ini",
+            "biaya_count_bulan_ini",
+            "pending_approval",
+            "recent_penjualan",
+            "recent_kunjungan",
+            "recent_activity"
+        ]
+    },
+    "daily_report_response_keys": [
+        "date",
+        "sales_name",
+        "summary",
+        "penjualans",
+        "pembelians",
+        "biayas",
+        "kunjungans"
+    ],
+    "daily_report_summary_keys": [
+        "total_penjualan",
+        "nilai_penjualan",
+        "total_pembelian",
+        "nilai_pembelian",
+        "total_biaya",
+        "nilai_biaya",
+        "total_kunjungan",
+        "total_aktivitas"
+    ],
+    "export_options_response_keys": [
+        "role",
+        "permissions",
+        "transaction_types",
+        "status_filters",
+        "biaya_jenis_filters",
+        "tujuan_kunjungan_filters",
+        "export_formats",
+        "gudang_options",
+        "sales_options",
+        "defaults"
+    ],
+    "export_validation": {
+        "date_from": "required|date",
+        "date_to": "required|date|after_or_equal:date_from",
+        "transaction_type": "required|in:all,penjualan,pembelian,biaya,kunjungan,pembayaran",
+        "status_filter": "nullable|in:all,Pending,Approved,Rejected,Canceled,Lunas",
+        "gudang_id": "nullable|exists:gudangs,id",
+        "biaya_jenis": "nullable|in:masuk,keluar",
+        "tujuan_filter": "nullable|string",
+        "export_format": "nullable|in:excel,pdf",
+        "sales_id": "nullable|exists:users,id"
+    },
+    "export_messages": {
+        "forbidden_pdf": "Anda tidak memiliki izin untuk export PDF.",
+        "forbidden_excel": "Anda tidak memiliki izin untuk export Excel.",
+        "forbidden_report": "Anda tidak memiliki izin untuk export laporan.",
+        "forbidden_role": "Akses ditolak. Hanya admin/super_admin yang dapat export laporan ini.",
+        "forbidden_gudang": "Tidak memiliki akses ke gudang ini."
+    },
+    "lampiran_download": {
+        "allowed_prefixes": [
+            "lampiran_penjualan/",
+            "lampiran_pembelian/",
+            "lampiran_biaya/",
+            "lampiran_kunjungan/",
+            "lampiran_pembayaran/",
+            "lampiran_penerimaan/"
+        ],
+        "error_invalid_path": {
+            "status": 403,
+            "body": {
+                "message": "Path tidak valid."
+            }
+        },
+        "error_not_found": {
+            "status": 404,
+            "body": {
+                "message": "File tidak ditemukan."
+            }
+        }
+    },
+    "daily_report_pdf_filename": "Laporan-Harian-{name}-{dateYmd}.pdf",
+    "export_filename_pattern": "Laporan_{type}_{gudang}_{sales}_{from}_sd_{to}.{ext}"
+}

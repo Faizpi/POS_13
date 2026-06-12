@@ -1,0 +1,121 @@
+{
+    "_meta": {
+        "source": "Captured from legacy Laravel 7 controller code analysis",
+        "date": "2026-06-05",
+        "controller": "App\\Http\\Controllers\\Api\\ProdukController"
+    },
+    "index": {
+        "endpoint": "GET /api/v1/produk",
+        "middleware": "api.token",
+        "validation": "none (optional: search, per_page default 50)",
+        "success": {
+            "status": 200,
+            "body": "<Laravel paginated JSON of Produk models>"
+        },
+        "role_scoping": {
+            "super_admin": "All products",
+            "admin/spectator": "Products with stock in current gudang",
+            "user": "Products with stock in user's gudang_id"
+        }
+    },
+    "show": {
+        "endpoint": "GET /api/v1/produk/{id}",
+        "middleware": "api.token",
+        "validation": "none",
+        "success": {
+            "status": 200,
+            "body": "<Produk model with eager stokDiGudang.gudang:id,nama_gudang>"
+        },
+        "failure_not_found": {
+            "status": 404,
+            "body": "Laravel ModelNotFound exception JSON"
+        },
+        "permissions": "Any authenticated user (no role check)"
+    },
+    "stok_by_gudang": {
+        "endpoint": "GET /api/v1/produk/stok/{gudangId}",
+        "middleware": "api.token",
+        "validation": "none",
+        "success": {
+            "status": 200,
+            "body": "<array of GudangProduk with produk:id,nama_produk,item_code,satuan,harga,harga_grosir>"
+        },
+        "failure_forbidden": {
+            "status": 403,
+            "body": {
+                "message": "Unauthorized"
+            }
+        },
+        "permissions": "super_admin or canAccessGudang(gudangId)"
+    },
+    "store": {
+        "endpoint": "POST /api/v1/produk",
+        "middleware": "api.token",
+        "validation": {
+            "nama_produk": "required|string|max:255",
+            "item_code": "nullable|string|max:255|unique:produks",
+            "harga": "required|numeric|min:0",
+            "harga_grosir": "nullable|numeric|min:0",
+            "satuan": "required|in:Pcs,Lusin,Karton",
+            "deskripsi": "nullable|string"
+        },
+        "success": {
+            "status": 201,
+            "body": {
+                "message": "Produk berhasil dibuat.",
+                "data": "<Produk model>"
+            }
+        },
+        "failure_forbidden": {
+            "status": 403,
+            "body": {
+                "message": "Unauthorized"
+            }
+        },
+        "permissions": "super_admin ONLY"
+    },
+    "update": {
+        "endpoint": "PUT /api/v1/produk/{id}",
+        "middleware": "api.token",
+        "validation": {
+            "nama_produk": "required|string|max:255",
+            "item_code": "nullable|string|max:255|unique:produks,item_code,{id}",
+            "harga": "required|numeric|min:0",
+            "harga_grosir": "nullable|numeric|min:0",
+            "satuan": "required|in:Pcs,Lusin,Karton",
+            "deskripsi": "nullable|string"
+        },
+        "success": {
+            "status": 200,
+            "body": {
+                "message": "Produk berhasil diupdate.",
+                "data": "<Produk model>"
+            }
+        },
+        "failure_forbidden": {
+            "status": 403,
+            "body": {
+                "message": "Unauthorized"
+            }
+        },
+        "permissions": "super_admin ONLY"
+    },
+    "destroy": {
+        "endpoint": "DELETE /api/v1/produk/{id}",
+        "middleware": "api.token",
+        "validation": "none",
+        "success": {
+            "status": 200,
+            "body": {
+                "message": "Produk berhasil dihapus."
+            }
+        },
+        "failure_forbidden": {
+            "status": 403,
+            "body": {
+                "message": "Unauthorized"
+            }
+        },
+        "permissions": "super_admin ONLY"
+    }
+}

@@ -1,0 +1,5 @@
+﻿@extends('errors.layout')
+@section('title', 'Server Sibuk')
+@section('code', '502')
+@section('icon', '🔄')
+@section('description', 'Server sedang sibuk atau mengalami gangguan koneksi. Silakan tunggu beberapa saat dan refresh halaman.')

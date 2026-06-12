@@ -1,0 +1,5 @@
+﻿@extends('errors.layout')
+@section('title', 'Terjadi Kesalahan')
+@section('code', '500')
+@section('icon', '🔧')
+@section('description', 'Maaf, fitur ini sedang mengalami gangguan teknis. Tim kami akan segera memperbaikinya. Silakan coba beberapa saat lagi.')

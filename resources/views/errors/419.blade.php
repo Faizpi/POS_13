@@ -1,0 +1,5 @@
+﻿@extends('errors.layout')
+@section('title', 'Sesi Habis')
+@section('code', '419')
+@section('icon', '⏰')
+@section('description', 'Sesi Anda telah berakhir karena terlalu lama tidak ada aktivitas. Silakan refresh halaman dan login kembali.')

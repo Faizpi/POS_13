@@ -1,0 +1,78 @@
+{
+    "_meta": {
+        "source": "Legacy Laravel 7 code",
+        "date": "2026-06-05",
+        "controller": "Api\\PrintController"
+    },
+    "qr_data": {
+        "endpoint": "GET /api/v1/print/{type}/{id}/qr",
+        "supported_types": [
+            "penjualan",
+            "pembelian",
+            "biaya",
+            "kunjungan",
+            "pembayaran",
+            "penerimaan-barang"
+        ],
+        "success_response": {
+            "type": "<string>",
+            "id": "<int>",
+            "uuid": "<uuid>",
+            "receipt_url": "https://{host}/struk/{type}/{uuid}",
+            "invoice_url": "https://{host}/invoice/{type}/{uuid}",
+            "download_url": "https://{host}/invoice/{type}/{uuid}/download",
+            "qr_payload": "https://{host}/invoice/{type}/{uuid}"
+        },
+        "error_invalid_type": {
+            "status": 404,
+            "body": {
+                "message": "Tipe transaksi tidak valid."
+            }
+        },
+        "error_unsupported": {
+            "status": 400,
+            "body": {
+                "message": "Tipe transaksi tidak didukung."
+            }
+        },
+        "error_forbidden": {
+            "status": 403,
+            "body": {
+                "message": "Unauthorized"
+            }
+        }
+    },
+    "bluetooth_data": {
+        "endpoint": "GET /api/v1/print/{type}/{id}/bluetooth",
+        "supported_types": [
+            "penjualan",
+            "pembelian",
+            "biaya",
+            "kunjungan"
+        ],
+        "unsupported_response": {
+            "status": 400,
+            "body": {
+                "message": "Bluetooth print belum tersedia untuk tipe ini.",
+                "supported_types": [
+                    "penjualan",
+                    "pembelian",
+                    "biaya",
+                    "kunjungan"
+                ]
+            }
+        },
+        "error_invalid_model": {
+            "status": 404,
+            "body": {
+                "message": "Tipe transaksi tidak valid."
+            }
+        }
+    },
+    "access_control": {
+        "super_admin": "always allowed",
+        "owner": "user_id matches auth user",
+        "approver": "approver_id matches auth user",
+        "admin_spectator": "canAccessGudang(model.gudang_id)"
+    }
+}

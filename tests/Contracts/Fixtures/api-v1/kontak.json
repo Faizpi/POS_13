@@ -1,0 +1,120 @@
+{
+    "_meta": {
+        "source": "Captured from legacy Laravel 7 controller code analysis",
+        "date": "2026-06-05",
+        "controller": "App\\Http\\Controllers\\Api\\KontakController"
+    },
+    "index": {
+        "endpoint": "GET /api/v1/kontak",
+        "middleware": "api.token",
+        "validation": "none (optional: search, per_page default 50)",
+        "success": {
+            "status": 200,
+            "body": "<Laravel paginated JSON of Kontak models, ordered by nama>"
+        },
+        "role_scoping": {
+            "super_admin": "All kontaks",
+            "spectator": "All kontaks",
+            "admin": "Kontaks in accessible gudang IDs + null gudang_id",
+            "user": "Only created_by = self OR legacy (created_by null + penjualan pelanggan name match)"
+        }
+    },
+    "show": {
+        "endpoint": "GET /api/v1/kontak/{id}",
+        "middleware": "api.token",
+        "validation": "none",
+        "success": {
+            "status": 200,
+            "body": "<Single Kontak model>"
+        },
+        "failure_forbidden": {
+            "status": 403,
+            "body": {
+                "message": "Unauthorized"
+            }
+        },
+        "permissions": "canAccessKontak check"
+    },
+    "store": {
+        "endpoint": "POST /api/v1/kontak",
+        "middleware": "api.token",
+        "validation": {
+            "nama": "required|string|max:255",
+            "no_telp": "nullable|string|max:20",
+            "email": "nullable|email|max:255",
+            "alamat": "nullable|string",
+            "kode_kontak": "nullable|string|max:50",
+            "pin": "nullable|string|size:6"
+        },
+        "success": {
+            "status": 201,
+            "body": {
+                "message": "Kontak berhasil dibuat.",
+                "data": "<Kontak model>"
+            }
+        },
+        "side_effects": "Sets created_by = auth user id; gudang_id from request or current gudang; diskon_persen defaults 0",
+        "permissions": "Any authenticated user (including spectator - RISK)"
+    },
+    "update": {
+        "endpoint": "PUT /api/v1/kontak/{id}",
+        "middleware": "api.token",
+        "validation": {
+            "nama": "required|string|max:255",
+            "no_telp": "nullable|string|max:20",
+            "email": "nullable|email|max:255",
+            "kode_kontak": "nullable|string|max:50",
+            "pin": "nullable|string|size:6"
+        },
+        "success": {
+            "status": 200,
+            "body": {
+                "message": "Kontak berhasil diupdate.",
+                "data": "<Kontak model>"
+            }
+        },
+        "failure_forbidden": {
+            "status": 403,
+            "body": {
+                "message": "Unauthorized"
+            }
+        },
+        "permissions": "canAccessKontak check",
+        "fields_updated": [
+            "nama",
+            "email",
+            "no_telp",
+            "alamat",
+            "diskon_persen",
+            "kode_kontak",
+            "pin"
+        ]
+    },
+    "destroy": {
+        "endpoint": "DELETE /api/v1/kontak/{id}",
+        "middleware": "api.token",
+        "validation": "none",
+        "success": {
+            "status": 200,
+            "body": {
+                "message": "Kontak berhasil dihapus."
+            }
+        },
+        "failure_forbidden": {
+            "status": 403,
+            "body": {
+                "message": "Unauthorized"
+            }
+        },
+        "permissions": "canAccessKontak check"
+    },
+    "access_control_helper": {
+        "canAccessKontak": {
+            "super_admin": "always true",
+            "spectator": "always true",
+            "admin": "true if kontak.gudang_id is null OR in accessible gudang IDs",
+            "user": "true if created_by == user.id OR legacy fallback (null created_by + penjualan name match)"
+        },
+        "getAccessibleGudangIds": "admin gudangs pivot IDs + current_gudang_id + gudang_id (unique)"
+    }
+}

@@ -1,0 +1,36 @@
+{
+    "_meta": {
+        "source": "Legacy Laravel 7 code",
+        "date": "2026-06-05",
+        "controller": "Api\\BiayaController"
+    },
+    "store_validation": {
+        "bayar_dari": "required|string",
+        "tgl_transaksi": "required|date",
+        "penerima": "nullable|string|max:255",
+        "tax_percentage": "required|numeric|min:0",
+        "items": "required|array|min:1",
+        "items.*.kategori": "required|string|max:255",
+        "items.*.jumlah": "required|numeric|min:0"
+    },
+    "messages": {
+        "store_success_pending": "Biaya berhasil dibuat.",
+        "store_success_approved": "Biaya berhasil disimpan dan langsung approved.",
+        "update_success": "Biaya berhasil diperbarui.",
+        "approve_success": "Biaya berhasil di-approve.",
+        "cancel_success": "Biaya berhasil dibatalkan.",
+        "uncancel_success": "Biaya berhasil di-uncancel. Status kembali ke Pending.",
+        "error_already_canceled": "Transaksi sudah dibatalkan, tidak bisa di-approve.",
+        "error_already_approved": "Transaksi sudah disetujui.",
+        "error_already_canceled_cancel": "Transaksi sudah dibatalkan.",
+        "forbidden_cancel_approved": "Hanya Super Admin yang dapat membatalkan transaksi yang sudah disetujui."
+    },
+    "state_machine": {
+        "create_super": "-> Approved",
+        "create_others": "-> Pending",
+        "approve": "Pending -> Approved",
+        "cancel": "Pending/Approved -> Canceled",
+        "uncancel": "Canceled -> Pending"
+    },
+    "stock_side_effects": "NONE"
+}

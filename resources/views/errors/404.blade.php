@@ -1,0 +1,5 @@
+﻿@extends('errors.layout')
+@section('title', 'Halaman Tidak Ditemukan')
+@section('code', '404')
+@section('icon', '🗺️')
+@section('description', 'Halaman yang Anda cari tidak ditemukan atau telah dipindahkan. Periksa kembali URL atau navigasi melalui menu dashboard.')

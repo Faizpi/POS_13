@@ -1,0 +1,323 @@
+{
+    "_meta": {
+        "source": "Captured from legacy Laravel 7 controller code analysis",
+        "date": "2026-06-05",
+        "controller": "App\\Http\\Controllers\\Api\\PenjualanController"
+    },
+    "index": {
+        "endpoint": "GET /api/v1/penjualan",
+        "middleware": "api.token",
+        "validation": "none (optional: status, search, per_page default 20)",
+        "success": {
+            "status": 200,
+            "body": "<Laravel paginated JSON with relations: user:id,name; gudang:id,nama_gudang; approver:id,name>"
+        },
+        "role_scoping": {
+            "super_admin": "All penjualan",
+            "admin/spectator": "Only current gudang (returns {data:[],meta:{total:0}} if no current gudang)",
+            "user": "Only own (user_id = auth id)"
+        }
+    },
+    "show": {
+        "endpoint": "GET /api/v1/penjualan/{id}",
+        "middleware": "api.token",
+        "validation": "none",
+        "success": {
+            "status": 200,
+            "body": "<Penjualan toArray() with user:id,name,no_telp; gudang:id,nama_gudang; approver:id,name; items.produk:id,nama_produk,item_code,satuan; PLUS injected no_telepon field>"
+        },
+        "failure_forbidden": {
+            "status": 403,
+            "body": {
+                "message": "Unauthorized"
+            }
+        },
+        "special_behavior": {
+            "no_telepon_resolution": "3-level fallback: penjualan.no_telepon -> penjualan.email -> Kontak lookup by pelanggan name"
+        },
+        "permissions": {
+            "user": "only own",
+            "admin/spectator": "only in current gudang",
+            "super_admin": "all"
+        }
+    },
+    "store": {
+        "endpoint": "POST /api/v1/penjualan",
+        "middleware": "api.token",
+        "validation": {
+            "pelanggan": "required|string",
+            "tgl_transaksi": "required|date",
+            "syarat_pembayaran": "required|string",
+            "gudang_id": "required|exists:gudangs,id",
+            "tipe_harga": "nullable|in:retail,grosir",
+            "tax_percentage": "required|numeric|min:0",
+            "diskon_akhir": "nullable",
+            "items": "required|array|min:1",
+            "items.*.produk_id": "required|exists:produks,id",
+            "items.*.kuantitas": "required|numeric|min:1",
+            "items.*.harga_satuan": "nullable",
+            "items.*.diskon": "nullable|numeric|min:0|max:100",
+            "items.*.diskon_nominal": "nullable"
+        },
+        "success": {
+            "status": 201,
+            "body": {
+                "message": "Penjualan berhasil dibuat.",
+                "data": "<Penjualan model with loaded items>"
+            }
+        },
+        "failure_spectator": {
+            "status": 403,
+            "body": {
+                "message": "Spectator tidak bisa membuat transaksi."
+            }
+        },
+        "failure_gudang_mismatch": {
+            "status": 403,
+            "body": {
+                "message": "Gudang transaksi harus sesuai gudang aktif."
+            }
+        },
+        "failure_no_access": {
+            "status": 403,
+            "body": {
+                "message": "Tidak memiliki akses ke gudang ini."
+            }
+        },
+        "failure_stock": {
+            "status": 422,
+            "body": {
+                "message": "Stok tidak mencukupi.",
+                "errors": [
+                    "Stok {nama_produk} tidak cukup. Tersedia: {n}, Diminta: {m}"
+                ]
+            }
+        },
+        "failure_server": {
+            "status": 500,
+            "body": {
+                "message": "Gagal membuat penjualan."
+            }
+        },
+        "business_logic": {
+            "status_on_create": "Always Pending",
+            "stock_check": "Checks stok_penjualan per item in target gudang",
+            "stock_deduction": "NOT done on create (only validation)",
+            "price_source": "From produks table based on tipe_harga (retail=harga, grosir=harga_grosir)",
+            "harga_satuan_from_request": "IGNORED - price always from produk master",
+            "nomor_generation": "INV-{YYYYMMDD}-{user_id}-{daily_sequence_padded_3}",
+            "jatuh_tempo": "Cash=null; Net 7/14/30/60 = tgl_transaksi + days",
+            "approver_chain": "user->admin_of_gudang->super_admin; admin->super_admin; super_admin->self",
+            "lampiran": "Stored in public/storage/lampiran_penjualan/{nomor}-{counter}.{ext}",
+            "email_notification": "sendCreatedNotification (async, failure silent)"
+        },
+        "permissions": "Any authenticated user EXCEPT spectator"
+    },
+    "update": {
+        "endpoint": "PUT /api/v1/penjualan/{id}",
+        "middleware": "api.token",
+        "modes": {
+            "attachment_only": {
+                "condition": "Has lampiran file BUT no core fields (pelanggan, tgl_transaksi, syarat_pembayaran, gudang_id, items)",
+                "permissions": "Transaction owner for own, or anyone with access",
+                "success_status": 200,
+                "success_body": {
+                    "message": "Lampiran berhasil ditambahkan.",
+                    "data": "<Penjualan with items>"
+                }
+            },
+            "full_update": {
+                "permissions": "super_admin ONLY",
+                "validation": "Same as store",
+                "success_status": 200,
+                "success_body": {
+                    "message": "Penjualan berhasil diperbarui.",
+                    "data": "<Penjualan with items>"
+                },
+                "business_logic": {
+                    "status_for_cash": "Sets to Lunas",
+                    "status_for_non_cash": "Sets to Pending",
+                    "items_handling": "Deletes ALL existing items, recreates from payload",
+                    "stock_recheck": "Yes, validates stock again"
+                }
+            }
+        },
+        "failure_forbidden_full": {
+            "status": 403,
+            "body": {
+                "message": "Hanya Super Admin yang dapat mengubah data penjualan."
+            }
+        },
+        "failure_forbidden_lampiran": {
+            "status": 403,
+            "body": {
+                "message": "Anda hanya dapat menambah lampiran pada transaksi milik Anda sendiri."
+            }
+        }
+    },
+    "approve": {
+        "endpoint": "POST /api/v1/penjualan/{id}/approve",
+        "middleware": "api.token",
+        "validation": "none",
+        "success": {
+            "status": 200,
+            "body": {
+                "message": "Penjualan berhasil di-approve.",
+                "data": "<Penjualan>"
+            }
+        },
+        "failure_role": {
+            "status": 403,
+            "body": {
+                "message": "Unauthorized"
+            }
+        },
+        "failure_status": {
+            "status": 422,
+            "body": {
+                "message": "Hanya transaksi Pending yang bisa di-approve."
+            }
+        },
+        "failure_gudang": {
+            "status": 403,
+            "body": {
+                "message": "Hanya bisa approve transaksi di gudang aktif."
+            }
+        },
+        "state_transition": "Pending -> Approved",
+        "side_effects": "Sets approver_id, sends approved email notification",
+        "permissions": "admin (current gudang only), super_admin"
+    },
+    "cancel": {
+        "endpoint": "POST /api/v1/penjualan/{id}/cancel",
+        "middleware": "api.token",
+        "validation": "none",
+        "success": {
+            "status": 200,
+            "body": {
+                "message": "Penjualan berhasil dibatalkan."
+            }
+        },
+        "failure_role": {
+            "status": 403,
+            "body": {
+                "message": "Unauthorized"
+            }
+        },
+        "failure_gudang": {
+            "status": 403,
+            "body": {
+                "message": "Hanya bisa cancel transaksi di gudang aktif."
+            }
+        },
+        "state_transition": "ANY -> Canceled (NO pre-status check)",
+        "permissions": {
+            "user": "only own transactions",
+            "admin": "only current gudang",
+            "super_admin": "all"
+        },
+        "critical_note": "Can cancel from ANY status including Approved and Lunas"
+    },
+    "uncancel": {
+        "endpoint": "POST /api/v1/penjualan/{id}/uncancel",
+        "middleware": "api.token",
+        "validation": "none",
+        "success": {
+            "status": 200,
+            "body": {
+                "message": "Transaksi berhasil di-uncancel. Status kembali ke Pending.",
+                "data": "<Penjualan>"
+            }
+        },
+        "failure_role": {
+            "status": 403,
+            "body": {
+                "message": "Hanya Super Admin yang dapat membatalkan pembatalan."
+            }
+        },
+        "failure_status": {
+            "status": 422,
+            "body": {
+                "message": "Transaksi ini tidak dalam status Canceled."
+            }
+        },
+        "state_transition": "Canceled -> Pending",
+        "side_effects": "Recalculates approver_id",
+        "permissions": "super_admin ONLY"
+    },
+    "mark_as_paid": {
+        "endpoint": "POST /api/v1/penjualan/{id}/mark-paid",
+        "middleware": "api.token",
+        "validation": "none",
+        "success": {
+            "status": 200,
+            "body": {
+                "message": "Penjualan ditandai LUNAS.",
+                "data": "<Penjualan>"
+            }
+        },
+        "failure_role": {
+            "status": 403,
+            "body": {
+                "message": "Unauthorized"
+            }
+        },
+        "failure_status": {
+            "status": 422,
+            "body": {
+                "message": "Hanya transaksi Approved yang bisa ditandai Lunas."
+            }
+        },
+        "failure_gudang": {
+            "status": 403,
+            "body": {
+                "message": "Hanya bisa ubah transaksi di gudang aktif."
+            }
+        },
+        "state_transition": "Approved -> Lunas",
+        "permissions": "admin (current gudang only), super_admin"
+    },
+    "unmark_as_paid": {
+        "endpoint": "POST /api/v1/penjualan/{id}/unmark-paid",
+        "middleware": "api.token",
+        "validation": "none",
+        "success": {
+            "status": 200,
+            "body": {
+                "message": "Status penjualan dikembalikan ke Approved.",
+                "data": "<Penjualan>"
+            }
+        },
+        "failure_role": {
+            "status": 403,
+            "body": {
+                "message": "Hanya Super Admin yang dapat melakukan ini."
+            }
+        },
+        "failure_status": {
+            "status": 422,
+            "body": {
+                "message": "Transaksi ini tidak dalam status Lunas."
+            }
+        },
+        "state_transition": "Lunas -> Approved",
+        "permissions": "super_admin ONLY"
+    },
+    "state_machine": {
+        "transitions": {
+            "create": "-> Pending",
+            "approve": "Pending -> Approved",
+            "mark_paid": "Approved -> Lunas",
+            "unmark_paid": "Lunas -> Approved (super_admin only)",
+            "cancel": "ANY -> Canceled (no pre-check)",
+            "uncancel": "Canceled -> Pending (super_admin only)",
+            "update_cash": "-> Lunas (super_admin full update with Cash payment)"
+        }
+    },
+    "helper_methods": {
+        "buildPenjualanItemRows": "Looks up produk price by tipe_harga, calculates diskon% and diskon_nominal, returns jumlah_baris",
+        "getProdukHargaByTipe": "grosir uses harga_grosir if > 0, otherwise harga (retail)",
+        "normalizeMoneyInput": "Handles Rp prefix, dot thousands, comma decimal, returns float",
+        "findApprover": "user->admin_of_gudang; admin->super_admin; super_admin->self"
+    }
+}

@@ -1,0 +1,64 @@
+{
+    "_meta": {
+        "source": "Legacy Laravel 7 code",
+        "date": "2026-06-05",
+        "controller": "Api\\PembayaranController"
+    },
+    "store_validation": {
+        "penjualan_id": "required|exists:penjualans,id",
+        "tgl_pembayaran": "required|date",
+        "metode_pembayaran": "required|string",
+        "jumlah_bayar": "required|numeric|min:1"
+    },
+    "messages": {
+        "store_success": "Pembayaran berhasil dibuat.",
+        "approve_success": "Pembayaran berhasil di-approve.",
+        "cancel_success": "Pembayaran berhasil dibatalkan.",
+        "uncancel_success": "Pembayaran berhasil di-uncancel. Status kembali ke Pending.",
+        "error_already_canceled": "Transaksi sudah dibatalkan, tidak bisa di-approve.",
+        "error_already_approved": "Transaksi sudah disetujui.",
+        "error_already_canceled_cancel": "Transaksi sudah dibatalkan.",
+        "forbidden_cancel_approved": "Hanya Super Admin yang dapat membatalkan transaksi yang sudah disetujui.",
+        "error_approve_server": "Gagal approve pembayaran.",
+        "error_cancel_server": "Gagal membatalkan pembayaran."
+    },
+    "penjualan_by_gudang_response_shape": {
+        "items": [
+            {
+                "id": "<int>",
+                "nomor": "<string>",
+                "pelanggan": "<string>",
+                "tgl_transaksi": "<Y-m-d>",
+                "grand_total": "<decimal>",
+                "sisa_tagihan": "<decimal>"
+            }
+        ]
+    },
+    "penjualan_detail_response_shape": {
+        "id": "<int>",
+        "nomor": "<string>",
+        "pelanggan": "<string>",
+        "grand_total": "<decimal>",
+        "gudang_id": "<int>",
+        "items": [
+            {
+                "produk_id": "<int>",
+                "nama_produk": "<string>",
+                "kuantitas": "<int>",
+                "harga_satuan": "<decimal>"
+            }
+        ]
+    },
+    "state_machine": {
+        "create": "-> Pending",
+        "approve": "Pending -> Approved",
+        "cancel_pending": "Pending -> Canceled",
+        "cancel_approved_super": "Approved -> Canceled",
+        "uncancel": "Canceled -> Pending"
+    },
+    "side_effects": {
+        "approve": "If total approved payments >= penjualan.grand_total, penjualan.status -> Lunas",
+        "cancel_approved": "If penjualan was Lunas, reverts penjualan.status -> Approved"
+    },
+    "export_harian_pdf_filename": "Tagihan-Invoice-{startYmd}-{endYmd}.pdf"
+}

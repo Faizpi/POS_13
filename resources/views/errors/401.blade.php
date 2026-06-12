@@ -1,0 +1,5 @@
+﻿@extends('errors.layout')
+@section('title', 'Belum Login')
+@section('code', '401')
+@section('icon', '🔒')
+@section('description', 'Anda harus login terlebih dahulu untuk mengakses halaman ini. Silakan login menggunakan akun Anda.')

@@ -1,0 +1,43 @@
+{
+    "_meta": {
+        "source": "Legacy Laravel 7 code",
+        "date": "2026-06-05",
+        "controller": "Api\\KunjunganController"
+    },
+    "store_validation": {
+        "kontak_id": "required|exists:kontaks,id",
+        "tgl_kunjungan": "required|date",
+        "tujuan": "required|in:Pemeriksaan Stock,Penagihan,Promo Gratis,Promo Sample",
+        "sales_nama": "nullable|string|max:255",
+        "sales_no_telepon": "nullable|string|max:30",
+        "sales_alamat": "nullable|string",
+        "items": "required|array|min:1 (for non-Penagihan) OR nullable|array (for Penagihan)",
+        "items.*.produk_id": "required|exists:produks,id",
+        "items.*.batch_number": "nullable|string|max:100",
+        "items.*.expired_date": "nullable|date"
+    },
+    "messages": {
+        "store_success": "Kunjungan berhasil dibuat.",
+        "update_success": "Kunjungan berhasil diperbarui.",
+        "approve_success": "Kunjungan berhasil di-approve.",
+        "cancel_success": "Kunjungan berhasil dibatalkan.",
+        "uncancel_success": "Kunjungan berhasil di-uncancel. Status kembali ke Pending.",
+        "stock_error_template": "Qty {nama_produk} ({qty}) melebihi {stok_label} yang tersedia ({available})."
+    },
+    "show_transform": {
+        "items_add_kuantitas": "item.jumlah -> kuantitas attribute",
+        "items_add_tipe_stok": "derived from tujuan: Promo Gratis->gratis, Promo Sample->sample, Pemeriksaan Stock->penjualan"
+    },
+    "state_machine": {
+        "create_super": "-> Approved",
+        "create_others": "-> Pending",
+        "approve": "Pending -> Approved",
+        "cancel_admin": "Pending -> Canceled",
+        "cancel_super": "ANY -> Canceled",
+        "uncancel": "Canceled -> Pending"
+    },
+    "stock_validation": {
+        "Promo Gratis": "checks stok_gratis",
+        "Promo Sample": "checks stok_sample"
+    }
+}

@@ -13,9 +13,12 @@ use App\Http\Controllers\PublicDocumentController;
 |--------------------------------------------------------------------------
 */
 
-// Root redirect to app panel
+// Root redirect to app panel (login if unauth)
 Route::get('/', function () {
-    return redirect('/app');
+    if (auth()->check()) {
+        return redirect('/app');
+    }
+    return redirect('/app/login');
 });
 
 // ========================================================================

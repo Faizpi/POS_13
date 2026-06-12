@@ -94,12 +94,12 @@ class UsersTable
                 SelectFilter::make('role')
                     ->options([
                         'super_admin' => 'Super Admin',
-                        'admin' => 'Admin',
                         'spectator' => 'Spectator',
+                        'admin' => 'Admin',
                         'user' => 'User',
                     ]),
             ])
-            ->defaultSort('name')
+            ->modifyQueryUsing(fn ($query) => $query->orderByRaw("FIELD(role, 'super_admin', 'spectator', 'admin', 'user')"))
             ->recordActions([
                 EditAction::make(),
                 DeleteAction::make()

@@ -81,7 +81,7 @@ class TutupBuku extends Page implements Tables\Contracts\HasTable
                     }),
             ])
             ->actions([
-                \Filament\Tables\Actions\ViewAction::make('view_metadata')
+                \Filament\Actions\ViewAction::make('view_metadata')
                     ->label('Detail')
                     ->icon('heroicon-o-eye')
                     ->modalHeading('Detail Tutup Buku')

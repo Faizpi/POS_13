@@ -65,8 +65,8 @@ class UserForm
                             ->required()
                             ->options([
                                 'super_admin' => 'Super Admin',
-                                'admin' => 'Admin',
                                 'spectator' => 'Spectator (Read-Only)',
+                                'admin' => 'Admin',
                                 'user' => 'User (Sales)',
                             ])
                             ->native(false)

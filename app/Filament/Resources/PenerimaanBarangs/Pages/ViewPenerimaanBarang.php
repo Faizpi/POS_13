@@ -154,7 +154,6 @@ class ViewPenerimaanBarang extends ViewRecord
                             ->html()
                             ->state(function ($record) {
                                 $paths = collect($record->lampiran_paths ?? []);
-                                $uniqId = uniqid();
 
                                 $html = '<div class="grid grid-cols-2 md:grid-cols-3 gap-4">';
                                 foreach ($paths as $path) {
@@ -164,7 +163,7 @@ class ViewPenerimaanBarang extends ViewRecord
 
                                     $html .= '<div class="flex flex-col items-center justify-center p-4 rounded-lg shadow-sm">';
                                     if ($isImage) {
-                                        $html .= '<a href="javascript:void(0)" onclick="document.getElementById(\'lightbox-img-' . $uniqId . '\').src = \'' . $url . '\'; document.getElementById(\'lightbox-container-' . $uniqId . '\').style.display = \'flex\';" class="block w-full h-32 mb-2 bg-gray-100 rounded flex items-center justify-center overflow-hidden hover:opacity-75 transition">';
+                                        $html .= '<a href="' . $url . '" target="_blank" class="block w-full h-32 mb-2 bg-gray-100 rounded flex items-center justify-center overflow-hidden hover:opacity-75 transition">';
                                         $html .= '<img src="' . $url . '" class="max-w-full max-h-full object-contain" alt="Lampiran" loading="lazy">';
                                         $html .= '</a>';
                                     } else {
@@ -177,18 +176,6 @@ class ViewPenerimaanBarang extends ViewRecord
                                     $html .= '</div>';
                                 }
                                 $html .= '</div>';
-                                
-                                // Lightbox Modal Markup
-                                $html .= '
-                                <div id="lightbox-container-' . $uniqId . '" style="display:none; position:fixed; inset:0; z-index:99999; background:rgba(0,0,0,0.9); align-items:center; justify-content:center;" onclick="if(event.target === this) this.style.display=\'none\';">
-                                    <button type="button" onclick="document.getElementById(\'lightbox-container-' . $uniqId . '\').style.display=\'none\';" style="position:absolute; top:16px; right:16px; color:#fff; background:rgba(0,0,0,0.5); border:none; border-radius:50%; width:48px; height:48px; font-size:32px; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:100000;">
-                                        &times;
-                                    </button>
-                                    <div onclick="event.stopPropagation();" style="max-w:90vw; max-h:90vh; display:flex; align-items:center; justify-content:center;">
-                                        <img id="lightbox-img-' . $uniqId . '" src="" style="max-w:100%; max-h:90vh; object-fit:contain; border-radius:8px; box-shadow:0 25px 50px -12px rgba(0,0,0,0.25);" alt="Preview">
-                                    </div>
-                                </div>';
-                                
                                 return $html;
                             })
                             ->columnSpanFull(),

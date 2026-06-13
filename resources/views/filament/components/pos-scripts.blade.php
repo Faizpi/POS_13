@@ -31,7 +31,7 @@
             overlay.onclick = function(e) { if (e.target === overlay) close(); };
 
             const closeBtn = document.createElement('button');
-            closeBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>';
+            closeBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>';
             closeBtn.style.cssText = 'position:absolute;top:16px;right:16px;color:#fff;background:rgba(0,0,0,.5);border:none;border-radius:999px;padding:8px;cursor:pointer;z-index:10;line-height:1';
             closeBtn.onclick = close;
             overlay.appendChild(closeBtn);

@@ -137,7 +137,7 @@ class ViewPembelian extends ViewRecord
                                     $ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
                                     $isImage = in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp']);
 
-                                    $html .= '<div class="flex flex-col items-center justify-center p-4 border rounded-lg shadow-sm">';
+                                    $html .= '<div class="flex flex-col items-center justify-center p-4 rounded-lg shadow-sm">';
                                     if ($isImage) {
                                         $html .= '<a href="' . $url . '" target="_blank" class="block w-full h-32 mb-2 bg-gray-100 rounded flex items-center justify-center overflow-hidden hover:opacity-75 transition">';
                                         $html .= '<img src="' . $url . '" class="max-w-full max-h-full object-contain" alt="Lampiran">';

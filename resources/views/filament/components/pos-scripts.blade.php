@@ -22,46 +22,57 @@
 // Lampiran Lightbox Preview
 // ================================================================
 (function() {
-    let overlay = null, imgEl = null, spinnerEl = null;
+    var ov = null, img = null, spin = null;
 
     function open(url) {
-        if (!overlay) {
-            overlay = document.createElement('div');
-            overlay.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s';
-            overlay.onclick = function(e) { if (e.target === overlay) close(); };
+        if (!ov) {
+            ov = document.createElement('div');
+            ov.id = 'lampiran-preview';
+            ov.style.cssText = 'position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center';
 
-            const closeBtn = document.createElement('button');
-            closeBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>';
-            closeBtn.style.cssText = 'position:absolute;top:16px;right:16px;color:#fff;background:rgba(0,0,0,.5);border:none;border-radius:999px;padding:8px;cursor:pointer;z-index:10;line-height:1';
-            closeBtn.onclick = close;
-            overlay.appendChild(closeBtn);
+            ov.addEventListener('click', function(e) {
+                if (e.target === ov) close();
+            });
 
-            spinnerEl = document.createElement('div');
-            spinnerEl.innerHTML = '<svg class="animate-spin w-10 h-10 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>';
-            spinnerEl.style.cssText = 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)';
-            overlay.appendChild(spinnerEl);
+            var x = document.createElement('button');
+            x.textContent = '\u00D7';
+            x.style.cssText = 'position:absolute;top:12px;right:16px;color:#fff;background:rgba(0,0,0,.5);border:none;border-radius:50%;width:44px;height:44px;font-size:28px;line-height:1;cursor:pointer;z-index:10;display:flex;align-items:center;justify-content:center';
+            x.onclick = close;
+            ov.appendChild(x);
 
-            imgEl = document.createElement('img');
-            imgEl.style.cssText = 'max-width:90vw;max-height:90vh;object-fit:contain;border-radius:8px;opacity:0;transition:opacity .3s';
-            imgEl.onload = function() { spinnerEl.style.display = 'none'; imgEl.style.opacity = '1'; };
-            imgEl.onerror = function() { spinnerEl.innerHTML = '<span class="text-white/70 text-sm">Gagal memuat gambar</span>'; };
-            overlay.appendChild(imgEl);
+            spin = document.createElement('div');
+            spin.id = 'lb-spin';
+            spin.textContent = '...';
+            spin.style.cssText = 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#fff;font-size:24px';
+            ov.appendChild(spin);
 
-            document.body.appendChild(overlay);
+            img = document.createElement('img');
+            img.style.cssText = 'max-width:88vw;max-height:88vh;object-fit:contain;border-radius:6px';
+            img.style.display = 'none';
+            img.onload = function() {
+                spin.style.display = 'none';
+                img.style.display = 'block';
+            };
+            img.onerror = function() {
+                spin.textContent = 'Gagal memuat gambar';
+                spin.style.fontSize = '16px';
+            };
+            ov.appendChild(img);
+
+            document.body.appendChild(ov);
         }
-        imgEl.style.opacity = '0';
-        imgEl.src = url;
-        spinnerEl.style.display = '';
-        spinnerEl.innerHTML = '<svg class="animate-spin w-10 h-10 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>';
-        overlay.style.opacity = '1';
-        overlay.style.pointerEvents = 'auto';
+        img.style.display = 'none';
+        img.src = url;
+        spin.style.display = 'block';
+        spin.textContent = '...';
+        spin.style.fontSize = '24px';
+        ov.style.display = 'flex';
     }
 
     function close() {
-        if (!overlay) return;
-        overlay.style.opacity = '0';
-        overlay.style.pointerEvents = 'none';
-        setTimeout(function() { if (imgEl) imgEl.src = ''; }, 300);
+        if (!ov) return;
+        ov.style.display = 'none';
+        img.src = '';
     }
 
     window.previewLampiran = open;

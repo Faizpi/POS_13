@@ -116,7 +116,7 @@ class ViewBiaya extends ViewRecord
 
                                     $html .= '<div class="flex flex-col items-center justify-center p-4 rounded-lg shadow-sm">';
                                     if ($isImage) {
-                                        $html .= '<a href="' . $url . '" class="block w-full h-32 mb-2 bg-gray-100 rounded flex items-center justify-center overflow-hidden hover:opacity-75 transition" onclick="event.preventDefault();previewLampiran(this.href)">';
+                                        $html .= '<a href="javascript:void(0)" onclick="window.previewLampiran(\'' . $url . '\')" class="block w-full h-32 mb-2 bg-gray-100 rounded flex items-center justify-center overflow-hidden hover:opacity-75 transition">';
                                         $html .= '<img src="' . $url . '" class="max-w-full max-h-full object-contain" alt="Lampiran" loading="lazy">';
                                         $html .= '</a>';
                                     } else {

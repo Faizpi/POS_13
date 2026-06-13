@@ -108,7 +108,8 @@ class ViewBiaya extends ViewRecord
                                     $paths = $paths->prepend($record->lampiran_path);
                                 }
 
-                                $html = '<div class="grid grid-cols-2 md:grid-cols-3 gap-4">';
+                                $html = '<div x-data="{ isOpen: false, imgUrl: \'\' }" class="relative">';
+                                $html .= '<div class="grid grid-cols-2 md:grid-cols-3 gap-4">';
                                 foreach ($paths as $path) {
                                     $url = asset('storage/' . $path);
                                     $ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
@@ -116,7 +117,7 @@ class ViewBiaya extends ViewRecord
 
                                     $html .= '<div class="flex flex-col items-center justify-center p-4 rounded-lg shadow-sm">';
                                     if ($isImage) {
-                                        $html .= '<a href="javascript:void(0)" onclick="window.previewLampiran(\'' . $url . '\')" class="block w-full h-32 mb-2 bg-gray-100 rounded flex items-center justify-center overflow-hidden hover:opacity-75 transition">';
+                                        $html .= '<a href="javascript:void(0)" @click="isOpen = true; imgUrl = \'' . $url . '\'" class="block w-full h-32 mb-2 bg-gray-100 rounded flex items-center justify-center overflow-hidden hover:opacity-75 transition">';
                                         $html .= '<img src="' . $url . '" class="max-w-full max-h-full object-contain" alt="Lampiran" loading="lazy">';
                                         $html .= '</a>';
                                     } else {
@@ -128,6 +129,27 @@ class ViewBiaya extends ViewRecord
                                     $html .= '<span class="text-xs text-center truncate w-full" title="' . basename($path) . '">' . basename($path) . '</span>';
                                     $html .= '</div>';
                                 }
+                                $html .= '</div>';
+                                
+                                // Lightbox Modal Markup
+                                $html .= '
+                                <div x-show="isOpen" 
+                                     x-transition 
+                                     class="fixed inset-0 z-[99999] flex items-center justify-center bg-black/90 p-4" 
+                                     @click="isOpen = false" 
+                                     style="display: none;">
+                                    <button type="button" 
+                                            @click.stop="isOpen = false" 
+                                            class="absolute top-4 right-4 text-white hover:text-gray-300 focus:outline-none bg-black/40 hover:bg-black/60 rounded-full w-12 h-12 flex items-center justify-center text-3xl font-bold transition">
+                                        &times;
+                                    </button>
+                                    <div @click.stop class="max-w-[90vw] max-h-[90vh] flex items-center justify-center">
+                                        <img :src="imgUrl" 
+                                             class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl" 
+                                             alt="Preview Image">
+                                    </div>
+                                </div>';
+                                
                                 $html .= '</div>';
                                 return $html;
                             })

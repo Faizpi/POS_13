@@ -154,9 +154,9 @@ class ViewPenerimaanBarang extends ViewRecord
                             ->html()
                             ->state(function ($record) {
                                 $paths = collect($record->lampiran_paths ?? []);
+                                $uniqId = uniqid();
 
-                                $html = '<div x-data="{ isOpen: false, imgUrl: \'\' }" class="relative">';
-                                $html .= '<div class="grid grid-cols-2 md:grid-cols-3 gap-4">';
+                                $html = '<div class="grid grid-cols-2 md:grid-cols-3 gap-4">';
                                 foreach ($paths as $path) {
                                     $url = asset('storage/' . $path);
                                     $ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
@@ -164,7 +164,7 @@ class ViewPenerimaanBarang extends ViewRecord
 
                                     $html .= '<div class="flex flex-col items-center justify-center p-4 rounded-lg shadow-sm">';
                                     if ($isImage) {
-                                        $html .= '<a href="javascript:void(0)" @click="isOpen = true; imgUrl = \'' . $url . '\'" class="block w-full h-32 mb-2 bg-gray-100 rounded flex items-center justify-center overflow-hidden hover:opacity-75 transition">';
+                                        $html .= '<a href="javascript:void(0)" onclick="document.getElementById(\'lightbox-img-' . $uniqId . '\').src = \'' . $url . '\'; document.getElementById(\'lightbox-container-' . $uniqId . '\').style.display = \'flex\';" class="block w-full h-32 mb-2 bg-gray-100 rounded flex items-center justify-center overflow-hidden hover:opacity-75 transition">';
                                         $html .= '<img src="' . $url . '" class="max-w-full max-h-full object-contain" alt="Lampiran" loading="lazy">';
                                         $html .= '</a>';
                                     } else {
@@ -180,24 +180,15 @@ class ViewPenerimaanBarang extends ViewRecord
                                 
                                 // Lightbox Modal Markup
                                 $html .= '
-                                <div x-show="isOpen" 
-                                     x-transition 
-                                     class="fixed inset-0 z-[99999] flex items-center justify-center bg-black/90 p-4" 
-                                     @click="isOpen = false" 
-                                     style="display: none;">
-                                    <button type="button" 
-                                            @click.stop="isOpen = false" 
-                                            class="absolute top-4 right-4 text-white hover:text-gray-300 focus:outline-none bg-black/40 hover:bg-black/60 rounded-full w-12 h-12 flex items-center justify-center text-3xl font-bold transition">
+                                <div id="lightbox-container-' . $uniqId . '" style="display:none; position:fixed; inset:0; z-index:99999; background:rgba(0,0,0,0.9); align-items:center; justify-content:center;" onclick="if(event.target === this) this.style.display=\'none\';">
+                                    <button type="button" onclick="document.getElementById(\'lightbox-container-' . $uniqId . '\').style.display=\'none\';" style="position:absolute; top:16px; right:16px; color:#fff; background:rgba(0,0,0,0.5); border:none; border-radius:50%; width:48px; height:48px; font-size:32px; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:100000;">
                                         &times;
                                     </button>
-                                    <div @click.stop class="max-w-[90vw] max-h-[90vh] flex items-center justify-center">
-                                        <img :src="imgUrl" 
-                                             class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl" 
-                                             alt="Preview Image">
+                                    <div onclick="event.stopPropagation();" style="max-w:90vw; max-h:90vh; display:flex; align-items:center; justify-content:center;">
+                                        <img id="lightbox-img-' . $uniqId . '" src="" style="max-w:100%; max-h:90vh; object-fit:contain; border-radius:8px; box-shadow:0 25px 50px -12px rgba(0,0,0,0.25);" alt="Preview">
                                     </div>
                                 </div>';
                                 
-                                $html .= '</div>';
                                 return $html;
                             })
                             ->columnSpanFull(),

@@ -19,6 +19,55 @@
 
 <script>
 // ================================================================
+// Lampiran Lightbox Preview
+// ================================================================
+(function() {
+    let overlay = null, imgEl = null, spinnerEl = null;
+
+    function open(url) {
+        if (!overlay) {
+            overlay = document.createElement('div');
+            overlay.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s';
+            overlay.onclick = function(e) { if (e.target === overlay) close(); };
+
+            const closeBtn = document.createElement('button');
+            closeBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>';
+            closeBtn.style.cssText = 'position:absolute;top:16px;right:16px;color:#fff;background:rgba(0,0,0,.5);border:none;border-radius:999px;padding:8px;cursor:pointer;z-index:10;line-height:1';
+            closeBtn.onclick = close;
+            overlay.appendChild(closeBtn);
+
+            spinnerEl = document.createElement('div');
+            spinnerEl.innerHTML = '<svg class="animate-spin w-10 h-10 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>';
+            spinnerEl.style.cssText = 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)';
+            overlay.appendChild(spinnerEl);
+
+            imgEl = document.createElement('img');
+            imgEl.style.cssText = 'max-width:90vw;max-height:90vh;object-fit:contain;border-radius:8px;opacity:0;transition:opacity .3s';
+            imgEl.onload = function() { spinnerEl.style.display = 'none'; imgEl.style.opacity = '1'; };
+            imgEl.onerror = function() { spinnerEl.innerHTML = '<span class="text-white/70 text-sm">Gagal memuat gambar</span>'; };
+            overlay.appendChild(imgEl);
+
+            document.body.appendChild(overlay);
+        }
+        imgEl.style.opacity = '0';
+        imgEl.src = url;
+        spinnerEl.style.display = '';
+        spinnerEl.innerHTML = '<svg class="animate-spin w-10 h-10 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>';
+        overlay.style.opacity = '1';
+        overlay.style.pointerEvents = 'auto';
+    }
+
+    function close() {
+        if (!overlay) return;
+        overlay.style.opacity = '0';
+        overlay.style.pointerEvents = 'none';
+        setTimeout(function() { if (imgEl) imgEl.src = ''; }, 300);
+    }
+
+    window.previewLampiran = open;
+})();
+
+// ================================================================
 // Global Scanner Data (kontak & produk for barcode lookup)
 // ================================================================
 window.posScannerData = {

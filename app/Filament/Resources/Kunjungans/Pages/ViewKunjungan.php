@@ -116,8 +116,8 @@ class ViewKunjungan extends ViewRecord
                                     
                                     $html .= '<div class="flex flex-col items-center justify-center p-4 rounded-lg shadow-sm">';
                                     if ($isImage) {
-                                        $html .= '<a href="' . $url . '" target="_blank" class="block w-full h-32 mb-2 bg-gray-100 rounded flex items-center justify-center overflow-hidden hover:opacity-75 transition">';
-                                        $html .= '<img src="' . $url . '" class="max-w-full max-h-full object-contain" alt="Lampiran">';
+                                        $html .= '<a href="' . $url . '" class="block w-full h-32 mb-2 bg-gray-100 rounded flex items-center justify-center overflow-hidden hover:opacity-75 transition" onclick="event.preventDefault();previewLampiran(this.href)">';
+                                        $html .= '<img src="' . $url . '" class="max-w-full max-h-full object-contain" alt="Lampiran" loading="lazy">';
                                         $html .= '</a>';
                                     } else {
                                         $html .= '<a href="' . $url . '" target="_blank" class="block w-full h-32 mb-2 bg-gray-100 rounded flex flex-col items-center justify-center text-primary-600 hover:text-primary-800 hover:bg-gray-200 transition">';

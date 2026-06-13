@@ -4,6 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
+use Illuminate\Auth\AuthenticationException;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -30,6 +31,22 @@ return Application::configure(basePath: dirname(__DIR__))
         );
 
         $exceptions->render(function (Throwable $e, Request $request) {
+            // AuthenticationException → redirect to login
+            if ($e instanceof AuthenticationException) {
+                $redirectTo = $e->redirectTo();
+
+                if ($redirectTo) {
+                    return redirect()->guest($redirectTo);
+                }
+
+                // Fallback berdasarkan guard
+                $guard = $e->guards()[0] ?? null;
+                return redirect()->guest(match ($guard) {
+                    'customer' => '/customer/login',
+                    default => '/app/login',
+                });
+            }
+
             if ($request->expectsJson() || $request->is('api/*')) {
                 return; // Bypass — pakai JSON response bawaan
             }

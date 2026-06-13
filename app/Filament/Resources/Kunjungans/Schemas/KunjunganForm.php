@@ -277,6 +277,7 @@ class KunjunganForm
                         Textarea::make('memo')->rows(3)->columnSpanFull(),
                         FileUpload::make('lampiran_paths')
                             ->multiple()
+                            ->disk('public')
                             ->directory('lampiran_kunjungan')
                             ->getUploadedFileNameForStorageUsing(function (\Livewire\Features\SupportFileUploads\TemporaryUploadedFile $file, $record): string {
                                 $user = auth()->user();

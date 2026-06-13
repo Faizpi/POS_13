@@ -33,6 +33,7 @@ class EditPembayaran extends EditRecord
                         ->multiple()
                         ->reorderable()
                         ->appendFiles()
+                        ->disk('public')
                         ->directory('lampiran_pembayaran')
                         ->getUploadedFileNameForStorageUsing(function (\Livewire\Features\SupportFileUploads\TemporaryUploadedFile $file, $record): string {
                             $nomor = $record?->nomor ?? ('PAY-' . now()->format('Ymd') . '-' . auth()->id());

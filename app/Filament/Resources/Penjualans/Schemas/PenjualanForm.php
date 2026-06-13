@@ -394,6 +394,7 @@ class PenjualanForm
                         FileUpload::make('lampiran_paths')
                                     ->label('Lampiran')
                                     ->multiple()
+                                    ->disk('public')
                                     ->directory('lampiran_penjualan')
                                     ->getUploadedFileNameForStorageUsing(function (\Livewire\Features\SupportFileUploads\TemporaryUploadedFile $file, $get, $record): string {
                                         $user = auth()->user();

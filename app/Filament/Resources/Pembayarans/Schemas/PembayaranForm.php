@@ -140,6 +140,7 @@ class PembayaranForm
                         FileUpload::make('lampiran_paths')
                             ->label('Lampiran / Bukti Bayar')
                             ->multiple()
+                            ->disk('public')
                             ->directory('lampiran_pembayaran')
                             ->getUploadedFileNameForStorageUsing(function (\Livewire\Features\SupportFileUploads\TemporaryUploadedFile $file, $record): string {
                                 $user = auth()->user();

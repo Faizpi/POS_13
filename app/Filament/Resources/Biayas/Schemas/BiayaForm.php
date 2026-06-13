@@ -216,6 +216,7 @@ class BiayaForm
                         FileUpload::make('lampiran_paths')
                             ->label('Lampiran')
                             ->multiple()
+                            ->disk('public')
                             ->directory('lampiran_biaya')
                             ->getUploadedFileNameForStorageUsing(function (\Livewire\Features\SupportFileUploads\TemporaryUploadedFile $file, $record): string {
                                 $user = auth()->user();

@@ -298,6 +298,7 @@ class PembelianForm
                         FileUpload::make('lampiran_paths')
                             ->label('Lampiran')
                             ->multiple()
+                            ->disk('public')
                             ->directory('lampiran_pembelian')
                             ->getUploadedFileNameForStorageUsing(function (\Livewire\Features\SupportFileUploads\TemporaryUploadedFile $file, $record): string {
                                 $user = auth()->user();

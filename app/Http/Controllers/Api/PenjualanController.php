@@ -201,6 +201,10 @@ class PenjualanController extends Controller
                 \App\Services\InvoiceEmailService::sendCreatedNotification($penjualan, 'penjualan');
             } catch (\Exception $e) { /* Email tidak gagalkan transaksi */ }
 
+            try {
+                \App\Services\WhatsappNotificationService::sendPenjualanCreated($penjualan);
+            } catch (\Exception $e) { /* WA tidak gagalkan transaksi */ }
+
             return response()->json([
                 'message' => 'Penjualan berhasil dibuat.',
                 'data' => $penjualan->load('items'),

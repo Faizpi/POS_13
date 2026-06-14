@@ -49,7 +49,8 @@ class WhatsappNotificationService
                 $nama   = $item->nama_produk ?? $item->produk->nama_produk ?? "-";
                 $satuan = $item->unit ?? $item->satuan ?? "pcs";
                 $harga  = "Rp " . number_format($item->harga_satuan ?? 0, 0, ",", ".");
-                $sub    = "Rp " . number_format($item->total ?? 0, 0, ",", ".");
+                // Bug fix: field total di database adalah jumlah_baris
+                $sub    = "Rp " . number_format($item->jumlah_baris ?? 0, 0, ",", ".");
                 $itemLines .= "\n  - {$nama} {$qty} {$satuan} x {$harga} = {$sub}";
             }
 

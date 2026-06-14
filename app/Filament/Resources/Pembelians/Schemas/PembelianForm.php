@@ -181,10 +181,12 @@ class PembelianForm
                                     ->afterStateUpdated(function ($state, callable $set, callable $get) {
                                         $produk = Produk::find($state);
                                         if ($produk) {
+                                            $set('kuantitas', 1);
                                             $set('unit', $produk->satuan);
                                             $set('harga_satuan', (float) $produk->harga);
                                         }
                                         self::recalcRow($set, $get);
+                                        self::recalcGrandTotal($set, $get);
                                     })
                                     ->suffixAction(
                                         Action::make('scan_produk_pembelian')
@@ -203,7 +205,7 @@ class PembelianForm
                                     ->numeric()
                                     ->default(1)
                                     ->minValue(1)
-                                    ->live(onBlur: true)
+                                    ->live()
                                     ->afterStateUpdated(fn ($set, $get) => self::recalcRow($set, $get)),
 
                                 TextInput::make('unit')

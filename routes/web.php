@@ -21,6 +21,14 @@ Route::get('/', function () {
     return redirect('/app/login');
 });
 
+// /app tanpa trailing path → redirect ke login jika belum auth
+Route::get('/app', function () {
+    if (auth()->check()) {
+        return redirect('/app/dashboard');
+    }
+    return redirect('/app/login');
+});
+
 // ========================================================================
 // API DOCUMENTATION (Public)
 // ========================================================================

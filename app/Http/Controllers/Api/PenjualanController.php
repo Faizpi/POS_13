@@ -202,8 +202,11 @@ class PenjualanController extends Controller
             } catch (\Exception $e) { /* Email tidak gagalkan transaksi */ }
 
             try {
+                \Illuminate\Support\Facades\Log::info('WA: mencoba kirim notifikasi penjualan #' . $penjualan->id);
                 \App\Services\WhatsappNotificationService::sendPenjualanCreated($penjualan);
-            } catch (\Exception $e) { /* WA tidak gagalkan transaksi */ }
+            } catch (\Exception $e) {
+                \Illuminate\Support\Facades\Log::error('WA ERROR: ' . $e->getMessage() . ' | ' . $e->getFile() . ':' . $e->getLine());
+            }
 
             return response()->json([
                 'message' => 'Penjualan berhasil dibuat.',

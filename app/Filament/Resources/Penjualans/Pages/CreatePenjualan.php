@@ -102,6 +102,12 @@ class CreatePenjualan extends CreateRecord
         } catch (\Throwable $e) {
             \Log::warning('Email notifikasi penjualan gagal: ' . $e->getMessage());
         }
+
+        try {
+            \App\Services\WhatsappNotificationService::sendPenjualanCreated($this->getRecord());
+        } catch (\Throwable $e) {
+            \Log::warning('WA notifikasi penjualan gagal: ' . $e->getMessage());
+        }
     }
 
     /**

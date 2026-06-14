@@ -257,12 +257,11 @@ class PenjualanForm
                                         }
                                         $tipeHarga = $get('../../tipe_harga') ?? 'retail';
                                         $harga = ($tipeHarga === 'grosir' && $produk->harga_grosir > 0) ? $produk->harga_grosir : $produk->harga;
-                                        $set('kuantitas', 1); // Force trigger recalculation
+                                        $set('kuantitas', 0);
                                         $set('harga_satuan', (float) $harga);
                                         $set('unit', $produk->satuan);
                                         $set('deskripsi', $produk->deskripsi);
                                         self::recalcRow($set, $get);
-                                        self::recalcGrandTotal($set, $get);
                                     })
                                     ->suffixAction(
                                         Action::make('scan_produk_penjualan')
@@ -279,7 +278,7 @@ class PenjualanForm
                                     ->label('Qty')
                                     ->required()
                                     ->numeric()
-                                    ->default(1)
+                                    ->default(0)
                                     ->minValue(1)
                                     ->live()
                                     ->afterStateUpdated(fn ($set, $get) => self::recalcRow($set, $get)),

@@ -6,44 +6,44 @@
 
 $projectPath = realpath(__DIR__ . '/..');
 
-if (!is_dir($projectPath)) { 
-    http_response_code(500); 
-    exit("Path not found"); 
+if (!is_dir($projectPath)) {
+    http_response_code(500);
+    exit("Path not found");
 }
 
 chdir($projectPath);
 
-if (!file_exists($projectPath . '/vendor/autoload.php')) { 
-    http_response_code(500); 
-    exit("vendor/autoload.php not found. Please run composer install first."); 
+if (!file_exists($projectPath . '/vendor/autoload.php')) {
+    http_response_code(500);
+    exit("vendor/autoload.php not found. Please run composer install first.");
 }
 
 require_once $projectPath . '/vendor/autoload.php';
-$app = require_once $projectPath . '/bootstrap/app.php';
+$app    = require_once $projectPath . '/bootstrap/app.php';
 $kernel = $app->make(Illuminate\Contracts\Console\Kernel::class);
 
 $commands = [
-    'Cache Clear' => 'cache:clear',
-    'Config Clear' => 'config:clear',
-    'Route Clear' => 'route:clear',
-    'View Clear' => 'view:clear',
-    'Optimize' => 'optimize',
-    'Optimize Clear' => 'optimize:clear',
-    'Storage Link' => 'storage:link',
-    'Storage Unlink' => 'storage:unlink',
+    'Cache Clear'        => 'cache:clear',
+    'Config Clear'       => 'config:clear',
+    'Route Clear'        => 'route:clear',
+    'View Clear'         => 'view:clear',
+    'Optimize'           => 'optimize',
+    'Optimize Clear'     => 'optimize:clear',
+    'Storage Link'       => 'storage:link',
+    'Storage Unlink'     => 'storage:unlink',
     'Storage Force Link' => 'storage:link --force',
-    'Migrate' => 'migrate',
-    'Migrate Fresh' => 'migrate:fresh',
-    'Migrate Seed' => 'migrate --seed',
-    'Filament Upgrade' => 'filament:upgrade',
+    'Migrate'            => 'migrate',
+    'Migrate Fresh'      => 'migrate:fresh',
+    'Migrate Seed'       => 'migrate --seed',
+    'Filament Upgrade'   => 'filament:upgrade',
     'Import Legacy Data' => 'import:legacy-data',
 ];
 
 $presets = [
-    'Quick Deploy' => ['Cache Clear', 'Config Clear', 'Route Clear', 'View Clear', 'Optimize'],
-    'Full Clear' => ['Cache Clear', 'Config Clear', 'Route Clear', 'View Clear', 'Optimize Clear'],
-    'Filament Assets Update' => ['Filament Upgrade', 'Cache Clear', 'View Clear', 'Optimize'],
-    'Database Refresh' => ['Migrate Fresh', 'Migrate Seed', 'Storage Force Link'],
+    'Quick Deploy'          => ['Cache Clear', 'Config Clear', 'Route Clear', 'View Clear', 'Optimize'],
+    'Full Clear'            => ['Cache Clear', 'Config Clear', 'Route Clear', 'View Clear', 'Optimize Clear'],
+    'Filament Assets Update'=> ['Filament Upgrade', 'Cache Clear', 'View Clear', 'Optimize'],
+    'Database Refresh'      => ['Migrate Fresh', 'Migrate Seed', 'Storage Force Link'],
 ];
 
 $customHandlers = [
@@ -65,15 +65,42 @@ $customHandlers = [
     }
 ];
 
-// Execute logic
+// ─── Log Viewer ──────────────────────────────────────────────────────────────
+$logAction   = isset($_GET['log']) ? $_GET['log'] : null;
+$logContent  = null;
+$logLines    = (int)($_GET['lines'] ?? 100);
+$logSearch   = trim($_GET['search'] ?? '');
+$logFile     = $projectPath . '/storage/logs/laravel.log';
+
+if ($logAction === 'view') {
+    if (file_exists($logFile)) {
+        $allLines = file($logFile, FILE_IGNORE_NEW_LINES);
+        $allLines = array_reverse($allLines); // newest first
+        if ($logSearch !== '') {
+            $allLines = array_filter($allLines, fn($l) => stripos($l, $logSearch) !== false);
+            $allLines = array_values($allLines);
+        }
+        $logContent = implode("\n", array_slice($allLines, 0, $logLines));
+    } else {
+        $logContent = '(Log file tidak ditemukan)';
+    }
+}
+
+if ($logAction === 'clear' && file_exists($logFile)) {
+    file_put_contents($logFile, '');
+    header('Location: ?log=view');
+    exit;
+}
+
+// ─── Execute logic ────────────────────────────────────────────────────────────
 $executionResults = null;
 $selectedCommands = isset($_POST['commands']) && is_array($_POST['commands']) ? $_POST['commands'] : [];
 $customCommand    = isset($_POST['custom_command']) ? trim($_POST['custom_command']) : '';
 
 if (!empty($selectedCommands) || !empty($customCommand)) {
     if (!empty($customCommand)) {
-        $cleanCommand = htmlspecialchars($customCommand);
-        $label        = "Custom: $cleanCommand";
+        $cleanCommand     = htmlspecialchars($customCommand);
+        $label            = "Custom: $cleanCommand";
         $commands[$label] = $customCommand;
         $selectedCommands[] = $label;
     }
@@ -89,7 +116,6 @@ if (!empty($selectedCommands) || !empty($customCommand)) {
             $failCount++;
             continue;
         }
-        $num = $index + 1;
         ob_start();
         try {
             $t0 = microtime(true);
@@ -99,7 +125,7 @@ if (!empty($selectedCommands) || !empty($customCommand)) {
                 $status = $kernel->call($commands[$label]);
                 echo $kernel->output();
             }
-            $ms = round((microtime(true) - $t0) * 1000, 2);
+            $ms  = round((microtime(true) - $t0) * 1000, 2);
             $out = ob_get_clean();
             $ok  = ($status === 0);
             $resultLines[] = ['label' => $label, 'cmd' => $commands[$label], 'output' => $out, 'ok' => $ok, 'ms' => $ms, 'status' => $status];
@@ -114,11 +140,13 @@ if (!empty($selectedCommands) || !empty($customCommand)) {
     $executionResults = ['lines' => $resultLines, 'total' => $totalCommands, 'success' => $successCount, 'fail' => $failCount];
 }
 
-$publicStorage   = $projectPath . '/public/storage';
-$storageStatus   = is_link($publicStorage) ? ['ok', 'Symlink aktif → ' . readlink($publicStorage)]
-                 : (is_dir($publicStorage) ? ['warn', '/public/storage adalah direktori (bukan symlink)']
-                 : ['error', 'Storage link tidak ditemukan']);
+$publicStorage = $projectPath . '/public/storage';
+$storageStatus = is_link($publicStorage) ? ['ok',    'Symlink aktif → ' . readlink($publicStorage)]
+               : (is_dir($publicStorage)  ? ['warn',  '/public/storage adalah direktori (bukan symlink)']
+               :                            ['error', 'Storage link tidak ditemukan']);
 
+// Log file size
+$logSize = file_exists($logFile) ? round(filesize($logFile) / 1024, 1) . ' KB' : 'N/A';
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -135,6 +163,7 @@ $storageStatus   = is_link($publicStorage) ? ['ok', 'Symlink aktif → ' . readl
   --accent: #f59e0b;
   --green: #22c55e;
   --red: #ef4444;
+  --blue: #3b82f6;
   --text: #e2e8f0;
   --muted: #64748b;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
@@ -149,12 +178,19 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-sans);
 .card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 20px; }
 h2 { font-size: 16px; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
 
-/* Grid Presets */
+/* Nav tabs */
+.tabs { display: flex; gap: 8px; margin-bottom: 0; }
+.tab { padding: 8px 18px; border-radius: 6px 6px 0 0; font-size: 13px; font-weight: 500; cursor: pointer; text-decoration: none; border: 1px solid var(--border); border-bottom: none; color: var(--muted); background: var(--panel); }
+.tab.active { background: var(--surface); color: var(--text); border-bottom: 1px solid var(--surface); margin-bottom: -1px; }
+.tab:hover { color: var(--text); }
+.tab-content { border: 1px solid var(--border); border-radius: 0 8px 8px 8px; background: var(--surface); padding: 20px; }
+
+/* Preset */
 .preset-grid { display: flex; flex-wrap: wrap; gap: 10px; }
 .preset-btn { background: var(--panel); border: 1px solid var(--border); color: var(--text); padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 500; transition: 0.2s; }
 .preset-btn:hover { border-color: var(--accent); color: var(--accent); }
 
-/* Grid Commands */
+/* Commands */
 .cmd-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
 .cmd-tile { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; cursor: pointer; transition: 0.2s; }
 .cmd-tile:hover { border-color: var(--accent); }
@@ -164,12 +200,16 @@ h2 { font-size: 16px; margin-bottom: 16px; display: flex; align-items: center; g
 .danger-tile:hover { border-color: var(--red); }
 
 /* Buttons */
-.action-bar { margin-top: 20px; display: flex; gap: 12px; align-items: center; }
-.btn { padding: 10px 20px; border-radius: 6px; font-weight: 600; font-size: 13px; cursor: pointer; border: none; transition: 0.2s; }
-.btn-run { background: var(--accent); color: #000; }
+.action-bar { margin-top: 20px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.btn { padding: 10px 20px; border-radius: 6px; font-weight: 600; font-size: 13px; cursor: pointer; border: none; transition: 0.2s; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+.btn-run  { background: var(--accent); color: #000; }
 .btn-run:hover { background: #fbbf24; }
 .btn-ghost { background: transparent; color: var(--muted); border: 1px solid var(--border); }
 .btn-ghost:hover { color: var(--text); }
+.btn-blue  { background: var(--blue); color: #fff; }
+.btn-blue:hover { background: #2563eb; }
+.btn-red   { background: rgba(239,68,68,0.15); color: var(--red); border: 1px solid rgba(239,68,68,0.3); }
+.btn-red:hover { background: rgba(239,68,68,0.25); }
 
 /* Input Custom */
 .custom-input { display: flex; gap: 10px; margin-top: 20px; }
@@ -179,17 +219,27 @@ h2 { font-size: 16px; margin-bottom: 16px; display: flex; align-items: center; g
 
 /* Terminal */
 .terminal { background: #0a0c12; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-top: 20px; }
-.terminal-header { background: var(--panel); padding: 8px 16px; font-size: 12px; color: var(--muted); font-family: var(--font-mono); border-bottom: 1px solid var(--border); }
-.terminal-body { padding: 16px; font-family: var(--font-mono); font-size: 13px; color: #a1a1aa; line-height: 1.6; max-height: 400px; overflow-y: auto; white-space: pre-wrap; }
+.terminal-header { background: var(--panel); padding: 8px 16px; font-size: 12px; color: var(--muted); font-family: var(--font-mono); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+.terminal-body { padding: 16px; font-family: var(--font-mono); font-size: 12px; color: #a1a1aa; line-height: 1.6; max-height: 600px; overflow-y: auto; white-space: pre-wrap; word-break: break-all; }
 .t-cmd { color: #fff; font-weight: 600; }
-.t-ok { color: var(--green); }
-.t-err { color: var(--red); }
+.t-ok   { color: var(--green); }
+.t-err  { color: var(--red); }
 .t-warn { color: var(--accent); }
+
+/* Log toolbar */
+.log-toolbar { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 16px; }
+.log-toolbar input[type=text] { background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 8px 12px; border-radius: 6px; font-family: var(--font-mono); font-size: 13px; outline: none; width: 220px; }
+.log-toolbar input[type=text]:focus { border-color: var(--accent); }
+.log-toolbar select { background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 8px 12px; border-radius: 6px; font-size: 13px; outline: none; }
+.log-meta { font-size: 12px; color: var(--muted); }
+.log-highlight-wa  { color: #22d3ee; }
+.log-highlight-err { color: var(--red); }
+.log-highlight-info { color: var(--green); }
 
 /* Storage */
 .storage-pill { display: inline-block; padding: 6px 12px; border-radius: 4px; font-family: var(--font-mono); font-size: 13px; }
-.spl-ok { background: rgba(34, 197, 94, 0.1); color: var(--green); border: 1px solid rgba(34, 197, 94, 0.2); }
-.spl-warn { background: rgba(245, 158, 11, 0.1); color: var(--accent); border: 1px solid rgba(245, 158, 11, 0.2); }
+.spl-ok    { background: rgba(34, 197, 94, 0.1); color: var(--green); border: 1px solid rgba(34, 197, 94, 0.2); }
+.spl-warn  { background: rgba(245, 158, 11, 0.1); color: var(--accent); border: 1px solid rgba(245, 158, 11, 0.2); }
 .spl-error { background: rgba(239, 68, 68, 0.1); color: var(--red); border: 1px solid rgba(239, 68, 68, 0.2); }
 </style>
 </head>
@@ -205,8 +255,8 @@ h2 { font-size: 16px; margin-bottom: 16px; display: flex; align-items: center; g
     <div class="card" id="results">
         <h2>Output Eksekusi</h2>
         <div style="font-size: 13px; margin-bottom: 10px;">
-            Total: <?= $executionResults['total'] ?> | 
-            <span style="color:var(--green)">Sukses: <?= $executionResults['success'] ?></span> | 
+            Total: <?= $executionResults['total'] ?> |
+            <span style="color:var(--green)">Sukses: <?= $executionResults['success'] ?></span> |
             <span style="color:var(--red)">Gagal: <?= $executionResults['fail'] ?></span>
         </div>
         <div class="terminal">
@@ -214,84 +264,137 @@ h2 { font-size: 16px; margin-bottom: 16px; display: flex; align-items: center; g
             <div class="terminal-body"><?php
                 foreach ($executionResults['lines'] as $i => $r):
                     echo "<span style='color:#475569'>[" . ($i+1) . "]</span> <span class='t-cmd'>{$r['label']}</span>\n";
-                    
                     $out = htmlspecialchars($r['output']);
                     $out = preg_replace('/(✓|SUCCESS|DONE)/i', '<span class="t-ok">$1</span>', $out);
                     $out = preg_replace('/(✗|ERROR|FAILED|FAIL)/i', '<span class="t-err">$1</span>', $out);
                     $out = preg_replace('/(⚠|WARNING)/i', '<span class="t-warn">$1</span>', $out);
                     echo $out . "\n";
-                    
-                    if ($r['ok']) {
-                        echo "<span class='t-ok'>✓ Sukses</span> ({$r['ms']}ms)\n\n";
-                    } else {
-                        echo "<span class='t-err'>✗ Gagal</span> ({$r['ms']}ms)\n\n";
-                    }
+                    echo $r['ok']
+                        ? "<span class='t-ok'>✓ Sukses</span> ({$r['ms']}ms)\n\n"
+                        : "<span class='t-err'>✗ Gagal</span> ({$r['ms']}ms)\n\n";
                 endforeach;
             ?></div>
         </div>
     </div>
     <?php endif; ?>
 
-    <div class="card">
-        <h2>🚀 Quick Presets</h2>
-        <div class="preset-grid">
-            <?php foreach ($presets as $name => $cmds): ?>
-            <form method="post" style="display:inline-block">
-                <?php foreach ($cmds as $c): ?>
-                <input type="hidden" name="commands[]" value="<?= htmlspecialchars($c) ?>">
-                <?php endforeach; ?>
-                <button type="submit" class="preset-btn"><?= htmlspecialchars($name) ?></button>
-            </form>
-            <?php endforeach; ?>
+    <!-- TABS -->
+    <div>
+        <div class="tabs">
+            <a class="tab <?= !$logAction ? 'active' : '' ?>" href="?">🚀 Deploy</a>
+            <a class="tab <?= $logAction ? 'active' : '' ?>" href="?log=view">📋 Log Viewer</a>
         </div>
-    </div>
 
-    <form method="post">
-        <div class="card">
-            <h2>📦 All Commands</h2>
-            <div class="cmd-grid" id="tileGrid">
-                <?php foreach ($commands as $label => $cmd): 
-                    $isDanger = str_contains($label, 'Fresh') || str_contains($label, 'Unlink');
-                ?>
-                <div class="cmd-tile <?= $isDanger ? 'danger-tile' : '' ?>">
-                    <label>
-                        <input type="checkbox" name="commands[]" value="<?= htmlspecialchars($label) ?>">
-                        <span><?= htmlspecialchars($label) ?></span>
-                    </label>
+        <?php if (!$logAction): ?>
+        <!-- ── DEPLOY TAB ── -->
+        <div class="tab-content">
+            <h2 style="margin-bottom:16px">🚀 Quick Presets</h2>
+            <div class="preset-grid">
+                <?php foreach ($presets as $name => $cmds): ?>
+                <form method="post" style="display:inline-block">
+                    <?php foreach ($cmds as $c): ?>
+                    <input type="hidden" name="commands[]" value="<?= htmlspecialchars($c) ?>">
+                    <?php endforeach; ?>
+                    <button type="submit" class="preset-btn"><?= htmlspecialchars($name) ?></button>
+                </form>
+                <?php endforeach; ?>
+            </div>
+
+            <form method="post" style="margin-top:24px">
+                <h2>📦 All Commands</h2>
+                <div class="cmd-grid" id="tileGrid">
+                    <?php foreach ($commands as $label => $cmd):
+                        $isDanger = str_contains($label, 'Fresh') || str_contains($label, 'Unlink');
+                    ?>
+                    <div class="cmd-tile <?= $isDanger ? 'danger-tile' : '' ?>">
+                        <label>
+                            <input type="checkbox" name="commands[]" value="<?= htmlspecialchars($label) ?>">
+                            <span><?= htmlspecialchars($label) ?></span>
+                        </label>
+                    </div>
+                    <?php endforeach; ?>
                 </div>
-                <?php endforeach; ?>
-            </div>
 
-            <div class="custom-input">
-                <span>php artisan</span>
-                <input type="text" name="custom_command" placeholder="command:name (optional)">
-            </div>
+                <div class="custom-input">
+                    <span>php artisan</span>
+                    <input type="text" name="custom_command" placeholder="command:name (optional)">
+                </div>
 
-            <div class="action-bar">
-                <button type="button" class="btn btn-ghost" onclick="selectAll()">Pilih Semua</button>
-                <button type="button" class="btn btn-ghost" onclick="deselectAll()">Reset</button>
-                <button type="submit" class="btn btn-run">▶ Jalankan Terpilih</button>
+                <div class="action-bar">
+                    <button type="button" class="btn btn-ghost" onclick="selectAll()">Pilih Semua</button>
+                    <button type="button" class="btn btn-ghost" onclick="deselectAll()">Reset</button>
+                    <button type="submit" class="btn btn-run">▶ Jalankan Terpilih</button>
+                </div>
+            </form>
+
+            <div style="margin-top:24px">
+                <h2>💾 Status Storage</h2>
+                <?php
+                    [$st, $msg] = $storageStatus;
+                    $cls = $st === 'ok' ? 'spl-ok' : ($st === 'warn' ? 'spl-warn' : 'spl-error');
+                    echo "<div class='storage-pill {$cls}'>{$msg}</div>";
+                ?>
             </div>
         </div>
-    </form>
 
-    <div class="card">
-        <h2>💾 Status Storage</h2>
-        <?php
-            [$st, $msg] = $storageStatus;
-            $cls = $st === 'ok' ? 'spl-ok' : ($st === 'warn' ? 'spl-warn' : 'spl-error');
-            echo "<div class='storage-pill {$cls}'>{$msg}</div>";
-        ?>
+        <?php else: ?>
+        <!-- ── LOG VIEWER TAB ── -->
+        <div class="tab-content">
+            <div class="log-toolbar">
+                <form method="get" style="display:contents">
+                    <input type="hidden" name="log" value="view">
+                    <input type="text" name="search" placeholder="Filter: WA, Fonnte, ERROR..." value="<?= htmlspecialchars($logSearch) ?>">
+                    <select name="lines">
+                        <?php foreach ([50, 100, 200, 500, 1000] as $n): ?>
+                        <option value="<?= $n ?>" <?= $logLines === $n ? 'selected' : '' ?>><?= $n ?> baris</option>
+                        <?php endforeach; ?>
+                    </select>
+                    <button type="submit" class="btn btn-blue">🔍 Tampilkan</button>
+                </form>
+
+                <!-- Shortcut filter buttons -->
+                <a href="?log=view&search=WA+customer&lines=<?= $logLines ?>" class="btn btn-ghost">WA Customer</a>
+                <a href="?log=view&search=WA+admin&lines=<?= $logLines ?>" class="btn btn-ghost">WA Admin</a>
+                <a href="?log=view&search=Fonnte&lines=<?= $logLines ?>" class="btn btn-ghost">Fonnte</a>
+                <a href="?log=view&search=ERROR&lines=<?= $logLines ?>" class="btn btn-ghost" style="color:var(--red)">ERROR</a>
+                <a href="?log=view&lines=<?= $logLines ?>" class="btn btn-ghost">Semua</a>
+
+                <span class="log-meta">📁 laravel.log — <?= $logSize ?></span>
+                <a href="?log=clear" class="btn btn-red" onclick="return confirm('Yakin hapus semua log?')">🗑 Clear Log</a>
+            </div>
+
+            <div class="terminal">
+                <div class="terminal-header">
+                    <span>storage/logs/laravel.log <?= $logSearch ? "| filter: \"" . htmlspecialchars($logSearch) . "\"" : '' ?> | <?= $logLines ?> baris terbaru</span>
+                    <span style="color:var(--muted)">terbaru di atas</span>
+                </div>
+                <div class="terminal-body"><?php
+                    if ($logContent !== null) {
+                        $lines = explode("\n", $logContent);
+                        foreach ($lines as $line) {
+                            $escaped = htmlspecialchars($line);
+                            // Highlight berdasarkan konten
+                            if (stripos($line, 'WA customer') !== false || stripos($line, 'WA admin') !== false || stripos($line, 'Fonnte') !== false) {
+                                echo "<span class='log-highlight-wa'>{$escaped}</span>\n";
+                            } elseif (stripos($line, '.ERROR') !== false || stripos($line, 'EXCEPTION') !== false) {
+                                echo "<span class='log-highlight-err'>{$escaped}</span>\n";
+                            } elseif (stripos($line, '.INFO') !== false) {
+                                echo "<span class='log-highlight-info'>{$escaped}</span>\n";
+                            } else {
+                                echo "{$escaped}\n";
+                            }
+                        }
+                    }
+                ?></div>
+            </div>
+        </div>
+        <?php endif; ?>
     </div>
 </div>
 
 <script>
-function selectAll() {
-    document.querySelectorAll('#tileGrid input').forEach(cb => cb.checked = true);
-}
-function deselectAll() {
-    document.querySelectorAll('#tileGrid input').forEach(cb => cb.checked = false);
-}
+function selectAll()   { document.querySelectorAll('#tileGrid input').forEach(cb => cb.checked = true); }
+function deselectAll() { document.querySelectorAll('#tileGrid input').forEach(cb => cb.checked = false); }
 <?php if ($executionResults): ?>
 window.scrollTo({ top: 0, behavior: 'smooth' });
 <?php endif; ?>

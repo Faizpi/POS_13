@@ -294,7 +294,7 @@ class PenjualanForm
                                     ->required()
                                     ->numeric()
                                     ->prefix('Rp')
-                                    ->live(onBlur: true)
+                                    ->live()
                                     ->afterStateUpdated(fn ($set, $get) => self::recalcRow($set, $get)),
 
                                 TextInput::make('diskon')
@@ -304,7 +304,7 @@ class PenjualanForm
                                     ->minValue(0)
                                     ->maxValue(100)
                                     ->suffix('%')
-                                    ->live(onBlur: true)
+                                    ->live()
                                     ->afterStateUpdated(fn ($set, $get) => self::recalcRow($set, $get)),
 
                                 TextInput::make('diskon_nominal')
@@ -312,7 +312,7 @@ class PenjualanForm
                                     ->numeric()
                                     ->default(0)
                                     ->prefix('Rp')
-                                    ->live(onBlur: true)
+                                    ->live()
                                     ->afterStateUpdated(fn ($set, $get) => self::recalcRow($set, $get)),
 
                                 TextInput::make('batch_number')
@@ -441,7 +441,9 @@ class PenjualanForm
     }
 
     /**
-     * Recalculate grand total from all items.
+     * Recalculate grand total from all items (called from PARENT scope only).
+     * Fungsi ini dipanggil dari repeater level (parent) atau dari field diskon/pajak,
+     * sehingga $get('items') sudah baca data repeater penuh.
      */
     protected static function recalcGrandTotal(callable $set, callable $get): void
     {

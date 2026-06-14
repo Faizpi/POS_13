@@ -218,7 +218,7 @@ class PembelianForm
                                     ->required()
                                     ->numeric()
                                     ->prefix('Rp')
-                                    ->live(onBlur: true)
+                                    ->live()
                                     ->afterStateUpdated(fn ($set, $get) => self::recalcRow($set, $get)),
 
                                 TextInput::make('diskon')
@@ -226,7 +226,7 @@ class PembelianForm
                                     ->numeric()
                                     ->default(0)
                                     ->suffix('%')
-                                    ->live(onBlur: true)
+                                    ->live()
                                     ->afterStateUpdated(fn ($set, $get) => self::recalcRow($set, $get)),
 
                                 TextInput::make('jumlah_baris')

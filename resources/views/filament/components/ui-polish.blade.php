@@ -169,8 +169,45 @@
     }
 
     /* ===== Sidebar polish ===== */
+    /* Left border line on sidebar items (sub-menu) */
+    .fi-sidebar-nav a.fi-sidebar-item {
+        position: relative;
+    }
+    .fi-sidebar-nav a.fi-sidebar-item::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 4px;
+        bottom: 4px;
+        width: 3px;
+        background: transparent;
+        border-radius: 0 3px 3px 0;
+        transition: background 0.2s ease;
+    }
+    .fi-sidebar-nav a.fi-sidebar-item:hover::before {
+        background: var(--fi-color-primary-200, #bfdbfe);
+    }
+    .fi-sidebar-nav a.fi-sidebar-item.fi-active::before {
+        background: var(--fi-color-primary-500, #3b82f6);
+    }
     .fi-sidebar-nav-item-button:hover {
         transition: background 0.15s ease;
+    }
+    /* Group header styling with icon spacing */
+    .fi-sidebar-group-label {
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        padding-top: 0.75rem;
+        padding-bottom: 0.25rem;
+        opacity: 0.75;
+    }
+    .fi-sidebar-group-label svg {
+        width: 1rem;
+        height: 1rem;
+        margin-right: 0.35rem;
+        opacity: 0.6;
     }
 
     /* ===== Badge fixes ===== */

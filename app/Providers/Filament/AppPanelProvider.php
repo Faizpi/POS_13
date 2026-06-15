@@ -10,6 +10,7 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\NavigationGroup;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Enums\ThemeMode;
@@ -49,10 +50,15 @@ class AppPanelProvider extends PanelProvider
             ->sidebarCollapsibleOnDesktop()
             ->maxContentWidth(Width::Full)
             ->navigationGroups([
-                'Transaksi',
-                'Master Data',
-                'Stok & Gudang',
-                'Pengaturan',
+                NavigationGroup::make('Neraca')->icon('heroicon-o-scale'),
+                NavigationGroup::make('Kunjungan')->icon('heroicon-o-map-pin'),
+                NavigationGroup::make('Biaya')->icon('heroicon-o-wallet'),
+                NavigationGroup::make('Piutang')->icon('heroicon-o-inbox'),
+                NavigationGroup::make('Hutang')->icon('heroicon-o-inbox-stack'),
+                NavigationGroup::make('Gudang')->icon('heroicon-o-archive-box'),
+                NavigationGroup::make('Kontak')->icon('heroicon-o-identification'),
+                NavigationGroup::make('Master Data')->icon('heroicon-o-database'),
+                NavigationGroup::make('Pengaturan')->icon('heroicon-o-cog-6-tooth'),
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')

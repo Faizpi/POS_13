@@ -24,7 +24,7 @@ class StokLogPage extends Page implements HasTable
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-clock';
 
-    protected static string|UnitEnum|null $navigationGroup = 'Master Data';
+    protected static string|UnitEnum|null $navigationGroup = 'Gudang';
 
     protected static ?int $navigationSort = 3;
 

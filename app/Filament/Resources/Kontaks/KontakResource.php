@@ -78,26 +78,37 @@ class KontakResource extends Resource
 
     public static function canCreate(): bool
     {
-        return !auth()->user()?->isSpectator();
+        $user = auth()->user();
+        if (!$user) return false;
+        
+        // Excel: Sales ✅ ADD, Admin ✅ ADD, Spectator ❌, SuperAdmin ✅
+        return !$user->isSpectator();
     }
 
     public static function canEdit($record): bool
     {
         $user = auth()->user();
         if (!$user) return false;
+        
+        // Excel: Sales ❌, Admin ✅ EDIT, Spectator ❌, SuperAdmin ✅
         if ($user->isSuperAdmin()) return true;
-        if ($user->isSpectator()) {
-            // Spectator hanya bisa edit no_telp — form membatasi field lain
-            return true;
-        }
+        if ($user->isSpectator()) return false;
         if ($user->isAdmin()) return true;
-        // Sales: hanya kontak yang mereka buat
-        return $record->created_by === $user->id;
+        
+        // Sales: tidak bisa edit kontak (sesuai Excel) — edit no_telp adalah PEMBAHARUAN terpisah
+        return false;
     }
 
     public static function canDelete($record): bool
     {
-        return auth()->user()?->isSuperAdmin() ?? false;
+        $user = auth()->user();
+        if (!$user) return false;
+        
+        // Excel: Sales ❌, Admin ✅ DEL, Spectator ❌, SuperAdmin ✅
+        if ($user->isSuperAdmin()) return true;
+        if ($user->role === 'admin') return true;
+        
+        return false;
     }
 
     public static function getPages(): array

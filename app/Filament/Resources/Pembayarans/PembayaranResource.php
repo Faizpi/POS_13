@@ -62,7 +62,11 @@ class PembayaranResource extends Resource
 
     public static function canCreate(): bool
     {
-        return !auth()->user()?->isSpectator();
+        $user = auth()->user();
+        if (!$user) return false;
+        
+        // Excel: Sales ❌, Admin ❌, Spectator ❌, SuperAdmin ✅
+        return $user->isSuperAdmin();
     }
 
     public static function canEdit($record): bool
@@ -70,13 +74,11 @@ class PembayaranResource extends Resource
         $user = auth()->user();
         if (!$user) return false;
 
-        // SuperAdmin bisa edit semua
+        // Excel: Sales ❌, Admin ❌, Spectator ✅ VIEW (read-only), SuperAdmin ✅ ALL
         if ($user->isSuperAdmin()) return true;
-
-        // Admin hanya bisa edit jika pembayaran ada di gudangnya
-        if ($user->role === 'admin') {
-            return $user->canAccessGudang($record->gudang_id);
-        }
+        
+        // Spectator hanya bisa view, tidak bisa edit
+        if ($user->isSpectator()) return false;
 
         return false;
     }
@@ -84,6 +86,15 @@ class PembayaranResource extends Resource
     public static function canDelete($record): bool
     {
         return auth()->user()?->isSuperAdmin() ?? false;
+    }
+
+    public static function canView($record): bool
+    {
+        $user = auth()->user();
+        if (!$user) return false;
+        
+        // Excel: Sales ❌, Admin ❌, Spectator ✅ VIEW, SuperAdmin ✅ ALL
+        return $user->isSpectator() || $user->isSuperAdmin();
     }
 
     public static function getPages(): array

@@ -61,17 +61,34 @@ class PenerimaanBarangResource extends Resource
 
     public static function canCreate(): bool
     {
-        return !auth()->user()?->isSpectator();
+        $user = auth()->user();
+        if (!$user) return false;
+        
+        // Excel: Sales ✅ ADD, Admin ✅ ADD, Spectator ❌, SuperAdmin ✅
+        return ! $user->isSpectator();
     }
 
     public static function canEdit($record): bool
     {
-        return auth()->user()?->isSuperAdmin() ?? false;
+        $user = auth()->user();
+        if (!$user) return false;
+
+        // Excel: Sales ❌ (VIEW only), Admin ✅ EDIT+APRV, Spectator ❌, SuperAdmin ✅
+        if ($user->isSuperAdmin()) return true;
+        
+        // Sales dan Spectator tidak bisa edit
+        if ($user->isSpectator() || $user->role === 'user') return false;
+
+        return false;
     }
 
     public static function canDelete($record): bool
     {
-        return auth()->user()?->isSuperAdmin() ?? false;
+        $user = auth()->user();
+        if (!$user) return false;
+        
+        // Excel: Sales ❌, Admin ❌, Spectator ❌, SuperAdmin ✅
+        return $user->isSuperAdmin() ?? false;
     }
 
     public static function getPages(): array

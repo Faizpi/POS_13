@@ -97,7 +97,7 @@ class ViewKontak extends ViewRecord
                 Section::make('Catatan Hutang')
                     ->icon('heroicon-o-banknotes')
                     ->collapsible()
-                    ->visible(fn($record) => in_array(auth()->user()?->role, ['admin', 'spectator', 'super_admin']))
+                    ->visible(fn($record) => in_array(auth()->user()?->role, ['user', 'admin', 'super_admin']))
                     ->schema([
                         View::make('filament.infolist.catatan-hutang'),
                     ]),

@@ -64,16 +64,25 @@ class StockOpnameResource extends Resource
     public static function canCreate(): bool
     {
         $role = auth()->user()?->role;
+        // Excel: Sales ❌, Admin ✅ CREATE, Spectator ❌, SuperAdmin ✅
         return in_array($role, ['super_admin', 'admin']);
     }
 
     public static function canEdit($record): bool
     {
-        return auth()->user()?->isSuperAdmin() ?? false;
+        $user = auth()->user();
+        if (!$user) return false;
+
+        // Excel: Sales ✅ VIEW only (no edit), Admin ✅ EDIT, Spectator ❌, SuperAdmin ✅
+        if ($user->isSuperAdmin()) return true;
+        if ($user->role === 'admin') return !$user->isSpectator();
+
+        return false;
     }
 
     public static function canDelete($record): bool
     {
+        // Excel: Sales ❌, Admin ❌, Spectator ❌, SuperAdmin ✅
         return auth()->user()?->isSuperAdmin() ?? false;
     }
 

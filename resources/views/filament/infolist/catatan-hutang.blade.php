@@ -5,7 +5,7 @@
         ->orderBy('tgl_jatuh_tempo')
         ->get();
 
-    $canView = in_array(auth()->user()?->role, ['admin', 'spectator', 'super_admin']);
+    $canView = in_array(auth()->user()?->role, ['user', 'admin', 'super_admin']);
 @endphp
 
 @if(!$canView)

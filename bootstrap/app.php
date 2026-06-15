@@ -33,7 +33,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->render(function (Throwable $e, Request $request) {
             // AuthenticationException → redirect to login
             if ($e instanceof AuthenticationException) {
-                $redirectTo = $e->redirectTo();
+                $redirectTo = $e->redirectTo($request);
 
                 if ($redirectTo) {
                     return redirect()->guest($redirectTo);

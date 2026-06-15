@@ -170,11 +170,8 @@
 
     /* ===== Sidebar polish ===== */
 
-    /* Group header: label besar + icon visible */
+    /* Group header: uppercase, semi-bold */
     .fi-sidebar-group-label {
-        display: flex;
-        align-items: center;
-        gap: 0.4rem;
         font-size: 0.72rem;
         font-weight: 800;
         text-transform: uppercase;
@@ -186,61 +183,80 @@
     .dark .fi-sidebar-group-label {
         color: rgb(148, 163, 184);
     }
-    .fi-sidebar-group-label svg {
-        width: 0.95rem;
-        height: 0.95rem;
-        flex-shrink: 0;
-        opacity: 0.85;
-    }
 
-    /* Garis pembatas atas tiap group */
+    /* Garis pembatas antar group */
     .fi-sidebar-group:not(:first-child) > .fi-sidebar-group-label {
-        border-top: 1px solid rgba(148, 163, 184, 0.2);
+        border-top: 1px solid rgba(148, 163, 184, 0.22);
         margin-top: 0.25rem;
     }
     .dark .fi-sidebar-group:not(:first-child) > .fi-sidebar-group-label {
         border-top-color: rgba(100, 116, 139, 0.25);
     }
 
-    /* Sub-menu item: garis kiri vertikal */
-    .fi-sidebar-group-items .fi-sidebar-item {
-        position: relative;
-        padding-left: 0.35rem;
+    /* Sub-menu: tree-like border lines (Filament's native grouped-border classes) */
+    .fi-sidebar-item-grouped-border {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 1.25rem;
+        pointer-events: none;
     }
-    .fi-sidebar-group-items .fi-sidebar-item-button,
-    .fi-sidebar-group-items a.fi-sidebar-item-button {
-        position: relative;
-        padding-left: 1.1rem !important;
-        margin-left: 0.5rem;
-        border-left: 2px solid rgba(148, 163, 184, 0.25);
-        border-radius: 0 0.375rem 0.375rem 0;
-        transition: border-color 0.15s ease, background 0.15s ease;
+    .fi-sidebar-item-grouped-border-part {
+        position: absolute;
+        left: 0.65rem;
+        top: 0;
+        bottom: 0;
+        width: 1.5px;
+        background: rgba(148, 163, 184, 0.28);
+        border-radius: 1px;
     }
-    .fi-sidebar-group-items .fi-sidebar-item-button:hover,
-    .fi-sidebar-group-items a.fi-sidebar-item-button:hover {
-        border-left-color: var(--fi-color-primary-400, #60a5fa);
-        background: rgba(59, 130, 246, 0.07);
+    .fi-sidebar-item-grouped-border-part-not-first {
+        position: absolute;
+        left: 0.65rem;
+        top: 0;
+        height: 50%;
+        width: 1.5px;
+        background: rgba(148, 163, 184, 0.28);
+        border-radius: 1px;
     }
-    .fi-sidebar-group-items .fi-active .fi-sidebar-item-button,
-    .fi-sidebar-group-items a.fi-sidebar-item-button.fi-active {
-        border-left-color: var(--fi-color-primary-500, #3b82f6);
-        background: rgba(59, 130, 246, 0.1);
-        font-weight: 600;
+    .fi-sidebar-item-grouped-border-part-not-last {
+        position: absolute;
+        left: 0.65rem;
+        bottom: 0;
+        height: 50%;
+        width: 1.5px;
+        background: rgba(148, 163, 184, 0.28);
+        border-radius: 1px;
     }
-    .dark .fi-sidebar-group-items .fi-sidebar-item-button:hover,
-    .dark .fi-sidebar-group-items a.fi-sidebar-item-button:hover {
-        background: rgba(59, 130, 246, 0.12);
-        border-left-color: var(--fi-color-primary-400, #60a5fa);
-    }
-    .dark .fi-sidebar-group-items .fi-active .fi-sidebar-item-button,
-    .dark .fi-sidebar-group-items a.fi-sidebar-item-button.fi-active {
-        background: rgba(59, 130, 246, 0.18);
-        border-left-color: var(--fi-color-primary-400, #60a5fa);
+    .dark .fi-sidebar-item-grouped-border-part,
+    .dark .fi-sidebar-item-grouped-border-part-not-first,
+    .dark .fi-sidebar-item-grouped-border-part-not-last {
+        background: rgba(100, 116, 139, 0.3);
     }
 
-    /* Remove old pseudo-element border (replaced above) */
-    .fi-sidebar-nav a.fi-sidebar-item::before {
-        display: none;
+    /* Sub-menu button: indent + left border line */
+    .fi-sidebar-item-btn {
+        padding-left: 1.5rem !important;
+    }
+
+    /* Sub-menu hover: highlight */
+    .fi-sidebar-group-items .fi-sidebar-item.fi-sidebar-item-has-url .fi-sidebar-item-btn:hover {
+        background: rgba(59, 130, 246, 0.07);
+    }
+    .dark .fi-sidebar-group-items .fi-sidebar-item.fi-sidebar-item-has-url .fi-sidebar-item-btn:hover {
+        background: rgba(59, 130, 246, 0.12);
+    }
+
+    /* Sub-menu active: highlight blue + bold */
+    .fi-sidebar-group-items .fi-sidebar-item.fi-active .fi-sidebar-item-btn {
+        background: rgba(59, 130, 246, 0.09);
+    }
+    .dark .fi-sidebar-group-items .fi-sidebar-item.fi-active .fi-sidebar-item-btn {
+        background: rgba(59, 130, 246, 0.15);
+    }
+    .fi-sidebar-group-items .fi-sidebar-item.fi-active .fi-sidebar-item-label {
+        font-weight: 600;
     }
 
     /* ===== Badge fixes ===== */

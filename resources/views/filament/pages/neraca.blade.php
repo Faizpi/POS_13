@@ -31,7 +31,7 @@
                 <div>
                     <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 tracking-wider">OMSET PERGUDANG</h3>
                     <p class="text-2xl font-bold text-gray-900 dark:text-white mt-1">
-                        Rp {{ number_format($data['total_omset'], 0, ',', '.') }}
+                        Rp {{ number_format($data['total_omset'], 2, ',', '.') }}
                     </p>
                 </div>
             </div>
@@ -40,7 +40,7 @@
                     @foreach($data['omset'] as $item)
                         <div class="flex justify-between items-center text-sm">
                             <span class="text-gray-500 dark:text-gray-400">{{ $item['gudang'] }}</span>
-                            <span class="font-semibold text-gray-700 dark:text-gray-300">Rp {{ number_format($item['total'], 0, ',', '.') }}</span>
+                            <span class="font-semibold text-gray-700 dark:text-gray-300">Rp {{ number_format($item['total'], 2, ',', '.') }}</span>
                         </div>
                     @endforeach
                 </div>
@@ -56,7 +56,7 @@
                 <div>
                     <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 tracking-wider">NILAI PEMBELIAN</h3>
                     <p class="text-2xl font-bold text-gray-900 dark:text-white mt-1">
-                        Rp {{ number_format($data['total_pembelian'], 0, ',', '.') }}
+                        Rp {{ number_format($data['total_pembelian'], 2, ',', '.') }}
                     </p>
                 </div>
             </div>
@@ -65,7 +65,7 @@
                     @foreach($data['pembelian'] as $item)
                         <div class="flex justify-between items-center text-sm">
                             <span class="text-gray-500 dark:text-gray-400">{{ $item['gudang'] }}</span>
-                            <span class="font-semibold text-gray-700 dark:text-gray-300">Rp {{ number_format($item['total'], 0, ',', '.') }}</span>
+                            <span class="font-semibold text-gray-700 dark:text-gray-300">Rp {{ number_format($item['total'], 2, ',', '.') }}</span>
                         </div>
                     @endforeach
                 </div>
@@ -81,7 +81,7 @@
                 <div>
                     <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 tracking-wider">BELUM LUNAS (PIUTANG)</h3>
                     <p class="text-2xl font-bold text-danger-600 dark:text-danger-400 mt-1">
-                        Rp {{ number_format($data['total_belum_lunas'], 0, ',', '.') }}
+                        Rp {{ number_format($data['total_belum_lunas'], 2, ',', '.') }}
                     </p>
                 </div>
             </div>
@@ -90,7 +90,7 @@
                     @foreach($data['belum_lunas'] as $item)
                         <div class="flex justify-between items-center text-sm">
                             <span class="text-gray-500 dark:text-gray-400">{{ $item['gudang'] }}</span>
-                            <span class="font-semibold text-danger-600 dark:text-danger-400">Rp {{ number_format($item['total'], 0, ',', '.') }}</span>
+                            <span class="font-semibold text-danger-600 dark:text-danger-400">Rp {{ number_format($item['total'], 2, ',', '.') }}</span>
                         </div>
                     @endforeach
                 </div>
@@ -106,7 +106,7 @@
                 <div>
                     <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 tracking-wider">PENJUALAN RETAIL</h3>
                     <p class="text-2xl font-bold text-gray-900 dark:text-white mt-1">
-                        Rp {{ number_format($data['total_retail'], 0, ',', '.') }}
+                        Rp {{ number_format($data['total_retail'], 2, ',', '.') }}
                     </p>
                     <p class="text-sm font-medium text-success-600 dark:text-success-400 mt-1.5 bg-success-50 dark:bg-success-900/30 inline-flex items-center px-2 py-0.5 rounded">
                         {{ number_format($data['qty_retail'], 0, ',', '.') }} unit terjual
@@ -124,7 +124,7 @@
                 <div>
                     <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 tracking-wider">PENJUALAN GROSIR</h3>
                     <p class="text-2xl font-bold text-gray-900 dark:text-white mt-1">
-                        Rp {{ number_format($data['total_grosir'], 0, ',', '.') }}
+                        Rp {{ number_format($data['total_grosir'], 2, ',', '.') }}
                     </p>
                     <p class="text-sm font-medium text-info-600 dark:text-info-400 mt-1.5 bg-info-50 dark:bg-info-900/30 inline-flex items-center px-2 py-0.5 rounded">
                         {{ number_format($data['qty_grosir'], 0, ',', '.') }} unit terjual

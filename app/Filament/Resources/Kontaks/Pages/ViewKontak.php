@@ -105,6 +105,11 @@ class ViewKontak extends ViewRecord
                             ->columnSpanFull()
                             ->formatStateUsing(function ($state, $record) {
                                 // List pembelian belum lunas dari kontak ini
+                                // Defensive check: pastikan kolom kontak_id ada di database
+                                if (!\Illuminate\Support\Facades\Schema::hasColumn('pembelians', 'kontak_id')) {
+                                    return '<div class="text-center py-6 text-sm text-gray-400">Silakan jalankan php artisan migrate terlebih dahulu (kolom kontak_id pada pembelians belum ada).</div>';
+                                }
+
                                 $pembelians = Pembelian::where('kontak_id', $record->id)
                                     ->whereIn('status', ['Approved'])
                                     ->with(['gudang'])

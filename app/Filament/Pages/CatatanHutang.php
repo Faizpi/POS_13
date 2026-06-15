@@ -34,6 +34,11 @@ class CatatanHutang extends Page
     {
         $user = Auth::user();
 
+        // Defensive check: pastikan kolom kontak_id ada di tabel pembelians
+        if (!\Illuminate\Support\Facades\Schema::hasColumn('pembelians', 'kontak_id')) {
+            return [];
+        }
+
         // Ambil semua kontak yang memiliki pembelian Approved yang belum lunas
         $query = Kontak::whereHas('pembelians', function ($q) {
             $q->whereIn('status', ['Approved']);

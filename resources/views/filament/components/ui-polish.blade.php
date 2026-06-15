@@ -169,45 +169,78 @@
     }
 
     /* ===== Sidebar polish ===== */
-    /* Left border line on sidebar items (sub-menu) */
-    .fi-sidebar-nav a.fi-sidebar-item {
-        position: relative;
-    }
-    .fi-sidebar-nav a.fi-sidebar-item::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 4px;
-        bottom: 4px;
-        width: 3px;
-        background: transparent;
-        border-radius: 0 3px 3px 0;
-        transition: background 0.2s ease;
-    }
-    .fi-sidebar-nav a.fi-sidebar-item:hover::before {
-        background: var(--fi-color-primary-200, #bfdbfe);
-    }
-    .fi-sidebar-nav a.fi-sidebar-item.fi-active::before {
-        background: var(--fi-color-primary-500, #3b82f6);
-    }
-    .fi-sidebar-nav-item-button:hover {
-        transition: background 0.15s ease;
-    }
-    /* Group header styling with icon spacing */
+
+    /* Group header: label besar + icon visible */
     .fi-sidebar-group-label {
-        font-size: 0.7rem;
-        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.72rem;
+        font-weight: 800;
         text-transform: uppercase;
-        letter-spacing: 0.05em;
-        padding-top: 0.75rem;
-        padding-bottom: 0.25rem;
-        opacity: 0.75;
+        letter-spacing: 0.07em;
+        padding-top: 1rem;
+        padding-bottom: 0.35rem;
+        color: rgb(100, 116, 139);
+    }
+    .dark .fi-sidebar-group-label {
+        color: rgb(148, 163, 184);
     }
     .fi-sidebar-group-label svg {
-        width: 1rem;
-        height: 1rem;
-        margin-right: 0.35rem;
-        opacity: 0.6;
+        width: 0.95rem;
+        height: 0.95rem;
+        flex-shrink: 0;
+        opacity: 0.85;
+    }
+
+    /* Garis pembatas atas tiap group */
+    .fi-sidebar-group:not(:first-child) > .fi-sidebar-group-label {
+        border-top: 1px solid rgba(148, 163, 184, 0.2);
+        margin-top: 0.25rem;
+    }
+    .dark .fi-sidebar-group:not(:first-child) > .fi-sidebar-group-label {
+        border-top-color: rgba(100, 116, 139, 0.25);
+    }
+
+    /* Sub-menu item: garis kiri vertikal */
+    .fi-sidebar-group-items .fi-sidebar-item {
+        position: relative;
+        padding-left: 0.35rem;
+    }
+    .fi-sidebar-group-items .fi-sidebar-item-button,
+    .fi-sidebar-group-items a.fi-sidebar-item-button {
+        position: relative;
+        padding-left: 1.1rem !important;
+        margin-left: 0.5rem;
+        border-left: 2px solid rgba(148, 163, 184, 0.25);
+        border-radius: 0 0.375rem 0.375rem 0;
+        transition: border-color 0.15s ease, background 0.15s ease;
+    }
+    .fi-sidebar-group-items .fi-sidebar-item-button:hover,
+    .fi-sidebar-group-items a.fi-sidebar-item-button:hover {
+        border-left-color: var(--fi-color-primary-400, #60a5fa);
+        background: rgba(59, 130, 246, 0.07);
+    }
+    .fi-sidebar-group-items .fi-active .fi-sidebar-item-button,
+    .fi-sidebar-group-items a.fi-sidebar-item-button.fi-active {
+        border-left-color: var(--fi-color-primary-500, #3b82f6);
+        background: rgba(59, 130, 246, 0.1);
+        font-weight: 600;
+    }
+    .dark .fi-sidebar-group-items .fi-sidebar-item-button:hover,
+    .dark .fi-sidebar-group-items a.fi-sidebar-item-button:hover {
+        background: rgba(59, 130, 246, 0.12);
+        border-left-color: var(--fi-color-primary-400, #60a5fa);
+    }
+    .dark .fi-sidebar-group-items .fi-active .fi-sidebar-item-button,
+    .dark .fi-sidebar-group-items a.fi-sidebar-item-button.fi-active {
+        background: rgba(59, 130, 246, 0.18);
+        border-left-color: var(--fi-color-primary-400, #60a5fa);
+    }
+
+    /* Remove old pseudo-element border (replaced above) */
+    .fi-sidebar-nav a.fi-sidebar-item::before {
+        display: none;
     }
 
     /* ===== Badge fixes ===== */

@@ -5,6 +5,7 @@ namespace App\Providers\Filament;
 use App\Filament\Pages\Dashboard;
 use App\Filament\Pages\Auth\Login;
 use App\Filament\Pages\ProfilePage;
+use Filament\Actions\Action;
 use Filament\Navigation\NavigationGroup;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -49,15 +50,15 @@ class AppPanelProvider extends PanelProvider
             ->sidebarCollapsibleOnDesktop()
             ->maxContentWidth(Width::Full)
             ->navigationGroups([
-                NavigationGroup::make('Neraca')->icon('heroicon-o-scale'),
-                NavigationGroup::make('Kunjungan')->icon('heroicon-o-map-pin'),
-                NavigationGroup::make('Biaya')->icon('heroicon-o-wallet'),
-                NavigationGroup::make('Piutang')->icon('heroicon-o-inbox'),
-                NavigationGroup::make('Hutang')->icon('heroicon-o-inbox-stack'),
-                NavigationGroup::make('Gudang')->icon('heroicon-o-archive-box'),
-                NavigationGroup::make('Kontak')->icon('heroicon-o-identification'),
-                NavigationGroup::make('Master Data')->icon('heroicon-o-database'),
-                NavigationGroup::make('Pengaturan')->icon('heroicon-o-cog-6-tooth'),
+                NavigationGroup::make('Neraca'),
+                NavigationGroup::make('Kunjungan'),
+                NavigationGroup::make('Biaya'),
+                NavigationGroup::make('Piutang'),
+                NavigationGroup::make('Hutang'),
+                NavigationGroup::make('Gudang'),
+                NavigationGroup::make('Kontak'),
+                NavigationGroup::make('Master Data'),
+                NavigationGroup::make('Pengaturan'),
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
@@ -83,6 +84,7 @@ class AppPanelProvider extends PanelProvider
                 fn (): string => '<script src="'.asset('js/bluetooth-print.js').'?v='.filemtime(public_path('js/bluetooth-print.js')).'"></script>'
                     .view('filament.components.barcode-scanner')->render()
                     .view('filament.components.pos-scripts')->render()
+                    .view('filament.components.sidebar-group-icons')->render()
             )
 
             ->middleware([

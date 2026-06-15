@@ -170,14 +170,14 @@
 
     /* ===== Sidebar polish ===== */
 
-    /* Group header: uppercase, semi-bold */
+    /* Group header: compact */
     .fi-sidebar-group-label {
         font-size: 0.72rem;
         font-weight: 800;
         text-transform: uppercase;
         letter-spacing: 0.07em;
-        padding-top: 1rem;
-        padding-bottom: 0.35rem;
+        padding-top: 0.5rem;
+        padding-bottom: 0.2rem;
         color: rgb(100, 116, 139);
     }
     .dark .fi-sidebar-group-label {
@@ -187,14 +187,33 @@
     /* Garis pembatas antar group */
     .fi-sidebar-group:not(:first-child) > .fi-sidebar-group-label {
         border-top: 1px solid rgba(148, 163, 184, 0.22);
-        margin-top: 0.25rem;
+        margin-top: 0.15rem;
     }
     .dark .fi-sidebar-group:not(:first-child) > .fi-sidebar-group-label {
         border-top-color: rgba(100, 116, 139, 0.25);
     }
 
-    /* Sub-menu: tree-like border lines (Filament's native grouped-border classes) */
-    .fi-sidebar-item-grouped-border {
+    /* Sub-menu item: compact */
+    .fi-sidebar-group-items {
+        margin-top: 0 !important;
+        padding-top: 0.15rem;
+        padding-bottom: 0.15rem;
+    }
+    .fi-sidebar-group-items .fi-sidebar-item {
+        margin: 0 !important;
+    }
+    .fi-sidebar-item-btn {
+        padding-top: 0.35rem !important;
+        padding-bottom: 0.35rem !important;
+        padding-left: 1.5rem !important;
+        min-height: 0 !important;
+    }
+    .fi-sidebar-item-label {
+        font-size: 0.85rem;
+    }
+
+    /* Tree-line border (injected by JS) */
+    .fi-sidebar-tree-line {
         position: absolute;
         left: 0;
         top: 0;
@@ -202,45 +221,46 @@
         width: 1.25rem;
         pointer-events: none;
     }
-    .fi-sidebar-item-grouped-border-part {
+    .fi-sidebar-tree-line-vertical {
         position: absolute;
         left: 0.65rem;
         top: 0;
         bottom: 0;
         width: 1.5px;
-        background: rgba(148, 163, 184, 0.28);
+        background: rgba(148, 163, 184, 0.4);
         border-radius: 1px;
     }
-    .fi-sidebar-item-grouped-border-part-not-first {
+    .fi-sidebar-tree-line-horizontal {
         position: absolute;
         left: 0.65rem;
-        top: 0;
-        height: 50%;
-        width: 1.5px;
-        background: rgba(148, 163, 184, 0.28);
+        top: 50%;
+        width: 0.5rem;
+        height: 1.5px;
+        background: rgba(148, 163, 184, 0.4);
         border-radius: 1px;
     }
-    .fi-sidebar-item-grouped-border-part-not-last {
+    .fi-sidebar-tree-line-dot {
         position: absolute;
-        left: 0.65rem;
-        bottom: 0;
-        height: 50%;
-        width: 1.5px;
-        background: rgba(148, 163, 184, 0.28);
-        border-radius: 1px;
+        left: 0.9rem;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: rgba(148, 163, 184, 0.4);
     }
-    .dark .fi-sidebar-item-grouped-border-part,
-    .dark .fi-sidebar-item-grouped-border-part-not-first,
-    .dark .fi-sidebar-item-grouped-border-part-not-last {
-        background: rgba(100, 116, 139, 0.3);
-    }
-
-    /* Sub-menu button: indent + left border line */
-    .fi-sidebar-item-btn {
-        padding-left: 1.5rem !important;
+    .dark .fi-sidebar-tree-line-vertical,
+    .dark .fi-sidebar-tree-line-horizontal,
+    .dark .fi-sidebar-tree-line-dot {
+        background: rgba(100, 116, 139, 0.5);
     }
 
-    /* Sub-menu hover: highlight */
+    /* Active item dot: blue */
+    .fi-sidebar-item.fi-active .fi-sidebar-tree-line-dot {
+        background: var(--fi-color-primary-500, #3b82f6);
+    }
+
+    /* Hover */
     .fi-sidebar-group-items .fi-sidebar-item.fi-sidebar-item-has-url .fi-sidebar-item-btn:hover {
         background: rgba(59, 130, 246, 0.07);
     }
@@ -248,7 +268,7 @@
         background: rgba(59, 130, 246, 0.12);
     }
 
-    /* Sub-menu active: highlight blue + bold */
+    /* Active */
     .fi-sidebar-group-items .fi-sidebar-item.fi-active .fi-sidebar-item-btn {
         background: rgba(59, 130, 246, 0.09);
     }

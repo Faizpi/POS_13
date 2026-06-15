@@ -32,6 +32,7 @@ $commands = [
     'Storage Link'       => 'storage:link',
     'Storage Unlink'     => 'storage:unlink',
     'Storage Force Link' => 'storage:link --force',
+    'Migrate Status'     => 'migrate:status',
     'Migrate'            => 'migrate',
     'Migrate Fresh'      => 'migrate:fresh',
     'Migrate Seed'       => 'migrate --seed',

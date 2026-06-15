@@ -1,6 +1,11 @@
 @vite(['resources/css/app.css'])
 
 <style>
+    /* ===== Global Scale (Zoom Out) ===== */
+    html {
+        font-size: 85% !important;
+    }
+
     /* ===== Dashboard Stats Cards ===== */
     .fi-dashboard-page .fi-wi-stats-overview-stat {
         min-height: 8.5rem;

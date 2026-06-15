@@ -19,7 +19,7 @@ class NeracaPage extends Page
 {
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-scale';
 
-    protected static string|UnitEnum|null $navigationGroup = 'Laporan';
+    protected static string|UnitEnum|null $navigationGroup = 'Neraca';
 
     protected static ?int $navigationSort = 1;
 

@@ -25,13 +25,13 @@ class PembayaranResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-banknotes';
 
-    protected static string|UnitEnum|null $navigationGroup = 'Transaksi';
+    protected static string|UnitEnum|null $navigationGroup = 'Piutang';
 
     protected static ?int $navigationSort = 3;
 
-    protected static ?string $modelLabel = 'Pembayaran';
+    protected static ?string $modelLabel = 'Pembayaran Piutang';
 
-    protected static ?string $pluralModelLabel = 'Pembayaran';
+    protected static ?string $pluralModelLabel = 'Pembayaran Piutang';
 
     public static function getNavigationBadge(): ?string
     {
@@ -56,7 +56,8 @@ class PembayaranResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return static::applyRoleScope(parent::getEloquentQuery());
+        // Pembayaran Resource ini khusus untuk PIUTANG
+        return static::applyRoleScope(parent::getEloquentQuery()->where('type', 'piutang'));
     }
 
     public static function canCreate(): bool

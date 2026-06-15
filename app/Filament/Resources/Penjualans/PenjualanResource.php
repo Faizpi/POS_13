@@ -25,13 +25,13 @@ class PenjualanResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-document-currency-dollar';
 
-    protected static string|UnitEnum|null $navigationGroup = 'Transaksi';
+    protected static string|UnitEnum|null $navigationGroup = 'Piutang';
 
     protected static ?int $navigationSort = 2;
 
-    protected static ?string $modelLabel = 'Penjualan';
+    protected static ?string $modelLabel = 'Buat Penjualan';
 
-    protected static ?string $pluralModelLabel = 'Penjualan';
+    protected static ?string $pluralModelLabel = 'Buat Penjualan';
 
     protected static ?string $recordTitleAttribute = 'nomor';
 

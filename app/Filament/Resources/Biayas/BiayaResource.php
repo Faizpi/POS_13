@@ -25,13 +25,13 @@ class BiayaResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-wallet';
 
-    protected static string|UnitEnum|null $navigationGroup = 'Transaksi';
+    protected static string|UnitEnum|null $navigationGroup = 'Biaya';
 
-    protected static ?int $navigationSort = 4;
+    protected static ?int $navigationSort = 1;
 
-    protected static ?string $modelLabel = 'Biaya';
+    protected static ?string $modelLabel = 'Buat Biaya';
 
-    protected static ?string $pluralModelLabel = 'Biaya';
+    protected static ?string $pluralModelLabel = 'Buat Biaya';
 
     protected static ?string $recordTitleAttribute = 'nomor';
 

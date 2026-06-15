@@ -25,13 +25,13 @@ class PenerimaanBarangResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-truck';
 
-    protected static string|UnitEnum|null $navigationGroup = 'Transaksi';
+    protected static string|UnitEnum|null $navigationGroup = 'Hutang';
 
-    protected static ?int $navigationSort = 6;
+    protected static ?int $navigationSort = 3;
 
-    protected static ?string $modelLabel = 'Penerimaan Barang';
+    protected static ?string $modelLabel = 'Buat Penerimaan Barang';
 
-    protected static ?string $pluralModelLabel = 'Penerimaan Barang';
+    protected static ?string $pluralModelLabel = 'Buat Penerimaan Barang';
 
     public static function getNavigationBadge(): ?string
     {

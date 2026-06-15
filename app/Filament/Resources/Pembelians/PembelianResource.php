@@ -26,13 +26,13 @@ class PembelianResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-shopping-bag';
 
-    protected static string|UnitEnum|null $navigationGroup = 'Transaksi';
+    protected static string|UnitEnum|null $navigationGroup = 'Hutang';
 
-    protected static ?int $navigationSort = 5;
+    protected static ?int $navigationSort = 2;
 
-    protected static ?string $modelLabel = 'Pembelian';
+    protected static ?string $modelLabel = 'Buat Pembelian';
 
-    protected static ?string $pluralModelLabel = 'Pembelian';
+    protected static ?string $pluralModelLabel = 'Buat Pembelian';
 
     protected static ?string $recordTitleAttribute = 'nomor';
 

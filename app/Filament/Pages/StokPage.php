@@ -21,11 +21,11 @@ class StokPage extends Page
 {
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-archive-box';
 
-    protected static string|UnitEnum|null $navigationGroup = 'Master Data';
+    protected static string|UnitEnum|null $navigationGroup = 'Gudang';
 
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 1;
 
-    protected static ?string $navigationLabel = 'Stok Gudang';
+    protected static ?string $navigationLabel = 'Dashboard';
 
     protected static ?string $title = 'Manajemen Stok';
 

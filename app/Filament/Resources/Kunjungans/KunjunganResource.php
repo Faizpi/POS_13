@@ -25,13 +25,13 @@ class KunjunganResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-map-pin';
 
-    protected static string|UnitEnum|null $navigationGroup = 'Transaksi';
+    protected static string|UnitEnum|null $navigationGroup = 'Kunjungan';
 
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 2;
 
-    protected static ?string $modelLabel = 'Kunjungan';
+    protected static ?string $modelLabel = 'Buat Kunjungan';
 
-    protected static ?string $pluralModelLabel = 'Kunjungan';
+    protected static ?string $pluralModelLabel = 'Buat Kunjungan';
 
     protected static ?string $recordTitleAttribute = 'nomor';
 

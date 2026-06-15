@@ -170,24 +170,24 @@
 
     /* ===== Sidebar polish ===== */
 
-    /* Group header: compact */
+    /* Group header: lebih gede */
     .fi-sidebar-group-label {
-        font-size: 0.72rem;
+        font-size: 0.95rem;
         font-weight: 800;
         text-transform: uppercase;
         letter-spacing: 0.07em;
-        padding-top: 0.5rem;
-        padding-bottom: 0.2rem;
-        color: rgb(100, 116, 139);
+        padding-top: 0.85rem;
+        padding-bottom: 0.4rem;
+        color: rgb(71, 85, 105);
     }
     .dark .fi-sidebar-group-label {
-        color: rgb(148, 163, 184);
+        color: rgb(203, 213, 225);
     }
 
     /* Garis pembatas antar group */
     .fi-sidebar-group:not(:first-child) > .fi-sidebar-group-label {
         border-top: 1px solid rgba(148, 163, 184, 0.22);
-        margin-top: 0.15rem;
+        margin-top: 0.25rem;
     }
     .dark .fi-sidebar-group:not(:first-child) > .fi-sidebar-group-label {
         border-top-color: rgba(100, 116, 139, 0.25);
@@ -203,61 +203,12 @@
         margin: 0 !important;
     }
     .fi-sidebar-item-btn {
-        padding-top: 0.35rem !important;
-        padding-bottom: 0.35rem !important;
-        padding-left: 1.5rem !important;
+        padding-top: 0.4rem !important;
+        padding-bottom: 0.4rem !important;
         min-height: 0 !important;
     }
     .fi-sidebar-item-label {
         font-size: 0.85rem;
-    }
-
-    /* Tree-line border (injected by JS) */
-    .fi-sidebar-tree-line {
-        position: absolute;
-        left: 0;
-        top: 0;
-        bottom: 0;
-        width: 1.25rem;
-        pointer-events: none;
-    }
-    .fi-sidebar-tree-line-vertical {
-        position: absolute;
-        left: 0.65rem;
-        top: 0;
-        bottom: 0;
-        width: 1.5px;
-        background: rgba(148, 163, 184, 0.4);
-        border-radius: 1px;
-    }
-    .fi-sidebar-tree-line-horizontal {
-        position: absolute;
-        left: 0.65rem;
-        top: 50%;
-        width: 0.5rem;
-        height: 1.5px;
-        background: rgba(148, 163, 184, 0.4);
-        border-radius: 1px;
-    }
-    .fi-sidebar-tree-line-dot {
-        position: absolute;
-        left: 0.9rem;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 5px;
-        height: 5px;
-        border-radius: 50%;
-        background: rgba(148, 163, 184, 0.4);
-    }
-    .dark .fi-sidebar-tree-line-vertical,
-    .dark .fi-sidebar-tree-line-horizontal,
-    .dark .fi-sidebar-tree-line-dot {
-        background: rgba(100, 116, 139, 0.5);
-    }
-
-    /* Active item dot: blue */
-    .fi-sidebar-item.fi-active .fi-sidebar-tree-line-dot {
-        background: var(--fi-color-primary-500, #3b82f6);
     }
 
     /* Hover */

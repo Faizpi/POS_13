@@ -84,7 +84,6 @@ class AppPanelProvider extends PanelProvider
                 fn (): string => '<script src="'.asset('js/bluetooth-print.js').'?v='.filemtime(public_path('js/bluetooth-print.js')).'"></script>'
                     .view('filament.components.barcode-scanner')->render()
                     .view('filament.components.pos-scripts')->render()
-                    .view('filament.components.sidebar-tree-line')->render()
             )
 
             ->middleware([

@@ -15,7 +15,7 @@ use UnitEnum;
 
 class PiutangPage extends Page
 {
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-inbox-arrow-down';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-inbox';
 
     protected static string|UnitEnum|null $navigationGroup = 'Laporan';
 

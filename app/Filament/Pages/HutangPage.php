@@ -16,7 +16,7 @@ use UnitEnum;
 
 class HutangPage extends Page
 {
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-inbox-arrow-up';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-inbox-stack';
 
     protected static string|UnitEnum|null $navigationGroup = 'Laporan';
 

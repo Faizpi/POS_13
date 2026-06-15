@@ -1,0 +1,147 @@
+<?php
+
+namespace App\Filament\Pages;
+
+use App\Models\Gudang;
+use App\Services\NeracaService;
+use Filament\Actions\Action;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Select;
+use Filament\Notifications\Notification;
+use Filament\Pages\Page;
+use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\NeracaExport;
+use BackedEnum;
+use UnitEnum;
+
+class NeracaPage extends Page
+{
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-scale';
+
+    protected static string|UnitEnum|null $navigationGroup = 'Laporan';
+
+    protected static ?int $navigationSort = 1;
+
+    protected static ?string $navigationLabel = 'Neraca';
+
+    protected static ?string $title = 'Neraca Keuangan';
+
+    protected string $view = 'filament.pages.neraca';
+
+    // Filter state
+    public ?string $filter_from = null;
+    public ?string $filter_to = null;
+    public ?int $filter_gudang_id = null;
+
+    public function mount(): void
+    {
+        $this->filter_from = now()->startOfMonth()->format('Y-m-d');
+        $this->filter_to = now()->format('Y-m-d');
+    }
+
+    public static function canAccess(): bool
+    {
+        return in_array(Auth::user()?->role, ['spectator', 'super_admin']);
+    }
+
+    public function getData(): array
+    {
+        $service = app(NeracaService::class);
+        return $service->getRingkasan(
+            $this->filter_from,
+            $this->filter_to,
+            $this->filter_gudang_id
+        );
+    }
+
+    public function applyFilter(): void
+    {
+        // Trigger re-render — Livewire reactivity handles the rest
+        Notification::make()
+            ->title('Filter diterapkan')
+            ->success()
+            ->send();
+    }
+
+    protected function getHeaderActions(): array
+    {
+        $user = Auth::user();
+
+        return [
+            Action::make('filter')
+                ->label('Filter Periode')
+                ->icon('heroicon-o-funnel')
+                ->color('gray')
+                ->form([
+                    DatePicker::make('from')
+                        ->label('Dari Tanggal')
+                        ->default($this->filter_from)
+                        ->required(),
+
+                    DatePicker::make('to')
+                        ->label('Sampai Tanggal')
+                        ->default($this->filter_to)
+                        ->required(),
+
+                    Select::make('gudang_id')
+                        ->label('Gudang (Opsional)')
+                        ->options(fn() => Gudang::pluck('nama_gudang', 'id'))
+                        ->placeholder('Semua Gudang')
+                        ->searchable()
+                        ->preload(),
+                ])
+                ->action(function (array $data) {
+                    $this->filter_from = $data['from'];
+                    $this->filter_to = $data['to'];
+                    $this->filter_gudang_id = $data['gudang_id'] ?? null;
+                    Notification::make()->title('Filter diterapkan')->success()->send();
+                })
+                ->modalSubmitActionLabel('Terapkan')
+                ->modalCancelActionLabel('Batal'),
+
+            Action::make('exportExcel')
+                ->label('Export Excel')
+                ->icon('heroicon-o-arrow-down-tray')
+                ->color('success')
+                ->visible(fn() => $user?->canExportExcel())
+                ->action(function () {
+                    $service = app(NeracaService::class);
+                    $data = $service->getRingkasan(
+                        $this->filter_from,
+                        $this->filter_to,
+                        $this->filter_gudang_id
+                    );
+                    $filename = 'Neraca_' . ($this->filter_from ?? 'all') . '_' . ($this->filter_to ?? 'all') . '.xlsx';
+                    return response()->streamDownload(function () use ($data, $filename) {
+                        echo Excel::raw(new NeracaExport($data), \Maatwebsite\Excel\Excel::XLSX);
+                    }, $filename);
+                }),
+
+            Action::make('exportPdf')
+                ->label('Export PDF')
+                ->icon('heroicon-o-document-arrow-down')
+                ->color('danger')
+                ->visible(fn() => $user?->canExportPdf())
+                ->action(function () {
+                    $service = app(NeracaService::class);
+                    $data = $service->getRingkasan(
+                        $this->filter_from,
+                        $this->filter_to,
+                        $this->filter_gudang_id
+                    );
+                    $pdf = app('dompdf.wrapper');
+                    $pdf->loadView('reports.neraca-pdf', [
+                        'data' => $data,
+                        'from' => $this->filter_from,
+                        'to' => $this->filter_to,
+                        'gudang' => $this->filter_gudang_id
+                            ? Gudang::find($this->filter_gudang_id)?->nama_gudang
+                            : 'Semua Gudang',
+                    ]);
+                    $filename = 'Neraca_' . ($this->filter_from ?? 'all') . '_' . ($this->filter_to ?? 'all') . '.pdf';
+                    return response()->streamDownload(fn() => print($pdf->output()), $filename);
+                }),
+        ];
+    }
+}

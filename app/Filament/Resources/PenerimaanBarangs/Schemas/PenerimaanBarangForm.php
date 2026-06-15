@@ -2,10 +2,13 @@
 
 namespace App\Filament\Resources\PenerimaanBarangs\Schemas;
 
+use App\Exports\PenerimaanBarangTemplateExport;
+use App\Imports\PenerimaanBarangItemImport;
 use App\Models\Gudang;
 use App\Models\Pembelian;
 use App\Models\PenerimaanBarangItem;
 use App\Models\Produk;
+use Filament\Actions\Action;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Hidden;
@@ -13,8 +16,10 @@ use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Notifications\Notification;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PenerimaanBarangForm
 {
@@ -131,6 +136,80 @@ class PenerimaanBarangForm
                 Section::make('Item Penerimaan')
                     ->icon('heroicon-o-list-bullet')
                     ->description('Item otomatis terisi dari PO yang dipilih. Sesuaikan qty_diterima dan qty_reject.')
+                    ->headerActions([
+                        Action::make('import_excel')
+                            ->label('Import Excel')
+                            ->icon('heroicon-o-arrow-up-on-square')
+                            ->color('success')
+                            ->form([
+                                FileUpload::make('file')
+                                    ->label('Pilih File Excel')
+                                    ->acceptedFileTypes([
+                                        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                                        'application/vnd.ms-excel',
+                                    ])
+                                    ->required(),
+                            ])
+                            ->action(function (array $data, callable $set, callable $get) {
+                                $file = $data['file'] ?? null;
+                                if (!$file) {
+                                    return;
+                                }
+
+                                $path = $file instanceof \Livewire\Features\SupportFileUploads\TemporaryUploadedFile
+                                    ? $file->getRealPath()
+                                    : $file;
+
+                                $import = new PenerimaanBarangItemImport();
+
+                                try {
+                                    Excel::import($import, $path);
+                                } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+                                    $errorMessages = collect($e->failures())
+                                        ->map(fn($failure) => "Baris {$failure->row()}: " . implode(', ', $failure->errors()))
+                                        ->implode("\n");
+
+                                    Notification::make()
+                                        ->title('Validasi Gagal')
+                                        ->body($errorMessages)
+                                        ->danger()
+                                        ->send();
+
+                                    return;
+                                }
+
+                                $existingItems = $get('items') ?? [];
+                                $newItems = $import->importedItems->map(fn($item) => [
+                                    'produk_id'     => $item['produk_id'],
+                                    'qty_diterima'  => $item['qty_diterima'],
+                                    'batch_number'  => $item['batch_number'],
+                                    'expired_date'  => $item['expired_date'],
+                                    'qty_reject'    => 0,
+                                    'tipe_stok'     => 'penjualan',
+                                    'keterangan'    => null,
+                                ])->toArray();
+
+                                $set('items', array_merge($existingItems, $newItems));
+
+                                Notification::make()
+                                    ->title('Import Berhasil')
+                                    ->body(count($newItems) . ' item berhasil diimport dari Excel.')
+                                    ->success()
+                                    ->send();
+                            }),
+                        Action::make('download_template')
+                            ->label('Download Template')
+                            ->icon('heroicon-o-arrow-down-tray')
+                            ->color('info')
+                            ->action(function () {
+                                return response()->streamDownload(function () {
+                                    echo \Maatwebsite\Excel\Facades\Excel::raw(
+                                        new PenerimaanBarangTemplateExport,
+                                        \Maatwebsite\Excel\Excel::XLSX
+                                    );
+                                }, 'template-penerimaan-barang.xlsx');
+                            }),
+                    ])
                     ->schema([
                         Repeater::make('items')
                             ->label('')

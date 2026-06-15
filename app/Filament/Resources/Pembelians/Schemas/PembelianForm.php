@@ -71,6 +71,32 @@ class PembelianForm
                             ->disabled()
                             ->dehydrated(),
 
+                        Select::make('tipe_harga')
+                            ->label('Tipe Harga')
+                            ->required()
+                            ->options([
+                                'retail' => 'Retail',
+                                'grosir' => 'Grosir',
+                            ])
+                            ->default('retail')
+                            ->native(false),
+
+                        TextInput::make('no_referensi')
+                            ->label('No Referensi')
+                            ->maxLength(255),
+
+                        TextInput::make('no_resi')
+                            ->label('Nomor Resi')
+                            ->maxLength(255),
+
+                        TextInput::make('biaya_pengiriman')
+                            ->label('Biaya Pengiriman')
+                            ->numeric()
+                            ->default(0)
+                            ->prefix('Rp')
+                            ->live(onBlur: true)
+                            ->afterStateUpdated(fn ($set, $get) => self::recalcGrandTotal($set, $get)),
+
                         Select::make('urgensi')
                             ->label('Urgensi')
                             ->required()
@@ -342,8 +368,9 @@ class PembelianForm
 
         $diskonAkhir = (float) ($get('diskon_akhir') ?? 0);
         $pajak = (float) ($get('tax_percentage') ?? 0);
+        $biayaPengiriman = (float) ($get('biaya_pengiriman') ?? 0);
         $kenaPajak = max(0, $subtotal - $diskonAkhir);
-        $total = $kenaPajak + ($kenaPajak * $pajak / 100);
+        $total = $kenaPajak + ($kenaPajak * $pajak / 100) + $biayaPengiriman;
 
         $set('grand_total', round($total, 2));
     }

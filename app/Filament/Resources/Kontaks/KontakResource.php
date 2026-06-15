@@ -84,8 +84,14 @@ class KontakResource extends Resource
     public static function canEdit($record): bool
     {
         $user = auth()->user();
-        if (!$user || $user->isSpectator()) return false;
+        if (!$user) return false;
         if ($user->isSuperAdmin()) return true;
+        if ($user->isSpectator()) {
+            // Spectator hanya bisa edit no_telp — form membatasi field lain
+            return true;
+        }
+        if ($user->isAdmin()) return true;
+        // Sales: hanya kontak yang mereka buat
         return $record->created_by === $user->id;
     }
 

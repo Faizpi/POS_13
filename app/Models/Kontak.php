@@ -48,4 +48,9 @@ class Kontak extends Authenticatable
     {
         return $this->hasMany(Kunjungan::class);
     }
+
+    public function pembelians()
+    {
+        return $this->hasMany(Pembelian::class);
+    }
 }

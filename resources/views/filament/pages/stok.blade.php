@@ -1,5 +1,40 @@
 <x-filament-panels::page>
-    @php $data = $this->getData(); @endphp
+    @php
+        $data = $this->getData();
+        $stok7Hari = $this->getStok7HariData();
+    @endphp
+
+    {{-- Stock Barang 7 Hari Widget --}}
+    @if($stok7Hari->isNotEmpty())
+    <x-filament::section heading="Informasi Stock Barang 7 Hari" icon="heroicon-o-clock" class="mb-4">
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+                <thead>
+                    <tr class="border-b border-gray-200 dark:border-gray-700">
+                        <th class="text-left py-2 px-3 font-medium">Produk</th>
+                        <th class="text-right py-2 px-3 font-medium">Total Perubahan</th>
+                        <th class="text-right py-2 px-3 font-medium">Frekuensi</th>
+                        <th class="text-right py-2 px-3 font-medium">Terakhir</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($stok7Hari as $log)
+                    <tr class="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50">
+                        <td class="py-2 px-3 font-medium">{{ $log->produk_nama }}</td>
+                        <td class="py-2 px-3 text-right font-semibold">{{ number_format($log->total_perubahan) }}</td>
+                        <td class="py-2 px-3 text-right">{{ $log->frekuensi }}x</td>
+                        <td class="py-2 px-3 text-right text-gray-500">{{ \Carbon\Carbon::parse($log->last_change)->diffForHumans() }}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </x-filament::section>
+    @else
+    <x-filament::section heading="Informasi Stock Barang 7 Hari" class="mb-4">
+        <p class="text-center py-4 text-gray-500">Belum ada perubahan stok dalam 7 hari terakhir.</p>
+    </x-filament::section>
+    @endif
 
     {{-- Accordion per gudang --}}
     <div class="space-y-4">

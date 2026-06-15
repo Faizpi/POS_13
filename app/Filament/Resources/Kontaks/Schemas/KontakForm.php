@@ -22,18 +22,21 @@ class KontakForm
                             ->label('Kode Kontak')
                             ->maxLength(50)
                             ->placeholder('Auto-generate jika kosong')
-                            ->helperText('Contoh: KT00001, CUST-001'),
+                            ->helperText('Contoh: KT00001, CUST-001')
+                            ->disabled(fn() => !in_array(auth()->user()?->role, ['admin', 'super_admin'])),
 
                         TextInput::make('nama')
                             ->label('Nama Kontak')
                             ->required()
                             ->maxLength(255)
-                            ->columnSpan(2),
+                            ->columnSpan(2)
+                            ->disabled(fn() => !in_array(auth()->user()?->role, ['admin', 'super_admin'])),
 
                         TextInput::make('email')
                             ->label('Email')
                             ->email()
-                            ->maxLength(255),
+                            ->maxLength(255)
+                            ->disabled(fn() => !in_array(auth()->user()?->role, ['admin', 'super_admin'])),
 
                         TextInput::make('no_telp')
                             ->label('No. Telepon')
@@ -48,7 +51,8 @@ class KontakForm
                             ->revealable()
                             ->maxLength(6)
                             ->minLength(6)
-                            ->placeholder('Untuk login portal customer'),
+                            ->placeholder('Untuk login portal customer')
+                            ->disabled(fn() => !in_array(auth()->user()?->role, ['admin', 'super_admin'])),
                     ])
                     ->columns(3),
 
@@ -57,7 +61,8 @@ class KontakForm
                         Textarea::make('alamat')
                             ->label('Alamat')
                             ->rows(3)
-                            ->columnSpanFull(),
+                            ->columnSpanFull()
+                            ->disabled(fn() => !in_array(auth()->user()?->role, ['admin', 'super_admin'])),
 
                         TextInput::make('diskon_persen')
                             ->label('Diskon Bawaan (%)')
@@ -66,7 +71,8 @@ class KontakForm
                             ->minValue(0)
                             ->maxValue(100)
                             ->suffix('%')
-                            ->helperText('Diskon otomatis untuk customer ini'),
+                            ->helperText('Diskon otomatis untuk customer ini')
+                            ->disabled(fn() => !in_array(auth()->user()?->role, ['admin', 'super_admin'])),
 
                         Select::make('gudang_id')
                             ->label('Gudang')

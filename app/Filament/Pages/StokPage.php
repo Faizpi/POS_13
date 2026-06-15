@@ -72,6 +72,41 @@ class StokPage extends Page
         ];
     }
 
+    /**
+     * Data Stock Barang 7 Hari Terakhir (untuk widget dashboard gudang).
+     * Group by produk_id, total selisih perubahan stok 7 hari terakhir.
+     */
+    public function getStok7HariData(): \Illuminate\Support\Collection
+    {
+        $user = Auth::user();
+
+        $query = \App\Models\StokLog::where('created_at', '>=', now()->subDays(7))
+            ->select('produk_id', 'produk_nama',
+                \Illuminate\Support\Facades\DB::raw('SUM(ABS(selisih)) as total_perubahan'),
+                \Illuminate\Support\Facades\DB::raw('COUNT(*) as frekuensi'),
+                \Illuminate\Support\Facades\DB::raw('MAX(created_at) as last_change')
+            )
+            ->groupBy('produk_id', 'produk_nama')
+            ->orderByDesc('total_perubahan');
+
+        // Filter by gudang if user is not super_admin
+        if ($user->isSuperAdmin()) {
+            // No filter
+        } elseif ($user->role === 'admin') {
+            $gudangIds = $user->gudangs->pluck('id');
+            $query->whereIn('gudang_id', $gudangIds);
+        } else {
+            $cg = $user?->getCurrentGudang();
+            if ($cg) {
+                $query->where('gudang_id', $cg->id);
+            } else {
+                $query->whereRaw('1=0');
+            }
+        }
+
+        return $query->limit(20)->get();
+    }
+
     protected function getHeaderActions(): array
     {
         $user = Auth::user();

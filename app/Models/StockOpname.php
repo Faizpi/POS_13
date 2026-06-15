@@ -5,22 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class Pembayaran extends Model
+class StockOpname extends Model
 {
     protected $fillable = [
         'user_id', 'approver_id', 'gudang_id',
-        'type', 'penjualan_id', 'pembelian_id',
         'no_urut_harian', 'nomor', 'uuid',
-        'tgl_pembayaran', 'metode_pembayaran', 'jumlah_bayar',
-        'bukti_bayar', 'lampiran_paths', 'keterangan', 'status',
+        'tgl_opname', 'status', 'memo', 'lampiran_paths',
     ];
 
     protected function casts(): array
     {
         return [
-            'tgl_pembayaran' => 'date',
+            'tgl_opname' => 'date',
             'lampiran_paths' => 'array',
-            'jumlah_bayar' => 'decimal:2',
         ];
     }
 
@@ -30,28 +27,30 @@ class Pembayaran extends Model
         static::creating(fn($m) => $m->uuid = $m->uuid ?: (string) Str::uuid());
     }
 
+    // Relationships
     public function user() { return $this->belongsTo(User::class); }
     public function approver() { return $this->belongsTo(User::class, 'approver_id'); }
     public function gudang() { return $this->belongsTo(Gudang::class); }
-    public function penjualan() { return $this->belongsTo(Penjualan::class); }
-    public function pembelian() { return $this->belongsTo(Pembelian::class); }
+    public function items() { return $this->hasMany(StockOpnameItem::class); }
 
-    // Scopes
-    public function scopePiutang($query) { return $query->where('type', 'piutang'); }
-    public function scopeHutang($query) { return $query->where('type', 'hutang'); }
-
+    // Accessors
     public function getCustomNumberAttribute(): string
     {
         if ($this->nomor) return $this->nomor;
         $dateCode = $this->created_at->format('Ymd');
         $noUrutPadded = str_pad($this->no_urut_harian, 3, '0', STR_PAD_LEFT);
-        return "PAY-{$dateCode}-{$this->user_id}-{$noUrutPadded}";
+        return "SOP-{$dateCode}-{$this->user_id}-{$noUrutPadded}";
     }
 
     public static function generateNomor($userId, $noUrut, $createdAt): string
     {
         $dateCode = $createdAt->format('Ymd');
         $noUrutPadded = str_pad($noUrut, 3, '0', STR_PAD_LEFT);
-        return "PAY-{$dateCode}-{$userId}-{$noUrutPadded}";
+        return "SOP-{$dateCode}-{$userId}-{$noUrutPadded}";
     }
+
+    // Status helpers
+    public function isDraft(): bool { return $this->status === 'Draft'; }
+    public function isSubmitted(): bool { return $this->status === 'Submitted'; }
+    public function isApplied(): bool { return $this->status === 'Applied'; }
 }

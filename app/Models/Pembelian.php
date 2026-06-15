@@ -11,6 +11,7 @@ class Pembelian extends Model
         'user_id', 'approver_id', 'kontak_id', 'no_urut_harian', 'nomor', 'uuid',
         'gudang_id', 'staf_penyetuju', 'email_penyetuju',
         'tgl_transaksi', 'syarat_pembayaran', 'tgl_jatuh_tempo',
+        'tipe_harga', 'no_referensi', 'no_resi', 'biaya_pengiriman',
         'urgensi', 'tahun_anggaran', 'tag', 'koordinat', 'memo',
         'lampiran_path', 'lampiran_paths', 'status',
         'diskon_akhir', 'tax_percentage', 'grand_total',
@@ -23,6 +24,9 @@ class Pembelian extends Model
             'tgl_jatuh_tempo' => 'date',
             'lampiran_paths' => 'array',
             'grand_total' => 'decimal:2',
+            'biaya_pengiriman' => 'decimal:2',
+            'diskon_akhir' => 'decimal:2',
+            'tax_percentage' => 'decimal:2',
         ];
     }
 
@@ -38,6 +42,7 @@ class Pembelian extends Model
     public function gudang() { return $this->belongsTo(Gudang::class); }
     public function items() { return $this->hasMany(PembelianItem::class); }
     public function penerimaanBarangs() { return $this->hasMany(PenerimaanBarang::class); }
+    public function pembayarans() { return $this->hasMany(Pembayaran::class)->where('type', 'hutang'); }
 
     public function getStatusDisplayAttribute(): string
     {

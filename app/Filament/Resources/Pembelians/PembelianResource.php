@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Pembelians;
 
+use App\Filament\Resources\Pembelians\RelationManagers\PembayaransRelationManager;
 use App\Filament\Concerns\ScopeByRole;
 use App\Filament\Resources\Pembelians\Pages\CreatePembelian;
 use App\Filament\Resources\Pembelians\Pages\EditPembelian;
@@ -74,6 +75,13 @@ class PembelianResource extends Resource
     public static function canDelete($record): bool
     {
         return auth()->user()?->isSuperAdmin() ?? false;
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            PembayaransRelationManager::class,
+        ];
     }
 
     public static function getPages(): array

@@ -12,6 +12,7 @@ use Filament\Schemas\Components\View;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Penjualan;
+use App\Models\Pembelian;
 
 class ViewKontak extends ViewRecord
 {
@@ -91,6 +92,55 @@ class ViewKontak extends ViewRecord
                     ->icon('heroicon-o-qr-code')
                     ->schema([
                         View::make('filament.infolist.kontak-barcode'),
+                    ]),
+
+                Section::make('Catatan Hutang')
+                    ->icon('heroicon-o-banknotes')
+                    ->collapsible()
+                    ->visible(fn($record) => in_array(auth()->user()?->role, ['admin', 'spectator', 'super_admin']))
+                    ->schema([
+                        TextEntry::make('id')
+                            ->label('')
+                            ->html()
+                            ->columnSpanFull()
+                            ->formatStateUsing(function ($state, $record) {
+                                // List pembelian belum lunas dari kontak ini
+                                $pembelians = Pembelian::where('kontak_id', $record->id)
+                                    ->whereIn('status', ['Approved'])
+                                    ->with(['gudang'])
+                                    ->orderBy('tgl_jatuh_tempo')
+                                    ->get();
+
+                                if ($pembelians->isEmpty()) {
+                                    return '<div class="text-center py-6 text-sm text-gray-400">Tidak ada catatan hutang untuk kontak ini.</div>';
+                                }
+
+                                $rows = '';
+                                foreach ($pembelians as $p) {
+                                    $totalBayar = $p->pembayarans()->where('status', 'Approved')->sum('jumlah_bayar');
+                                    $sisa = max(0, $p->grand_total - $totalBayar);
+                                    $lewat = $p->tgl_jatuh_tempo && $p->tgl_jatuh_tempo->isPast();
+                                    $lewatClass = $lewat ? 'style="color:red;font-weight:bold;"' : '';
+                                    $rows .= '<tr style="border-bottom:1px solid #f3f4f6;">';
+                                    $rows .= '<td style="padding:5px 8px;">' . e($p->custom_number) . '</td>';
+                                    $rows .= '<td style="padding:5px 8px;">' . e($p->gudang?->nama_gudang ?? '—') . '</td>';
+                                    $rows .= '<td ' . $lewatClass . ' style="padding:5px 8px;">' . ($p->tgl_jatuh_tempo?->format('d/m/Y') ?? '—') . '</td>';
+                                    $rows .= '<td style="padding:5px 8px;text-align:right;">Rp ' . number_format($p->grand_total, 0, ',', '.') . '</td>';
+                                    $rows .= '<td style="padding:5px 8px;text-align:right;color:red;font-weight:bold;">Rp ' . number_format($sisa, 0, ',', '.') . '</td>';
+                                    $rows .= '</tr>';
+                                }
+
+                                return '<div style="overflow-x:auto;"><table style="width:100%;font-size:13px;border-collapse:collapse;">
+                                    <thead><tr style="background:#f9fafb;border-bottom:2px solid #e5e7eb;">
+                                    <th style="padding:6px 8px;text-align:left;">No Transaksi</th>
+                                    <th style="padding:6px 8px;text-align:left;">Gudang</th>
+                                    <th style="padding:6px 8px;text-align:left;">Jatuh Tempo</th>
+                                    <th style="padding:6px 8px;text-align:right;">Total</th>
+                                    <th style="padding:6px 8px;text-align:right;">Sisa Hutang</th>
+                                    </tr></thead>
+                                    <tbody>' . $rows . '</tbody>
+                                    </table></div>';
+                            }),
                     ]),
 
                 Section::make('Riwayat Penjualan')

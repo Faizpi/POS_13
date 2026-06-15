@@ -47,6 +47,10 @@ class ViewPembelian extends ViewRecord
                         TextEntry::make('tgl_jatuh_tempo')->label('Jatuh Tempo')->date('d F Y')->placeholder('—'),
                         TextEntry::make('created_at')->label('Dibuat')->dateTime('d M Y, H:i'),
                         TextEntry::make('syarat_pembayaran')->label('Syarat Bayar'),
+                        TextEntry::make('tipe_harga')->label('Tipe Harga')->badge()->color(fn($state) => $state === 'grosir' ? 'info' : 'success'),
+                        TextEntry::make('no_referensi')->label('No Referensi')->placeholder('—'),
+                        TextEntry::make('no_resi')->label('Nomor Resi')->placeholder('—'),
+                        TextEntry::make('biaya_pengiriman')->label('Biaya Pengiriman')->money('IDR')->placeholder('—'),
                         TextEntry::make('status')
                             ->label('Status')
                             ->badge()

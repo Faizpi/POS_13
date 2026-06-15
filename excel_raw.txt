@@ -1,0 +1,141 @@
+ROW 0:  || MENU ||  || OUTLINE || FITUR || FILL || TIPE USER ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  || 
+ROW 1:  ||  ||  ||  ||  ||  || SALES ||  ||  ||  ||  || ADMIN ||  ||  ||  ||  || SPECTATOR ||  ||  ||  ||  || SUPER ADMIN ||  ||  ||  ||  || 
+ROW 2:  ||  ||  ||  ||  ||  || ADD || VIEW || APRV || EDIT || DEL || ADD || VIEW || APRV || EDIT || DEL || ADD || VIEW || APRV || EDIT || DEL || ADD || VIEW || APRV || EDIT || DEL || 
+ROW 3:  || NERACA || DASHBOARD || NERACA || OMSET PERGUDANG || EXPORT EXCEL DAN PDF 
+(RENTANG WAKTU) ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  || ☑ ||  ||  ||  ||  || ☑ ||  ||  ||  || NEW
+ROW 4:  ||  ||  ||  || NILAI PEMBELIAN GUDANG ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  || ☑ ||  ||  ||  ||  || ☑ ||  ||  ||  || NEW
+ROW 5:  ||  ||  ||  || NILAI PENJUALAN GUDANG RETAIL ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  || ☑ ||  ||  ||  ||  || ☑ ||  ||  ||  || NEW
+ROW 6:  ||  ||  ||  || NILAI PENJULAN GUDANG GROSIR ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  || ☑ ||  ||  ||  ||  || ☑ ||  ||  ||  || NEW
+ROW 7:  ||  ||  ||  || JUMLAH PRODUK TERJUAL RETAIL ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  || ☑ ||  ||  ||  ||  || ☑ ||  ||  ||  || NEW
+ROW 8:  ||  ||  ||  || JUMLAH PRODUK TERJUAL GROSIR ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  || 
+ROW 9:  ||  ||  ||  || PEMBAYARAN LUNAS PERGUDANG ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  || 
+ROW 10:  ||  ||  ||  || PEMBAYARAN BELUM LUNAS PERGUDANG ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  || ☑ ||  ||  ||  ||  || ☑ ||  ||  ||  || NEW
+ROW 11:  || KUNJUNGAN || BUAT KUNJUNGAN || INFORMASI KUNJUNGAN || NAMA PELANGGAN || List Created Contact by User || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 12:  ||  ||  ||  || TANGGAL KUNJUNGAN || choose from list || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 13:  ||  ||  ||  || TUJUAN KUNJUNGAN || choose from list || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 14:  ||  ||  ||  || KOORDINAT KUNJUNGAN || autofill based gps ||  || ☑ ||  ||  ||  ||  || ☑ || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 15:  ||  ||  || HASIL KUNJUNGAN || NAMA PRODUK || choose from list ||  || ☑ ||  ||  ||  ||  || ☑ || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 16:  ||  ||  ||  || JUMLAH PRODUK || entry || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 17:  ||  ||  ||  || BATCH AND EXP || entry || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 18:  ||  ||  || CATATAN DAN LAMPIRAN || MEMO || entry || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 19:  ||  ||  ||  || LAMPIRAN FOTO || entry || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 20:  || PENJUALAN || BUAT PENJUALAN || INFORMASI PELANGGAN || NAMA PELANGGAN || List Created Contact by User || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 21:  ||  ||  ||  || NOMOR TELEPON PELANGGAN || List Created Contact by User || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 22:  ||  ||  ||  || ALAMAT PELANGGAN || List Created Contact by User || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 23:  ||  ||  || DETAIL TRANSAKSI || NOMOR TRANSAKSI || autofill based date ||  || ☑ ||  ||  ||  ||  || ☑ || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 24:  ||  ||  ||  || TANGGAL TRANSAKSI || choose from list || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 25:  ||  ||  ||  || JATUH TEMPO || choose from list || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 26:  ||  ||  ||  || TIPE HARGA || choose from list || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 27:  ||  ||  ||  || NO REFERENSI || entry || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ || ☑ ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 28:  ||  ||  ||  || KOORDINAT || autofill based gps ||  || ☑ ||  ||  ||  ||  || ☑ || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 29:  ||  ||  || ITEM PENJUALAN || NAMA PRODUK || choose from list || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 30:  ||  ||  ||  || QTY PRODUK || entry || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 31:  ||  ||  ||  || UNIT || auto fill dari produk ||  || ☑ ||  ||  ||  ||  || ☑ || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 32:  ||  ||  ||  || HARGA || auto fill dari produk ||  || ☑ ||  ||  ||  ||  || ☑ || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 33:  ||  ||  ||  || DISCONT PERCENT || entry || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 34:  ||  ||  ||  || DISCONT RP || entry || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 35:  ||  ||  ||  || BATCH AND EXP || entry || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 36:  ||  ||  ||  || DESKRIPSI || entry || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 37:  ||  ||  ||  || JUMLAH SUB || Auto Calculated ||  || ☑ ||  ||  ||  ||  || ☑ || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 38:  ||  ||  || TOTAL DAN PAJAK || DISKON AKHIR || entry || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 39:  ||  ||  ||  || PAJAK || entry || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 40:  ||  ||  ||  || BIAYA PENGIRIMAN || entry || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 41:  ||  ||  || CATATAN DAN LAMPIRAN || TAG SALES || Autofill based Account ||  || ☑ ||  ||  ||  ||  || ☑ || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 42:  ||  ||  ||  || MEMO || entry || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 43:  ||  ||  ||  || LAMPIRAN FOTO || entry || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 44:  || BIAYA || BUAT BIAYA || INFORMASI BIAYA || JENIS BIAYA || choose from list ||  || ☑ ||  ||  ||  ||  || ☑ || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 45:  ||  ||  ||  || GUDANG || choose from list ||  || ☑ ||  ||  ||  ||  || ☑ || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 46:  ||  ||  ||  || TAG SALES || Autofill ||  || ☑ ||  ||  ||  ||  || ☑ || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 47:  ||  ||  ||  || BAYAR DARI || choose from list ||  || ☑ ||  ||  ||  ||  || ☑ || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 48:  ||  ||  ||  || PENERIMA || List Created Contact by User ||  || ☑ ||  ||  ||  ||  || ☑ || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 49:  ||  ||  ||  || NOMOR TELEPON || List Created Contact by User ||  || ☑ ||  ||  ||  ||  || ☑ || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 50:  ||  ||  ||  || TANGGAL TRANSAKSI || choose from list ||  || ☑ ||  ||  ||  ||  || ☑ || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 51:  ||  ||  ||  || CARA PEMBAYARAN || choose from list ||  || ☑ ||  ||  ||  ||  || ☑ || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 52:  ||  ||  ||  || ALAMAT PENAGIHAN || Autofill ||  || ☑ ||  ||  ||  ||  || ☑ || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 53:  ||  ||  || ITEM || KATEGORI || choose from list ||  || ☑ ||  ||  ||  ||  || ☑ || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 54:  ||  ||  ||  || DESKERIPSI || entry || ☑ ||  ||  ||  ||  ||  || ☑ || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 55:  ||  ||  ||  || JUMLAH || entry || ☑ ||  ||  ||  ||  ||  || ☑ || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 56:  ||  ||  || TOTAL DAN PAJAK || DISKON AKHIR || entry || ☑ ||  ||  ||  ||  ||  ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 57:  ||  ||  ||  || PAJAK || entry || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 58:  ||  ||  || CATATAN DAN LAMPIRAN || MEMO || entry || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 59:  ||  ||  ||  || LAMPIRAN FOTO || entry || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 60:  || PIUTANG || DASHBOARD PIUTANG || Graph Total Tempo Monthly || Export Button (Created By User and Admin Only) || Export Daily (PDF) ||  || ☑ ||  ||  ||  ||  || ☑ ||  ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || NEW
+ROW 61:  ||  ||  || List Toko Tempo Belum dan Sudah Terbayar || Export Button (Created By User and Admin Only) ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || NEW
+ROW 62:  ||  || BUAT PENJUALAN || INFORMASI PELANGGAN || NAMA PELANGGAN || List Created Contact by User || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 63:  ||  ||  ||  || NOMOR TELEPON PELANGGAN || List Created Contact by User || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 64:  ||  ||  ||  || ALAMAT PELANGGAN || List Created Contact by User || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 65:  ||  ||  || DETAIL TRANSAKSI || NOMOR TRANSAKSI || autofill based date ||  || ☑ ||  ||  ||  ||  || ☑ || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 66:  ||  ||  ||  || TANGGAL TRANSAKSI || choose from list || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 67:  ||  ||  ||  || JATUH TEMPO || choose from list || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 68:  ||  ||  ||  || TIPE HARGA || choose from list || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 69:  ||  ||  ||  || NO REFERENSI || entry || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ || ☑ ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 70:  ||  ||  ||  || KOORDINAT || autofill based gps ||  || ☑ ||  ||  ||  ||  || ☑ || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 71:  ||  ||  || ITEM PENJUALAN || NAMA PRODUK || choose from list || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 72:  ||  ||  ||  || QTY PRODUK || entry || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 73:  ||  ||  ||  || UNIT || auto fill dari produk ||  || ☑ ||  ||  ||  ||  || ☑ || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 74:  ||  ||  ||  || HARGA || auto fill dari produk ||  || ☑ ||  ||  ||  ||  || ☑ || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 75:  ||  ||  ||  || DISCONT PERCENT || entry || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 76:  ||  ||  ||  || DISCONT RP || entry || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 77:  ||  ||  ||  || BATCH AND EXP || entry || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 78:  ||  ||  ||  || DESKRIPSI || entry || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 79:  ||  ||  ||  || JUMLAH SUB || Auto Calculated ||  || ☑ ||  ||  ||  ||  || ☑ || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 80:  ||  ||  || TOTAL DAN PAJAK || DISKON AKHIR || entry || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 81:  ||  ||  ||  || PAJAK || entry || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 82:  ||  ||  ||  || NO RESI || entry ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 83:  ||  ||  ||  || BIAYA PENGIRIMAN || entry || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 84:  ||  ||  || CATATAN DAN LAMPIRAN || TAG SALES || Autofill based Account ||  || ☑ ||  ||  ||  ||  || ☑ || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 85:  ||  ||  ||  || MEMO || entry || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 86:  ||  ||  ||  || LAMPIRAN FOTO || entry || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 87:  ||  || PEMBAYARAN PIUTANG || DETAIL PEMBAYARAN || NO TRANSAKSI || Autofill ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 88:  ||  ||  ||  || GUDANG || choose from list ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 89:  ||  ||  ||  || INVOICE PENJUALAN || choose from list ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 90:  ||  ||  ||  || METODE PEMBAYARAN || choose from list ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 91:  || HUTANG || DASHBOARD HUTANG || Graph Total Pembelian Monthly || Export Button (Created By User and Admin Only) || Export Daily (PDF) ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || NEW
+ROW 92:  ||  ||  || List Tempo Hutang Belum/Sudah Terbayar || Export Button (Created By User and Admin Only) ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || NEW
+ROW 93:  ||  || BUAT PEMBELIAN || INFORMASI PENJUAL || NAMA PELANGGAN || List Created Contact by User || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || NEW
+ROW 94:  ||  ||  ||  || NOMOR TELEPON PELANGGAN || List Created Contact by User || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || NEW
+ROW 95:  ||  ||  ||  || ALAMAT PELANGGAN || List Created Contact by User || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || NEW
+ROW 96:  ||  ||  || DETAIL TRANSAKSI || NOMOR TRANSAKSI || autofill based date ||  || ☑ ||  ||  ||  ||  || ☑ || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || NEW
+ROW 97:  ||  ||  ||  || TANGGAL TRANSAKSI || choose from list || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || NEW
+ROW 98:  ||  ||  ||  || JATUH TEMPO || choose from list || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || NEW
+ROW 99:  ||  ||  ||  || TIPE HARGA || choose from list || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || NEW
+ROW 100:  ||  ||  ||  || NO REFERENSI || entry || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ || ☑ ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || NEW
+ROW 101:  ||  ||  ||  || KOORDINAT || autofill based gps ||  || ☑ ||  ||  ||  ||  || ☑ || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || NEW
+ROW 102:  ||  ||  || ITEM PEMEBLIAN || NAMA PRODUK || choose from list || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || NEW
+ROW 103:  ||  ||  ||  || QTY PRODUK || entry || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || NEW
+ROW 104:  ||  ||  ||  || UNIT || auto fill dari produk ||  || ☑ ||  ||  ||  ||  || ☑ || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || NEW
+ROW 105:  ||  ||  ||  || HARGA || entry ||  || ☑ ||  ||  ||  ||  || ☑ || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || NEW
+ROW 106:  ||  ||  ||  || DISCONT PERCENT || entry || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || NEW
+ROW 107:  ||  ||  ||  || DISCONT RP || entry || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || NEW
+ROW 108:  ||  ||  ||  || BATCH AND EXP || entry || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || NEW
+ROW 109:  ||  ||  ||  || DESKRIPSI || entry || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || NEW
+ROW 110:  ||  ||  ||  || JUMLAH SUB || Auto Calculated ||  || ☑ ||  ||  ||  ||  || ☑ || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || NEW
+ROW 111:  ||  ||  || TOTAL DAN PAJAK || DISKON AKHIR || entry || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || NEW
+ROW 112:  ||  ||  ||  || PAJAK || entry || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || NEW
+ROW 113:  ||  ||  ||  || NOMOR RESI || entry || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || NEW
+ROW 114:  ||  ||  ||  || BIAYA PENGIRIMAN || entry || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || NEW
+ROW 115:  ||  ||  || CATATAN DAN LAMPIRAN || TAG SALES || Autofill based Account ||  || ☑ ||  ||  ||  ||  || ☑ || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || NEW
+ROW 116:  ||  ||  ||  || MEMO || entry || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || NEW
+ROW 117:  ||  ||  ||  || LAMPIRAN FOTO || entry || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || NEW
+ROW 118:  ||  || PEMBAYARAN HUTANG || DETAIL PEMBAYARAN || NO TRANSAKSI || Autofill || ☑ || ☑ ||  ||  ||  || ☑ || ☑ ||  ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || NEW
+ROW 119:  ||  ||  ||  || GUDANG || choose from list || ☑ || ☑ ||  ||  ||  || ☑ || ☑ ||  ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || NEW
+ROW 120:  ||  ||  ||  || INVOICE PEMBELIAN || choose from list || ☑ || ☑ ||  ||  ||  || ☑ || ☑ ||  ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || NEW
+ROW 121:  ||  ||  ||  || METODE PEMBAYARAN || choose from list || ☑ || ☑ ||  ||  ||  || ☑ || ☑ ||  ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || NEW
+ROW 122:  ||  || BUAT PENERIMAAN BARANG || DETAIL PENERIMAAN || NO TRANSAKSI || Auto || ☑ ||  ||  ||  ||  || ☑ || ☑ ||  ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 123:  ||  ||  ||  || GUDANG || Auto || ☑ ||  ||  ||  ||  || ☑ || ☑ ||  ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 124:  ||  ||  ||  || INVOICE PEMBELIAN || choose from list || ☑ ||  ||  ||  ||  || ☑ || ☑ ||  ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 125:  ||  ||  ||  || TANGGAL PENERIMAAN || choose from list || ☑ ||  ||  ||  ||  || ☑ || ☑ ||  ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 126:  ||  ||  ||  || NOMOR SURAT JALAN || Entry || ☑ ||  ||  ||  ||  || ☑ || ☑ ||  ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 127:  ||  ||  || ITEM PENERIMAAN || BUAT IMPORT EXCEL (NO BATCH, TANGGAL, QTY)  || Entry || ☑ ||  ||  ||  ||  || ☑ || ☑ ||  ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || NEW
+ROW 128:  ||  ||  || CATATAN DAN LAMPIRAN || TAG SALES || Autofill based Account ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 129:  ||  ||  ||  || MEMO || entry || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 130:  ||  ||  ||  || LAMPIRAN FOTO || entry || ☑ ||  ||  ||  ||  || ☑ ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || 
+ROW 131:  || GUDANG || DASHBOARD || STOCK BARANG || INFORMASI STOCK BARANG 7 HARI  || Entry ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || NEW
+ROW 132:  ||  || STOCK OPNAME || GAMBARAN BEFORE/AFTER HASIL CHECK STOCK SELISI SEBELUM DIREPLACE || BUAT IMPORT EXCEL (NO BATCH, TANGGAL, QTY)  || Entry ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || NEW
+ROW 133:  ||  ||  ||  || BUAT IMPORT EXCEL (NO BATCH, TANGGAL, QTY)  || Entry ||  || ☑ ||  ||  ||  || ☑ ||  ||  ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || NEW
+ROW 134:  || KONTAK || BUAT KONTAK || LIST KONTAK  || HANYA TAMPIL YANG DIBUAT OLEH USER || Entry || ☑ || ☑ ||  ||  ||  || ☑ ||  ||  ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || NEW
+ROW 135:  ||  ||  || PEMBAHARUAN || NOMOR TELPON ONLY || Entry || ☑ || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || NEW
+ROW 136:  ||  || CATATAN HUTANG || NAMA KONTAK DAN HUTANGNYA || LIST || Auto ||  || ☑ ||  ||  ||  || ☑ || ☑ ||  ||  ||  ||  || ☑ ||  ||  ||  || ☑ || ☑ || ☑ || ☑ || ☑ || NEW
+ROW 137:  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  || 
+ROW 138:  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  || 
+ROW 139:  || Note : || Setiap Transksi yang dibuat hanya dapat dilihat oleh user yang membuat dan admin. ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  ||  || 

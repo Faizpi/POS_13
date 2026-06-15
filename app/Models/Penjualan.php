@@ -11,8 +11,8 @@ class Penjualan extends Model
         'user_id', 'approver_id', 'no_urut_harian', 'nomor', 'uuid',
         'gudang_id', 'tipe_harga', 'pelanggan', 'no_telepon',
         'alamat_penagihan', 'koordinat', 'tgl_transaksi', 'tgl_jatuh_tempo',
-        'syarat_pembayaran', 'no_referensi', 'tag', 'memo',
-        'lampiran_path', 'lampiran_paths', 'status',
+        'syarat_pembayaran', 'no_referensi', 'no_resi', 'biaya_pengiriman',
+        'tag', 'memo', 'lampiran_path', 'lampiran_paths', 'status',
         'diskon_akhir', 'tax_percentage', 'grand_total',
     ];
 
@@ -25,6 +25,7 @@ class Penjualan extends Model
             'grand_total' => 'decimal:2',
             'diskon_akhir' => 'decimal:2',
             'tax_percentage' => 'decimal:2',
+            'biaya_pengiriman' => 'decimal:2',
         ];
     }
 

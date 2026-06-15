@@ -11,8 +11,11 @@ return new class extends Migration
         // ── Idempotent migration: safe to run multiple times ─────────────────
         // Cek apakah kolom sudah ada sebelum ALTER untuk mencegah error duplikat.
 
-        // 1. pembelians: tambah 4 field baru
+        // 1. pembelians: tambah kolom kontak_id + 4 field baru
         Schema::table('pembelians', function (Blueprint $table) {
+            if (!Schema::hasColumn('pembelians', 'kontak_id')) {
+                $table->foreignId('kontak_id')->nullable()->after('gudang_id')->constrained('kontaks')->nullOnDelete();
+            }
             if (!Schema::hasColumn('pembelians', 'tipe_harga')) {
                 $table->string('tipe_harga')->default('retail');
             }

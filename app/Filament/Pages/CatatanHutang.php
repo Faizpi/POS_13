@@ -27,7 +27,7 @@ class CatatanHutang extends Page
 
     public static function canAccess(): bool
     {
-        return in_array(Auth::user()?->role, ['admin', 'spectator', 'super_admin']);
+        return in_array(Auth::user()?->role, ['user', 'admin', 'spectator', 'super_admin']);
     }
 
     public function getCatatanHutang(): array

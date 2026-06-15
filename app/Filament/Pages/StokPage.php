@@ -41,7 +41,7 @@ class StokPage extends Page
 
     public static function canAccess(): bool
     {
-        return in_array(Auth::user()?->role, ['super_admin', 'admin', 'spectator']);
+        return in_array(Auth::user()?->role, ['super_admin', 'admin', 'user']);
     }
 
     public function getData(): array

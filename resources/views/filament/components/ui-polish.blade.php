@@ -19,11 +19,9 @@
     }
 
     .dark .fi-dashboard-page .fi-wi-stats-overview-stat {
-        border-color: rgba(148, 163, 184, 0.18);
-        background:
-            linear-gradient(135deg, rgba(30, 41, 59, 0.72), rgba(15, 23, 42, 0.92)),
-            #0f172a;
-        box-shadow: 0 14px 34px rgba(0, 0, 0, 0.28);
+        border-color: rgba(255, 255, 255, 0.08);
+        background: rgb(9, 9, 11);
+        box-shadow: 0 14px 34px rgba(0, 0, 0, 0.5);
     }
 
     .fi-dashboard-page .fi-wi-stats-overview-stat-content {

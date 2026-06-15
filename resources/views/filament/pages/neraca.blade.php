@@ -23,7 +23,7 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 mb-6">
 
         {{-- OMSET PERGUDANG --}}
-        <div class="fi-wi-stats-overview-stat relative flex flex-col p-6 overflow-hidden bg-white dark:bg-gray-900 rounded-xl shadow-sm ring-1 ring-gray-950/5 dark:ring-white/10">
+        <div class="fi-wi-stats-overview-stat relative flex flex-col p-6 overflow-hidden">
             <div class="flex items-center gap-4 fi-wi-stats-overview-stat-content">
                 <div class="p-3 rounded-full bg-primary-50 dark:bg-primary-900/50 text-primary-600 dark:text-primary-400">
                     <x-filament::icon icon="heroicon-o-banknotes" class="w-7 h-7" />
@@ -48,7 +48,7 @@
         </div>
 
         {{-- NILAI PEMBELIAN --}}
-        <div class="fi-wi-stats-overview-stat relative flex flex-col p-6 overflow-hidden bg-white dark:bg-gray-900 rounded-xl shadow-sm ring-1 ring-gray-950/5 dark:ring-white/10">
+        <div class="fi-wi-stats-overview-stat relative flex flex-col p-6 overflow-hidden">
             <div class="flex items-center gap-4 fi-wi-stats-overview-stat-content">
                 <div class="p-3 rounded-full bg-warning-50 dark:bg-warning-900/50 text-warning-600 dark:text-warning-400">
                     <x-filament::icon icon="heroicon-o-shopping-bag" class="w-7 h-7" />
@@ -73,7 +73,7 @@
         </div>
 
         {{-- PEMBAYARAN BELUM LUNAS --}}
-        <div class="fi-wi-stats-overview-stat relative flex flex-col p-6 overflow-hidden bg-white dark:bg-gray-900 rounded-xl shadow-sm ring-1 ring-gray-950/5 dark:ring-white/10">
+        <div class="fi-wi-stats-overview-stat relative flex flex-col p-6 overflow-hidden">
             <div class="flex items-center gap-4 fi-wi-stats-overview-stat-content">
                 <div class="p-3 rounded-full bg-danger-50 dark:bg-danger-900/50 text-danger-600 dark:text-danger-400">
                     <x-filament::icon icon="heroicon-o-exclamation-triangle" class="w-7 h-7" />
@@ -98,7 +98,7 @@
         </div>
 
         {{-- PENJUALAN RETAIL --}}
-        <div class="fi-wi-stats-overview-stat relative flex flex-col p-6 overflow-hidden bg-white dark:bg-gray-900 rounded-xl shadow-sm ring-1 ring-gray-950/5 dark:ring-white/10">
+        <div class="fi-wi-stats-overview-stat relative flex flex-col p-6 overflow-hidden">
             <div class="flex items-center gap-4 fi-wi-stats-overview-stat-content">
                 <div class="p-3 rounded-full bg-success-50 dark:bg-success-900/50 text-success-600 dark:text-success-400">
                     <x-filament::icon icon="heroicon-o-shopping-cart" class="w-7 h-7" />
@@ -116,7 +116,7 @@
         </div>
 
         {{-- PENJUALAN GROSIR --}}
-        <div class="fi-wi-stats-overview-stat relative flex flex-col p-6 overflow-hidden bg-white dark:bg-gray-900 rounded-xl shadow-sm ring-1 ring-gray-950/5 dark:ring-white/10">
+        <div class="fi-wi-stats-overview-stat relative flex flex-col p-6 overflow-hidden">
             <div class="flex items-center gap-4 fi-wi-stats-overview-stat-content">
                 <div class="p-3 rounded-full bg-info-50 dark:bg-info-900/50 text-info-600 dark:text-info-400">
                     <x-filament::icon icon="heroicon-o-cube" class="w-7 h-7" />
@@ -134,7 +134,7 @@
         </div>
 
         {{-- RINGKASAN QTY TOTAL --}}
-        <div class="fi-wi-stats-overview-stat relative flex flex-col p-6 overflow-hidden bg-white dark:bg-gray-900 rounded-xl shadow-sm ring-1 ring-gray-950/5 dark:ring-white/10">
+        <div class="fi-wi-stats-overview-stat relative flex flex-col p-6 overflow-hidden">
             <div class="flex items-center gap-4 fi-wi-stats-overview-stat-content">
                 <div class="p-3 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400">
                     <x-filament::icon icon="heroicon-o-calculator" class="w-7 h-7" />

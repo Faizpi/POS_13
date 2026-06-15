@@ -89,7 +89,7 @@ class ChartTrenPenjualan extends ChartWidget
                     'borderColor' => '#14B8A6',
                     'backgroundColor' => 'rgba(20, 184, 166, 0.14)',
 
-                    'fill' => true,
+                    'fill' => false,
                     'tension' => 0.45,
                     'borderWidth' => 2,
                     'pointRadius' => 2.5,
@@ -109,7 +109,7 @@ class ChartTrenPenjualan extends ChartWidget
                     'borderColor' => '#F59E0B',
                     'backgroundColor' => 'rgba(245, 158, 11, 0.13)',
 
-                    'fill' => true,
+                    'fill' => false,
                     'tension' => 0.45,
                     'borderWidth' => 2,
                     'pointRadius' => 2.5,
@@ -129,7 +129,7 @@ class ChartTrenPenjualan extends ChartWidget
                     'borderColor' => '#F43F5E',
                     'backgroundColor' => 'rgba(244, 63, 94, 0.12)',
 
-                    'fill' => true,
+                    'fill' => false,
                     'tension' => 0.45,
                     'borderWidth' => 2,
                     'pointRadius' => 2.5,

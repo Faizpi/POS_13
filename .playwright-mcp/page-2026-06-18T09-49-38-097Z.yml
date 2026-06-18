@@ -1,0 +1,717 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e3]:
+    - generic [ref=e4]:
+      - button "Persempit menu" [ref=e6] [cursor=pointer]:
+        - img [ref=e7]
+      - link "Hibiscus Efsya POS" [ref=e9] [cursor=pointer]:
+        - /url: https://new.hibiscusefsya.com/app
+        - generic [ref=e10]: Hibiscus Efsya POS
+    - generic [ref=e11]:
+      - generic [ref=e14]:
+        - generic [ref=e15]: Pencarian global
+        - generic [ref=e16]:
+          - img [ref=e18]
+          - searchbox "Pencarian global" [ref=e21]
+      - button "Buka notifikasi" [ref=e23] [cursor=pointer]:
+        - img [ref=e24]
+      - button "Menu pengguna" [ref=e28] [cursor=pointer]:
+        - img "Avatar Hibiscus Efsya" [ref=e29]
+  - generic [ref=e30]:
+    - complementary [ref=e32]:
+      - navigation [ref=e33]:
+        - list [ref=e34]:
+          - listitem [ref=e35]:
+            - list [ref=e36]:
+              - listitem [ref=e37]:
+                - link "Dasbor" [ref=e38] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app
+                  - img [ref=e39]
+                  - generic [ref=e41]: Dasbor
+              - listitem [ref=e42]:
+                - link "Profil Saya" [ref=e43] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/profile-page
+                  - img [ref=e44]
+                  - generic [ref=e46]: Profil Saya
+          - listitem [ref=e47]:
+            - generic [ref=e48] [cursor=pointer]:
+              - generic [ref=e49]: Neraca
+              - button "Neraca" [expanded] [ref=e50]:
+                - img [ref=e51]
+            - list [ref=e53]:
+              - listitem [ref=e54]:
+                - link "Neraca" [ref=e55] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/neraca-page
+                  - img [ref=e56]
+                  - generic [ref=e58]: Neraca
+          - listitem [ref=e59]:
+            - generic [ref=e60] [cursor=pointer]:
+              - generic [ref=e61]: Kunjungan
+              - button "Kunjungan" [expanded] [ref=e62]:
+                - img [ref=e63]
+            - list [ref=e65]:
+              - listitem [ref=e66]:
+                - link "Buat Kunjungan 204" [ref=e67] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/kunjungans
+                  - img [ref=e68]
+                  - generic [ref=e71]: Buat Kunjungan
+                  - generic [ref=e75]: "204"
+          - listitem [ref=e76]:
+            - generic [ref=e77] [cursor=pointer]:
+              - generic [ref=e78]: Biaya
+              - button "Biaya" [expanded] [ref=e79]:
+                - img [ref=e80]
+            - list [ref=e82]:
+              - listitem [ref=e83]:
+                - link "Buat Biaya 23" [ref=e84] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/biayas
+                  - img [ref=e85]
+                  - generic [ref=e87]: Buat Biaya
+                  - generic [ref=e91]: "23"
+          - listitem [ref=e92]:
+            - generic [ref=e93] [cursor=pointer]:
+              - generic [ref=e94]: Piutang
+              - button "Piutang" [expanded] [ref=e95]:
+                - img [ref=e96]
+            - list [ref=e98]:
+              - listitem [ref=e99]:
+                - link "Dashboard Piutang" [ref=e100] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/piutang-page
+                  - img [ref=e101]
+                  - generic [ref=e103]: Dashboard Piutang
+              - listitem [ref=e104]:
+                - link "Buat Penjualan 183" [ref=e105] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/penjualans
+                  - img [ref=e106]
+                  - generic [ref=e108]: Buat Penjualan
+                  - generic [ref=e112]: "183"
+              - listitem [ref=e113]:
+                - link "Pembayaran Piutang 22" [ref=e114] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/pembayarans
+                  - img [ref=e115]
+                  - generic [ref=e117]: Pembayaran Piutang
+                  - generic [ref=e121]: "22"
+          - listitem [ref=e122]:
+            - generic [ref=e123] [cursor=pointer]:
+              - generic [ref=e124]: Hutang
+              - button "Hutang" [expanded] [ref=e125]:
+                - img [ref=e126]
+            - list [ref=e128]:
+              - listitem [ref=e129]:
+                - link "Dashboard Hutang" [ref=e130] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/hutang-page
+                  - img [ref=e131]
+                  - generic [ref=e133]: Dashboard Hutang
+              - listitem [ref=e134]:
+                - link "Buat Pembelian 4" [ref=e135] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/pembelians
+                  - img [ref=e136]
+                  - generic [ref=e138]: Buat Pembelian
+                  - generic [ref=e142]: "4"
+              - listitem [ref=e143]:
+                - link "Buat Penerimaan Barang" [ref=e144] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/penerimaan-barangs
+                  - img [ref=e145]
+                  - generic [ref=e147]: Buat Penerimaan Barang
+              - listitem [ref=e148]:
+                - link "Pembayaran Hutang" [ref=e149] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/pembayaran-hutangs
+                  - img [ref=e150]
+                  - generic [ref=e152]: Pembayaran Hutang
+          - listitem [ref=e153]:
+            - generic [ref=e154] [cursor=pointer]:
+              - generic [ref=e155]: Gudang
+              - button "Gudang" [expanded] [ref=e156]:
+                - img [ref=e157]
+            - list [ref=e159]:
+              - listitem [ref=e160]:
+                - link "Dashboard" [ref=e161] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/stok-page
+                  - img [ref=e162]
+                  - generic [ref=e164]: Dashboard
+              - listitem [ref=e165]:
+                - link "Stock Opname" [ref=e166] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/stock-opnames
+                  - img [ref=e167]
+                  - generic [ref=e169]: Stock Opname
+              - listitem [ref=e170]:
+                - link "Riwayat Stok" [ref=e171] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/stok-log-page
+                  - img [ref=e172]
+                  - generic [ref=e174]: Riwayat Stok
+          - listitem [ref=e175]:
+            - generic [ref=e176] [cursor=pointer]:
+              - generic [ref=e177]: Kontak
+              - button "Kontak" [expanded] [ref=e178]:
+                - img [ref=e179]
+            - list [ref=e181]:
+              - listitem [ref=e182]:
+                - link "Buat Kontak" [ref=e183] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/kontaks
+                  - img [ref=e184]
+                  - generic [ref=e186]: Buat Kontak
+              - listitem [ref=e187]:
+                - link "Catatan Hutang" [ref=e188] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/catatan-hutang
+                  - img [ref=e189]
+                  - generic [ref=e191]: Catatan Hutang
+          - listitem [ref=e192]:
+            - generic [ref=e193] [cursor=pointer]:
+              - generic [ref=e194]: Pengaturan
+              - button "Pengaturan" [expanded] [ref=e195]:
+                - img [ref=e196]
+            - list [ref=e198]:
+              - listitem [ref=e199]:
+                - link "Tutup Buku & Backup" [ref=e200] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/tutup-buku
+                  - img [ref=e201]
+                  - generic [ref=e203]: Tutup Buku & Backup
+              - listitem [ref=e204]:
+                - link "Pengguna" [ref=e205] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/users
+                  - img [ref=e206]
+                  - generic [ref=e208]: Pengguna
+              - listitem [ref=e209]:
+                - link "Gudang" [ref=e210] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/gudangs
+                  - img [ref=e211]
+                  - generic [ref=e213]: Gudang
+              - listitem [ref=e214]:
+                - link "Produk" [ref=e215] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/produks
+                  - img [ref=e216]
+                  - generic [ref=e218]: Produk
+    - main [ref=e220]:
+      - generic [ref=e222]:
+        - generic [ref=e223]:
+          - generic [ref=e224]:
+            - navigation [ref=e225]:
+              - list [ref=e226]:
+                - listitem [ref=e227]:
+                  - link "Pembayaran Piutang" [ref=e228] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/pembayarans
+                - listitem [ref=e229]:
+                  - img [ref=e230]
+                  - generic [ref=e232]: Daftar
+            - heading "Pembayaran Piutang" [level=1] [ref=e233]
+          - link "Buat Pembayaran" [ref=e236] [cursor=pointer]:
+            - /url: https://new.hibiscusefsya.com/app/pembayarans/create
+        - generic [ref=e239]:
+          - tablist [ref=e243]:
+            - tab "Semua 164" [ref=e244] [cursor=pointer]:
+              - generic [ref=e245]: Semua
+              - generic [ref=e248]: "164"
+            - tab "Pending 22" [ref=e249] [cursor=pointer]:
+              - generic [ref=e250]: Pending
+              - generic [ref=e253]: "22"
+            - tab "Approved 136" [ref=e254] [cursor=pointer]:
+              - generic [ref=e255]: Approved
+              - generic [ref=e258]: "136"
+            - tab "Rejected 0" [ref=e259] [cursor=pointer]:
+              - generic [ref=e260]: Rejected
+              - generic [ref=e263]: "0"
+            - tab "Canceled 6" [ref=e264] [cursor=pointer]:
+              - generic [ref=e265]: Canceled
+              - generic [ref=e268]: "6"
+          - generic [ref=e273]:
+            - generic [ref=e276]:
+              - generic [ref=e277]:
+                - generic [ref=e278]: Cari
+                - generic [ref=e279]:
+                  - img [ref=e281]
+                  - searchbox "Cari" [ref=e284]
+              - button "Filter" [ref=e287] [cursor=pointer]:
+                - img [ref=e288]
+                - generic [ref=e291]: "0"
+            - table [ref=e293]:
+              - rowgroup [ref=e294]:
+                - row "Buat/batalkan pilihan semua item untuk tindakan massal. Tanggal Nomor Invoice Pelanggan Metode Jumlah Status Aksi" [ref=e295]:
+                  - columnheader "Buat/batalkan pilihan semua item untuk tindakan massal." [ref=e296]:
+                    - checkbox "Buat/batalkan pilihan semua item untuk tindakan massal." [ref=e297]
+                  - columnheader "Tanggal" [ref=e298]:
+                    - button "Tanggal" [ref=e299] [cursor=pointer]:
+                      - text: Tanggal
+                      - img [ref=e300]
+                  - columnheader "Nomor" [ref=e302]
+                  - columnheader "Invoice" [ref=e303]
+                  - columnheader "Pelanggan" [ref=e304]
+                  - columnheader "Metode" [ref=e305]
+                  - columnheader "Jumlah" [ref=e306]
+                  - columnheader "Status" [ref=e307]
+                  - columnheader "Aksi" [ref=e308]
+              - rowgroup [ref=e309]:
+                - row "Buat/batalkan pilihan item 166 untuk tindakan massal. 09/06/2026 PAY-20260610-2-001-E INV-20260608-9-001 Apotik sinergi farma Transfer Bank Rp 390.000,00 Approved Lihat Ubah Hapus" [ref=e310]:
+                  - cell "Buat/batalkan pilihan item 166 untuk tindakan massal." [ref=e311]:
+                    - checkbox "Buat/batalkan pilihan item 166 untuk tindakan massal." [ref=e312]
+                  - cell "09/06/2026" [ref=e313]:
+                    - link "09/06/2026" [ref=e314] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/166
+                      - generic [ref=e315]: 09/06/2026
+                  - cell "PAY-20260610-2-001-E" [ref=e316]:
+                    - link "PAY-20260610-2-001-E" [ref=e317] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/166
+                      - generic [ref=e318]: PAY-20260610-2-001-E
+                  - cell "INV-20260608-9-001" [ref=e319]:
+                    - link "INV-20260608-9-001" [ref=e320] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/166
+                      - generic [ref=e321]: INV-20260608-9-001
+                  - cell "Apotik sinergi farma" [ref=e322]:
+                    - link "Apotik sinergi farma" [ref=e323] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/166
+                      - generic [ref=e324]: Apotik sinergi farma
+                  - cell "Transfer Bank" [ref=e325]:
+                    - link "Transfer Bank" [ref=e326] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/166
+                      - generic [ref=e328]: Transfer Bank
+                  - cell "Rp 390.000,00" [ref=e329]:
+                    - link "Rp 390.000,00" [ref=e330] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/166
+                      - generic [ref=e331]: Rp 390.000,00
+                  - cell "Approved" [ref=e332]:
+                    - link "Approved" [ref=e333] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/166
+                      - generic [ref=e335]: Approved
+                  - cell "Lihat Ubah Hapus" [ref=e336]:
+                    - generic [ref=e337]:
+                      - link "Lihat" [ref=e338] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/pembayarans/166
+                        - img [ref=e339]
+                        - text: Lihat
+                      - link "Ubah" [ref=e342] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/pembayarans/166/edit
+                        - img [ref=e343]
+                        - text: Ubah
+                      - button "Hapus" [ref=e346] [cursor=pointer]:
+                        - img [ref=e347]
+                        - text: Hapus
+                - row "Buat/batalkan pilihan item 165 untuk tindakan massal. 09/06/2026 PAY-20260610-2-001-D INV-20260609-9-004 Apotek Assalam Transfer Bank Rp 102.000,00 Approved Lihat Ubah Hapus" [ref=e349]:
+                  - cell "Buat/batalkan pilihan item 165 untuk tindakan massal." [ref=e350]:
+                    - checkbox "Buat/batalkan pilihan item 165 untuk tindakan massal." [ref=e351]
+                  - cell "09/06/2026" [ref=e352]:
+                    - link "09/06/2026" [ref=e353] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/165
+                      - generic [ref=e354]: 09/06/2026
+                  - cell "PAY-20260610-2-001-D" [ref=e355]:
+                    - link "PAY-20260610-2-001-D" [ref=e356] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/165
+                      - generic [ref=e357]: PAY-20260610-2-001-D
+                  - cell "INV-20260609-9-004" [ref=e358]:
+                    - link "INV-20260609-9-004" [ref=e359] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/165
+                      - generic [ref=e360]: INV-20260609-9-004
+                  - cell "Apotek Assalam" [ref=e361]:
+                    - link "Apotek Assalam" [ref=e362] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/165
+                      - generic [ref=e363]: Apotek Assalam
+                  - cell "Transfer Bank" [ref=e364]:
+                    - link "Transfer Bank" [ref=e365] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/165
+                      - generic [ref=e367]: Transfer Bank
+                  - cell "Rp 102.000,00" [ref=e368]:
+                    - link "Rp 102.000,00" [ref=e369] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/165
+                      - generic [ref=e370]: Rp 102.000,00
+                  - cell "Approved" [ref=e371]:
+                    - link "Approved" [ref=e372] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/165
+                      - generic [ref=e374]: Approved
+                  - cell "Lihat Ubah Hapus" [ref=e375]:
+                    - generic [ref=e376]:
+                      - link "Lihat" [ref=e377] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/pembayarans/165
+                        - img [ref=e378]
+                        - text: Lihat
+                      - link "Ubah" [ref=e381] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/pembayarans/165/edit
+                        - img [ref=e382]
+                        - text: Ubah
+                      - button "Hapus" [ref=e385] [cursor=pointer]:
+                        - img [ref=e386]
+                        - text: Hapus
+                - row "Buat/batalkan pilihan item 164 untuk tindakan massal. 09/06/2026 PAY-20260610-2-001-C INV-20260609-9-003 Apotik daffa Transfer Bank Rp 61.000,00 Approved Lihat Ubah Hapus" [ref=e388]:
+                  - cell "Buat/batalkan pilihan item 164 untuk tindakan massal." [ref=e389]:
+                    - checkbox "Buat/batalkan pilihan item 164 untuk tindakan massal." [ref=e390]
+                  - cell "09/06/2026" [ref=e391]:
+                    - link "09/06/2026" [ref=e392] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/164
+                      - generic [ref=e393]: 09/06/2026
+                  - cell "PAY-20260610-2-001-C" [ref=e394]:
+                    - link "PAY-20260610-2-001-C" [ref=e395] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/164
+                      - generic [ref=e396]: PAY-20260610-2-001-C
+                  - cell "INV-20260609-9-003" [ref=e397]:
+                    - link "INV-20260609-9-003" [ref=e398] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/164
+                      - generic [ref=e399]: INV-20260609-9-003
+                  - cell "Apotik daffa" [ref=e400]:
+                    - link "Apotik daffa" [ref=e401] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/164
+                      - generic [ref=e402]: Apotik daffa
+                  - cell "Transfer Bank" [ref=e403]:
+                    - link "Transfer Bank" [ref=e404] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/164
+                      - generic [ref=e406]: Transfer Bank
+                  - cell "Rp 61.000,00" [ref=e407]:
+                    - link "Rp 61.000,00" [ref=e408] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/164
+                      - generic [ref=e409]: Rp 61.000,00
+                  - cell "Approved" [ref=e410]:
+                    - link "Approved" [ref=e411] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/164
+                      - generic [ref=e413]: Approved
+                  - cell "Lihat Ubah Hapus" [ref=e414]:
+                    - generic [ref=e415]:
+                      - link "Lihat" [ref=e416] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/pembayarans/164
+                        - img [ref=e417]
+                        - text: Lihat
+                      - link "Ubah" [ref=e420] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/pembayarans/164/edit
+                        - img [ref=e421]
+                        - text: Ubah
+                      - button "Hapus" [ref=e424] [cursor=pointer]:
+                        - img [ref=e425]
+                        - text: Hapus
+                - row "Buat/batalkan pilihan item 163 untuk tindakan massal. 09/06/2026 PAY-20260610-2-001-B INV-20260609-9-002 Aphrodhite Transfer Bank Rp 80.000,00 Approved Lihat Ubah Hapus" [ref=e427]:
+                  - cell "Buat/batalkan pilihan item 163 untuk tindakan massal." [ref=e428]:
+                    - checkbox "Buat/batalkan pilihan item 163 untuk tindakan massal." [ref=e429]
+                  - cell "09/06/2026" [ref=e430]:
+                    - link "09/06/2026" [ref=e431] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/163
+                      - generic [ref=e432]: 09/06/2026
+                  - cell "PAY-20260610-2-001-B" [ref=e433]:
+                    - link "PAY-20260610-2-001-B" [ref=e434] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/163
+                      - generic [ref=e435]: PAY-20260610-2-001-B
+                  - cell "INV-20260609-9-002" [ref=e436]:
+                    - link "INV-20260609-9-002" [ref=e437] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/163
+                      - generic [ref=e438]: INV-20260609-9-002
+                  - cell "Aphrodhite" [ref=e439]:
+                    - link "Aphrodhite" [ref=e440] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/163
+                      - generic [ref=e441]: Aphrodhite
+                  - cell "Transfer Bank" [ref=e442]:
+                    - link "Transfer Bank" [ref=e443] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/163
+                      - generic [ref=e445]: Transfer Bank
+                  - cell "Rp 80.000,00" [ref=e446]:
+                    - link "Rp 80.000,00" [ref=e447] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/163
+                      - generic [ref=e448]: Rp 80.000,00
+                  - cell "Approved" [ref=e449]:
+                    - link "Approved" [ref=e450] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/163
+                      - generic [ref=e452]: Approved
+                  - cell "Lihat Ubah Hapus" [ref=e453]:
+                    - generic [ref=e454]:
+                      - link "Lihat" [ref=e455] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/pembayarans/163
+                        - img [ref=e456]
+                        - text: Lihat
+                      - link "Ubah" [ref=e459] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/pembayarans/163/edit
+                        - img [ref=e460]
+                        - text: Ubah
+                      - button "Hapus" [ref=e463] [cursor=pointer]:
+                        - img [ref=e464]
+                        - text: Hapus
+                - row "Buat/batalkan pilihan item 162 untuk tindakan massal. 09/06/2026 PAY-20260610-2-001-A INV-20260609-9-001 Dani Jaya Transfer Bank Rp 630.000,00 Approved Lihat Ubah Hapus" [ref=e466]:
+                  - cell "Buat/batalkan pilihan item 162 untuk tindakan massal." [ref=e467]:
+                    - checkbox "Buat/batalkan pilihan item 162 untuk tindakan massal." [ref=e468]
+                  - cell "09/06/2026" [ref=e469]:
+                    - link "09/06/2026" [ref=e470] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/162
+                      - generic [ref=e471]: 09/06/2026
+                  - cell "PAY-20260610-2-001-A" [ref=e472]:
+                    - link "PAY-20260610-2-001-A" [ref=e473] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/162
+                      - generic [ref=e474]: PAY-20260610-2-001-A
+                  - cell "INV-20260609-9-001" [ref=e475]:
+                    - link "INV-20260609-9-001" [ref=e476] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/162
+                      - generic [ref=e477]: INV-20260609-9-001
+                  - cell "Dani Jaya" [ref=e478]:
+                    - link "Dani Jaya" [ref=e479] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/162
+                      - generic [ref=e480]: Dani Jaya
+                  - cell "Transfer Bank" [ref=e481]:
+                    - link "Transfer Bank" [ref=e482] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/162
+                      - generic [ref=e484]: Transfer Bank
+                  - cell "Rp 630.000,00" [ref=e485]:
+                    - link "Rp 630.000,00" [ref=e486] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/162
+                      - generic [ref=e487]: Rp 630.000,00
+                  - cell "Approved" [ref=e488]:
+                    - link "Approved" [ref=e489] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/162
+                      - generic [ref=e491]: Approved
+                  - cell "Lihat Ubah Hapus" [ref=e492]:
+                    - generic [ref=e493]:
+                      - link "Lihat" [ref=e494] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/pembayarans/162
+                        - img [ref=e495]
+                        - text: Lihat
+                      - link "Ubah" [ref=e498] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/pembayarans/162/edit
+                        - img [ref=e499]
+                        - text: Ubah
+                      - button "Hapus" [ref=e502] [cursor=pointer]:
+                        - img [ref=e503]
+                        - text: Hapus
+                - row "Buat/batalkan pilihan item 161 untuk tindakan massal. 08/06/2026 PAY-20260608-22-001-D INV-20260608-8-004 TRJ STORE Transfer Bank Rp 30.000,00 Approved Lihat Ubah Hapus" [ref=e505]:
+                  - cell "Buat/batalkan pilihan item 161 untuk tindakan massal." [ref=e506]:
+                    - checkbox "Buat/batalkan pilihan item 161 untuk tindakan massal." [ref=e507]
+                  - cell "08/06/2026" [ref=e508]:
+                    - link "08/06/2026" [ref=e509] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/161
+                      - generic [ref=e510]: 08/06/2026
+                  - cell "PAY-20260608-22-001-D" [ref=e511]:
+                    - link "PAY-20260608-22-001-D" [ref=e512] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/161
+                      - generic [ref=e513]: PAY-20260608-22-001-D
+                  - cell "INV-20260608-8-004" [ref=e514]:
+                    - link "INV-20260608-8-004" [ref=e515] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/161
+                      - generic [ref=e516]: INV-20260608-8-004
+                  - cell "TRJ STORE" [ref=e517]:
+                    - link "TRJ STORE" [ref=e518] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/161
+                      - generic [ref=e519]: TRJ STORE
+                  - cell "Transfer Bank" [ref=e520]:
+                    - link "Transfer Bank" [ref=e521] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/161
+                      - generic [ref=e523]: Transfer Bank
+                  - cell "Rp 30.000,00" [ref=e524]:
+                    - link "Rp 30.000,00" [ref=e525] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/161
+                      - generic [ref=e526]: Rp 30.000,00
+                  - cell "Approved" [ref=e527]:
+                    - link "Approved" [ref=e528] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/161
+                      - generic [ref=e530]: Approved
+                  - cell "Lihat Ubah Hapus" [ref=e531]:
+                    - generic [ref=e532]:
+                      - link "Lihat" [ref=e533] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/pembayarans/161
+                        - img [ref=e534]
+                        - text: Lihat
+                      - link "Ubah" [ref=e537] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/pembayarans/161/edit
+                        - img [ref=e538]
+                        - text: Ubah
+                      - button "Hapus" [ref=e541] [cursor=pointer]:
+                        - img [ref=e542]
+                        - text: Hapus
+                - row "Buat/batalkan pilihan item 160 untuk tindakan massal. 08/06/2026 PAY-20260608-22-001-C INV-20260608-8-003 APOTIK KIRANI FARMA TELANAI Transfer Bank Rp 171.000,00 Approved Lihat Ubah Hapus" [ref=e544]:
+                  - cell "Buat/batalkan pilihan item 160 untuk tindakan massal." [ref=e545]:
+                    - checkbox "Buat/batalkan pilihan item 160 untuk tindakan massal." [ref=e546]
+                  - cell "08/06/2026" [ref=e547]:
+                    - link "08/06/2026" [ref=e548] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/160
+                      - generic [ref=e549]: 08/06/2026
+                  - cell "PAY-20260608-22-001-C" [ref=e550]:
+                    - link "PAY-20260608-22-001-C" [ref=e551] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/160
+                      - generic [ref=e552]: PAY-20260608-22-001-C
+                  - cell "INV-20260608-8-003" [ref=e553]:
+                    - link "INV-20260608-8-003" [ref=e554] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/160
+                      - generic [ref=e555]: INV-20260608-8-003
+                  - cell "APOTIK KIRANI FARMA TELANAI" [ref=e556]:
+                    - link "APOTIK KIRANI FARMA TELANAI" [ref=e557] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/160
+                      - generic [ref=e558]: APOTIK KIRANI FARMA TELANAI
+                  - cell "Transfer Bank" [ref=e559]:
+                    - link "Transfer Bank" [ref=e560] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/160
+                      - generic [ref=e562]: Transfer Bank
+                  - cell "Rp 171.000,00" [ref=e563]:
+                    - link "Rp 171.000,00" [ref=e564] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/160
+                      - generic [ref=e565]: Rp 171.000,00
+                  - cell "Approved" [ref=e566]:
+                    - link "Approved" [ref=e567] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/160
+                      - generic [ref=e569]: Approved
+                  - cell "Lihat Ubah Hapus" [ref=e570]:
+                    - generic [ref=e571]:
+                      - link "Lihat" [ref=e572] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/pembayarans/160
+                        - img [ref=e573]
+                        - text: Lihat
+                      - link "Ubah" [ref=e576] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/pembayarans/160/edit
+                        - img [ref=e577]
+                        - text: Ubah
+                      - button "Hapus" [ref=e580] [cursor=pointer]:
+                        - img [ref=e581]
+                        - text: Hapus
+                - row "Buat/batalkan pilihan item 159 untuk tindakan massal. 08/06/2026 PAY-20260608-22-001-B INV-20260608-8-002 TOKO BASMALAH Transfer Bank Rp 41.000,00 Approved Lihat Ubah Hapus" [ref=e583]:
+                  - cell "Buat/batalkan pilihan item 159 untuk tindakan massal." [ref=e584]:
+                    - checkbox "Buat/batalkan pilihan item 159 untuk tindakan massal." [ref=e585]
+                  - cell "08/06/2026" [ref=e586]:
+                    - link "08/06/2026" [ref=e587] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/159
+                      - generic [ref=e588]: 08/06/2026
+                  - cell "PAY-20260608-22-001-B" [ref=e589]:
+                    - link "PAY-20260608-22-001-B" [ref=e590] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/159
+                      - generic [ref=e591]: PAY-20260608-22-001-B
+                  - cell "INV-20260608-8-002" [ref=e592]:
+                    - link "INV-20260608-8-002" [ref=e593] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/159
+                      - generic [ref=e594]: INV-20260608-8-002
+                  - cell "TOKO BASMALAH" [ref=e595]:
+                    - link "TOKO BASMALAH" [ref=e596] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/159
+                      - generic [ref=e597]: TOKO BASMALAH
+                  - cell "Transfer Bank" [ref=e598]:
+                    - link "Transfer Bank" [ref=e599] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/159
+                      - generic [ref=e601]: Transfer Bank
+                  - cell "Rp 41.000,00" [ref=e602]:
+                    - link "Rp 41.000,00" [ref=e603] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/159
+                      - generic [ref=e604]: Rp 41.000,00
+                  - cell "Approved" [ref=e605]:
+                    - link "Approved" [ref=e606] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/159
+                      - generic [ref=e608]: Approved
+                  - cell "Lihat Ubah Hapus" [ref=e609]:
+                    - generic [ref=e610]:
+                      - link "Lihat" [ref=e611] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/pembayarans/159
+                        - img [ref=e612]
+                        - text: Lihat
+                      - link "Ubah" [ref=e615] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/pembayarans/159/edit
+                        - img [ref=e616]
+                        - text: Ubah
+                      - button "Hapus" [ref=e619] [cursor=pointer]:
+                        - img [ref=e620]
+                        - text: Hapus
+                - row "Buat/batalkan pilihan item 158 untuk tindakan massal. 08/06/2026 PAY-20260608-22-001-A INV-20260608-8-001 APOTIK MEDISTRA Transfer Bank Rp 130.000,00 Approved Lihat Ubah Hapus" [ref=e622]:
+                  - cell "Buat/batalkan pilihan item 158 untuk tindakan massal." [ref=e623]:
+                    - checkbox "Buat/batalkan pilihan item 158 untuk tindakan massal." [ref=e624]
+                  - cell "08/06/2026" [ref=e625]:
+                    - link "08/06/2026" [ref=e626] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/158
+                      - generic [ref=e627]: 08/06/2026
+                  - cell "PAY-20260608-22-001-A" [ref=e628]:
+                    - link "PAY-20260608-22-001-A" [ref=e629] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/158
+                      - generic [ref=e630]: PAY-20260608-22-001-A
+                  - cell "INV-20260608-8-001" [ref=e631]:
+                    - link "INV-20260608-8-001" [ref=e632] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/158
+                      - generic [ref=e633]: INV-20260608-8-001
+                  - cell "APOTIK MEDISTRA" [ref=e634]:
+                    - link "APOTIK MEDISTRA" [ref=e635] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/158
+                      - generic [ref=e636]: APOTIK MEDISTRA
+                  - cell "Transfer Bank" [ref=e637]:
+                    - link "Transfer Bank" [ref=e638] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/158
+                      - generic [ref=e640]: Transfer Bank
+                  - cell "Rp 130.000,00" [ref=e641]:
+                    - link "Rp 130.000,00" [ref=e642] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/158
+                      - generic [ref=e643]: Rp 130.000,00
+                  - cell "Approved" [ref=e644]:
+                    - link "Approved" [ref=e645] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/158
+                      - generic [ref=e647]: Approved
+                  - cell "Lihat Ubah Hapus" [ref=e648]:
+                    - generic [ref=e649]:
+                      - link "Lihat" [ref=e650] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/pembayarans/158
+                        - img [ref=e651]
+                        - text: Lihat
+                      - link "Ubah" [ref=e654] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/pembayarans/158/edit
+                        - img [ref=e655]
+                        - text: Ubah
+                      - button "Hapus" [ref=e658] [cursor=pointer]:
+                        - img [ref=e659]
+                        - text: Hapus
+                - row "Buat/batalkan pilihan item 157 untuk tindakan massal. 06/06/2026 PAY-20260608-2-006-I INV-20260604-11-003 Apotek Pribumi Transfer Bank Rp 171.000,00 Approved Lihat Ubah Hapus" [ref=e661]:
+                  - cell "Buat/batalkan pilihan item 157 untuk tindakan massal." [ref=e662]:
+                    - checkbox "Buat/batalkan pilihan item 157 untuk tindakan massal." [ref=e663]
+                  - cell "06/06/2026" [ref=e664]:
+                    - link "06/06/2026" [ref=e665] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/157
+                      - generic [ref=e666]: 06/06/2026
+                  - cell "PAY-20260608-2-006-I" [ref=e667]:
+                    - link "PAY-20260608-2-006-I" [ref=e668] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/157
+                      - generic [ref=e669]: PAY-20260608-2-006-I
+                  - cell "INV-20260604-11-003" [ref=e670]:
+                    - link "INV-20260604-11-003" [ref=e671] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/157
+                      - generic [ref=e672]: INV-20260604-11-003
+                  - cell "Apotek Pribumi" [ref=e673]:
+                    - link "Apotek Pribumi" [ref=e674] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/157
+                      - generic [ref=e675]: Apotek Pribumi
+                  - cell "Transfer Bank" [ref=e676]:
+                    - link "Transfer Bank" [ref=e677] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/157
+                      - generic [ref=e679]: Transfer Bank
+                  - cell "Rp 171.000,00" [ref=e680]:
+                    - link "Rp 171.000,00" [ref=e681] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/157
+                      - generic [ref=e682]: Rp 171.000,00
+                  - cell "Approved" [ref=e683]:
+                    - link "Approved" [ref=e684] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembayarans/157
+                      - generic [ref=e686]: Approved
+                  - cell "Lihat Ubah Hapus" [ref=e687]:
+                    - generic [ref=e688]:
+                      - link "Lihat" [ref=e689] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/pembayarans/157
+                        - img [ref=e690]
+                        - text: Lihat
+                      - link "Ubah" [ref=e693] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/pembayarans/157/edit
+                        - img [ref=e694]
+                        - text: Ubah
+                      - button "Hapus" [ref=e697] [cursor=pointer]:
+                        - img [ref=e698]
+                        - text: Hapus
+            - navigation "Navigasi halaman" [ref=e700]:
+              - generic [ref=e701]: Menampilkan 1 sampai 10 dari 164 hasil
+              - generic [ref=e704]:
+                - generic [ref=e706]: per halaman
+                - combobox "per halaman" [ref=e708]:
+                  - option "5"
+                  - option "10" [selected]
+                  - option "25"
+                  - option "50"
+              - list [ref=e709]:
+                - listitem [ref=e710]:
+                  - button "Ke halaman 1" [ref=e711] [cursor=pointer]:
+                    - generic [ref=e712]: "1"
+                - listitem [ref=e713]:
+                  - button "Ke halaman 2" [ref=e714] [cursor=pointer]:
+                    - generic [ref=e715]: "2"
+                - listitem [ref=e716]:
+                  - button "Ke halaman 3" [ref=e717] [cursor=pointer]:
+                    - generic [ref=e718]: "3"
+                - listitem [ref=e719]:
+                  - button "Ke halaman 4" [ref=e720] [cursor=pointer]:
+                    - generic [ref=e721]: "4"
+                - listitem [ref=e722]:
+                  - button "..." [disabled] [ref=e723]:
+                    - generic [ref=e724]: ...
+                - listitem [ref=e725]:
+                  - button "Ke halaman 16" [ref=e726] [cursor=pointer]:
+                    - generic [ref=e727]: "16"
+                - listitem [ref=e728]:
+                  - button "Ke halaman 17" [ref=e729] [cursor=pointer]:
+                    - generic [ref=e730]: "17"
+                - listitem [ref=e731]:
+                  - button "Selanjutnya" [ref=e732] [cursor=pointer]:
+                    - img [ref=e733]
+  - generic:
+    - status

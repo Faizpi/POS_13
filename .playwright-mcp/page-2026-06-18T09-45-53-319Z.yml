@@ -1,0 +1,128 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e3]:
+    - button "Perluas menu" [ref=e4] [cursor=pointer]:
+      - img [ref=e5]
+    - generic [ref=e7]:
+      - generic [ref=e10]:
+        - generic [ref=e11]: Pencarian global
+        - generic [ref=e12]:
+          - img [ref=e14]
+          - searchbox "Pencarian global" [ref=e17]
+      - button "Buka notifikasi" [ref=e19] [cursor=pointer]:
+        - img [ref=e20]
+      - button "Menu pengguna" [ref=e24] [cursor=pointer]:
+        - img "Avatar Hibiscus Efsya" [ref=e25]
+  - generic [ref=e26]:
+    - complementary [ref=e27]:
+      - navigation [ref=e30]:
+        - list [ref=e31]:
+          - listitem [ref=e32]:
+            - list [ref=e33]:
+              - listitem [ref=e34]:
+                - link [ref=e35] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app
+                  - img [ref=e36]
+              - listitem [ref=e38]:
+                - link [ref=e39] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/profile-page
+                  - img [ref=e40]
+          - listitem [ref=e42]:
+            - list [ref=e43]:
+              - listitem [ref=e44]:
+                - link [ref=e45] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/neraca-page
+                  - img [ref=e46]
+          - listitem [ref=e48]:
+            - list [ref=e49]:
+              - listitem [ref=e50]:
+                - link [ref=e51] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/kunjungans
+                  - img [ref=e52]
+          - listitem [ref=e55]:
+            - list [ref=e56]:
+              - listitem [ref=e57]:
+                - link [ref=e58] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/biayas
+                  - img [ref=e59]
+          - listitem [ref=e61]:
+            - list [ref=e62]:
+              - listitem [ref=e63]:
+                - link [ref=e64] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/piutang-page
+                  - img [ref=e65]
+              - listitem [ref=e67]:
+                - link [ref=e68] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/penjualans
+                  - img [ref=e69]
+              - listitem [ref=e71]:
+                - link [ref=e72] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/pembayarans
+                  - img [ref=e73]
+          - listitem [ref=e75]:
+            - list [ref=e76]:
+              - listitem [ref=e77]:
+                - link [ref=e78] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/hutang-page
+                  - img [ref=e79]
+              - listitem [ref=e81]:
+                - link [ref=e82] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/pembelians
+                  - img [ref=e83]
+              - listitem [ref=e85]:
+                - link [ref=e86] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/penerimaan-barangs
+                  - img [ref=e87]
+              - listitem [ref=e89]:
+                - link [ref=e90] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/pembayaran-hutangs
+                  - img [ref=e91]
+          - listitem [ref=e93]:
+            - list [ref=e94]:
+              - listitem [ref=e95]:
+                - link [ref=e96] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/stok-page
+                  - img [ref=e97]
+              - listitem [ref=e99]:
+                - link [ref=e100] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/stock-opnames
+                  - img [ref=e101]
+              - listitem [ref=e103]:
+                - link [ref=e104] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/stok-log-page
+                  - img [ref=e105]
+          - listitem [ref=e107]:
+            - list [ref=e108]:
+              - listitem [ref=e109]:
+                - link [ref=e110] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/kontaks
+                  - img [ref=e111]
+              - listitem [ref=e113]:
+                - link [ref=e114] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/catatan-hutang
+                  - img [ref=e115]
+          - listitem [ref=e117]:
+            - list [ref=e118]:
+              - listitem [ref=e119]:
+                - link [ref=e120] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/tutup-buku
+                  - img [ref=e121]
+              - listitem [ref=e123]:
+                - link [ref=e124] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/users
+                  - img [ref=e125]
+              - listitem [ref=e127]:
+                - link [ref=e128] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/gudangs
+                  - img [ref=e129]
+              - listitem [ref=e131]:
+                - link [ref=e132] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/produks
+                  - img [ref=e133]
+    - main [ref=e136]:
+      - generic [ref=e139]:
+        - heading "Dasbor" [level=1] [ref=e141]
+        - button "Export Laporan" [ref=e144] [cursor=pointer]:
+          - img [ref=e145]
+          - text: Export Laporan
+  - generic:
+    - status

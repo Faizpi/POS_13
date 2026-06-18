@@ -1,9 +1,10 @@
 @php
-    $pembelians = \App\Models\Pembelian::whereHas('kontak', fn($q) => $q->where('id', $kontak->id))
+    $kontak = $record ?? $kontak ?? null;
+    $pembelians = $kontak ? \App\Models\Pembelian::whereHas('kontak', fn($q) => $q->where('id', $kontak->id))
         ->whereIn('status', ['Approved'])
         ->with(['gudang', 'pembayarans' => fn($q) => $q->where('status', 'Approved')])
         ->orderBy('tgl_jatuh_tempo')
-        ->get();
+        ->get() : collect();
 
     $canView = in_array(auth()->user()?->role, ['user', 'admin', 'super_admin']);
 @endphp

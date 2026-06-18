@@ -1,0 +1,428 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e3]:
+    - generic [ref=e4]:
+      - button "Persempit menu" [ref=e6] [cursor=pointer]:
+        - img [ref=e7]
+      - link "Hibiscus Efsya POS" [ref=e9] [cursor=pointer]:
+        - /url: https://new.hibiscusefsya.com/app
+        - generic [ref=e10]: Hibiscus Efsya POS
+    - generic [ref=e11]:
+      - generic [ref=e14]:
+        - generic [ref=e15]: Pencarian global
+        - generic [ref=e16]:
+          - img [ref=e18]
+          - searchbox "Pencarian global" [ref=e21]
+      - button "Buka notifikasi" [ref=e23] [cursor=pointer]:
+        - img [ref=e24]
+      - button "Menu pengguna" [ref=e28] [cursor=pointer]:
+        - img "Avatar Hibiscus Efsya" [ref=e29]
+  - generic [ref=e30]:
+    - complementary [ref=e32]:
+      - navigation [ref=e33]:
+        - list [ref=e34]:
+          - listitem [ref=e35]:
+            - list [ref=e36]:
+              - listitem [ref=e37]:
+                - link "Dasbor" [ref=e38] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app
+                  - img [ref=e39]
+                  - generic [ref=e41]: Dasbor
+              - listitem [ref=e42]:
+                - link "Profil Saya" [ref=e43] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/profile-page
+                  - img [ref=e44]
+                  - generic [ref=e46]: Profil Saya
+          - listitem [ref=e47]:
+            - generic [ref=e48] [cursor=pointer]:
+              - generic [ref=e49]: Neraca
+              - button "Neraca" [expanded] [ref=e50]:
+                - img [ref=e51]
+            - list [ref=e53]:
+              - listitem [ref=e54]:
+                - link "Neraca" [ref=e55] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/neraca-page
+                  - img [ref=e56]
+                  - generic [ref=e58]: Neraca
+          - listitem [ref=e59]:
+            - generic [ref=e60] [cursor=pointer]:
+              - generic [ref=e61]: Kunjungan
+              - button "Kunjungan" [expanded] [ref=e62]:
+                - img [ref=e63]
+            - list [ref=e65]:
+              - listitem [ref=e66]:
+                - link "Buat Kunjungan 204" [ref=e67] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/kunjungans
+                  - img [ref=e68]
+                  - generic [ref=e71]: Buat Kunjungan
+                  - generic [ref=e75]: "204"
+          - listitem [ref=e76]:
+            - generic [ref=e77] [cursor=pointer]:
+              - generic [ref=e78]: Biaya
+              - button "Biaya" [expanded] [ref=e79]:
+                - img [ref=e80]
+            - list [ref=e82]:
+              - listitem [ref=e83]:
+                - link "Buat Biaya 23" [ref=e84] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/biayas
+                  - img [ref=e85]
+                  - generic [ref=e87]: Buat Biaya
+                  - generic [ref=e91]: "23"
+          - listitem [ref=e92]:
+            - generic [ref=e93] [cursor=pointer]:
+              - generic [ref=e94]: Piutang
+              - button "Piutang" [expanded] [ref=e95]:
+                - img [ref=e96]
+            - list [ref=e98]:
+              - listitem [ref=e99]:
+                - link "Dashboard Piutang" [ref=e100] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/piutang-page
+                  - img [ref=e101]
+                  - generic [ref=e103]: Dashboard Piutang
+              - listitem [ref=e104]:
+                - link "Buat Penjualan 183" [ref=e105] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/penjualans
+                  - img [ref=e106]
+                  - generic [ref=e108]: Buat Penjualan
+                  - generic [ref=e112]: "183"
+              - listitem [ref=e113]:
+                - link "Pembayaran Piutang 22" [ref=e114] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/pembayarans
+                  - img [ref=e115]
+                  - generic [ref=e117]: Pembayaran Piutang
+                  - generic [ref=e121]: "22"
+          - listitem [ref=e122]:
+            - generic [ref=e123] [cursor=pointer]:
+              - generic [ref=e124]: Hutang
+              - button "Hutang" [expanded] [ref=e125]:
+                - img [ref=e126]
+            - list [ref=e128]:
+              - listitem [ref=e129]:
+                - link "Dashboard Hutang" [ref=e130] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/hutang-page
+                  - img [ref=e131]
+                  - generic [ref=e133]: Dashboard Hutang
+              - listitem [ref=e134]:
+                - link "Buat Pembelian 4" [ref=e135] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/pembelians
+                  - img [ref=e136]
+                  - generic [ref=e138]: Buat Pembelian
+                  - generic [ref=e142]: "4"
+              - listitem [ref=e143]:
+                - link "Buat Penerimaan Barang" [ref=e144] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/penerimaan-barangs
+                  - img [ref=e145]
+                  - generic [ref=e147]: Buat Penerimaan Barang
+              - listitem [ref=e148]:
+                - link "Pembayaran Hutang" [ref=e149] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/pembayaran-hutangs
+                  - img [ref=e150]
+                  - generic [ref=e152]: Pembayaran Hutang
+          - listitem [ref=e153]:
+            - generic [ref=e154] [cursor=pointer]:
+              - generic [ref=e155]: Gudang
+              - button "Gudang" [expanded] [ref=e156]:
+                - img [ref=e157]
+            - list [ref=e159]:
+              - listitem [ref=e160]:
+                - link "Dashboard" [ref=e161] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/stok-page
+                  - img [ref=e162]
+                  - generic [ref=e164]: Dashboard
+              - listitem [ref=e165]:
+                - link "Stock Opname" [ref=e166] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/stock-opnames
+                  - img [ref=e167]
+                  - generic [ref=e169]: Stock Opname
+              - listitem [ref=e170]:
+                - link "Riwayat Stok" [ref=e171] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/stok-log-page
+                  - img [ref=e172]
+                  - generic [ref=e174]: Riwayat Stok
+          - listitem [ref=e175]:
+            - generic [ref=e176] [cursor=pointer]:
+              - generic [ref=e177]: Kontak
+              - button "Kontak" [expanded] [ref=e178]:
+                - img [ref=e179]
+            - list [ref=e181]:
+              - listitem [ref=e182]:
+                - link "Buat Kontak" [ref=e183] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/kontaks
+                  - img [ref=e184]
+                  - generic [ref=e186]: Buat Kontak
+              - listitem [ref=e187]:
+                - link "Catatan Hutang" [ref=e188] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/catatan-hutang
+                  - img [ref=e189]
+                  - generic [ref=e191]: Catatan Hutang
+          - listitem [ref=e192]:
+            - generic [ref=e193] [cursor=pointer]:
+              - generic [ref=e194]: Pengaturan
+              - button "Pengaturan" [expanded] [ref=e195]:
+                - img [ref=e196]
+            - list [ref=e198]:
+              - listitem [ref=e199]:
+                - link "Tutup Buku & Backup" [ref=e200] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/tutup-buku
+                  - img [ref=e201]
+                  - generic [ref=e203]: Tutup Buku & Backup
+              - listitem [ref=e204]:
+                - link "Pengguna" [ref=e205] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/users
+                  - img [ref=e206]
+                  - generic [ref=e208]: Pengguna
+              - listitem [ref=e209]:
+                - link "Gudang" [ref=e210] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/gudangs
+                  - img [ref=e211]
+                  - generic [ref=e213]: Gudang
+              - listitem [ref=e214]:
+                - link "Produk" [ref=e215] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/produks
+                  - img [ref=e216]
+                  - generic [ref=e218]: Produk
+    - main [ref=e220]:
+      - generic [ref=e222]:
+        - generic [ref=e223]:
+          - generic [ref=e224]:
+            - navigation [ref=e225]:
+              - list [ref=e226]:
+                - listitem [ref=e227]:
+                  - link "Buat Penerimaan Barang" [ref=e228] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/penerimaan-barangs
+                - listitem [ref=e229]:
+                  - img [ref=e230]
+                  - generic [ref=e232]: Daftar
+            - heading "Buat Penerimaan Barang" [level=1] [ref=e233]
+          - link "Buat Penerimaan" [ref=e236] [cursor=pointer]:
+            - /url: https://new.hibiscusefsya.com/app/penerimaan-barangs/create
+        - generic [ref=e239]:
+          - tablist [ref=e243]:
+            - tab "Semua 4" [ref=e244] [cursor=pointer]:
+              - generic [ref=e245]: Semua
+              - generic [ref=e248]: "4"
+            - tab "Pending 0" [ref=e249] [cursor=pointer]:
+              - generic [ref=e250]: Pending
+              - generic [ref=e253]: "0"
+            - tab "Approved 4" [ref=e254] [cursor=pointer]:
+              - generic [ref=e255]: Approved
+              - generic [ref=e258]: "4"
+            - tab "Rejected 0" [ref=e259] [cursor=pointer]:
+              - generic [ref=e260]: Rejected
+              - generic [ref=e263]: "0"
+            - tab "Canceled 0" [ref=e264] [cursor=pointer]:
+              - generic [ref=e265]: Canceled
+              - generic [ref=e268]: "0"
+          - generic [ref=e273]:
+            - generic [ref=e276]:
+              - generic [ref=e277]:
+                - generic [ref=e278]: Cari
+                - generic [ref=e279]:
+                  - img [ref=e281]
+                  - searchbox "Cari" [ref=e284]
+              - button "Filter" [ref=e287] [cursor=pointer]:
+                - img [ref=e288]
+                - generic [ref=e291]: "0"
+            - table [ref=e293]:
+              - rowgroup [ref=e294]:
+                - row "Buat/batalkan pilihan semua item untuk tindakan massal. Tanggal Nomor Pembelian Gudang Pembuat Total Items Status Aksi" [ref=e295]:
+                  - columnheader "Buat/batalkan pilihan semua item untuk tindakan massal." [ref=e296]:
+                    - checkbox "Buat/batalkan pilihan semua item untuk tindakan massal." [ref=e297]
+                  - columnheader "Tanggal" [ref=e298]:
+                    - button "Tanggal" [ref=e299] [cursor=pointer]:
+                      - text: Tanggal
+                      - img [ref=e300]
+                  - columnheader "Nomor" [ref=e302]
+                  - columnheader "Pembelian" [ref=e303]
+                  - columnheader "Gudang" [ref=e304]
+                  - columnheader "Pembuat" [ref=e305]
+                  - columnheader "Total Items" [ref=e306]
+                  - columnheader "Status" [ref=e307]
+                  - columnheader "Aksi" [ref=e308]
+              - rowgroup [ref=e309]:
+                - row "Buat/batalkan pilihan item 9 untuk tindakan massal. 23/05/2026 RCV-20260525-2-001 PR-20260522-2-002 GUDANG GARUT NUR - ADMIN JA2PALU 4 Approved Lihat Ubah Hapus" [ref=e310]:
+                  - cell "Buat/batalkan pilihan item 9 untuk tindakan massal." [ref=e311]:
+                    - checkbox "Buat/batalkan pilihan item 9 untuk tindakan massal." [ref=e312]
+                  - cell "23/05/2026" [ref=e313]:
+                    - link "23/05/2026" [ref=e314] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penerimaan-barangs/9
+                      - generic [ref=e315]: 23/05/2026
+                  - cell "RCV-20260525-2-001" [ref=e316]:
+                    - link "RCV-20260525-2-001" [ref=e317] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penerimaan-barangs/9
+                      - generic [ref=e318]: RCV-20260525-2-001
+                  - cell "PR-20260522-2-002" [ref=e319]:
+                    - link "PR-20260522-2-002" [ref=e320] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penerimaan-barangs/9
+                      - generic [ref=e321]: PR-20260522-2-002
+                  - cell "GUDANG GARUT" [ref=e322]:
+                    - link "GUDANG GARUT" [ref=e323] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penerimaan-barangs/9
+                      - generic [ref=e325]: GUDANG GARUT
+                  - cell "NUR - ADMIN JA2PALU" [ref=e326]:
+                    - link "NUR - ADMIN JA2PALU" [ref=e327] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penerimaan-barangs/9
+                      - generic [ref=e328]: NUR - ADMIN JA2PALU
+                  - cell "4" [ref=e329]:
+                    - link "4" [ref=e330] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penerimaan-barangs/9
+                      - generic [ref=e332]: "4"
+                  - cell "Approved" [ref=e333]:
+                    - link "Approved" [ref=e334] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penerimaan-barangs/9
+                      - generic [ref=e336]: Approved
+                  - cell "Lihat Ubah Hapus" [ref=e337]:
+                    - generic [ref=e338]:
+                      - link "Lihat" [ref=e339] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/penerimaan-barangs/9
+                        - img [ref=e340]
+                        - text: Lihat
+                      - link "Ubah" [ref=e343] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/penerimaan-barangs/9/edit
+                        - img [ref=e344]
+                        - text: Ubah
+                      - button "Hapus" [ref=e347] [cursor=pointer]:
+                        - img [ref=e348]
+                        - text: Hapus
+                - row "Buat/batalkan pilihan item 8 untuk tindakan massal. 29/04/2026 RCV-20260429-2-001 PR-20260429-2-002 GUDANG CIAMIS NUR - ADMIN JA2PALU 6 Approved Lihat Ubah Hapus" [ref=e350]:
+                  - cell "Buat/batalkan pilihan item 8 untuk tindakan massal." [ref=e351]:
+                    - checkbox "Buat/batalkan pilihan item 8 untuk tindakan massal." [ref=e352]
+                  - cell "29/04/2026" [ref=e353]:
+                    - link "29/04/2026" [ref=e354] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penerimaan-barangs/8
+                      - generic [ref=e355]: 29/04/2026
+                  - cell "RCV-20260429-2-001" [ref=e356]:
+                    - link "RCV-20260429-2-001" [ref=e357] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penerimaan-barangs/8
+                      - generic [ref=e358]: RCV-20260429-2-001
+                  - cell "PR-20260429-2-002" [ref=e359]:
+                    - link "PR-20260429-2-002" [ref=e360] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penerimaan-barangs/8
+                      - generic [ref=e361]: PR-20260429-2-002
+                  - cell "GUDANG CIAMIS" [ref=e362]:
+                    - link "GUDANG CIAMIS" [ref=e363] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penerimaan-barangs/8
+                      - generic [ref=e365]: GUDANG CIAMIS
+                  - cell "NUR - ADMIN JA2PALU" [ref=e366]:
+                    - link "NUR - ADMIN JA2PALU" [ref=e367] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penerimaan-barangs/8
+                      - generic [ref=e368]: NUR - ADMIN JA2PALU
+                  - cell "6" [ref=e369]:
+                    - link "6" [ref=e370] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penerimaan-barangs/8
+                      - generic [ref=e372]: "6"
+                  - cell "Approved" [ref=e373]:
+                    - link "Approved" [ref=e374] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penerimaan-barangs/8
+                      - generic [ref=e376]: Approved
+                  - cell "Lihat Ubah Hapus" [ref=e377]:
+                    - generic [ref=e378]:
+                      - link "Lihat" [ref=e379] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/penerimaan-barangs/8
+                        - img [ref=e380]
+                        - text: Lihat
+                      - link "Ubah" [ref=e383] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/penerimaan-barangs/8/edit
+                        - img [ref=e384]
+                        - text: Ubah
+                      - button "Hapus" [ref=e387] [cursor=pointer]:
+                        - img [ref=e388]
+                        - text: Hapus
+                - row "Buat/batalkan pilihan item 7 untuk tindakan massal. 15/04/2026 RCV-20260415-11-001 PR-20260414-2-001 GUDANG CIAMIS SALES M.B.K - ROZAK 4 Approved Lihat Ubah Hapus" [ref=e390]:
+                  - cell "Buat/batalkan pilihan item 7 untuk tindakan massal." [ref=e391]:
+                    - checkbox "Buat/batalkan pilihan item 7 untuk tindakan massal." [ref=e392]
+                  - cell "15/04/2026" [ref=e393]:
+                    - link "15/04/2026" [ref=e394] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penerimaan-barangs/7
+                      - generic [ref=e395]: 15/04/2026
+                  - cell "RCV-20260415-11-001" [ref=e396]:
+                    - link "RCV-20260415-11-001" [ref=e397] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penerimaan-barangs/7
+                      - generic [ref=e398]: RCV-20260415-11-001
+                  - cell "PR-20260414-2-001" [ref=e399]:
+                    - link "PR-20260414-2-001" [ref=e400] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penerimaan-barangs/7
+                      - generic [ref=e401]: PR-20260414-2-001
+                  - cell "GUDANG CIAMIS" [ref=e402]:
+                    - link "GUDANG CIAMIS" [ref=e403] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penerimaan-barangs/7
+                      - generic [ref=e405]: GUDANG CIAMIS
+                  - cell "SALES M.B.K - ROZAK" [ref=e406]:
+                    - link "SALES M.B.K - ROZAK" [ref=e407] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penerimaan-barangs/7
+                      - generic [ref=e408]: SALES M.B.K - ROZAK
+                  - cell "4" [ref=e409]:
+                    - link "4" [ref=e410] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penerimaan-barangs/7
+                      - generic [ref=e412]: "4"
+                  - cell "Approved" [ref=e413]:
+                    - link "Approved" [ref=e414] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penerimaan-barangs/7
+                      - generic [ref=e416]: Approved
+                  - cell "Lihat Ubah Hapus" [ref=e417]:
+                    - generic [ref=e418]:
+                      - link "Lihat" [ref=e419] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/penerimaan-barangs/7
+                        - img [ref=e420]
+                        - text: Lihat
+                      - link "Ubah" [ref=e423] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/penerimaan-barangs/7/edit
+                        - img [ref=e424]
+                        - text: Ubah
+                      - button "Hapus" [ref=e427] [cursor=pointer]:
+                        - img [ref=e428]
+                        - text: Hapus
+                - row "Buat/batalkan pilihan item 4 untuk tindakan massal. 10/03/2026 RCV-20260310-1-001 PR-20260306-5-002 GUDANG PALEMBANG Hibiscus Efsya 8 Approved Lihat Ubah Hapus" [ref=e430]:
+                  - cell "Buat/batalkan pilihan item 4 untuk tindakan massal." [ref=e431]:
+                    - checkbox "Buat/batalkan pilihan item 4 untuk tindakan massal." [ref=e432]
+                  - cell "10/03/2026" [ref=e433]:
+                    - link "10/03/2026" [ref=e434] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penerimaan-barangs/4
+                      - generic [ref=e435]: 10/03/2026
+                  - cell "RCV-20260310-1-001" [ref=e436]:
+                    - link "RCV-20260310-1-001" [ref=e437] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penerimaan-barangs/4
+                      - generic [ref=e438]: RCV-20260310-1-001
+                  - cell "PR-20260306-5-002" [ref=e439]:
+                    - link "PR-20260306-5-002" [ref=e440] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penerimaan-barangs/4
+                      - generic [ref=e441]: PR-20260306-5-002
+                  - cell "GUDANG PALEMBANG" [ref=e442]:
+                    - link "GUDANG PALEMBANG" [ref=e443] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penerimaan-barangs/4
+                      - generic [ref=e445]: GUDANG PALEMBANG
+                  - cell "Hibiscus Efsya" [ref=e446]:
+                    - link "Hibiscus Efsya" [ref=e447] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penerimaan-barangs/4
+                      - generic [ref=e448]: Hibiscus Efsya
+                  - cell "8" [ref=e449]:
+                    - link "8" [ref=e450] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penerimaan-barangs/4
+                      - generic [ref=e452]: "8"
+                  - cell "Approved" [ref=e453]:
+                    - link "Approved" [ref=e454] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penerimaan-barangs/4
+                      - generic [ref=e456]: Approved
+                  - cell "Lihat Ubah Hapus" [ref=e457]:
+                    - generic [ref=e458]:
+                      - link "Lihat" [ref=e459] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/penerimaan-barangs/4
+                        - img [ref=e460]
+                        - text: Lihat
+                      - link "Ubah" [ref=e463] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/penerimaan-barangs/4/edit
+                        - img [ref=e464]
+                        - text: Ubah
+                      - button "Hapus" [ref=e467] [cursor=pointer]:
+                        - img [ref=e468]
+                        - text: Hapus
+            - navigation "Navigasi halaman" [ref=e470]:
+              - generic [ref=e471]: Menampilkan 1 sampai 4 dari 4 hasil
+              - generic [ref=e474]:
+                - generic [ref=e476]: per halaman
+                - combobox "per halaman" [ref=e478]:
+                  - option "5"
+                  - option "10" [selected]
+                  - option "25"
+                  - option "50"
+  - generic:
+    - status

@@ -1,0 +1,14 @@
+- generic [ref=e5]:
+  - generic [ref=e6]:
+    - img "Hibiscus Efsya" [ref=e7]
+    - heading "Hibiscus Efsya" [level=4] [ref=e8]
+    - paragraph [ref=e9]: Portal Customer
+  - generic [ref=e10]:
+    - generic [ref=e11]:
+      - strong [ref=e13]: Nomor Telepon
+      - textbox "08xxxxxxxxxx atau 628xxxxxxxxxx" [active] [ref=e14]
+      - text: Masukkan nomor telepon yang terdaftar
+    - button "Lanjut " [ref=e15] [cursor=pointer]:
+      - text: Lanjut
+      - generic [ref=e16]: 
+  - generic [ref=e17]: Belum punya akun? Hubungi sales kami

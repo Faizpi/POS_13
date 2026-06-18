@@ -1,0 +1,811 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e3]:
+    - generic [ref=e4]:
+      - button "Persempit menu" [ref=e6] [cursor=pointer]:
+        - img [ref=e7]
+      - link "Hibiscus Efsya POS" [ref=e9] [cursor=pointer]:
+        - /url: https://new.hibiscusefsya.com/app
+        - generic [ref=e10]: Hibiscus Efsya POS
+    - generic [ref=e11]:
+      - generic [ref=e14]:
+        - generic [ref=e15]: Pencarian global
+        - generic [ref=e16]:
+          - img [ref=e18]
+          - searchbox "Pencarian global" [ref=e21]
+      - generic [ref=e22]:
+        - button "Buka notifikasi" [disabled]:
+          - img
+      - button "Menu pengguna" [ref=e25] [cursor=pointer]:
+        - img "Avatar Hibiscus Efsya" [ref=e26]
+  - generic [ref=e27]:
+    - complementary [ref=e29]:
+      - navigation [ref=e30]:
+        - list [ref=e31]:
+          - listitem [ref=e32]:
+            - list [ref=e33]:
+              - listitem [ref=e34]:
+                - link "Dasbor" [ref=e35] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app
+                  - img [ref=e36]
+                  - generic [ref=e38]: Dasbor
+              - listitem [ref=e39]:
+                - link "Profil Saya" [ref=e40] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/profile-page
+                  - img [ref=e41]
+                  - generic [ref=e43]: Profil Saya
+          - listitem [ref=e44]:
+            - generic [ref=e45] [cursor=pointer]:
+              - generic [ref=e46]: Neraca
+              - button "Neraca" [expanded] [ref=e47]:
+                - img [ref=e48]
+            - list [ref=e50]:
+              - listitem [ref=e51]:
+                - link "Neraca" [ref=e52] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/neraca-page
+                  - img [ref=e53]
+                  - generic [ref=e55]: Neraca
+          - listitem [ref=e56]:
+            - generic [ref=e57] [cursor=pointer]:
+              - generic [ref=e58]: Kunjungan
+              - button "Kunjungan" [expanded] [ref=e59]:
+                - img [ref=e60]
+            - list [ref=e62]:
+              - listitem [ref=e63]:
+                - link "Buat Kunjungan 204" [ref=e64] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/kunjungans
+                  - img [ref=e65]
+                  - generic [ref=e68]: Buat Kunjungan
+                  - generic [ref=e72]: "204"
+          - listitem [ref=e73]:
+            - generic [ref=e74] [cursor=pointer]:
+              - generic [ref=e75]: Biaya
+              - button "Biaya" [expanded] [ref=e76]:
+                - img [ref=e77]
+            - list [ref=e79]:
+              - listitem [ref=e80]:
+                - link "Buat Biaya 23" [ref=e81] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/biayas
+                  - img [ref=e82]
+                  - generic [ref=e84]: Buat Biaya
+                  - generic [ref=e88]: "23"
+          - listitem [ref=e89]:
+            - generic [ref=e90] [cursor=pointer]:
+              - generic [ref=e91]: Piutang
+              - button "Piutang" [expanded] [ref=e92]:
+                - img [ref=e93]
+            - list [ref=e95]:
+              - listitem [ref=e96]:
+                - link "Dashboard Piutang" [ref=e97] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/piutang-page
+                  - img [ref=e98]
+                  - generic [ref=e100]: Dashboard Piutang
+              - listitem [ref=e101]:
+                - link "Buat Penjualan 183" [ref=e102] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/penjualans
+                  - img [ref=e103]
+                  - generic [ref=e105]: Buat Penjualan
+                  - generic [ref=e109]: "183"
+              - listitem [ref=e110]:
+                - link "Pembayaran Piutang 22" [ref=e111] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/pembayarans
+                  - img [ref=e112]
+                  - generic [ref=e114]: Pembayaran Piutang
+                  - generic [ref=e118]: "22"
+          - listitem [ref=e119]:
+            - generic [ref=e120] [cursor=pointer]:
+              - generic [ref=e121]: Hutang
+              - button "Hutang" [expanded] [ref=e122]:
+                - img [ref=e123]
+            - list [ref=e125]:
+              - listitem [ref=e126]:
+                - link "Dashboard Hutang" [ref=e127] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/hutang-page
+                  - img [ref=e128]
+                  - generic [ref=e130]: Dashboard Hutang
+              - listitem [ref=e131]:
+                - link "Buat Pembelian 4" [ref=e132] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/pembelians
+                  - img [ref=e133]
+                  - generic [ref=e135]: Buat Pembelian
+                  - generic [ref=e139]: "4"
+              - listitem [ref=e140]:
+                - link "Buat Penerimaan Barang" [ref=e141] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/penerimaan-barangs
+                  - img [ref=e142]
+                  - generic [ref=e144]: Buat Penerimaan Barang
+              - listitem [ref=e145]:
+                - link "Pembayaran Hutang" [ref=e146] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/pembayaran-hutangs
+                  - img [ref=e147]
+                  - generic [ref=e149]: Pembayaran Hutang
+          - listitem [ref=e150]:
+            - generic [ref=e151] [cursor=pointer]:
+              - generic [ref=e152]: Gudang
+              - button "Gudang" [expanded] [ref=e153]:
+                - img [ref=e154]
+            - list [ref=e156]:
+              - listitem [ref=e157]:
+                - link "Dashboard" [ref=e158] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/stok-page
+                  - img [ref=e159]
+                  - generic [ref=e161]: Dashboard
+              - listitem [ref=e162]:
+                - link "Stock Opname" [ref=e163] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/stock-opnames
+                  - img [ref=e164]
+                  - generic [ref=e166]: Stock Opname
+              - listitem [ref=e167]:
+                - link "Riwayat Stok" [ref=e168] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/stok-log-page
+                  - img [ref=e169]
+                  - generic [ref=e171]: Riwayat Stok
+          - listitem [ref=e172]:
+            - generic [ref=e173] [cursor=pointer]:
+              - generic [ref=e174]: Kontak
+              - button "Kontak" [expanded] [ref=e175]:
+                - img [ref=e176]
+            - list [ref=e178]:
+              - listitem [ref=e179]:
+                - link "Buat Kontak" [ref=e180] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/kontaks
+                  - img [ref=e181]
+                  - generic [ref=e183]: Buat Kontak
+              - listitem [ref=e184]:
+                - link "Catatan Hutang" [ref=e185] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/catatan-hutang
+                  - img [ref=e186]
+                  - generic [ref=e188]: Catatan Hutang
+          - listitem [ref=e189]:
+            - generic [ref=e190] [cursor=pointer]:
+              - generic [ref=e191]: Pengaturan
+              - button "Pengaturan" [expanded] [ref=e192]:
+                - img [ref=e193]
+            - list [ref=e195]:
+              - listitem [ref=e196]:
+                - link "Tutup Buku & Backup" [ref=e197] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/tutup-buku
+                  - img [ref=e198]
+                  - generic [ref=e200]: Tutup Buku & Backup
+              - listitem [ref=e201]:
+                - link "Pengguna" [ref=e202] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/users
+                  - img [ref=e203]
+                  - generic [ref=e205]: Pengguna
+              - listitem [ref=e206]:
+                - link "Gudang" [ref=e207] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/gudangs
+                  - img [ref=e208]
+                  - generic [ref=e210]: Gudang
+              - listitem [ref=e211]:
+                - link "Produk" [ref=e212] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/produks
+                  - img [ref=e213]
+                  - generic [ref=e215]: Produk
+    - main [ref=e217]:
+      - generic [ref=e219]:
+        - generic [ref=e220]:
+          - generic [ref=e221]:
+            - navigation [ref=e222]:
+              - list [ref=e223]:
+                - listitem [ref=e224]:
+                  - link "Buat Pembelian" [ref=e225] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/pembelians
+                - listitem [ref=e226]:
+                  - img [ref=e227]
+                  - generic [ref=e229]: Daftar
+            - heading "Buat Pembelian" [level=1] [ref=e230]
+          - link "Buat Permintaan Baru" [ref=e233] [cursor=pointer]:
+            - /url: https://new.hibiscusefsya.com/app/pembelians/create
+        - generic [ref=e242]:
+          - tablist [ref=e246]:
+            - tab "Semua 17" [ref=e247] [cursor=pointer]:
+              - generic [ref=e248]: Semua
+              - generic [ref=e251]: "17"
+            - tab "Pending 4" [ref=e252] [cursor=pointer]:
+              - generic [ref=e253]: Pending
+              - generic [ref=e256]: "4"
+            - tab "Approved 6" [ref=e257] [cursor=pointer]:
+              - generic [ref=e258]: Approved
+              - generic [ref=e261]: "6"
+            - tab "Rejected 0" [ref=e262] [cursor=pointer]:
+              - generic [ref=e263]: Rejected
+              - generic [ref=e266]: "0"
+            - tab "Canceled 7" [ref=e267] [cursor=pointer]:
+              - generic [ref=e268]: Canceled
+              - generic [ref=e271]: "7"
+          - generic [ref=e276]:
+            - generic [ref=e279]:
+              - generic [ref=e280]:
+                - generic [ref=e281]: Cari
+                - generic [ref=e282]:
+                  - img [ref=e284]
+                  - searchbox "Cari" [ref=e287]
+              - button "Filter" [ref=e290] [cursor=pointer]:
+                - img [ref=e291]
+                - generic [ref=e294]: "0"
+            - table [ref=e296]:
+              - rowgroup [ref=e297]:
+                - row "Buat/batalkan pilihan semua item untuk tindakan massal. Tanggal Nomor Pembuat Approver Gudang Supplier Urgensi Total Status Aksi" [ref=e298]:
+                  - columnheader "Buat/batalkan pilihan semua item untuk tindakan massal." [ref=e299]:
+                    - checkbox "Buat/batalkan pilihan semua item untuk tindakan massal." [ref=e300]
+                  - columnheader "Tanggal" [ref=e301]:
+                    - button "Tanggal" [ref=e302] [cursor=pointer]:
+                      - text: Tanggal
+                      - img [ref=e303]
+                  - columnheader "Nomor" [ref=e305]:
+                    - button "Nomor" [ref=e306] [cursor=pointer]:
+                      - text: Nomor
+                      - img [ref=e307]
+                  - columnheader "Pembuat" [ref=e309]
+                  - columnheader "Approver" [ref=e310]
+                  - columnheader "Gudang" [ref=e311]
+                  - columnheader "Supplier" [ref=e312]
+                  - columnheader "Urgensi" [ref=e313]
+                  - columnheader "Total" [ref=e314]:
+                    - button "Total" [ref=e315] [cursor=pointer]:
+                      - text: Total
+                      - img [ref=e316]
+                  - columnheader "Status" [ref=e318]
+                  - columnheader "Aksi" [ref=e319]
+              - rowgroup [ref=e320]:
+                - row "Buat/batalkan pilihan item 30 untuk tindakan massal. 20/05/2026 09:43 PR-20260522-2-002 NUR - ADMIN JA2PALU NUR - ADMIN JA2PALU GUDANG GARUT — Sedang Rp 4.405.368,00 Approved Lihat Ubah Hapus" [ref=e321]:
+                  - cell "Buat/batalkan pilihan item 30 untuk tindakan massal." [ref=e322]:
+                    - checkbox "Buat/batalkan pilihan item 30 untuk tindakan massal." [ref=e323]
+                  - cell "20/05/2026 09:43" [ref=e324]:
+                    - link "20/05/2026 09:43" [ref=e325] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/30
+                      - generic [ref=e326]:
+                        - paragraph [ref=e327]: 20/05/2026
+                        - paragraph [ref=e328]: 09:43
+                  - cell "PR-20260522-2-002" [ref=e329]:
+                    - link "PR-20260522-2-002" [ref=e330] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/30
+                      - generic [ref=e331]: PR-20260522-2-002
+                  - cell "NUR - ADMIN JA2PALU" [ref=e332]:
+                    - link "NUR - ADMIN JA2PALU" [ref=e333] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/30
+                      - generic [ref=e334]: NUR - ADMIN JA2PALU
+                  - cell "NUR - ADMIN JA2PALU" [ref=e335]:
+                    - link "NUR - ADMIN JA2PALU" [ref=e336] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/30
+                      - generic [ref=e337]: NUR - ADMIN JA2PALU
+                  - cell "GUDANG GARUT" [ref=e338]:
+                    - link "GUDANG GARUT" [ref=e339] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/30
+                      - generic [ref=e341]: GUDANG GARUT
+                  - cell "—" [ref=e342]:
+                    - link "—" [ref=e343] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/30
+                      - paragraph [ref=e345]: —
+                  - cell "Sedang" [ref=e346]:
+                    - link "Sedang" [ref=e347] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/30
+                      - generic [ref=e349]: Sedang
+                  - cell "Rp 4.405.368,00" [ref=e350]:
+                    - link "Rp 4.405.368,00" [ref=e351] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/30
+                      - generic [ref=e352]: Rp 4.405.368,00
+                  - cell "Approved" [ref=e353]:
+                    - link "Approved" [ref=e354] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/30
+                      - generic [ref=e356]: Approved
+                  - cell "Lihat Ubah Hapus" [ref=e357]:
+                    - generic [ref=e358]:
+                      - link "Lihat" [ref=e359] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/pembelians/30
+                        - img [ref=e360]
+                        - text: Lihat
+                      - link "Ubah" [ref=e363] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/pembelians/30/edit
+                        - img [ref=e364]
+                        - text: Ubah
+                      - button "Hapus" [ref=e367] [cursor=pointer]:
+                        - img [ref=e368]
+                        - text: Hapus
+                - row "Buat/batalkan pilihan item 29 untuk tindakan massal. 20/05/2026 09:39 PR-20260522-2-001 NUR - ADMIN JA2PALU Hibiscus Efsya GUDANG GARUT — Sedang Rp 5.193.600,00 Canceled Lihat Ubah Hapus" [ref=e370]:
+                  - cell "Buat/batalkan pilihan item 29 untuk tindakan massal." [ref=e371]:
+                    - checkbox "Buat/batalkan pilihan item 29 untuk tindakan massal." [ref=e372]
+                  - cell "20/05/2026 09:39" [ref=e373]:
+                    - link "20/05/2026 09:39" [ref=e374] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/29
+                      - generic [ref=e375]:
+                        - paragraph [ref=e376]: 20/05/2026
+                        - paragraph [ref=e377]: 09:39
+                  - cell "PR-20260522-2-001" [ref=e378]:
+                    - link "PR-20260522-2-001" [ref=e379] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/29
+                      - generic [ref=e380]: PR-20260522-2-001
+                  - cell "NUR - ADMIN JA2PALU" [ref=e381]:
+                    - link "NUR - ADMIN JA2PALU" [ref=e382] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/29
+                      - generic [ref=e383]: NUR - ADMIN JA2PALU
+                  - cell "Hibiscus Efsya" [ref=e384]:
+                    - link "Hibiscus Efsya" [ref=e385] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/29
+                      - generic [ref=e386]: Hibiscus Efsya
+                  - cell "GUDANG GARUT" [ref=e387]:
+                    - link "GUDANG GARUT" [ref=e388] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/29
+                      - generic [ref=e390]: GUDANG GARUT
+                  - cell "—" [ref=e391]:
+                    - link "—" [ref=e392] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/29
+                      - paragraph [ref=e394]: —
+                  - cell "Sedang" [ref=e395]:
+                    - link "Sedang" [ref=e396] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/29
+                      - generic [ref=e398]: Sedang
+                  - cell "Rp 5.193.600,00" [ref=e399]:
+                    - link "Rp 5.193.600,00" [ref=e400] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/29
+                      - generic [ref=e401]: Rp 5.193.600,00
+                  - cell "Canceled" [ref=e402]:
+                    - link "Canceled" [ref=e403] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/29
+                      - generic [ref=e405]: Canceled
+                  - cell "Lihat Ubah Hapus" [ref=e406]:
+                    - generic [ref=e407]:
+                      - link "Lihat" [ref=e408] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/pembelians/29
+                        - img [ref=e409]
+                        - text: Lihat
+                      - link "Ubah" [ref=e412] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/pembelians/29/edit
+                        - img [ref=e413]
+                        - text: Ubah
+                      - button "Hapus" [ref=e416] [cursor=pointer]:
+                        - img [ref=e417]
+                        - text: Hapus
+                - row "Buat/batalkan pilihan item 28 untuk tindakan massal. 25/04/2026 09:52 PR-20260429-2-002 NUR - ADMIN JA2PALU NUR - ADMIN JA2PALU GUDANG CIAMIS — Sedang Rp 11.672.671,20 Approved Lihat Ubah Hapus" [ref=e419]:
+                  - cell "Buat/batalkan pilihan item 28 untuk tindakan massal." [ref=e420]:
+                    - checkbox "Buat/batalkan pilihan item 28 untuk tindakan massal." [ref=e421]
+                  - cell "25/04/2026 09:52" [ref=e422]:
+                    - link "25/04/2026 09:52" [ref=e423] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/28
+                      - generic [ref=e424]:
+                        - paragraph [ref=e425]: 25/04/2026
+                        - paragraph [ref=e426]: 09:52
+                  - cell "PR-20260429-2-002" [ref=e427]:
+                    - link "PR-20260429-2-002" [ref=e428] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/28
+                      - generic [ref=e429]: PR-20260429-2-002
+                  - cell "NUR - ADMIN JA2PALU" [ref=e430]:
+                    - link "NUR - ADMIN JA2PALU" [ref=e431] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/28
+                      - generic [ref=e432]: NUR - ADMIN JA2PALU
+                  - cell "NUR - ADMIN JA2PALU" [ref=e433]:
+                    - link "NUR - ADMIN JA2PALU" [ref=e434] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/28
+                      - generic [ref=e435]: NUR - ADMIN JA2PALU
+                  - cell "GUDANG CIAMIS" [ref=e436]:
+                    - link "GUDANG CIAMIS" [ref=e437] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/28
+                      - generic [ref=e439]: GUDANG CIAMIS
+                  - cell "—" [ref=e440]:
+                    - link "—" [ref=e441] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/28
+                      - paragraph [ref=e443]: —
+                  - cell "Sedang" [ref=e444]:
+                    - link "Sedang" [ref=e445] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/28
+                      - generic [ref=e447]: Sedang
+                  - cell "Rp 11.672.671,20" [ref=e448]:
+                    - link "Rp 11.672.671,20" [ref=e449] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/28
+                      - generic [ref=e450]: Rp 11.672.671,20
+                  - cell "Approved" [ref=e451]:
+                    - link "Approved" [ref=e452] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/28
+                      - generic [ref=e454]: Approved
+                  - cell "Lihat Ubah Hapus" [ref=e455]:
+                    - generic [ref=e456]:
+                      - link "Lihat" [ref=e457] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/pembelians/28
+                        - img [ref=e458]
+                        - text: Lihat
+                      - link "Ubah" [ref=e461] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/pembelians/28/edit
+                        - img [ref=e462]
+                        - text: Ubah
+                      - button "Hapus" [ref=e465] [cursor=pointer]:
+                        - img [ref=e466]
+                        - text: Hapus
+                - row "Buat/batalkan pilihan item 27 untuk tindakan massal. 25/04/2026 09:50 PR-20260429-2-001 NUR - ADMIN JA2PALU Hibiscus Efsya GUDANG CIAMIS — Sedang Rp 11.789.887,20 Canceled Lihat Ubah Hapus" [ref=e468]:
+                  - cell "Buat/batalkan pilihan item 27 untuk tindakan massal." [ref=e469]:
+                    - checkbox "Buat/batalkan pilihan item 27 untuk tindakan massal." [ref=e470]
+                  - cell "25/04/2026 09:50" [ref=e471]:
+                    - link "25/04/2026 09:50" [ref=e472] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/27
+                      - generic [ref=e473]:
+                        - paragraph [ref=e474]: 25/04/2026
+                        - paragraph [ref=e475]: 09:50
+                  - cell "PR-20260429-2-001" [ref=e476]:
+                    - link "PR-20260429-2-001" [ref=e477] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/27
+                      - generic [ref=e478]: PR-20260429-2-001
+                  - cell "NUR - ADMIN JA2PALU" [ref=e479]:
+                    - link "NUR - ADMIN JA2PALU" [ref=e480] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/27
+                      - generic [ref=e481]: NUR - ADMIN JA2PALU
+                  - cell "Hibiscus Efsya" [ref=e482]:
+                    - link "Hibiscus Efsya" [ref=e483] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/27
+                      - generic [ref=e484]: Hibiscus Efsya
+                  - cell "GUDANG CIAMIS" [ref=e485]:
+                    - link "GUDANG CIAMIS" [ref=e486] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/27
+                      - generic [ref=e488]: GUDANG CIAMIS
+                  - cell "—" [ref=e489]:
+                    - link "—" [ref=e490] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/27
+                      - paragraph [ref=e492]: —
+                  - cell "Sedang" [ref=e493]:
+                    - link "Sedang" [ref=e494] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/27
+                      - generic [ref=e496]: Sedang
+                  - cell "Rp 11.789.887,20" [ref=e497]:
+                    - link "Rp 11.789.887,20" [ref=e498] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/27
+                      - generic [ref=e499]: Rp 11.789.887,20
+                  - cell "Canceled" [ref=e500]:
+                    - link "Canceled" [ref=e501] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/27
+                      - generic [ref=e503]: Canceled
+                  - cell "Lihat Ubah Hapus" [ref=e504]:
+                    - generic [ref=e505]:
+                      - link "Lihat" [ref=e506] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/pembelians/27
+                        - img [ref=e507]
+                        - text: Lihat
+                      - link "Ubah" [ref=e510] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/pembelians/27/edit
+                        - img [ref=e511]
+                        - text: Ubah
+                      - button "Hapus" [ref=e514] [cursor=pointer]:
+                        - img [ref=e515]
+                        - text: Hapus
+                - row "Buat/batalkan pilihan item 26 untuk tindakan massal. 25/04/2026 12:33 PR-20260428-2-002 NUR - ADMIN JA2PALU NUR - ADMIN JA2PALU GUDANG GARUT — Sedang Rp 11.672.671,20 Canceled Lihat Ubah Hapus" [ref=e517]:
+                  - cell "Buat/batalkan pilihan item 26 untuk tindakan massal." [ref=e518]:
+                    - checkbox "Buat/batalkan pilihan item 26 untuk tindakan massal." [ref=e519]
+                  - cell "25/04/2026 12:33" [ref=e520]:
+                    - link "25/04/2026 12:33" [ref=e521] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/26
+                      - generic [ref=e522]:
+                        - paragraph [ref=e523]: 25/04/2026
+                        - paragraph [ref=e524]: 12:33
+                  - cell "PR-20260428-2-002" [ref=e525]:
+                    - link "PR-20260428-2-002" [ref=e526] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/26
+                      - generic [ref=e527]: PR-20260428-2-002
+                  - cell "NUR - ADMIN JA2PALU" [ref=e528]:
+                    - link "NUR - ADMIN JA2PALU" [ref=e529] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/26
+                      - generic [ref=e530]: NUR - ADMIN JA2PALU
+                  - cell "NUR - ADMIN JA2PALU" [ref=e531]:
+                    - link "NUR - ADMIN JA2PALU" [ref=e532] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/26
+                      - generic [ref=e533]: NUR - ADMIN JA2PALU
+                  - cell "GUDANG GARUT" [ref=e534]:
+                    - link "GUDANG GARUT" [ref=e535] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/26
+                      - generic [ref=e537]: GUDANG GARUT
+                  - cell "—" [ref=e538]:
+                    - link "—" [ref=e539] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/26
+                      - paragraph [ref=e541]: —
+                  - cell "Sedang" [ref=e542]:
+                    - link "Sedang" [ref=e543] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/26
+                      - generic [ref=e545]: Sedang
+                  - cell "Rp 11.672.671,20" [ref=e546]:
+                    - link "Rp 11.672.671,20" [ref=e547] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/26
+                      - generic [ref=e548]: Rp 11.672.671,20
+                  - cell "Canceled" [ref=e549]:
+                    - link "Canceled" [ref=e550] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/26
+                      - generic [ref=e552]: Canceled
+                  - cell "Lihat Ubah Hapus" [ref=e553]:
+                    - generic [ref=e554]:
+                      - link "Lihat" [ref=e555] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/pembelians/26
+                        - img [ref=e556]
+                        - text: Lihat
+                      - link "Ubah" [ref=e559] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/pembelians/26/edit
+                        - img [ref=e560]
+                        - text: Ubah
+                      - button "Hapus" [ref=e563] [cursor=pointer]:
+                        - img [ref=e564]
+                        - text: Hapus
+                - row "Buat/batalkan pilihan item 25 untuk tindakan massal. 25/04/2026 12:27 PR-20260428-2-001 NUR - ADMIN JA2PALU Hibiscus Efsya GUDANG GARUT — Sedang Rp 11.672.671,20 Canceled Lihat Ubah Hapus" [ref=e566]:
+                  - cell "Buat/batalkan pilihan item 25 untuk tindakan massal." [ref=e567]:
+                    - checkbox "Buat/batalkan pilihan item 25 untuk tindakan massal." [ref=e568]
+                  - cell "25/04/2026 12:27" [ref=e569]:
+                    - link "25/04/2026 12:27" [ref=e570] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/25
+                      - generic [ref=e571]:
+                        - paragraph [ref=e572]: 25/04/2026
+                        - paragraph [ref=e573]: 12:27
+                  - cell "PR-20260428-2-001" [ref=e574]:
+                    - link "PR-20260428-2-001" [ref=e575] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/25
+                      - generic [ref=e576]: PR-20260428-2-001
+                  - cell "NUR - ADMIN JA2PALU" [ref=e577]:
+                    - link "NUR - ADMIN JA2PALU" [ref=e578] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/25
+                      - generic [ref=e579]: NUR - ADMIN JA2PALU
+                  - cell "Hibiscus Efsya" [ref=e580]:
+                    - link "Hibiscus Efsya" [ref=e581] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/25
+                      - generic [ref=e582]: Hibiscus Efsya
+                  - cell "GUDANG GARUT" [ref=e583]:
+                    - link "GUDANG GARUT" [ref=e584] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/25
+                      - generic [ref=e586]: GUDANG GARUT
+                  - cell "—" [ref=e587]:
+                    - link "—" [ref=e588] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/25
+                      - paragraph [ref=e590]: —
+                  - cell "Sedang" [ref=e591]:
+                    - link "Sedang" [ref=e592] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/25
+                      - generic [ref=e594]: Sedang
+                  - cell "Rp 11.672.671,20" [ref=e595]:
+                    - link "Rp 11.672.671,20" [ref=e596] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/25
+                      - generic [ref=e597]: Rp 11.672.671,20
+                  - cell "Canceled" [ref=e598]:
+                    - link "Canceled" [ref=e599] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/25
+                      - generic [ref=e601]: Canceled
+                  - cell "Lihat Ubah Hapus" [ref=e602]:
+                    - generic [ref=e603]:
+                      - link "Lihat" [ref=e604] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/pembelians/25
+                        - img [ref=e605]
+                        - text: Lihat
+                      - link "Ubah" [ref=e608] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/pembelians/25/edit
+                        - img [ref=e609]
+                        - text: Ubah
+                      - button "Hapus" [ref=e612] [cursor=pointer]:
+                        - img [ref=e613]
+                        - text: Hapus
+                - row "Buat/batalkan pilihan item 24 untuk tindakan massal. 10/04/2026 13:52 PR-20260414-2-001 NUR - ADMIN JA2PALU NUR - ADMIN JA2PALU GUDANG CIAMIS — Sedang Rp 8.621.013,60 Approved Lihat Ubah Hapus" [ref=e615]:
+                  - cell "Buat/batalkan pilihan item 24 untuk tindakan massal." [ref=e616]:
+                    - checkbox "Buat/batalkan pilihan item 24 untuk tindakan massal." [ref=e617]
+                  - cell "10/04/2026 13:52" [ref=e618]:
+                    - link "10/04/2026 13:52" [ref=e619] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/24
+                      - generic [ref=e620]:
+                        - paragraph [ref=e621]: 10/04/2026
+                        - paragraph [ref=e622]: 13:52
+                  - cell "PR-20260414-2-001" [ref=e623]:
+                    - link "PR-20260414-2-001" [ref=e624] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/24
+                      - generic [ref=e625]: PR-20260414-2-001
+                  - cell "NUR - ADMIN JA2PALU" [ref=e626]:
+                    - link "NUR - ADMIN JA2PALU" [ref=e627] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/24
+                      - generic [ref=e628]: NUR - ADMIN JA2PALU
+                  - cell "NUR - ADMIN JA2PALU" [ref=e629]:
+                    - link "NUR - ADMIN JA2PALU" [ref=e630] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/24
+                      - generic [ref=e631]: NUR - ADMIN JA2PALU
+                  - cell "GUDANG CIAMIS" [ref=e632]:
+                    - link "GUDANG CIAMIS" [ref=e633] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/24
+                      - generic [ref=e635]: GUDANG CIAMIS
+                  - cell "—" [ref=e636]:
+                    - link "—" [ref=e637] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/24
+                      - paragraph [ref=e639]: —
+                  - cell "Sedang" [ref=e640]:
+                    - link "Sedang" [ref=e641] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/24
+                      - generic [ref=e643]: Sedang
+                  - cell "Rp 8.621.013,60" [ref=e644]:
+                    - link "Rp 8.621.013,60" [ref=e645] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/24
+                      - generic [ref=e646]: Rp 8.621.013,60
+                  - cell "Approved" [ref=e647]:
+                    - link "Approved" [ref=e648] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/24
+                      - generic [ref=e650]: Approved
+                  - cell "Lihat Ubah Hapus" [ref=e651]:
+                    - generic [ref=e652]:
+                      - link "Lihat" [ref=e653] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/pembelians/24
+                        - img [ref=e654]
+                        - text: Lihat
+                      - link "Ubah" [ref=e657] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/pembelians/24/edit
+                        - img [ref=e658]
+                        - text: Ubah
+                      - button "Hapus" [ref=e661] [cursor=pointer]:
+                        - img [ref=e662]
+                        - text: Hapus
+                - row "Buat/batalkan pilihan item 23 untuk tindakan massal. 10/04/2026 06:03 PR-20260414-22-003 Assistant HE M.B.K Hibiscus Efsya GUDANG CIAMIS — Sedang Rp 10.957.860,00 Canceled Lihat Ubah Hapus" [ref=e664]:
+                  - cell "Buat/batalkan pilihan item 23 untuk tindakan massal." [ref=e665]:
+                    - checkbox "Buat/batalkan pilihan item 23 untuk tindakan massal." [ref=e666]
+                  - cell "10/04/2026 06:03" [ref=e667]:
+                    - link "10/04/2026 06:03" [ref=e668] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/23
+                      - generic [ref=e669]:
+                        - paragraph [ref=e670]: 10/04/2026
+                        - paragraph [ref=e671]: 06:03
+                  - cell "PR-20260414-22-003" [ref=e672]:
+                    - link "PR-20260414-22-003" [ref=e673] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/23
+                      - generic [ref=e674]: PR-20260414-22-003
+                  - cell "Assistant HE M.B.K" [ref=e675]:
+                    - link "Assistant HE M.B.K" [ref=e676] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/23
+                      - generic [ref=e677]: Assistant HE M.B.K
+                  - cell "Hibiscus Efsya" [ref=e678]:
+                    - link "Hibiscus Efsya" [ref=e679] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/23
+                      - generic [ref=e680]: Hibiscus Efsya
+                  - cell "GUDANG CIAMIS" [ref=e681]:
+                    - link "GUDANG CIAMIS" [ref=e682] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/23
+                      - generic [ref=e684]: GUDANG CIAMIS
+                  - cell "—" [ref=e685]:
+                    - link "—" [ref=e686] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/23
+                      - paragraph [ref=e688]: —
+                  - cell "Sedang" [ref=e689]:
+                    - link "Sedang" [ref=e690] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/23
+                      - generic [ref=e692]: Sedang
+                  - cell "Rp 10.957.860,00" [ref=e693]:
+                    - link "Rp 10.957.860,00" [ref=e694] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/23
+                      - generic [ref=e695]: Rp 10.957.860,00
+                  - cell "Canceled" [ref=e696]:
+                    - link "Canceled" [ref=e697] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/23
+                      - generic [ref=e699]: Canceled
+                  - cell "Lihat Ubah Hapus" [ref=e700]:
+                    - generic [ref=e701]:
+                      - link "Lihat" [ref=e702] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/pembelians/23
+                        - img [ref=e703]
+                        - text: Lihat
+                      - link "Ubah" [ref=e706] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/pembelians/23/edit
+                        - img [ref=e707]
+                        - text: Ubah
+                      - button "Hapus" [ref=e710] [cursor=pointer]:
+                        - img [ref=e711]
+                        - text: Hapus
+                - row "Buat/batalkan pilihan item 22 untuk tindakan massal. 10/04/2026 06:00 PR-20260414-22-002 Assistant HE M.B.K Hibiscus Efsya GUDANG PALEMBANG — Sedang Rp 116.200.000,00 Pending Lihat Ubah Hapus" [ref=e713]:
+                  - cell "Buat/batalkan pilihan item 22 untuk tindakan massal." [ref=e714]:
+                    - checkbox "Buat/batalkan pilihan item 22 untuk tindakan massal." [ref=e715]
+                  - cell "10/04/2026 06:00" [ref=e716]:
+                    - link "10/04/2026 06:00" [ref=e717] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/22
+                      - generic [ref=e718]:
+                        - paragraph [ref=e719]: 10/04/2026
+                        - paragraph [ref=e720]: 06:00
+                  - cell "PR-20260414-22-002" [ref=e721]:
+                    - link "PR-20260414-22-002" [ref=e722] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/22
+                      - generic [ref=e723]: PR-20260414-22-002
+                  - cell "Assistant HE M.B.K" [ref=e724]:
+                    - link "Assistant HE M.B.K" [ref=e725] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/22
+                      - generic [ref=e726]: Assistant HE M.B.K
+                  - cell "Hibiscus Efsya" [ref=e727]:
+                    - link "Hibiscus Efsya" [ref=e728] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/22
+                      - generic [ref=e729]: Hibiscus Efsya
+                  - cell "GUDANG PALEMBANG" [ref=e730]:
+                    - link "GUDANG PALEMBANG" [ref=e731] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/22
+                      - generic [ref=e733]: GUDANG PALEMBANG
+                  - cell "—" [ref=e734]:
+                    - link "—" [ref=e735] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/22
+                      - paragraph [ref=e737]: —
+                  - cell "Sedang" [ref=e738]:
+                    - link "Sedang" [ref=e739] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/22
+                      - generic [ref=e741]: Sedang
+                  - cell "Rp 116.200.000,00" [ref=e742]:
+                    - link "Rp 116.200.000,00" [ref=e743] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/22
+                      - generic [ref=e744]: Rp 116.200.000,00
+                  - cell "Pending" [ref=e745]:
+                    - link "Pending" [ref=e746] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/22
+                      - generic [ref=e748]: Pending
+                  - cell "Lihat Ubah Hapus" [ref=e749]:
+                    - generic [ref=e750]:
+                      - link "Lihat" [ref=e751] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/pembelians/22
+                        - img [ref=e752]
+                        - text: Lihat
+                      - link "Ubah" [ref=e755] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/pembelians/22/edit
+                        - img [ref=e756]
+                        - text: Ubah
+                      - button "Hapus" [ref=e759] [cursor=pointer]:
+                        - img [ref=e760]
+                        - text: Hapus
+                - row "Buat/batalkan pilihan item 21 untuk tindakan massal. 07/04/2026 05:58 PR-20260414-22-001 Assistant HE M.B.K Hibiscus Efsya GUDANG PALEMBANG — Sedang Rp 27.628.620,00 Pending Lihat Ubah Hapus" [ref=e762]:
+                  - cell "Buat/batalkan pilihan item 21 untuk tindakan massal." [ref=e763]:
+                    - checkbox "Buat/batalkan pilihan item 21 untuk tindakan massal." [ref=e764]
+                  - cell "07/04/2026 05:58" [ref=e765]:
+                    - link "07/04/2026 05:58" [ref=e766] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/21
+                      - generic [ref=e767]:
+                        - paragraph [ref=e768]: 07/04/2026
+                        - paragraph [ref=e769]: 05:58
+                  - cell "PR-20260414-22-001" [ref=e770]:
+                    - link "PR-20260414-22-001" [ref=e771] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/21
+                      - generic [ref=e772]: PR-20260414-22-001
+                  - cell "Assistant HE M.B.K" [ref=e773]:
+                    - link "Assistant HE M.B.K" [ref=e774] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/21
+                      - generic [ref=e775]: Assistant HE M.B.K
+                  - cell "Hibiscus Efsya" [ref=e776]:
+                    - link "Hibiscus Efsya" [ref=e777] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/21
+                      - generic [ref=e778]: Hibiscus Efsya
+                  - cell "GUDANG PALEMBANG" [ref=e779]:
+                    - link "GUDANG PALEMBANG" [ref=e780] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/21
+                      - generic [ref=e782]: GUDANG PALEMBANG
+                  - cell "—" [ref=e783]:
+                    - link "—" [ref=e784] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/21
+                      - paragraph [ref=e786]: —
+                  - cell "Sedang" [ref=e787]:
+                    - link "Sedang" [ref=e788] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/21
+                      - generic [ref=e790]: Sedang
+                  - cell "Rp 27.628.620,00" [ref=e791]:
+                    - link "Rp 27.628.620,00" [ref=e792] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/21
+                      - generic [ref=e793]: Rp 27.628.620,00
+                  - cell "Pending" [ref=e794]:
+                    - link "Pending" [ref=e795] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/pembelians/21
+                      - generic [ref=e797]: Pending
+                  - cell "Lihat Ubah Hapus" [ref=e798]:
+                    - generic [ref=e799]:
+                      - link "Lihat" [ref=e800] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/pembelians/21
+                        - img [ref=e801]
+                        - text: Lihat
+                      - link "Ubah" [ref=e804] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/pembelians/21/edit
+                        - img [ref=e805]
+                        - text: Ubah
+                      - button "Hapus" [ref=e808] [cursor=pointer]:
+                        - img [ref=e809]
+                        - text: Hapus
+            - navigation "Navigasi halaman" [ref=e811]:
+              - generic [ref=e812]: Menampilkan 1 sampai 10 dari 17 hasil
+              - generic [ref=e815]:
+                - generic [ref=e817]: per halaman
+                - combobox "per halaman" [ref=e819]:
+                  - option "5"
+                  - option "10" [selected]
+                  - option "25"
+                  - option "50"
+              - list [ref=e820]:
+                - listitem [ref=e821]:
+                  - button "Ke halaman 1" [ref=e822] [cursor=pointer]:
+                    - generic [ref=e823]: "1"
+                - listitem [ref=e824]:
+                  - button "Ke halaman 2" [ref=e825] [cursor=pointer]:
+                    - generic [ref=e826]: "2"
+                - listitem [ref=e827]:
+                  - button "Selanjutnya" [ref=e828] [cursor=pointer]:
+                    - img [ref=e829]
+  - generic:
+    - status

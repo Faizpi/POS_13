@@ -1,0 +1,913 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e3]:
+    - generic [ref=e4]:
+      - button "Persempit menu" [ref=e6] [cursor=pointer]:
+        - img [ref=e7]
+      - link "Hibiscus Efsya POS" [ref=e9] [cursor=pointer]:
+        - /url: https://new.hibiscusefsya.com/app
+        - generic [ref=e10]: Hibiscus Efsya POS
+    - generic [ref=e11]:
+      - generic [ref=e14]:
+        - generic [ref=e15]: Pencarian global
+        - generic [ref=e16]:
+          - img [ref=e18]
+          - searchbox "Pencarian global" [ref=e21]
+      - button "Buka notifikasi" [ref=e25] [cursor=pointer]:
+        - img [ref=e26]
+      - button "Menu pengguna" [ref=e30] [cursor=pointer]:
+        - img "Avatar Hibiscus Efsya" [ref=e31]
+  - generic [ref=e32]:
+    - complementary [ref=e34]:
+      - navigation [ref=e35]:
+        - list [ref=e36]:
+          - listitem [ref=e37]:
+            - list [ref=e38]:
+              - listitem [ref=e39]:
+                - link "Dasbor" [ref=e40] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app
+                  - img [ref=e41]
+                  - generic [ref=e43]: Dasbor
+              - listitem [ref=e44]:
+                - link "Profil Saya" [ref=e45] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/profile-page
+                  - img [ref=e46]
+                  - generic [ref=e48]: Profil Saya
+          - listitem [ref=e49]:
+            - generic [ref=e50] [cursor=pointer]:
+              - generic [ref=e51]: Neraca
+              - button "Neraca" [expanded] [ref=e52]:
+                - img [ref=e53]
+            - list [ref=e55]:
+              - listitem [ref=e56]:
+                - link "Neraca" [ref=e57] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/neraca-page
+                  - img [ref=e58]
+                  - generic [ref=e60]: Neraca
+          - listitem [ref=e61]:
+            - generic [ref=e62] [cursor=pointer]:
+              - generic [ref=e63]: Kunjungan
+              - button "Kunjungan" [expanded] [ref=e64]:
+                - img [ref=e65]
+            - list [ref=e67]:
+              - listitem [ref=e68]:
+                - link "Buat Kunjungan 204" [ref=e69] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/kunjungans
+                  - img [ref=e70]
+                  - generic [ref=e73]: Buat Kunjungan
+                  - generic [ref=e77]: "204"
+          - listitem [ref=e78]:
+            - generic [ref=e79] [cursor=pointer]:
+              - generic [ref=e80]: Biaya
+              - button "Biaya" [expanded] [ref=e81]:
+                - img [ref=e82]
+            - list [ref=e84]:
+              - listitem [ref=e85]:
+                - link "Buat Biaya 23" [ref=e86] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/biayas
+                  - img [ref=e87]
+                  - generic [ref=e89]: Buat Biaya
+                  - generic [ref=e93]: "23"
+          - listitem [ref=e94]:
+            - generic [ref=e95] [cursor=pointer]:
+              - generic [ref=e96]: Piutang
+              - button "Piutang" [expanded] [ref=e97]:
+                - img [ref=e98]
+            - list [ref=e100]:
+              - listitem [ref=e101]:
+                - link "Dashboard Piutang" [ref=e102] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/piutang-page
+                  - img [ref=e103]
+                  - generic [ref=e105]: Dashboard Piutang
+              - listitem [ref=e106]:
+                - link "Buat Penjualan 183" [ref=e107] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/penjualans
+                  - img [ref=e108]
+                  - generic [ref=e110]: Buat Penjualan
+                  - generic [ref=e114]: "183"
+              - listitem [ref=e115]:
+                - link "Pembayaran Piutang 22" [ref=e116] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/pembayarans
+                  - img [ref=e117]
+                  - generic [ref=e119]: Pembayaran Piutang
+                  - generic [ref=e123]: "22"
+          - listitem [ref=e124]:
+            - generic [ref=e125] [cursor=pointer]:
+              - generic [ref=e126]: Hutang
+              - button "Hutang" [expanded] [ref=e127]:
+                - img [ref=e128]
+            - list [ref=e130]:
+              - listitem [ref=e131]:
+                - link "Dashboard Hutang" [ref=e132] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/hutang-page
+                  - img [ref=e133]
+                  - generic [ref=e135]: Dashboard Hutang
+              - listitem [ref=e136]:
+                - link "Buat Pembelian 4" [ref=e137] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/pembelians
+                  - img [ref=e138]
+                  - generic [ref=e140]: Buat Pembelian
+                  - generic [ref=e144]: "4"
+              - listitem [ref=e145]:
+                - link "Buat Penerimaan Barang" [ref=e146] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/penerimaan-barangs
+                  - img [ref=e147]
+                  - generic [ref=e149]: Buat Penerimaan Barang
+              - listitem [ref=e150]:
+                - link "Pembayaran Hutang" [ref=e151] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/pembayaran-hutangs
+                  - img [ref=e152]
+                  - generic [ref=e154]: Pembayaran Hutang
+          - listitem [ref=e155]:
+            - generic [ref=e156] [cursor=pointer]:
+              - generic [ref=e157]: Gudang
+              - button "Gudang" [expanded] [ref=e158]:
+                - img [ref=e159]
+            - list [ref=e161]:
+              - listitem [ref=e162]:
+                - link "Dashboard" [ref=e163] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/stok-page
+                  - img [ref=e164]
+                  - generic [ref=e166]: Dashboard
+              - listitem [ref=e167]:
+                - link "Stock Opname" [ref=e168] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/stock-opnames
+                  - img [ref=e169]
+                  - generic [ref=e171]: Stock Opname
+              - listitem [ref=e172]:
+                - link "Riwayat Stok" [ref=e173] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/stok-log-page
+                  - img [ref=e174]
+                  - generic [ref=e176]: Riwayat Stok
+          - listitem [ref=e177]:
+            - generic [ref=e178] [cursor=pointer]:
+              - generic [ref=e179]: Kontak
+              - button "Kontak" [expanded] [ref=e180]:
+                - img [ref=e181]
+            - list [ref=e183]:
+              - listitem [ref=e184]:
+                - link "Buat Kontak" [ref=e185] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/kontaks
+                  - img [ref=e186]
+                  - generic [ref=e188]: Buat Kontak
+              - listitem [ref=e189]:
+                - link "Catatan Hutang" [ref=e190] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/catatan-hutang
+                  - img [ref=e191]
+                  - generic [ref=e193]: Catatan Hutang
+          - listitem [ref=e194]:
+            - generic [ref=e195] [cursor=pointer]:
+              - generic [ref=e196]: Pengaturan
+              - button "Pengaturan" [expanded] [ref=e197]:
+                - img [ref=e198]
+            - list [ref=e200]:
+              - listitem [ref=e201]:
+                - link "Tutup Buku & Backup" [ref=e202] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/tutup-buku
+                  - img [ref=e203]
+                  - generic [ref=e205]: Tutup Buku & Backup
+              - listitem [ref=e206]:
+                - link "Pengguna" [ref=e207] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/users
+                  - img [ref=e208]
+                  - generic [ref=e210]: Pengguna
+              - listitem [ref=e211]:
+                - link "Gudang" [ref=e212] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/gudangs
+                  - img [ref=e213]
+                  - generic [ref=e215]: Gudang
+              - listitem [ref=e216]:
+                - link "Produk" [ref=e217] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/produks
+                  - img [ref=e218]
+                  - generic [ref=e220]: Produk
+    - main [ref=e222]:
+      - generic [ref=e224]:
+        - generic [ref=e225]:
+          - generic [ref=e226]:
+            - navigation [ref=e227]:
+              - list [ref=e228]:
+                - listitem [ref=e229]:
+                  - link "Pengguna" [ref=e230] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users
+                - listitem [ref=e231]:
+                  - img [ref=e232]
+                  - generic [ref=e234]: Daftar
+            - heading "Pengguna" [level=1] [ref=e235]
+          - link "Buat Pengguna" [ref=e238] [cursor=pointer]:
+            - /url: https://new.hibiscusefsya.com/app/users/create
+        - generic [ref=e246]:
+          - generic [ref=e249]:
+            - generic [ref=e250]:
+              - generic [ref=e251]: Cari
+              - generic [ref=e252]:
+                - img [ref=e254]
+                - searchbox "Cari" [ref=e257]
+            - button "Filter" [ref=e260] [cursor=pointer]:
+              - img [ref=e261]
+              - generic [ref=e264]: "0"
+            - button "Pilih kolom" [ref=e267] [cursor=pointer]:
+              - img [ref=e268]
+          - table [ref=e271]:
+            - rowgroup [ref=e272]:
+              - row "Buat/batalkan pilihan semua item untuk tindakan massal. Nama Role Gudang Gudang Multi Email WA Exp PDF Exp Excel Aksi" [ref=e273]:
+                - columnheader "Buat/batalkan pilihan semua item untuk tindakan massal." [ref=e274]:
+                  - checkbox "Buat/batalkan pilihan semua item untuk tindakan massal." [ref=e275]
+                - columnheader [ref=e276]
+                - columnheader "Nama" [ref=e277]:
+                  - button "Nama" [ref=e278] [cursor=pointer]:
+                    - text: Nama
+                    - img [ref=e279]
+                - columnheader "Role" [ref=e281]
+                - columnheader "Gudang" [ref=e282]
+                - columnheader "Gudang Multi" [ref=e283]
+                - columnheader "Email" [ref=e284]
+                - columnheader "WA" [ref=e285]
+                - columnheader "Exp PDF" [ref=e286]
+                - columnheader "Exp Excel" [ref=e287]
+                - columnheader "Aksi" [ref=e288]
+            - rowgroup [ref=e289]:
+              - row "Buat/batalkan pilihan item 1 untuk tindakan massal. Hibiscus Efsya jurnal@hibiscusefsya.com Super Admin — — Ubah" [ref=e290]:
+                - cell "Buat/batalkan pilihan item 1 untuk tindakan massal." [ref=e291]:
+                  - checkbox "Buat/batalkan pilihan item 1 untuk tindakan massal." [ref=e292]
+                - cell [ref=e293]:
+                  - link [ref=e294] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/1/edit
+                    - img [ref=e296]
+                - cell "Hibiscus Efsya jurnal@hibiscusefsya.com" [ref=e297]:
+                  - link "Hibiscus Efsya jurnal@hibiscusefsya.com" [ref=e298] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/1/edit
+                    - generic [ref=e299]:
+                      - paragraph [ref=e300]: Hibiscus Efsya
+                      - paragraph [ref=e301]: jurnal@hibiscusefsya.com
+                - cell "Super Admin" [ref=e302]:
+                  - link "Super Admin" [ref=e303] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/1/edit
+                    - generic [ref=e305]:
+                      - img [ref=e306]
+                      - text: Super Admin
+                - cell "—" [ref=e308]:
+                  - link "—" [ref=e309] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/1/edit
+                    - paragraph [ref=e311]: —
+                - cell "—" [ref=e312]:
+                  - link "—" [ref=e313] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/1/edit
+                    - paragraph [ref=e315]: —
+                - cell [ref=e316]:
+                  - switch [ref=e319] [cursor=pointer]:
+                    - generic:
+                      - generic:
+                        - img
+                      - generic:
+                        - img
+                - cell [ref=e320]:
+                  - switch [checked] [ref=e323] [cursor=pointer]:
+                    - generic:
+                      - generic:
+                        - img
+                      - generic:
+                        - img
+                - cell [ref=e324]:
+                  - generic [ref=e326]:
+                    - switch:
+                      - generic:
+                        - generic:
+                          - img
+                        - generic:
+                          - img
+                - cell [ref=e327]:
+                  - generic [ref=e329]:
+                    - switch:
+                      - generic:
+                        - generic:
+                          - img
+                        - generic:
+                          - img
+                - cell "Ubah" [ref=e330]:
+                  - link "Ubah" [ref=e332] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/1/edit
+                    - img [ref=e333]
+                    - text: Ubah
+              - row "Buat/batalkan pilihan item 4 untuk tindakan massal. Syifa Yasfani hibiscusefsya@gmail.com Super Admin — — Ubah Hapus" [ref=e336]:
+                - cell "Buat/batalkan pilihan item 4 untuk tindakan massal." [ref=e337]:
+                  - checkbox "Buat/batalkan pilihan item 4 untuk tindakan massal." [ref=e338]
+                - cell [ref=e339]:
+                  - link [ref=e340] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/4/edit
+                    - img [ref=e342]
+                - cell "Syifa Yasfani hibiscusefsya@gmail.com" [ref=e343]:
+                  - link "Syifa Yasfani hibiscusefsya@gmail.com" [ref=e344] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/4/edit
+                    - generic [ref=e345]:
+                      - paragraph [ref=e346]: Syifa Yasfani
+                      - paragraph [ref=e347]: hibiscusefsya@gmail.com
+                - cell "Super Admin" [ref=e348]:
+                  - link "Super Admin" [ref=e349] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/4/edit
+                    - generic [ref=e351]:
+                      - img [ref=e352]
+                      - text: Super Admin
+                - cell "—" [ref=e354]:
+                  - link "—" [ref=e355] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/4/edit
+                    - paragraph [ref=e357]: —
+                - cell "—" [ref=e358]:
+                  - link "—" [ref=e359] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/4/edit
+                    - paragraph [ref=e361]: —
+                - cell [ref=e362]:
+                  - switch [checked] [ref=e365] [cursor=pointer]:
+                    - generic:
+                      - generic:
+                        - img
+                      - generic:
+                        - img
+                - cell [ref=e366]:
+                  - switch [checked] [ref=e369] [cursor=pointer]:
+                    - generic:
+                      - generic:
+                        - img
+                      - generic:
+                        - img
+                - cell [ref=e370]:
+                  - generic [ref=e372]:
+                    - switch:
+                      - generic:
+                        - generic:
+                          - img
+                        - generic:
+                          - img
+                - cell [ref=e373]:
+                  - generic [ref=e375]:
+                    - switch:
+                      - generic:
+                        - generic:
+                          - img
+                        - generic:
+                          - img
+                - cell "Ubah Hapus" [ref=e376]:
+                  - generic [ref=e377]:
+                    - link "Ubah" [ref=e378] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/users/4/edit
+                      - img [ref=e379]
+                      - text: Ubah
+                    - button "Hapus" [ref=e382] [cursor=pointer]:
+                      - img [ref=e383]
+                      - text: Hapus
+              - row "Buat/batalkan pilihan item 18 untuk tindakan massal. E TEAMS eteam@hibiscusefsya.com Spectator — — Ubah Hapus" [ref=e385]:
+                - cell "Buat/batalkan pilihan item 18 untuk tindakan massal." [ref=e386]:
+                  - checkbox "Buat/batalkan pilihan item 18 untuk tindakan massal." [ref=e387]
+                - cell [ref=e388]:
+                  - link [ref=e389] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/18/edit
+                    - img [ref=e391]
+                - cell "E TEAMS eteam@hibiscusefsya.com" [ref=e392]:
+                  - link "E TEAMS eteam@hibiscusefsya.com" [ref=e393] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/18/edit
+                    - generic [ref=e394]:
+                      - paragraph [ref=e395]: E TEAMS
+                      - paragraph [ref=e396]: eteam@hibiscusefsya.com
+                - cell "Spectator" [ref=e397]:
+                  - link "Spectator" [ref=e398] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/18/edit
+                    - generic [ref=e400]:
+                      - img [ref=e401]
+                      - text: Spectator
+                - cell "—" [ref=e404]:
+                  - link "—" [ref=e405] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/18/edit
+                    - paragraph [ref=e407]: —
+                - cell "—" [ref=e408]:
+                  - link "—" [ref=e409] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/18/edit
+                    - paragraph [ref=e411]: —
+                - cell [ref=e412]:
+                  - switch [checked] [ref=e415] [cursor=pointer]:
+                    - generic:
+                      - generic:
+                        - img
+                      - generic:
+                        - img
+                - cell [ref=e416]:
+                  - switch [checked] [ref=e419] [cursor=pointer]:
+                    - generic:
+                      - generic:
+                        - img
+                      - generic:
+                        - img
+                - cell [ref=e420]:
+                  - generic [ref=e422]:
+                    - switch:
+                      - generic:
+                        - generic:
+                          - img
+                        - generic:
+                          - img
+                - cell [ref=e423]:
+                  - generic [ref=e425]:
+                    - switch:
+                      - generic:
+                        - generic:
+                          - img
+                        - generic:
+                          - img
+                - cell "Ubah Hapus" [ref=e426]:
+                  - generic [ref=e427]:
+                    - link "Ubah" [ref=e428] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/users/18/edit
+                      - img [ref=e429]
+                      - text: Ubah
+                    - button "Hapus" [ref=e432] [cursor=pointer]:
+                      - img [ref=e433]
+                      - text: Hapus
+              - row "Buat/batalkan pilihan item 22 untuk tindakan massal. Assistant HE M.B.K Support@hibiscusefsya.com Admin — GUDANG JAKARTA GUDANG PALEMBANG Tampilkan 3 lainnya Ubah Hapus" [ref=e435]:
+                - cell "Buat/batalkan pilihan item 22 untuk tindakan massal." [ref=e436]:
+                  - checkbox "Buat/batalkan pilihan item 22 untuk tindakan massal." [ref=e437]
+                - cell [ref=e438]:
+                  - link [ref=e439] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/22/edit
+                    - img [ref=e441]
+                - cell "Assistant HE M.B.K Support@hibiscusefsya.com" [ref=e442]:
+                  - link "Assistant HE M.B.K Support@hibiscusefsya.com" [ref=e443] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/22/edit
+                    - generic [ref=e444]:
+                      - paragraph [ref=e445]: Assistant HE M.B.K
+                      - paragraph [ref=e446]: Support@hibiscusefsya.com
+                - cell "Admin" [ref=e447]:
+                  - link "Admin" [ref=e448] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/22/edit
+                    - generic [ref=e450]:
+                      - img [ref=e451]
+                      - text: Admin
+                - cell "—" [ref=e453]:
+                  - link "—" [ref=e454] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/22/edit
+                    - paragraph [ref=e456]: —
+                - cell "GUDANG JAKARTA GUDANG PALEMBANG Tampilkan 3 lainnya" [ref=e457]:
+                  - link "GUDANG JAKARTA GUDANG PALEMBANG Tampilkan 3 lainnya" [ref=e458] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/22/edit
+                    - generic [ref=e459]:
+                      - list [ref=e460]:
+                        - listitem [ref=e461]:
+                          - generic [ref=e462]: GUDANG JAKARTA
+                        - listitem [ref=e463]:
+                          - generic [ref=e464]: GUDANG PALEMBANG
+                      - button "Tampilkan 3 lainnya" [ref=e466]
+                - cell [ref=e467]:
+                  - switch [ref=e470] [cursor=pointer]:
+                    - generic:
+                      - generic:
+                        - img
+                      - generic:
+                        - img
+                - cell [ref=e471]:
+                  - switch [checked] [ref=e474] [cursor=pointer]:
+                    - generic:
+                      - generic:
+                        - img
+                      - generic:
+                        - img
+                - cell [ref=e475]:
+                  - switch [ref=e478] [cursor=pointer]:
+                    - generic:
+                      - generic:
+                        - img
+                      - generic:
+                        - img
+                - cell [ref=e479]:
+                  - switch [ref=e482] [cursor=pointer]:
+                    - generic:
+                      - generic:
+                        - img
+                      - generic:
+                        - img
+                - cell "Ubah Hapus" [ref=e483]:
+                  - generic [ref=e484]:
+                    - link "Ubah" [ref=e485] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/users/22/edit
+                      - img [ref=e486]
+                      - text: Ubah
+                    - button "Hapus" [ref=e489] [cursor=pointer]:
+                      - img [ref=e490]
+                      - text: Hapus
+              - row "Buat/batalkan pilihan item 2 untuk tindakan massal. NUR - ADMIN JA2PALU akuntanefsya@gmail.com Admin — GUDANG JAKARTA GUDANG PALEMBANG Tampilkan 3 lainnya Ubah Hapus" [ref=e492]:
+                - cell "Buat/batalkan pilihan item 2 untuk tindakan massal." [ref=e493]:
+                  - checkbox "Buat/batalkan pilihan item 2 untuk tindakan massal." [ref=e494]
+                - cell [ref=e495]:
+                  - link [ref=e496] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/2/edit
+                    - img [ref=e498]
+                - cell "NUR - ADMIN JA2PALU akuntanefsya@gmail.com" [ref=e499]:
+                  - link "NUR - ADMIN JA2PALU akuntanefsya@gmail.com" [ref=e500] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/2/edit
+                    - generic [ref=e501]:
+                      - paragraph [ref=e502]: NUR - ADMIN JA2PALU
+                      - paragraph [ref=e503]: akuntanefsya@gmail.com
+                - cell "Admin" [ref=e504]:
+                  - link "Admin" [ref=e505] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/2/edit
+                    - generic [ref=e507]:
+                      - img [ref=e508]
+                      - text: Admin
+                - cell "—" [ref=e510]:
+                  - link "—" [ref=e511] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/2/edit
+                    - paragraph [ref=e513]: —
+                - cell "GUDANG JAKARTA GUDANG PALEMBANG Tampilkan 3 lainnya" [ref=e514]:
+                  - link "GUDANG JAKARTA GUDANG PALEMBANG Tampilkan 3 lainnya" [ref=e515] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/2/edit
+                    - generic [ref=e516]:
+                      - list [ref=e517]:
+                        - listitem [ref=e518]:
+                          - generic [ref=e519]: GUDANG JAKARTA
+                        - listitem [ref=e520]:
+                          - generic [ref=e521]: GUDANG PALEMBANG
+                      - button "Tampilkan 3 lainnya" [ref=e523]
+                - cell [ref=e524]:
+                  - switch [checked] [ref=e527] [cursor=pointer]:
+                    - generic:
+                      - generic:
+                        - img
+                      - generic:
+                        - img
+                - cell [ref=e528]:
+                  - switch [checked] [ref=e531] [cursor=pointer]:
+                    - generic:
+                      - generic:
+                        - img
+                      - generic:
+                        - img
+                - cell [ref=e532]:
+                  - switch [checked] [ref=e535] [cursor=pointer]:
+                    - generic:
+                      - generic:
+                        - img
+                      - generic:
+                        - img
+                - cell [ref=e536]:
+                  - switch [ref=e539] [cursor=pointer]:
+                    - generic:
+                      - generic:
+                        - img
+                      - generic:
+                        - img
+                - cell "Ubah Hapus" [ref=e540]:
+                  - generic [ref=e541]:
+                    - link "Ubah" [ref=e542] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/users/2/edit
+                      - img [ref=e543]
+                      - text: Ubah
+                    - button "Hapus" [ref=e546] [cursor=pointer]:
+                      - img [ref=e547]
+                      - text: Hapus
+              - row "Buat/batalkan pilihan item 24 untuk tindakan massal. faiz tes jakarta admin faiztesadmin@gmail.com Admin — GUDANG JAKARTA Ubah Hapus" [ref=e549]:
+                - cell "Buat/batalkan pilihan item 24 untuk tindakan massal." [ref=e550]:
+                  - checkbox "Buat/batalkan pilihan item 24 untuk tindakan massal." [ref=e551]
+                - cell [ref=e552]:
+                  - link [ref=e553] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/24/edit
+                    - img [ref=e555]
+                - cell "faiz tes jakarta admin faiztesadmin@gmail.com" [ref=e556]:
+                  - link "faiz tes jakarta admin faiztesadmin@gmail.com" [ref=e557] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/24/edit
+                    - generic [ref=e558]:
+                      - paragraph [ref=e559]: faiz tes jakarta admin
+                      - paragraph [ref=e560]: faiztesadmin@gmail.com
+                - cell "Admin" [ref=e561]:
+                  - link "Admin" [ref=e562] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/24/edit
+                    - generic [ref=e564]:
+                      - img [ref=e565]
+                      - text: Admin
+                - cell "—" [ref=e567]:
+                  - link "—" [ref=e568] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/24/edit
+                    - paragraph [ref=e570]: —
+                - cell "GUDANG JAKARTA" [ref=e571]:
+                  - link "GUDANG JAKARTA" [ref=e572] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/24/edit
+                    - generic [ref=e574]: GUDANG JAKARTA
+                - cell [ref=e575]:
+                  - switch [ref=e578] [cursor=pointer]:
+                    - generic:
+                      - generic:
+                        - img
+                      - generic:
+                        - img
+                - cell [ref=e579]:
+                  - switch [checked] [ref=e582] [cursor=pointer]:
+                    - generic:
+                      - generic:
+                        - img
+                      - generic:
+                        - img
+                - cell [ref=e583]:
+                  - switch [ref=e586] [cursor=pointer]:
+                    - generic:
+                      - generic:
+                        - img
+                      - generic:
+                        - img
+                - cell [ref=e587]:
+                  - switch [ref=e590] [cursor=pointer]:
+                    - generic:
+                      - generic:
+                        - img
+                      - generic:
+                        - img
+                - cell "Ubah Hapus" [ref=e591]:
+                  - generic [ref=e592]:
+                    - link "Ubah" [ref=e593] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/users/24/edit
+                      - img [ref=e594]
+                      - text: Ubah
+                    - button "Hapus" [ref=e597] [cursor=pointer]:
+                      - img [ref=e598]
+                      - text: Hapus
+              - row "Buat/batalkan pilihan item 5 untuk tindakan massal. AINI - ADMIN JAPALU aini@hibiscusefsya.com Admin — GUDANG PALEMBANG GUDANG JAMBI Ubah Hapus" [ref=e600]:
+                - cell "Buat/batalkan pilihan item 5 untuk tindakan massal." [ref=e601]:
+                  - checkbox "Buat/batalkan pilihan item 5 untuk tindakan massal." [ref=e602]
+                - cell [ref=e603]:
+                  - link [ref=e604] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/5/edit
+                    - img [ref=e606]
+                - cell "AINI - ADMIN JAPALU aini@hibiscusefsya.com" [ref=e607]:
+                  - link "AINI - ADMIN JAPALU aini@hibiscusefsya.com" [ref=e608] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/5/edit
+                    - generic [ref=e609]:
+                      - paragraph [ref=e610]: AINI - ADMIN JAPALU
+                      - paragraph [ref=e611]: aini@hibiscusefsya.com
+                - cell "Admin" [ref=e612]:
+                  - link "Admin" [ref=e613] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/5/edit
+                    - generic [ref=e615]:
+                      - img [ref=e616]
+                      - text: Admin
+                - cell "—" [ref=e618]:
+                  - link "—" [ref=e619] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/5/edit
+                    - paragraph [ref=e621]: —
+                - cell "GUDANG PALEMBANG GUDANG JAMBI" [ref=e622]:
+                  - link "GUDANG PALEMBANG GUDANG JAMBI" [ref=e623] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/5/edit
+                    - list [ref=e624]:
+                      - listitem [ref=e625]:
+                        - generic [ref=e626]: GUDANG PALEMBANG
+                      - listitem [ref=e627]:
+                        - generic [ref=e628]: GUDANG JAMBI
+                - cell [ref=e629]:
+                  - switch [ref=e632] [cursor=pointer]:
+                    - generic:
+                      - generic:
+                        - img
+                      - generic:
+                        - img
+                - cell [ref=e633]:
+                  - switch [checked] [ref=e636] [cursor=pointer]:
+                    - generic:
+                      - generic:
+                        - img
+                      - generic:
+                        - img
+                - cell [ref=e637]:
+                  - switch [checked] [ref=e640] [cursor=pointer]:
+                    - generic:
+                      - generic:
+                        - img
+                      - generic:
+                        - img
+                - cell [ref=e641]:
+                  - switch [ref=e644] [cursor=pointer]:
+                    - generic:
+                      - generic:
+                        - img
+                      - generic:
+                        - img
+                - cell "Ubah Hapus" [ref=e645]:
+                  - generic [ref=e646]:
+                    - link "Ubah" [ref=e647] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/users/5/edit
+                      - img [ref=e648]
+                      - text: Ubah
+                    - button "Hapus" [ref=e651] [cursor=pointer]:
+                      - img [ref=e652]
+                      - text: Hapus
+              - row "Buat/batalkan pilihan item 11 untuk tindakan massal. SALES M.B.K - ROZAK rozak@hibiscusefsya.com User GUDANG CIAMIS — Ubah Hapus" [ref=e654]:
+                - cell "Buat/batalkan pilihan item 11 untuk tindakan massal." [ref=e655]:
+                  - checkbox "Buat/batalkan pilihan item 11 untuk tindakan massal." [ref=e656]
+                - cell [ref=e657]:
+                  - link [ref=e658] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/11/edit
+                    - img [ref=e660]
+                - cell "SALES M.B.K - ROZAK rozak@hibiscusefsya.com" [ref=e661]:
+                  - link "SALES M.B.K - ROZAK rozak@hibiscusefsya.com" [ref=e662] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/11/edit
+                    - generic [ref=e663]:
+                      - paragraph [ref=e664]: SALES M.B.K - ROZAK
+                      - paragraph [ref=e665]: rozak@hibiscusefsya.com
+                - cell "User" [ref=e666]:
+                  - link "User" [ref=e667] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/11/edit
+                    - generic [ref=e669]:
+                      - img [ref=e670]
+                      - text: User
+                - cell "GUDANG CIAMIS" [ref=e672]:
+                  - link "GUDANG CIAMIS" [ref=e673] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/11/edit
+                    - generic [ref=e675]: GUDANG CIAMIS
+                - cell "—" [ref=e676]:
+                  - link "—" [ref=e677] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/11/edit
+                    - paragraph [ref=e679]: —
+                - cell [ref=e680]:
+                  - switch [checked] [ref=e683] [cursor=pointer]:
+                    - generic:
+                      - generic:
+                        - img
+                      - generic:
+                        - img
+                - cell [ref=e684]:
+                  - switch [checked] [ref=e687] [cursor=pointer]:
+                    - generic:
+                      - generic:
+                        - img
+                      - generic:
+                        - img
+                - cell [ref=e688]:
+                  - generic [ref=e690]:
+                    - switch:
+                      - generic:
+                        - generic:
+                          - img
+                        - generic:
+                          - img
+                - cell [ref=e691]:
+                  - generic [ref=e693]:
+                    - switch:
+                      - generic:
+                        - generic:
+                          - img
+                        - generic:
+                          - img
+                - cell "Ubah Hapus" [ref=e694]:
+                  - generic [ref=e695]:
+                    - link "Ubah" [ref=e696] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/users/11/edit
+                      - img [ref=e697]
+                      - text: Ubah
+                    - button "Hapus" [ref=e700] [cursor=pointer]:
+                      - img [ref=e701]
+                      - text: Hapus
+              - row "Buat/batalkan pilihan item 10 untuk tindakan massal. DAIN GRT - SALES 2 Sales-2@hibiscusefsya.com User GUDANG GARUT — Ubah Hapus" [ref=e703]:
+                - cell "Buat/batalkan pilihan item 10 untuk tindakan massal." [ref=e704]:
+                  - checkbox "Buat/batalkan pilihan item 10 untuk tindakan massal." [ref=e705]
+                - cell [ref=e706]:
+                  - link [ref=e707] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/10/edit
+                    - img [ref=e709]
+                - cell "DAIN GRT - SALES 2 Sales-2@hibiscusefsya.com" [ref=e710]:
+                  - link "DAIN GRT - SALES 2 Sales-2@hibiscusefsya.com" [ref=e711] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/10/edit
+                    - generic [ref=e712]:
+                      - paragraph [ref=e713]: DAIN GRT - SALES 2
+                      - paragraph [ref=e714]: Sales-2@hibiscusefsya.com
+                - cell "User" [ref=e715]:
+                  - link "User" [ref=e716] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/10/edit
+                    - generic [ref=e718]:
+                      - img [ref=e719]
+                      - text: User
+                - cell "GUDANG GARUT" [ref=e721]:
+                  - link "GUDANG GARUT" [ref=e722] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/10/edit
+                    - generic [ref=e724]: GUDANG GARUT
+                - cell "—" [ref=e725]:
+                  - link "—" [ref=e726] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/10/edit
+                    - paragraph [ref=e728]: —
+                - cell [ref=e729]:
+                  - switch [checked] [ref=e732] [cursor=pointer]:
+                    - generic:
+                      - generic:
+                        - img
+                      - generic:
+                        - img
+                - cell [ref=e733]:
+                  - switch [checked] [ref=e736] [cursor=pointer]:
+                    - generic:
+                      - generic:
+                        - img
+                      - generic:
+                        - img
+                - cell [ref=e737]:
+                  - generic [ref=e739]:
+                    - switch:
+                      - generic:
+                        - generic:
+                          - img
+                        - generic:
+                          - img
+                - cell [ref=e740]:
+                  - generic [ref=e742]:
+                    - switch:
+                      - generic:
+                        - generic:
+                          - img
+                        - generic:
+                          - img
+                - cell "Ubah Hapus" [ref=e743]:
+                  - generic [ref=e744]:
+                    - link "Ubah" [ref=e745] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/users/10/edit
+                      - img [ref=e746]
+                      - text: Ubah
+                    - button "Hapus" [ref=e749] [cursor=pointer]:
+                      - img [ref=e750]
+                      - text: Hapus
+              - row "Buat/batalkan pilihan item 9 untuk tindakan massal. SALES M.B.K - UMAR umar@hibiscusefsya.com User GUDANG GARUT — Ubah Hapus" [ref=e752]:
+                - cell "Buat/batalkan pilihan item 9 untuk tindakan massal." [ref=e753]:
+                  - checkbox "Buat/batalkan pilihan item 9 untuk tindakan massal." [ref=e754]
+                - cell [ref=e755]:
+                  - link [ref=e756] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/9/edit
+                    - img [ref=e758]
+                - cell "SALES M.B.K - UMAR umar@hibiscusefsya.com" [ref=e759]:
+                  - link "SALES M.B.K - UMAR umar@hibiscusefsya.com" [ref=e760] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/9/edit
+                    - generic [ref=e761]:
+                      - paragraph [ref=e762]: SALES M.B.K - UMAR
+                      - paragraph [ref=e763]: umar@hibiscusefsya.com
+                - cell "User" [ref=e764]:
+                  - link "User" [ref=e765] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/9/edit
+                    - generic [ref=e767]:
+                      - img [ref=e768]
+                      - text: User
+                - cell "GUDANG GARUT" [ref=e770]:
+                  - link "GUDANG GARUT" [ref=e771] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/9/edit
+                    - generic [ref=e773]: GUDANG GARUT
+                - cell "—" [ref=e774]:
+                  - link "—" [ref=e775] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/users/9/edit
+                    - paragraph [ref=e777]: —
+                - cell [ref=e778]:
+                  - switch [checked] [ref=e781] [cursor=pointer]:
+                    - generic:
+                      - generic:
+                        - img
+                      - generic:
+                        - img
+                - cell [ref=e782]:
+                  - switch [checked] [ref=e785] [cursor=pointer]:
+                    - generic:
+                      - generic:
+                        - img
+                      - generic:
+                        - img
+                - cell [ref=e786]:
+                  - generic [ref=e788]:
+                    - switch:
+                      - generic:
+                        - generic:
+                          - img
+                        - generic:
+                          - img
+                - cell [ref=e789]:
+                  - generic [ref=e791]:
+                    - switch:
+                      - generic:
+                        - generic:
+                          - img
+                        - generic:
+                          - img
+                - cell "Ubah Hapus" [ref=e792]:
+                  - generic [ref=e793]:
+                    - link "Ubah" [ref=e794] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/users/9/edit
+                      - img [ref=e795]
+                      - text: Ubah
+                    - button "Hapus" [ref=e798] [cursor=pointer]:
+                      - img [ref=e799]
+                      - text: Hapus
+          - navigation "Navigasi halaman" [ref=e801]:
+            - generic [ref=e802]: Menampilkan 1 sampai 10 dari 16 hasil
+            - generic [ref=e805]:
+              - generic [ref=e807]: per halaman
+              - combobox "per halaman" [ref=e809]:
+                - option "5"
+                - option "10" [selected]
+                - option "25"
+                - option "50"
+            - list [ref=e810]:
+              - listitem [ref=e811]:
+                - button "Ke halaman 1" [ref=e812] [cursor=pointer]:
+                  - generic [ref=e813]: "1"
+              - listitem [ref=e814]:
+                - button "Ke halaman 2" [ref=e815] [cursor=pointer]:
+                  - generic [ref=e816]: "2"
+              - listitem [ref=e817]:
+                - button "Selanjutnya" [ref=e818] [cursor=pointer]:
+                  - img [ref=e819]
+  - generic:
+    - status

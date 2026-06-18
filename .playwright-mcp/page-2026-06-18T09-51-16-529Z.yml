@@ -1,0 +1,707 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e3]:
+    - generic [ref=e4]:
+      - button "Persempit menu" [ref=e6] [cursor=pointer]:
+        - img [ref=e7]
+      - link "Hibiscus Efsya POS" [ref=e9] [cursor=pointer]:
+        - /url: https://new.hibiscusefsya.com/app
+        - generic [ref=e10]: Hibiscus Efsya POS
+    - generic [ref=e11]:
+      - generic [ref=e14]:
+        - generic [ref=e15]: Pencarian global
+        - generic [ref=e16]:
+          - img [ref=e18]
+          - searchbox "Pencarian global" [ref=e21]
+      - button "Buka notifikasi" [ref=e23] [cursor=pointer]:
+        - img [ref=e24]
+      - button "Menu pengguna" [ref=e28] [cursor=pointer]:
+        - img "Avatar Hibiscus Efsya" [ref=e29]
+  - generic [ref=e30]:
+    - complementary [ref=e32]:
+      - navigation [ref=e33]:
+        - list [ref=e34]:
+          - listitem [ref=e35]:
+            - list [ref=e36]:
+              - listitem [ref=e37]:
+                - link "Dasbor" [ref=e38] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app
+                  - img [ref=e39]
+                  - generic [ref=e41]: Dasbor
+              - listitem [ref=e42]:
+                - link "Profil Saya" [ref=e43] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/profile-page
+                  - img [ref=e44]
+                  - generic [ref=e46]: Profil Saya
+          - listitem [ref=e47]:
+            - generic [ref=e48] [cursor=pointer]:
+              - generic [ref=e49]: Neraca
+              - button "Neraca" [expanded] [ref=e50]:
+                - img [ref=e51]
+            - list [ref=e53]:
+              - listitem [ref=e54]:
+                - link "Neraca" [ref=e55] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/neraca-page
+                  - img [ref=e56]
+                  - generic [ref=e58]: Neraca
+          - listitem [ref=e59]:
+            - generic [ref=e60] [cursor=pointer]:
+              - generic [ref=e61]: Kunjungan
+              - button "Kunjungan" [expanded] [ref=e62]:
+                - img [ref=e63]
+            - list [ref=e65]:
+              - listitem [ref=e66]:
+                - link "Buat Kunjungan 204" [ref=e67] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/kunjungans
+                  - img [ref=e68]
+                  - generic [ref=e71]: Buat Kunjungan
+                  - generic [ref=e75]: "204"
+          - listitem [ref=e76]:
+            - generic [ref=e77] [cursor=pointer]:
+              - generic [ref=e78]: Biaya
+              - button "Biaya" [expanded] [ref=e79]:
+                - img [ref=e80]
+            - list [ref=e82]:
+              - listitem [ref=e83]:
+                - link "Buat Biaya 23" [ref=e84] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/biayas
+                  - img [ref=e85]
+                  - generic [ref=e87]: Buat Biaya
+                  - generic [ref=e91]: "23"
+          - listitem [ref=e92]:
+            - generic [ref=e93] [cursor=pointer]:
+              - generic [ref=e94]: Piutang
+              - button "Piutang" [expanded] [ref=e95]:
+                - img [ref=e96]
+            - list [ref=e98]:
+              - listitem [ref=e99]:
+                - link "Dashboard Piutang" [ref=e100] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/piutang-page
+                  - img [ref=e101]
+                  - generic [ref=e103]: Dashboard Piutang
+              - listitem [ref=e104]:
+                - link "Buat Penjualan 183" [ref=e105] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/penjualans
+                  - img [ref=e106]
+                  - generic [ref=e108]: Buat Penjualan
+                  - generic [ref=e112]: "183"
+              - listitem [ref=e113]:
+                - link "Pembayaran Piutang 22" [ref=e114] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/pembayarans
+                  - img [ref=e115]
+                  - generic [ref=e117]: Pembayaran Piutang
+                  - generic [ref=e121]: "22"
+          - listitem [ref=e122]:
+            - generic [ref=e123] [cursor=pointer]:
+              - generic [ref=e124]: Hutang
+              - button "Hutang" [expanded] [ref=e125]:
+                - img [ref=e126]
+            - list [ref=e128]:
+              - listitem [ref=e129]:
+                - link "Dashboard Hutang" [ref=e130] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/hutang-page
+                  - img [ref=e131]
+                  - generic [ref=e133]: Dashboard Hutang
+              - listitem [ref=e134]:
+                - link "Buat Pembelian 4" [ref=e135] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/pembelians
+                  - img [ref=e136]
+                  - generic [ref=e138]: Buat Pembelian
+                  - generic [ref=e142]: "4"
+              - listitem [ref=e143]:
+                - link "Buat Penerimaan Barang" [ref=e144] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/penerimaan-barangs
+                  - img [ref=e145]
+                  - generic [ref=e147]: Buat Penerimaan Barang
+              - listitem [ref=e148]:
+                - link "Pembayaran Hutang" [ref=e149] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/pembayaran-hutangs
+                  - img [ref=e150]
+                  - generic [ref=e152]: Pembayaran Hutang
+          - listitem [ref=e153]:
+            - generic [ref=e154] [cursor=pointer]:
+              - generic [ref=e155]: Gudang
+              - button "Gudang" [expanded] [ref=e156]:
+                - img [ref=e157]
+            - list [ref=e159]:
+              - listitem [ref=e160]:
+                - link "Dashboard" [ref=e161] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/stok-page
+                  - img [ref=e162]
+                  - generic [ref=e164]: Dashboard
+              - listitem [ref=e165]:
+                - link "Stock Opname" [ref=e166] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/stock-opnames
+                  - img [ref=e167]
+                  - generic [ref=e169]: Stock Opname
+              - listitem [ref=e170]:
+                - link "Riwayat Stok" [ref=e171] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/stok-log-page
+                  - img [ref=e172]
+                  - generic [ref=e174]: Riwayat Stok
+          - listitem [ref=e175]:
+            - generic [ref=e176] [cursor=pointer]:
+              - generic [ref=e177]: Kontak
+              - button "Kontak" [expanded] [ref=e178]:
+                - img [ref=e179]
+            - list [ref=e181]:
+              - listitem [ref=e182]:
+                - link "Buat Kontak" [ref=e183] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/kontaks
+                  - img [ref=e184]
+                  - generic [ref=e186]: Buat Kontak
+              - listitem [ref=e187]:
+                - link "Catatan Hutang" [ref=e188] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/catatan-hutang
+                  - img [ref=e189]
+                  - generic [ref=e191]: Catatan Hutang
+          - listitem [ref=e192]:
+            - generic [ref=e193] [cursor=pointer]:
+              - generic [ref=e194]: Pengaturan
+              - button "Pengaturan" [expanded] [ref=e195]:
+                - img [ref=e196]
+            - list [ref=e198]:
+              - listitem [ref=e199]:
+                - link "Tutup Buku & Backup" [ref=e200] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/tutup-buku
+                  - img [ref=e201]
+                  - generic [ref=e203]: Tutup Buku & Backup
+              - listitem [ref=e204]:
+                - link "Pengguna" [ref=e205] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/users
+                  - img [ref=e206]
+                  - generic [ref=e208]: Pengguna
+              - listitem [ref=e209]:
+                - link "Gudang" [ref=e210] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/gudangs
+                  - img [ref=e211]
+                  - generic [ref=e213]: Gudang
+              - listitem [ref=e214]:
+                - link "Produk" [ref=e215] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/produks
+                  - img [ref=e216]
+                  - generic [ref=e218]: Produk
+    - main [ref=e220]:
+      - generic [ref=e222]:
+        - generic [ref=e223]:
+          - generic [ref=e224]:
+            - navigation [ref=e225]:
+              - list [ref=e226]:
+                - listitem [ref=e227]:
+                  - link "Buat Kontak" [ref=e228] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks
+                - listitem [ref=e229]:
+                  - img [ref=e230]
+                  - generic [ref=e232]: Daftar
+            - heading "Buat Kontak" [level=1] [ref=e233]
+          - link "Buat Buat Kontak" [ref=e236] [cursor=pointer]:
+            - /url: https://new.hibiscusefsya.com/app/kontaks/create
+        - generic [ref=e244]:
+          - generic [ref=e247]:
+            - generic [ref=e248]:
+              - generic [ref=e249]: Cari
+              - generic [ref=e250]:
+                - img [ref=e252]
+                - searchbox "Cari" [ref=e255]
+            - button "Filter" [ref=e258] [cursor=pointer]:
+              - img [ref=e259]
+              - generic [ref=e262]: "0"
+            - button "Pilih kolom" [ref=e265] [cursor=pointer]:
+              - img [ref=e266]
+          - table [ref=e269]:
+            - rowgroup [ref=e270]:
+              - row "Buat/batalkan pilihan semua item untuk tindakan massal. Kode Nama No. Telp Email Gudang Diskon Dibuat oleh Aksi" [ref=e271]:
+                - columnheader "Buat/batalkan pilihan semua item untuk tindakan massal." [ref=e272]:
+                  - checkbox "Buat/batalkan pilihan semua item untuk tindakan massal." [ref=e273]
+                - columnheader "Kode" [ref=e274]:
+                  - button "Kode" [ref=e275] [cursor=pointer]:
+                    - text: Kode
+                    - img [ref=e276]
+                - columnheader "Nama" [ref=e278]:
+                  - button "Nama" [ref=e279] [cursor=pointer]:
+                    - text: Nama
+                    - img [ref=e280]
+                - columnheader "No. Telp" [ref=e282]
+                - columnheader "Email" [ref=e283]
+                - columnheader "Gudang" [ref=e284]
+                - columnheader "Diskon" [ref=e285]
+                - columnheader "Dibuat oleh" [ref=e286]
+                - columnheader "Aksi" [ref=e287]
+            - rowgroup [ref=e288]:
+              - row "Buat/batalkan pilihan item 11 untuk tindakan massal. KT00011 - — — GUDANG JAKARTA 0.00% SALES M.B.K - HADI Lihat Ubah Hapus" [ref=e289]:
+                - cell "Buat/batalkan pilihan item 11 untuk tindakan massal." [ref=e290]:
+                  - checkbox "Buat/batalkan pilihan item 11 untuk tindakan massal." [ref=e291]
+                - cell "KT00011" [ref=e292]:
+                  - link "KT00011" [ref=e293] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/11
+                    - generic [ref=e295]: KT00011
+                - cell "-" [ref=e296]:
+                  - link "-" [ref=e297] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/11
+                    - generic [ref=e298]: "-"
+                - cell "—" [ref=e299]:
+                  - link "—" [ref=e300] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/11
+                    - paragraph [ref=e302]: —
+                - cell "—" [ref=e303]:
+                  - link "—" [ref=e304] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/11
+                    - paragraph [ref=e306]: —
+                - cell "GUDANG JAKARTA" [ref=e307]:
+                  - link "GUDANG JAKARTA" [ref=e308] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/11
+                    - generic [ref=e310]: GUDANG JAKARTA
+                - cell "0.00%" [ref=e311]:
+                  - link "0.00%" [ref=e312] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/11
+                    - generic [ref=e313]: 0.00%
+                - cell "SALES M.B.K - HADI" [ref=e314]:
+                  - link "SALES M.B.K - HADI" [ref=e315] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/11
+                    - generic [ref=e316]: SALES M.B.K - HADI
+                - cell "Lihat Ubah Hapus" [ref=e317]:
+                  - generic [ref=e318]:
+                    - link "Lihat" [ref=e319] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/kontaks/11
+                      - img [ref=e320]
+                      - text: Lihat
+                    - link "Ubah" [ref=e323] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/kontaks/11/edit
+                      - img [ref=e324]
+                      - text: Ubah
+                    - button "Hapus" [ref=e327] [cursor=pointer]:
+                      - img [ref=e328]
+                      - text: Hapus
+              - row "Buat/batalkan pilihan item 12 untuk tindakan massal. KT00012 - — — GUDANG JAKARTA 0.00% SALES M.B.K - HADI Lihat Ubah Hapus" [ref=e330]:
+                - cell "Buat/batalkan pilihan item 12 untuk tindakan massal." [ref=e331]:
+                  - checkbox "Buat/batalkan pilihan item 12 untuk tindakan massal." [ref=e332]
+                - cell "KT00012" [ref=e333]:
+                  - link "KT00012" [ref=e334] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/12
+                    - generic [ref=e336]: KT00012
+                - cell "-" [ref=e337]:
+                  - link "-" [ref=e338] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/12
+                    - generic [ref=e339]: "-"
+                - cell "—" [ref=e340]:
+                  - link "—" [ref=e341] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/12
+                    - paragraph [ref=e343]: —
+                - cell "—" [ref=e344]:
+                  - link "—" [ref=e345] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/12
+                    - paragraph [ref=e347]: —
+                - cell "GUDANG JAKARTA" [ref=e348]:
+                  - link "GUDANG JAKARTA" [ref=e349] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/12
+                    - generic [ref=e351]: GUDANG JAKARTA
+                - cell "0.00%" [ref=e352]:
+                  - link "0.00%" [ref=e353] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/12
+                    - generic [ref=e354]: 0.00%
+                - cell "SALES M.B.K - HADI" [ref=e355]:
+                  - link "SALES M.B.K - HADI" [ref=e356] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/12
+                    - generic [ref=e357]: SALES M.B.K - HADI
+                - cell "Lihat Ubah Hapus" [ref=e358]:
+                  - generic [ref=e359]:
+                    - link "Lihat" [ref=e360] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/kontaks/12
+                      - img [ref=e361]
+                      - text: Lihat
+                    - link "Ubah" [ref=e364] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/kontaks/12/edit
+                      - img [ref=e365]
+                      - text: Ubah
+                    - button "Hapus" [ref=e368] [cursor=pointer]:
+                      - img [ref=e369]
+                      - text: Hapus
+              - row "Buat/batalkan pilihan item 13 untuk tindakan massal. KT00013 - — — GUDANG JAKARTA 0.00% SALES M.B.K - HADI Lihat Ubah Hapus" [ref=e371]:
+                - cell "Buat/batalkan pilihan item 13 untuk tindakan massal." [ref=e372]:
+                  - checkbox "Buat/batalkan pilihan item 13 untuk tindakan massal." [ref=e373]
+                - cell "KT00013" [ref=e374]:
+                  - link "KT00013" [ref=e375] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/13
+                    - generic [ref=e377]: KT00013
+                - cell "-" [ref=e378]:
+                  - link "-" [ref=e379] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/13
+                    - generic [ref=e380]: "-"
+                - cell "—" [ref=e381]:
+                  - link "—" [ref=e382] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/13
+                    - paragraph [ref=e384]: —
+                - cell "—" [ref=e385]:
+                  - link "—" [ref=e386] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/13
+                    - paragraph [ref=e388]: —
+                - cell "GUDANG JAKARTA" [ref=e389]:
+                  - link "GUDANG JAKARTA" [ref=e390] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/13
+                    - generic [ref=e392]: GUDANG JAKARTA
+                - cell "0.00%" [ref=e393]:
+                  - link "0.00%" [ref=e394] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/13
+                    - generic [ref=e395]: 0.00%
+                - cell "SALES M.B.K - HADI" [ref=e396]:
+                  - link "SALES M.B.K - HADI" [ref=e397] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/13
+                    - generic [ref=e398]: SALES M.B.K - HADI
+                - cell "Lihat Ubah Hapus" [ref=e399]:
+                  - generic [ref=e400]:
+                    - link "Lihat" [ref=e401] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/kontaks/13
+                      - img [ref=e402]
+                      - text: Lihat
+                    - link "Ubah" [ref=e405] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/kontaks/13/edit
+                      - img [ref=e406]
+                      - text: Ubah
+                    - button "Hapus" [ref=e409] [cursor=pointer]:
+                      - img [ref=e410]
+                      - text: Hapus
+              - row "Buat/batalkan pilihan item 14 untuk tindakan massal. KT00014 - — — GUDANG JAKARTA 0.00% SALES M.B.K - HADI Lihat Ubah Hapus" [ref=e412]:
+                - cell "Buat/batalkan pilihan item 14 untuk tindakan massal." [ref=e413]:
+                  - checkbox "Buat/batalkan pilihan item 14 untuk tindakan massal." [ref=e414]
+                - cell "KT00014" [ref=e415]:
+                  - link "KT00014" [ref=e416] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/14
+                    - generic [ref=e418]: KT00014
+                - cell "-" [ref=e419]:
+                  - link "-" [ref=e420] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/14
+                    - generic [ref=e421]: "-"
+                - cell "—" [ref=e422]:
+                  - link "—" [ref=e423] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/14
+                    - paragraph [ref=e425]: —
+                - cell "—" [ref=e426]:
+                  - link "—" [ref=e427] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/14
+                    - paragraph [ref=e429]: —
+                - cell "GUDANG JAKARTA" [ref=e430]:
+                  - link "GUDANG JAKARTA" [ref=e431] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/14
+                    - generic [ref=e433]: GUDANG JAKARTA
+                - cell "0.00%" [ref=e434]:
+                  - link "0.00%" [ref=e435] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/14
+                    - generic [ref=e436]: 0.00%
+                - cell "SALES M.B.K - HADI" [ref=e437]:
+                  - link "SALES M.B.K - HADI" [ref=e438] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/14
+                    - generic [ref=e439]: SALES M.B.K - HADI
+                - cell "Lihat Ubah Hapus" [ref=e440]:
+                  - generic [ref=e441]:
+                    - link "Lihat" [ref=e442] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/kontaks/14
+                      - img [ref=e443]
+                      - text: Lihat
+                    - link "Ubah" [ref=e446] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/kontaks/14/edit
+                      - img [ref=e447]
+                      - text: Ubah
+                    - button "Hapus" [ref=e450] [cursor=pointer]:
+                      - img [ref=e451]
+                      - text: Hapus
+              - row "Buat/batalkan pilihan item 15 untuk tindakan massal. KT00015 - — — GUDANG JAKARTA 0.00% SALES M.B.K - HADI Lihat Ubah Hapus" [ref=e453]:
+                - cell "Buat/batalkan pilihan item 15 untuk tindakan massal." [ref=e454]:
+                  - checkbox "Buat/batalkan pilihan item 15 untuk tindakan massal." [ref=e455]
+                - cell "KT00015" [ref=e456]:
+                  - link "KT00015" [ref=e457] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/15
+                    - generic [ref=e459]: KT00015
+                - cell "-" [ref=e460]:
+                  - link "-" [ref=e461] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/15
+                    - generic [ref=e462]: "-"
+                - cell "—" [ref=e463]:
+                  - link "—" [ref=e464] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/15
+                    - paragraph [ref=e466]: —
+                - cell "—" [ref=e467]:
+                  - link "—" [ref=e468] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/15
+                    - paragraph [ref=e470]: —
+                - cell "GUDANG JAKARTA" [ref=e471]:
+                  - link "GUDANG JAKARTA" [ref=e472] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/15
+                    - generic [ref=e474]: GUDANG JAKARTA
+                - cell "0.00%" [ref=e475]:
+                  - link "0.00%" [ref=e476] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/15
+                    - generic [ref=e477]: 0.00%
+                - cell "SALES M.B.K - HADI" [ref=e478]:
+                  - link "SALES M.B.K - HADI" [ref=e479] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/15
+                    - generic [ref=e480]: SALES M.B.K - HADI
+                - cell "Lihat Ubah Hapus" [ref=e481]:
+                  - generic [ref=e482]:
+                    - link "Lihat" [ref=e483] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/kontaks/15
+                      - img [ref=e484]
+                      - text: Lihat
+                    - link "Ubah" [ref=e487] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/kontaks/15/edit
+                      - img [ref=e488]
+                      - text: Ubah
+                    - button "Hapus" [ref=e491] [cursor=pointer]:
+                      - img [ref=e492]
+                      - text: Hapus
+              - row "Buat/batalkan pilihan item 16 untuk tindakan massal. KT00016 - — — GUDANG JAKARTA 0.00% SALES M.B.K - HADI Lihat Ubah Hapus" [ref=e494]:
+                - cell "Buat/batalkan pilihan item 16 untuk tindakan massal." [ref=e495]:
+                  - checkbox "Buat/batalkan pilihan item 16 untuk tindakan massal." [ref=e496]
+                - cell "KT00016" [ref=e497]:
+                  - link "KT00016" [ref=e498] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/16
+                    - generic [ref=e500]: KT00016
+                - cell "-" [ref=e501]:
+                  - link "-" [ref=e502] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/16
+                    - generic [ref=e503]: "-"
+                - cell "—" [ref=e504]:
+                  - link "—" [ref=e505] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/16
+                    - paragraph [ref=e507]: —
+                - cell "—" [ref=e508]:
+                  - link "—" [ref=e509] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/16
+                    - paragraph [ref=e511]: —
+                - cell "GUDANG JAKARTA" [ref=e512]:
+                  - link "GUDANG JAKARTA" [ref=e513] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/16
+                    - generic [ref=e515]: GUDANG JAKARTA
+                - cell "0.00%" [ref=e516]:
+                  - link "0.00%" [ref=e517] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/16
+                    - generic [ref=e518]: 0.00%
+                - cell "SALES M.B.K - HADI" [ref=e519]:
+                  - link "SALES M.B.K - HADI" [ref=e520] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/16
+                    - generic [ref=e521]: SALES M.B.K - HADI
+                - cell "Lihat Ubah Hapus" [ref=e522]:
+                  - generic [ref=e523]:
+                    - link "Lihat" [ref=e524] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/kontaks/16
+                      - img [ref=e525]
+                      - text: Lihat
+                    - link "Ubah" [ref=e528] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/kontaks/16/edit
+                      - img [ref=e529]
+                      - text: Ubah
+                    - button "Hapus" [ref=e532] [cursor=pointer]:
+                      - img [ref=e533]
+                      - text: Hapus
+              - row "Buat/batalkan pilihan item 17 untuk tindakan massal. KT00017 - — — GUDANG JAKARTA 0.00% SALES M.B.K - HADI Lihat Ubah Hapus" [ref=e535]:
+                - cell "Buat/batalkan pilihan item 17 untuk tindakan massal." [ref=e536]:
+                  - checkbox "Buat/batalkan pilihan item 17 untuk tindakan massal." [ref=e537]
+                - cell "KT00017" [ref=e538]:
+                  - link "KT00017" [ref=e539] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/17
+                    - generic [ref=e541]: KT00017
+                - cell "-" [ref=e542]:
+                  - link "-" [ref=e543] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/17
+                    - generic [ref=e544]: "-"
+                - cell "—" [ref=e545]:
+                  - link "—" [ref=e546] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/17
+                    - paragraph [ref=e548]: —
+                - cell "—" [ref=e549]:
+                  - link "—" [ref=e550] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/17
+                    - paragraph [ref=e552]: —
+                - cell "GUDANG JAKARTA" [ref=e553]:
+                  - link "GUDANG JAKARTA" [ref=e554] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/17
+                    - generic [ref=e556]: GUDANG JAKARTA
+                - cell "0.00%" [ref=e557]:
+                  - link "0.00%" [ref=e558] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/17
+                    - generic [ref=e559]: 0.00%
+                - cell "SALES M.B.K - HADI" [ref=e560]:
+                  - link "SALES M.B.K - HADI" [ref=e561] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/17
+                    - generic [ref=e562]: SALES M.B.K - HADI
+                - cell "Lihat Ubah Hapus" [ref=e563]:
+                  - generic [ref=e564]:
+                    - link "Lihat" [ref=e565] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/kontaks/17
+                      - img [ref=e566]
+                      - text: Lihat
+                    - link "Ubah" [ref=e569] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/kontaks/17/edit
+                      - img [ref=e570]
+                      - text: Ubah
+                    - button "Hapus" [ref=e573] [cursor=pointer]:
+                      - img [ref=e574]
+                      - text: Hapus
+              - row "Buat/batalkan pilihan item 18 untuk tindakan massal. KT00018 - — — GUDANG JAKARTA 0.00% SALES M.B.K - HADI Lihat Ubah Hapus" [ref=e576]:
+                - cell "Buat/batalkan pilihan item 18 untuk tindakan massal." [ref=e577]:
+                  - checkbox "Buat/batalkan pilihan item 18 untuk tindakan massal." [ref=e578]
+                - cell "KT00018" [ref=e579]:
+                  - link "KT00018" [ref=e580] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/18
+                    - generic [ref=e582]: KT00018
+                - cell "-" [ref=e583]:
+                  - link "-" [ref=e584] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/18
+                    - generic [ref=e585]: "-"
+                - cell "—" [ref=e586]:
+                  - link "—" [ref=e587] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/18
+                    - paragraph [ref=e589]: —
+                - cell "—" [ref=e590]:
+                  - link "—" [ref=e591] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/18
+                    - paragraph [ref=e593]: —
+                - cell "GUDANG JAKARTA" [ref=e594]:
+                  - link "GUDANG JAKARTA" [ref=e595] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/18
+                    - generic [ref=e597]: GUDANG JAKARTA
+                - cell "0.00%" [ref=e598]:
+                  - link "0.00%" [ref=e599] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/18
+                    - generic [ref=e600]: 0.00%
+                - cell "SALES M.B.K - HADI" [ref=e601]:
+                  - link "SALES M.B.K - HADI" [ref=e602] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/18
+                    - generic [ref=e603]: SALES M.B.K - HADI
+                - cell "Lihat Ubah Hapus" [ref=e604]:
+                  - generic [ref=e605]:
+                    - link "Lihat" [ref=e606] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/kontaks/18
+                      - img [ref=e607]
+                      - text: Lihat
+                    - link "Ubah" [ref=e610] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/kontaks/18/edit
+                      - img [ref=e611]
+                      - text: Ubah
+                    - button "Hapus" [ref=e614] [cursor=pointer]:
+                      - img [ref=e615]
+                      - text: Hapus
+              - row "Buat/batalkan pilihan item 299 untuk tindakan massal. KT00299 02 KOSMETIK +62 822-1317-1254 — GUDANG JAMBI 0.00% SALES M.B.K - DEO Lihat Ubah Hapus" [ref=e617]:
+                - cell "Buat/batalkan pilihan item 299 untuk tindakan massal." [ref=e618]:
+                  - checkbox "Buat/batalkan pilihan item 299 untuk tindakan massal." [ref=e619]
+                - cell "KT00299" [ref=e620]:
+                  - link "KT00299" [ref=e621] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/299
+                    - generic [ref=e623]: KT00299
+                - cell "02 KOSMETIK" [ref=e624]:
+                  - link "02 KOSMETIK" [ref=e625] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/299
+                    - generic [ref=e626]: 02 KOSMETIK
+                - cell "+62 822-1317-1254" [ref=e627]:
+                  - link "+62 822-1317-1254" [ref=e628] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/299
+                    - generic [ref=e630]:
+                      - img [ref=e631]
+                      - text: +62 822-1317-1254
+                - cell "—" [ref=e633]:
+                  - link "—" [ref=e634] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/299
+                    - paragraph [ref=e636]: —
+                - cell "GUDANG JAMBI" [ref=e637]:
+                  - link "GUDANG JAMBI" [ref=e638] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/299
+                    - generic [ref=e640]: GUDANG JAMBI
+                - cell "0.00%" [ref=e641]:
+                  - link "0.00%" [ref=e642] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/299
+                    - generic [ref=e643]: 0.00%
+                - cell "SALES M.B.K - DEO" [ref=e644]:
+                  - link "SALES M.B.K - DEO" [ref=e645] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/299
+                    - generic [ref=e646]: SALES M.B.K - DEO
+                - cell "Lihat Ubah Hapus" [ref=e647]:
+                  - generic [ref=e648]:
+                    - link "Lihat" [ref=e649] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/kontaks/299
+                      - img [ref=e650]
+                      - text: Lihat
+                    - link "Ubah" [ref=e653] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/kontaks/299/edit
+                      - img [ref=e654]
+                      - text: Ubah
+                    - button "Hapus" [ref=e657] [cursor=pointer]:
+                      - img [ref=e658]
+                      - text: Hapus
+              - row "Buat/batalkan pilihan item 392 untuk tindakan massal. KT00392 AB Grosir — — GUDANG GARUT 0.00% — Lihat Ubah Hapus" [ref=e660]:
+                - cell "Buat/batalkan pilihan item 392 untuk tindakan massal." [ref=e661]:
+                  - checkbox "Buat/batalkan pilihan item 392 untuk tindakan massal." [ref=e662]
+                - cell "KT00392" [ref=e663]:
+                  - link "KT00392" [ref=e664] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/392
+                    - generic [ref=e666]: KT00392
+                - cell "AB Grosir" [ref=e667]:
+                  - link "AB Grosir" [ref=e668] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/392
+                    - generic [ref=e669]: AB Grosir
+                - cell "—" [ref=e670]:
+                  - link "—" [ref=e671] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/392
+                    - paragraph [ref=e673]: —
+                - cell "—" [ref=e674]:
+                  - link "—" [ref=e675] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/392
+                    - paragraph [ref=e677]: —
+                - cell "GUDANG GARUT" [ref=e678]:
+                  - link "GUDANG GARUT" [ref=e679] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/392
+                    - generic [ref=e681]: GUDANG GARUT
+                - cell "0.00%" [ref=e682]:
+                  - link "0.00%" [ref=e683] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/392
+                    - generic [ref=e684]: 0.00%
+                - cell "—" [ref=e685]:
+                  - link "—" [ref=e686] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/kontaks/392
+                    - paragraph [ref=e688]: —
+                - cell "Lihat Ubah Hapus" [ref=e689]:
+                  - generic [ref=e690]:
+                    - link "Lihat" [ref=e691] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/kontaks/392
+                      - img [ref=e692]
+                      - text: Lihat
+                    - link "Ubah" [ref=e695] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/kontaks/392/edit
+                      - img [ref=e696]
+                      - text: Ubah
+                    - button "Hapus" [ref=e699] [cursor=pointer]:
+                      - img [ref=e700]
+                      - text: Hapus
+          - navigation "Navigasi halaman" [ref=e702]:
+            - generic [ref=e703]: Menampilkan 1 sampai 10 dari 502 hasil
+            - generic [ref=e706]:
+              - generic [ref=e708]: per halaman
+              - combobox "per halaman" [ref=e710]:
+                - option "5"
+                - option "10" [selected]
+                - option "25"
+                - option "50"
+            - list [ref=e711]:
+              - listitem [ref=e712]:
+                - button "Ke halaman 1" [ref=e713] [cursor=pointer]:
+                  - generic [ref=e714]: "1"
+              - listitem [ref=e715]:
+                - button "Ke halaman 2" [ref=e716] [cursor=pointer]:
+                  - generic [ref=e717]: "2"
+              - listitem [ref=e718]:
+                - button "Ke halaman 3" [ref=e719] [cursor=pointer]:
+                  - generic [ref=e720]: "3"
+              - listitem [ref=e721]:
+                - button "Ke halaman 4" [ref=e722] [cursor=pointer]:
+                  - generic [ref=e723]: "4"
+              - listitem [ref=e724]:
+                - button "..." [disabled] [ref=e725]:
+                  - generic [ref=e726]: ...
+              - listitem [ref=e727]:
+                - button "Ke halaman 50" [ref=e728] [cursor=pointer]:
+                  - generic [ref=e729]: "50"
+              - listitem [ref=e730]:
+                - button "Ke halaman 51" [ref=e731] [cursor=pointer]:
+                  - generic [ref=e732]: "51"
+              - listitem [ref=e733]:
+                - button "Selanjutnya" [ref=e734] [cursor=pointer]:
+                  - img [ref=e735]
+  - generic:
+    - status

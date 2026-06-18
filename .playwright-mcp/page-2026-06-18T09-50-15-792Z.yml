@@ -1,0 +1,233 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e3]:
+    - generic [ref=e4]:
+      - button "Persempit menu" [ref=e6] [cursor=pointer]:
+        - img [ref=e7]
+      - link "Hibiscus Efsya POS" [ref=e9] [cursor=pointer]:
+        - /url: https://new.hibiscusefsya.com/app
+        - generic [ref=e10]: Hibiscus Efsya POS
+    - generic [ref=e11]:
+      - generic [ref=e14]:
+        - generic [ref=e15]: Pencarian global
+        - generic [ref=e16]:
+          - img [ref=e18]
+          - searchbox "Pencarian global" [ref=e21]
+      - generic [ref=e22]:
+        - button "Buka notifikasi" [disabled]:
+          - img
+      - button "Menu pengguna" [ref=e25] [cursor=pointer]:
+        - img "Avatar Hibiscus Efsya" [ref=e26]
+  - generic [ref=e27]:
+    - complementary [ref=e29]:
+      - navigation [ref=e30]:
+        - list [ref=e31]:
+          - listitem [ref=e32]:
+            - list [ref=e33]:
+              - listitem [ref=e34]:
+                - link "Dasbor" [ref=e35] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app
+                  - img [ref=e36]
+                  - generic [ref=e38]: Dasbor
+              - listitem [ref=e39]:
+                - link "Profil Saya" [ref=e40] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/profile-page
+                  - img [ref=e41]
+                  - generic [ref=e43]: Profil Saya
+          - listitem [ref=e44]:
+            - generic [ref=e45] [cursor=pointer]:
+              - generic [ref=e46]: Neraca
+              - button "Neraca" [expanded] [ref=e47]:
+                - img [ref=e48]
+            - list [ref=e50]:
+              - listitem [ref=e51]:
+                - link "Neraca" [ref=e52] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/neraca-page
+                  - img [ref=e53]
+                  - generic [ref=e55]: Neraca
+          - listitem [ref=e56]:
+            - generic [ref=e57] [cursor=pointer]:
+              - generic [ref=e58]: Kunjungan
+              - button "Kunjungan" [expanded] [ref=e59]:
+                - img [ref=e60]
+            - list [ref=e62]:
+              - listitem [ref=e63]:
+                - link "Buat Kunjungan 204" [ref=e64] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/kunjungans
+                  - img [ref=e65]
+                  - generic [ref=e68]: Buat Kunjungan
+                  - generic [ref=e72]: "204"
+          - listitem [ref=e73]:
+            - generic [ref=e74] [cursor=pointer]:
+              - generic [ref=e75]: Biaya
+              - button "Biaya" [expanded] [ref=e76]:
+                - img [ref=e77]
+            - list [ref=e79]:
+              - listitem [ref=e80]:
+                - link "Buat Biaya 23" [ref=e81] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/biayas
+                  - img [ref=e82]
+                  - generic [ref=e84]: Buat Biaya
+                  - generic [ref=e88]: "23"
+          - listitem [ref=e89]:
+            - generic [ref=e90] [cursor=pointer]:
+              - generic [ref=e91]: Piutang
+              - button "Piutang" [expanded] [ref=e92]:
+                - img [ref=e93]
+            - list [ref=e95]:
+              - listitem [ref=e96]:
+                - link "Dashboard Piutang" [ref=e97] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/piutang-page
+                  - img [ref=e98]
+                  - generic [ref=e100]: Dashboard Piutang
+              - listitem [ref=e101]:
+                - link "Buat Penjualan 183" [ref=e102] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/penjualans
+                  - img [ref=e103]
+                  - generic [ref=e105]: Buat Penjualan
+                  - generic [ref=e109]: "183"
+              - listitem [ref=e110]:
+                - link "Pembayaran Piutang 22" [ref=e111] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/pembayarans
+                  - img [ref=e112]
+                  - generic [ref=e114]: Pembayaran Piutang
+                  - generic [ref=e118]: "22"
+          - listitem [ref=e119]:
+            - generic [ref=e120] [cursor=pointer]:
+              - generic [ref=e121]: Hutang
+              - button "Hutang" [expanded] [ref=e122]:
+                - img [ref=e123]
+            - list [ref=e125]:
+              - listitem [ref=e126]:
+                - link "Dashboard Hutang" [ref=e127] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/hutang-page
+                  - img [ref=e128]
+                  - generic [ref=e130]: Dashboard Hutang
+              - listitem [ref=e131]:
+                - link "Buat Pembelian 4" [ref=e132] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/pembelians
+                  - img [ref=e133]
+                  - generic [ref=e135]: Buat Pembelian
+                  - generic [ref=e139]: "4"
+              - listitem [ref=e140]:
+                - link "Buat Penerimaan Barang" [ref=e141] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/penerimaan-barangs
+                  - img [ref=e142]
+                  - generic [ref=e144]: Buat Penerimaan Barang
+              - listitem [ref=e145]:
+                - link "Pembayaran Hutang" [ref=e146] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/pembayaran-hutangs
+                  - img [ref=e147]
+                  - generic [ref=e149]: Pembayaran Hutang
+          - listitem [ref=e150]:
+            - generic [ref=e151] [cursor=pointer]:
+              - generic [ref=e152]: Gudang
+              - button "Gudang" [expanded] [ref=e153]:
+                - img [ref=e154]
+            - list [ref=e156]:
+              - listitem [ref=e157]:
+                - link "Dashboard" [ref=e158] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/stok-page
+                  - img [ref=e159]
+                  - generic [ref=e161]: Dashboard
+              - listitem [ref=e162]:
+                - link "Stock Opname" [ref=e163] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/stock-opnames
+                  - img [ref=e164]
+                  - generic [ref=e166]: Stock Opname
+              - listitem [ref=e167]:
+                - link "Riwayat Stok" [ref=e168] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/stok-log-page
+                  - img [ref=e169]
+                  - generic [ref=e171]: Riwayat Stok
+          - listitem [ref=e172]:
+            - generic [ref=e173] [cursor=pointer]:
+              - generic [ref=e174]: Kontak
+              - button "Kontak" [expanded] [ref=e175]:
+                - img [ref=e176]
+            - list [ref=e178]:
+              - listitem [ref=e179]:
+                - link "Buat Kontak" [ref=e180] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/kontaks
+                  - img [ref=e181]
+                  - generic [ref=e183]: Buat Kontak
+              - listitem [ref=e184]:
+                - link "Catatan Hutang" [ref=e185] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/catatan-hutang
+                  - img [ref=e186]
+                  - generic [ref=e188]: Catatan Hutang
+          - listitem [ref=e189]:
+            - generic [ref=e190] [cursor=pointer]:
+              - generic [ref=e191]: Pengaturan
+              - button "Pengaturan" [expanded] [ref=e192]:
+                - img [ref=e193]
+            - list [ref=e195]:
+              - listitem [ref=e196]:
+                - link "Tutup Buku & Backup" [ref=e197] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/tutup-buku
+                  - img [ref=e198]
+                  - generic [ref=e200]: Tutup Buku & Backup
+              - listitem [ref=e201]:
+                - link "Pengguna" [ref=e202] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/users
+                  - img [ref=e203]
+                  - generic [ref=e205]: Pengguna
+              - listitem [ref=e206]:
+                - link "Gudang" [ref=e207] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/gudangs
+                  - img [ref=e208]
+                  - generic [ref=e210]: Gudang
+              - listitem [ref=e211]:
+                - link "Produk" [ref=e212] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/produks
+                  - img [ref=e213]
+                  - generic [ref=e215]: Produk
+    - main [ref=e217]:
+      - generic [ref=e219]:
+        - generic [ref=e220]:
+          - generic [ref=e221]:
+            - navigation [ref=e222]:
+              - list [ref=e223]:
+                - listitem [ref=e224]:
+                  - link "Pembayaran Hutang" [ref=e225] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/pembayaran-hutangs
+                - listitem [ref=e226]:
+                  - img [ref=e227]
+                  - generic [ref=e229]: Daftar
+            - heading "Pembayaran Hutang" [level=1] [ref=e230]
+          - link "Buat Pembayaran Hutang" [ref=e233] [cursor=pointer]:
+            - /url: https://new.hibiscusefsya.com/app/pembayaran-hutangs/create
+        - generic [ref=e241]:
+          - generic [ref=e244]:
+            - generic [ref=e245]:
+              - generic [ref=e246]: Cari
+              - generic [ref=e247]:
+                - img [ref=e249]
+                - searchbox "Cari" [ref=e252]
+            - button "Filter" [ref=e255] [cursor=pointer]:
+              - img [ref=e256]
+              - generic [ref=e259]: "0"
+            - button "Pilih kolom" [ref=e262] [cursor=pointer]:
+              - img [ref=e263]
+          - table [ref=e266]:
+            - rowgroup [ref=e267]:
+              - row "Tanggal Nomor Invoice Pembelian Supplier Gudang Metode Jumlah Status" [ref=e268]:
+                - columnheader "Tanggal" [ref=e269]:
+                  - button "Tanggal" [ref=e270] [cursor=pointer]:
+                    - text: Tanggal
+                    - img [ref=e271]
+                - columnheader "Nomor" [ref=e273]
+                - columnheader "Invoice Pembelian" [ref=e274]
+                - columnheader "Supplier" [ref=e275]
+                - columnheader "Gudang" [ref=e276]
+                - columnheader "Metode" [ref=e277]
+                - columnheader "Jumlah" [ref=e278]:
+                  - button "Jumlah" [ref=e279] [cursor=pointer]:
+                    - text: Jumlah
+                    - img [ref=e280]
+                - columnheader "Status" [ref=e282]
+          - generic [ref=e284]:
+            - img [ref=e286]
+            - heading "Belum ada pembayaran hutang" [level=2] [ref=e288]
+            - paragraph [ref=e289]: Catat pembayaran untuk pembelian yang belum lunas.
+  - generic:
+    - status

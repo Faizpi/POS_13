@@ -1,0 +1,809 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e3]:
+    - generic [ref=e4]:
+      - button "Persempit menu" [ref=e6] [cursor=pointer]:
+        - img [ref=e7]
+      - link "Hibiscus Efsya POS" [ref=e9] [cursor=pointer]:
+        - /url: https://new.hibiscusefsya.com/app
+        - generic [ref=e10]: Hibiscus Efsya POS
+    - generic [ref=e11]:
+      - generic [ref=e14]:
+        - generic [ref=e15]: Pencarian global
+        - generic [ref=e16]:
+          - img [ref=e18]
+          - searchbox "Pencarian global" [ref=e21]
+      - button "Buka notifikasi" [ref=e23] [cursor=pointer]:
+        - img [ref=e24]
+      - button "Menu pengguna" [ref=e28] [cursor=pointer]:
+        - img "Avatar Hibiscus Efsya" [ref=e29]
+  - generic [ref=e30]:
+    - complementary [ref=e32]:
+      - navigation [ref=e33]:
+        - list [ref=e34]:
+          - listitem [ref=e35]:
+            - list [ref=e36]:
+              - listitem [ref=e37]:
+                - link "Dasbor" [ref=e38] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app
+                  - img [ref=e39]
+                  - generic [ref=e41]: Dasbor
+              - listitem [ref=e42]:
+                - link "Profil Saya" [ref=e43] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/profile-page
+                  - img [ref=e44]
+                  - generic [ref=e46]: Profil Saya
+          - listitem [ref=e47]:
+            - generic [ref=e48] [cursor=pointer]:
+              - generic [ref=e49]: Neraca
+              - button "Neraca" [expanded] [ref=e50]:
+                - img [ref=e51]
+            - list [ref=e53]:
+              - listitem [ref=e54]:
+                - link "Neraca" [ref=e55] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/neraca-page
+                  - img [ref=e56]
+                  - generic [ref=e58]: Neraca
+          - listitem [ref=e59]:
+            - generic [ref=e60] [cursor=pointer]:
+              - generic [ref=e61]: Kunjungan
+              - button "Kunjungan" [expanded] [ref=e62]:
+                - img [ref=e63]
+            - list [ref=e65]:
+              - listitem [ref=e66]:
+                - link "Buat Kunjungan 204" [ref=e67] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/kunjungans
+                  - img [ref=e68]
+                  - generic [ref=e71]: Buat Kunjungan
+                  - generic [ref=e75]: "204"
+          - listitem [ref=e76]:
+            - generic [ref=e77] [cursor=pointer]:
+              - generic [ref=e78]: Biaya
+              - button "Biaya" [expanded] [ref=e79]:
+                - img [ref=e80]
+            - list [ref=e82]:
+              - listitem [ref=e83]:
+                - link "Buat Biaya 23" [ref=e84] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/biayas
+                  - img [ref=e85]
+                  - generic [ref=e87]: Buat Biaya
+                  - generic [ref=e91]: "23"
+          - listitem [ref=e92]:
+            - generic [ref=e93] [cursor=pointer]:
+              - generic [ref=e94]: Piutang
+              - button "Piutang" [expanded] [ref=e95]:
+                - img [ref=e96]
+            - list [ref=e98]:
+              - listitem [ref=e99]:
+                - link "Dashboard Piutang" [ref=e100] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/piutang-page
+                  - img [ref=e101]
+                  - generic [ref=e103]: Dashboard Piutang
+              - listitem [ref=e104]:
+                - link "Buat Penjualan 183" [ref=e105] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/penjualans
+                  - img [ref=e106]
+                  - generic [ref=e108]: Buat Penjualan
+                  - generic [ref=e112]: "183"
+              - listitem [ref=e113]:
+                - link "Pembayaran Piutang 22" [ref=e114] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/pembayarans
+                  - img [ref=e115]
+                  - generic [ref=e117]: Pembayaran Piutang
+                  - generic [ref=e121]: "22"
+          - listitem [ref=e122]:
+            - generic [ref=e123] [cursor=pointer]:
+              - generic [ref=e124]: Hutang
+              - button "Hutang" [expanded] [ref=e125]:
+                - img [ref=e126]
+            - list [ref=e128]:
+              - listitem [ref=e129]:
+                - link "Dashboard Hutang" [ref=e130] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/hutang-page
+                  - img [ref=e131]
+                  - generic [ref=e133]: Dashboard Hutang
+              - listitem [ref=e134]:
+                - link "Buat Pembelian 4" [ref=e135] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/pembelians
+                  - img [ref=e136]
+                  - generic [ref=e138]: Buat Pembelian
+                  - generic [ref=e142]: "4"
+              - listitem [ref=e143]:
+                - link "Buat Penerimaan Barang" [ref=e144] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/penerimaan-barangs
+                  - img [ref=e145]
+                  - generic [ref=e147]: Buat Penerimaan Barang
+              - listitem [ref=e148]:
+                - link "Pembayaran Hutang" [ref=e149] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/pembayaran-hutangs
+                  - img [ref=e150]
+                  - generic [ref=e152]: Pembayaran Hutang
+          - listitem [ref=e153]:
+            - generic [ref=e154] [cursor=pointer]:
+              - generic [ref=e155]: Gudang
+              - button "Gudang" [expanded] [ref=e156]:
+                - img [ref=e157]
+            - list [ref=e159]:
+              - listitem [ref=e160]:
+                - link "Dashboard" [ref=e161] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/stok-page
+                  - img [ref=e162]
+                  - generic [ref=e164]: Dashboard
+              - listitem [ref=e165]:
+                - link "Stock Opname" [ref=e166] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/stock-opnames
+                  - img [ref=e167]
+                  - generic [ref=e169]: Stock Opname
+              - listitem [ref=e170]:
+                - link "Riwayat Stok" [ref=e171] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/stok-log-page
+                  - img [ref=e172]
+                  - generic [ref=e174]: Riwayat Stok
+          - listitem [ref=e175]:
+            - generic [ref=e176] [cursor=pointer]:
+              - generic [ref=e177]: Kontak
+              - button "Kontak" [expanded] [ref=e178]:
+                - img [ref=e179]
+            - list [ref=e181]:
+              - listitem [ref=e182]:
+                - link "Buat Kontak" [ref=e183] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/kontaks
+                  - img [ref=e184]
+                  - generic [ref=e186]: Buat Kontak
+              - listitem [ref=e187]:
+                - link "Catatan Hutang" [ref=e188] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/catatan-hutang
+                  - img [ref=e189]
+                  - generic [ref=e191]: Catatan Hutang
+          - listitem [ref=e192]:
+            - generic [ref=e193] [cursor=pointer]:
+              - generic [ref=e194]: Pengaturan
+              - button "Pengaturan" [expanded] [ref=e195]:
+                - img [ref=e196]
+            - list [ref=e198]:
+              - listitem [ref=e199]:
+                - link "Tutup Buku & Backup" [ref=e200] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/tutup-buku
+                  - img [ref=e201]
+                  - generic [ref=e203]: Tutup Buku & Backup
+              - listitem [ref=e204]:
+                - link "Pengguna" [ref=e205] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/users
+                  - img [ref=e206]
+                  - generic [ref=e208]: Pengguna
+              - listitem [ref=e209]:
+                - link "Gudang" [ref=e210] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/gudangs
+                  - img [ref=e211]
+                  - generic [ref=e213]: Gudang
+              - listitem [ref=e214]:
+                - link "Produk" [ref=e215] [cursor=pointer]:
+                  - /url: https://new.hibiscusefsya.com/app/produks
+                  - img [ref=e216]
+                  - generic [ref=e218]: Produk
+    - main [ref=e220]:
+      - generic [ref=e222]:
+        - generic [ref=e223]:
+          - generic [ref=e224]:
+            - navigation [ref=e225]:
+              - list [ref=e226]:
+                - listitem [ref=e227]:
+                  - link "Buat Penjualan" [ref=e228] [cursor=pointer]:
+                    - /url: https://new.hibiscusefsya.com/app/penjualans
+                - listitem [ref=e229]:
+                  - img [ref=e230]
+                  - generic [ref=e232]: Daftar
+            - heading "Buat Penjualan" [level=1] [ref=e233]
+          - link "Buat Penagihan Baru" [ref=e236] [cursor=pointer]:
+            - /url: https://new.hibiscusefsya.com/app/penjualans/create
+        - generic [ref=e245]:
+          - tablist [ref=e249]:
+            - tab "Semua 1410" [ref=e250] [cursor=pointer]:
+              - generic [ref=e251]: Semua
+              - generic [ref=e254]: "1410"
+            - tab "Pending 183" [ref=e255] [cursor=pointer]:
+              - generic [ref=e256]: Pending
+              - generic [ref=e259]: "183"
+            - tab "Approved 555" [ref=e260] [cursor=pointer]:
+              - generic [ref=e261]: Approved
+              - generic [ref=e264]: "555"
+            - tab "Lunas 645" [ref=e265] [cursor=pointer]:
+              - generic [ref=e266]: Lunas
+              - generic [ref=e269]: "645"
+            - tab "Rejected 0" [ref=e270] [cursor=pointer]:
+              - generic [ref=e271]: Rejected
+              - generic [ref=e274]: "0"
+            - tab "Canceled 27" [ref=e275] [cursor=pointer]:
+              - generic [ref=e276]: Canceled
+              - generic [ref=e279]: "27"
+          - generic [ref=e284]:
+            - generic [ref=e287]:
+              - generic [ref=e288]:
+                - generic [ref=e289]: Cari
+                - generic [ref=e290]:
+                  - img [ref=e292]
+                  - searchbox "Cari" [ref=e295]
+              - button "Filter" [ref=e298] [cursor=pointer]:
+                - img [ref=e299]
+                - generic [ref=e302]: "0"
+              - button "Pilih kolom" [ref=e305] [cursor=pointer]:
+                - img [ref=e306]
+            - table [ref=e309]:
+              - rowgroup [ref=e310]:
+                - row "Buat/batalkan pilihan semua item untuk tindakan massal. Tanggal Nomor Pembuat Approver Pelanggan Gudang Total Status Aksi" [ref=e311]:
+                  - columnheader "Buat/batalkan pilihan semua item untuk tindakan massal." [ref=e312]:
+                    - checkbox "Buat/batalkan pilihan semua item untuk tindakan massal." [ref=e313]
+                  - columnheader "Tanggal" [ref=e314]:
+                    - button "Tanggal" [ref=e315] [cursor=pointer]:
+                      - text: Tanggal
+                      - img [ref=e316]
+                  - columnheader "Nomor" [ref=e318]:
+                    - button "Nomor" [ref=e319] [cursor=pointer]:
+                      - text: Nomor
+                      - img [ref=e320]
+                  - columnheader "Pembuat" [ref=e322]
+                  - columnheader "Approver" [ref=e323]
+                  - columnheader "Pelanggan" [ref=e324]
+                  - columnheader "Gudang" [ref=e325]
+                  - columnheader "Total" [ref=e326]:
+                    - button "Total" [ref=e327] [cursor=pointer]:
+                      - text: Total
+                      - img [ref=e328]
+                  - columnheader "Status" [ref=e330]
+                  - columnheader "Aksi" [ref=e331]
+              - rowgroup [ref=e332]:
+                - row "Buat/batalkan pilihan item 1479 untuk tindakan massal. 16/06/2026 08:44 INV-20260616-21-002 USER SALE NUR - ADMIN JA2PALU Bp. Idham GUDANG PALEMBANG Rp 1.488.000,00 Pending Lihat Ubah Hapus" [ref=e333]:
+                  - cell "Buat/batalkan pilihan item 1479 untuk tindakan massal." [ref=e334]:
+                    - checkbox "Buat/batalkan pilihan item 1479 untuk tindakan massal." [ref=e335]
+                  - cell "16/06/2026 08:44" [ref=e336]:
+                    - link "16/06/2026 08:44" [ref=e337] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1479
+                      - generic [ref=e338]:
+                        - paragraph [ref=e339]: 16/06/2026
+                        - paragraph [ref=e340]: 08:44
+                  - cell "INV-20260616-21-002" [ref=e341]:
+                    - link "INV-20260616-21-002" [ref=e342] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1479
+                      - generic [ref=e343]: INV-20260616-21-002
+                  - cell "USER SALE" [ref=e344]:
+                    - link "USER SALE" [ref=e345] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1479
+                      - generic [ref=e346]: USER SALE
+                  - cell "NUR - ADMIN JA2PALU" [ref=e347]:
+                    - link "NUR - ADMIN JA2PALU" [ref=e348] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1479
+                      - generic [ref=e349]: NUR - ADMIN JA2PALU
+                  - cell "Bp. Idham" [ref=e350]:
+                    - link "Bp. Idham" [ref=e351] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1479
+                      - generic [ref=e352]: Bp. Idham
+                  - cell "GUDANG PALEMBANG" [ref=e353]:
+                    - link "GUDANG PALEMBANG" [ref=e354] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1479
+                      - generic [ref=e356]: GUDANG PALEMBANG
+                  - cell "Rp 1.488.000,00" [ref=e357]:
+                    - link "Rp 1.488.000,00" [ref=e358] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1479
+                      - generic [ref=e359]: Rp 1.488.000,00
+                  - cell "Pending" [ref=e360]:
+                    - link "Pending" [ref=e361] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1479
+                      - generic [ref=e363]:
+                        - img [ref=e364]
+                        - text: Pending
+                  - cell "Lihat Ubah Hapus" [ref=e366]:
+                    - generic [ref=e367]:
+                      - link "Lihat" [ref=e368] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/penjualans/1479
+                        - img [ref=e369]
+                        - text: Lihat
+                      - link "Ubah" [ref=e372] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/penjualans/1479/edit
+                        - img [ref=e373]
+                        - text: Ubah
+                      - button "Hapus" [ref=e376] [cursor=pointer]:
+                        - img [ref=e377]
+                        - text: Hapus
+                - row "Buat/batalkan pilihan item 1478 untuk tindakan massal. 16/06/2026 08:28 INV-20260616-21-001 USER SALE NUR - ADMIN JA2PALU Ahmad G GUDANG PALEMBANG Rp 1.500.000,00 Pending Lihat Ubah Hapus" [ref=e379]:
+                  - cell "Buat/batalkan pilihan item 1478 untuk tindakan massal." [ref=e380]:
+                    - checkbox "Buat/batalkan pilihan item 1478 untuk tindakan massal." [ref=e381]
+                  - cell "16/06/2026 08:28" [ref=e382]:
+                    - link "16/06/2026 08:28" [ref=e383] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1478
+                      - generic [ref=e384]:
+                        - paragraph [ref=e385]: 16/06/2026
+                        - paragraph [ref=e386]: 08:28
+                  - cell "INV-20260616-21-001" [ref=e387]:
+                    - link "INV-20260616-21-001" [ref=e388] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1478
+                      - generic [ref=e389]: INV-20260616-21-001
+                  - cell "USER SALE" [ref=e390]:
+                    - link "USER SALE" [ref=e391] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1478
+                      - generic [ref=e392]: USER SALE
+                  - cell "NUR - ADMIN JA2PALU" [ref=e393]:
+                    - link "NUR - ADMIN JA2PALU" [ref=e394] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1478
+                      - generic [ref=e395]: NUR - ADMIN JA2PALU
+                  - cell "Ahmad G" [ref=e396]:
+                    - link "Ahmad G" [ref=e397] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1478
+                      - generic [ref=e398]: Ahmad G
+                  - cell "GUDANG PALEMBANG" [ref=e399]:
+                    - link "GUDANG PALEMBANG" [ref=e400] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1478
+                      - generic [ref=e402]: GUDANG PALEMBANG
+                  - cell "Rp 1.500.000,00" [ref=e403]:
+                    - link "Rp 1.500.000,00" [ref=e404] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1478
+                      - generic [ref=e405]: Rp 1.500.000,00
+                  - cell "Pending" [ref=e406]:
+                    - link "Pending" [ref=e407] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1478
+                      - generic [ref=e409]:
+                        - img [ref=e410]
+                        - text: Pending
+                  - cell "Lihat Ubah Hapus" [ref=e412]:
+                    - generic [ref=e413]:
+                      - link "Lihat" [ref=e414] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/penjualans/1478
+                        - img [ref=e415]
+                        - text: Lihat
+                      - link "Ubah" [ref=e418] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/penjualans/1478/edit
+                        - img [ref=e419]
+                        - text: Ubah
+                      - button "Hapus" [ref=e422] [cursor=pointer]:
+                        - img [ref=e423]
+                        - text: Hapus
+                - row "Buat/batalkan pilihan item 1477 untuk tindakan massal. 14/06/2026 22:02 INV-20260614-23-007 Faiz Tes Jakarta Sales NUR - ADMIN JA2PALU Budi GUDANG JAKARTA Rp 114.000,00 Pending Lihat Ubah Hapus" [ref=e425]:
+                  - cell "Buat/batalkan pilihan item 1477 untuk tindakan massal." [ref=e426]:
+                    - checkbox "Buat/batalkan pilihan item 1477 untuk tindakan massal." [ref=e427]
+                  - cell "14/06/2026 22:02" [ref=e428]:
+                    - link "14/06/2026 22:02" [ref=e429] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1477
+                      - generic [ref=e430]:
+                        - paragraph [ref=e431]: 14/06/2026
+                        - paragraph [ref=e432]: 22:02
+                  - cell "INV-20260614-23-007" [ref=e433]:
+                    - link "INV-20260614-23-007" [ref=e434] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1477
+                      - generic [ref=e435]: INV-20260614-23-007
+                  - cell "Faiz Tes Jakarta Sales" [ref=e436]:
+                    - link "Faiz Tes Jakarta Sales" [ref=e437] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1477
+                      - generic [ref=e438]: Faiz Tes Jakarta Sales
+                  - cell "NUR - ADMIN JA2PALU" [ref=e439]:
+                    - link "NUR - ADMIN JA2PALU" [ref=e440] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1477
+                      - generic [ref=e441]: NUR - ADMIN JA2PALU
+                  - cell "Budi" [ref=e442]:
+                    - link "Budi" [ref=e443] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1477
+                      - generic [ref=e444]: Budi
+                  - cell "GUDANG JAKARTA" [ref=e445]:
+                    - link "GUDANG JAKARTA" [ref=e446] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1477
+                      - generic [ref=e448]: GUDANG JAKARTA
+                  - cell "Rp 114.000,00" [ref=e449]:
+                    - link "Rp 114.000,00" [ref=e450] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1477
+                      - generic [ref=e451]: Rp 114.000,00
+                  - cell "Pending" [ref=e452]:
+                    - link "Pending" [ref=e453] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1477
+                      - generic [ref=e455]:
+                        - img [ref=e456]
+                        - text: Pending
+                  - cell "Lihat Ubah Hapus" [ref=e458]:
+                    - generic [ref=e459]:
+                      - link "Lihat" [ref=e460] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/penjualans/1477
+                        - img [ref=e461]
+                        - text: Lihat
+                      - link "Ubah" [ref=e464] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/penjualans/1477/edit
+                        - img [ref=e465]
+                        - text: Ubah
+                      - button "Hapus" [ref=e468] [cursor=pointer]:
+                        - img [ref=e469]
+                        - text: Hapus
+                - row "Buat/batalkan pilihan item 1476 untuk tindakan massal. 14/06/2026 21:39 INV-20260614-23-006 Faiz Tes Jakarta Sales NUR - ADMIN JA2PALU Budi GUDANG JAKARTA Rp 32.000,00 Pending Lihat Ubah Hapus" [ref=e471]:
+                  - cell "Buat/batalkan pilihan item 1476 untuk tindakan massal." [ref=e472]:
+                    - checkbox "Buat/batalkan pilihan item 1476 untuk tindakan massal." [ref=e473]
+                  - cell "14/06/2026 21:39" [ref=e474]:
+                    - link "14/06/2026 21:39" [ref=e475] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1476
+                      - generic [ref=e476]:
+                        - paragraph [ref=e477]: 14/06/2026
+                        - paragraph [ref=e478]: 21:39
+                  - cell "INV-20260614-23-006" [ref=e479]:
+                    - link "INV-20260614-23-006" [ref=e480] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1476
+                      - generic [ref=e481]: INV-20260614-23-006
+                  - cell "Faiz Tes Jakarta Sales" [ref=e482]:
+                    - link "Faiz Tes Jakarta Sales" [ref=e483] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1476
+                      - generic [ref=e484]: Faiz Tes Jakarta Sales
+                  - cell "NUR - ADMIN JA2PALU" [ref=e485]:
+                    - link "NUR - ADMIN JA2PALU" [ref=e486] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1476
+                      - generic [ref=e487]: NUR - ADMIN JA2PALU
+                  - cell "Budi" [ref=e488]:
+                    - link "Budi" [ref=e489] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1476
+                      - generic [ref=e490]: Budi
+                  - cell "GUDANG JAKARTA" [ref=e491]:
+                    - link "GUDANG JAKARTA" [ref=e492] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1476
+                      - generic [ref=e494]: GUDANG JAKARTA
+                  - cell "Rp 32.000,00" [ref=e495]:
+                    - link "Rp 32.000,00" [ref=e496] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1476
+                      - generic [ref=e497]: Rp 32.000,00
+                  - cell "Pending" [ref=e498]:
+                    - link "Pending" [ref=e499] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1476
+                      - generic [ref=e501]:
+                        - img [ref=e502]
+                        - text: Pending
+                  - cell "Lihat Ubah Hapus" [ref=e504]:
+                    - generic [ref=e505]:
+                      - link "Lihat" [ref=e506] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/penjualans/1476
+                        - img [ref=e507]
+                        - text: Lihat
+                      - link "Ubah" [ref=e510] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/penjualans/1476/edit
+                        - img [ref=e511]
+                        - text: Ubah
+                      - button "Hapus" [ref=e514] [cursor=pointer]:
+                        - img [ref=e515]
+                        - text: Hapus
+                - row "Buat/batalkan pilihan item 1475 untuk tindakan massal. 14/06/2026 21:35 INV-20260614-23-005 Faiz Tes Jakarta Sales NUR - ADMIN JA2PALU Budi GUDANG JAKARTA Rp 24.000,00 Pending Lihat Ubah Hapus" [ref=e517]:
+                  - cell "Buat/batalkan pilihan item 1475 untuk tindakan massal." [ref=e518]:
+                    - checkbox "Buat/batalkan pilihan item 1475 untuk tindakan massal." [ref=e519]
+                  - cell "14/06/2026 21:35" [ref=e520]:
+                    - link "14/06/2026 21:35" [ref=e521] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1475
+                      - generic [ref=e522]:
+                        - paragraph [ref=e523]: 14/06/2026
+                        - paragraph [ref=e524]: 21:35
+                  - cell "INV-20260614-23-005" [ref=e525]:
+                    - link "INV-20260614-23-005" [ref=e526] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1475
+                      - generic [ref=e527]: INV-20260614-23-005
+                  - cell "Faiz Tes Jakarta Sales" [ref=e528]:
+                    - link "Faiz Tes Jakarta Sales" [ref=e529] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1475
+                      - generic [ref=e530]: Faiz Tes Jakarta Sales
+                  - cell "NUR - ADMIN JA2PALU" [ref=e531]:
+                    - link "NUR - ADMIN JA2PALU" [ref=e532] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1475
+                      - generic [ref=e533]: NUR - ADMIN JA2PALU
+                  - cell "Budi" [ref=e534]:
+                    - link "Budi" [ref=e535] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1475
+                      - generic [ref=e536]: Budi
+                  - cell "GUDANG JAKARTA" [ref=e537]:
+                    - link "GUDANG JAKARTA" [ref=e538] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1475
+                      - generic [ref=e540]: GUDANG JAKARTA
+                  - cell "Rp 24.000,00" [ref=e541]:
+                    - link "Rp 24.000,00" [ref=e542] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1475
+                      - generic [ref=e543]: Rp 24.000,00
+                  - cell "Pending" [ref=e544]:
+                    - link "Pending" [ref=e545] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1475
+                      - generic [ref=e547]:
+                        - img [ref=e548]
+                        - text: Pending
+                  - cell "Lihat Ubah Hapus" [ref=e550]:
+                    - generic [ref=e551]:
+                      - link "Lihat" [ref=e552] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/penjualans/1475
+                        - img [ref=e553]
+                        - text: Lihat
+                      - link "Ubah" [ref=e556] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/penjualans/1475/edit
+                        - img [ref=e557]
+                        - text: Ubah
+                      - button "Hapus" [ref=e560] [cursor=pointer]:
+                        - img [ref=e561]
+                        - text: Hapus
+                - row "Buat/batalkan pilihan item 1474 untuk tindakan massal. 14/06/2026 21:31 INV-20260614-23-004 Faiz Tes Jakarta Sales NUR - ADMIN JA2PALU Budi GUDANG JAKARTA Rp 12.000,00 Pending Lihat Ubah Hapus" [ref=e563]:
+                  - cell "Buat/batalkan pilihan item 1474 untuk tindakan massal." [ref=e564]:
+                    - checkbox "Buat/batalkan pilihan item 1474 untuk tindakan massal." [ref=e565]
+                  - cell "14/06/2026 21:31" [ref=e566]:
+                    - link "14/06/2026 21:31" [ref=e567] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1474
+                      - generic [ref=e568]:
+                        - paragraph [ref=e569]: 14/06/2026
+                        - paragraph [ref=e570]: 21:31
+                  - cell "INV-20260614-23-004" [ref=e571]:
+                    - link "INV-20260614-23-004" [ref=e572] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1474
+                      - generic [ref=e573]: INV-20260614-23-004
+                  - cell "Faiz Tes Jakarta Sales" [ref=e574]:
+                    - link "Faiz Tes Jakarta Sales" [ref=e575] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1474
+                      - generic [ref=e576]: Faiz Tes Jakarta Sales
+                  - cell "NUR - ADMIN JA2PALU" [ref=e577]:
+                    - link "NUR - ADMIN JA2PALU" [ref=e578] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1474
+                      - generic [ref=e579]: NUR - ADMIN JA2PALU
+                  - cell "Budi" [ref=e580]:
+                    - link "Budi" [ref=e581] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1474
+                      - generic [ref=e582]: Budi
+                  - cell "GUDANG JAKARTA" [ref=e583]:
+                    - link "GUDANG JAKARTA" [ref=e584] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1474
+                      - generic [ref=e586]: GUDANG JAKARTA
+                  - cell "Rp 12.000,00" [ref=e587]:
+                    - link "Rp 12.000,00" [ref=e588] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1474
+                      - generic [ref=e589]: Rp 12.000,00
+                  - cell "Pending" [ref=e590]:
+                    - link "Pending" [ref=e591] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1474
+                      - generic [ref=e593]:
+                        - img [ref=e594]
+                        - text: Pending
+                  - cell "Lihat Ubah Hapus" [ref=e596]:
+                    - generic [ref=e597]:
+                      - link "Lihat" [ref=e598] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/penjualans/1474
+                        - img [ref=e599]
+                        - text: Lihat
+                      - link "Ubah" [ref=e602] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/penjualans/1474/edit
+                        - img [ref=e603]
+                        - text: Ubah
+                      - button "Hapus" [ref=e606] [cursor=pointer]:
+                        - img [ref=e607]
+                        - text: Hapus
+                - row "Buat/batalkan pilihan item 1473 untuk tindakan massal. 14/06/2026 21:23 INV-20260614-23-003 Faiz Tes Jakarta Sales NUR - ADMIN JA2PALU Budi GUDANG JAKARTA Rp 0,00 Pending Lihat Ubah Hapus" [ref=e609]:
+                  - cell "Buat/batalkan pilihan item 1473 untuk tindakan massal." [ref=e610]:
+                    - checkbox "Buat/batalkan pilihan item 1473 untuk tindakan massal." [ref=e611]
+                  - cell "14/06/2026 21:23" [ref=e612]:
+                    - link "14/06/2026 21:23" [ref=e613] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1473
+                      - generic [ref=e614]:
+                        - paragraph [ref=e615]: 14/06/2026
+                        - paragraph [ref=e616]: 21:23
+                  - cell "INV-20260614-23-003" [ref=e617]:
+                    - link "INV-20260614-23-003" [ref=e618] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1473
+                      - generic [ref=e619]: INV-20260614-23-003
+                  - cell "Faiz Tes Jakarta Sales" [ref=e620]:
+                    - link "Faiz Tes Jakarta Sales" [ref=e621] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1473
+                      - generic [ref=e622]: Faiz Tes Jakarta Sales
+                  - cell "NUR - ADMIN JA2PALU" [ref=e623]:
+                    - link "NUR - ADMIN JA2PALU" [ref=e624] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1473
+                      - generic [ref=e625]: NUR - ADMIN JA2PALU
+                  - cell "Budi" [ref=e626]:
+                    - link "Budi" [ref=e627] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1473
+                      - generic [ref=e628]: Budi
+                  - cell "GUDANG JAKARTA" [ref=e629]:
+                    - link "GUDANG JAKARTA" [ref=e630] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1473
+                      - generic [ref=e632]: GUDANG JAKARTA
+                  - cell "Rp 0,00" [ref=e633]:
+                    - link "Rp 0,00" [ref=e634] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1473
+                      - generic [ref=e635]: Rp 0,00
+                  - cell "Pending" [ref=e636]:
+                    - link "Pending" [ref=e637] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1473
+                      - generic [ref=e639]:
+                        - img [ref=e640]
+                        - text: Pending
+                  - cell "Lihat Ubah Hapus" [ref=e642]:
+                    - generic [ref=e643]:
+                      - link "Lihat" [ref=e644] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/penjualans/1473
+                        - img [ref=e645]
+                        - text: Lihat
+                      - link "Ubah" [ref=e648] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/penjualans/1473/edit
+                        - img [ref=e649]
+                        - text: Ubah
+                      - button "Hapus" [ref=e652] [cursor=pointer]:
+                        - img [ref=e653]
+                        - text: Hapus
+                - row "Buat/batalkan pilihan item 1472 untuk tindakan massal. 14/06/2026 21:06 INV-20260614-23-002 Faiz Tes Jakarta Sales NUR - ADMIN JA2PALU Budi GUDANG JAKARTA Rp 231.000,00 Pending Lihat Ubah Hapus" [ref=e655]:
+                  - cell "Buat/batalkan pilihan item 1472 untuk tindakan massal." [ref=e656]:
+                    - checkbox "Buat/batalkan pilihan item 1472 untuk tindakan massal." [ref=e657]
+                  - cell "14/06/2026 21:06" [ref=e658]:
+                    - link "14/06/2026 21:06" [ref=e659] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1472
+                      - generic [ref=e660]:
+                        - paragraph [ref=e661]: 14/06/2026
+                        - paragraph [ref=e662]: 21:06
+                  - cell "INV-20260614-23-002" [ref=e663]:
+                    - link "INV-20260614-23-002" [ref=e664] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1472
+                      - generic [ref=e665]: INV-20260614-23-002
+                  - cell "Faiz Tes Jakarta Sales" [ref=e666]:
+                    - link "Faiz Tes Jakarta Sales" [ref=e667] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1472
+                      - generic [ref=e668]: Faiz Tes Jakarta Sales
+                  - cell "NUR - ADMIN JA2PALU" [ref=e669]:
+                    - link "NUR - ADMIN JA2PALU" [ref=e670] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1472
+                      - generic [ref=e671]: NUR - ADMIN JA2PALU
+                  - cell "Budi" [ref=e672]:
+                    - link "Budi" [ref=e673] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1472
+                      - generic [ref=e674]: Budi
+                  - cell "GUDANG JAKARTA" [ref=e675]:
+                    - link "GUDANG JAKARTA" [ref=e676] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1472
+                      - generic [ref=e678]: GUDANG JAKARTA
+                  - cell "Rp 231.000,00" [ref=e679]:
+                    - link "Rp 231.000,00" [ref=e680] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1472
+                      - generic [ref=e681]: Rp 231.000,00
+                  - cell "Pending" [ref=e682]:
+                    - link "Pending" [ref=e683] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1472
+                      - generic [ref=e685]:
+                        - img [ref=e686]
+                        - text: Pending
+                  - cell "Lihat Ubah Hapus" [ref=e688]:
+                    - generic [ref=e689]:
+                      - link "Lihat" [ref=e690] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/penjualans/1472
+                        - img [ref=e691]
+                        - text: Lihat
+                      - link "Ubah" [ref=e694] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/penjualans/1472/edit
+                        - img [ref=e695]
+                        - text: Ubah
+                      - button "Hapus" [ref=e698] [cursor=pointer]:
+                        - img [ref=e699]
+                        - text: Hapus
+                - row "Buat/batalkan pilihan item 1471 untuk tindakan massal. 14/06/2026 21:02 INV-20260614-23-001 Faiz Tes Jakarta Sales NUR - ADMIN JA2PALU Budi GUDANG JAKARTA Rp 60.000,00 Pending Lihat Ubah Hapus" [ref=e701]:
+                  - cell "Buat/batalkan pilihan item 1471 untuk tindakan massal." [ref=e702]:
+                    - checkbox "Buat/batalkan pilihan item 1471 untuk tindakan massal." [ref=e703]
+                  - cell "14/06/2026 21:02" [ref=e704]:
+                    - link "14/06/2026 21:02" [ref=e705] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1471
+                      - generic [ref=e706]:
+                        - paragraph [ref=e707]: 14/06/2026
+                        - paragraph [ref=e708]: 21:02
+                  - cell "INV-20260614-23-001" [ref=e709]:
+                    - link "INV-20260614-23-001" [ref=e710] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1471
+                      - generic [ref=e711]: INV-20260614-23-001
+                  - cell "Faiz Tes Jakarta Sales" [ref=e712]:
+                    - link "Faiz Tes Jakarta Sales" [ref=e713] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1471
+                      - generic [ref=e714]: Faiz Tes Jakarta Sales
+                  - cell "NUR - ADMIN JA2PALU" [ref=e715]:
+                    - link "NUR - ADMIN JA2PALU" [ref=e716] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1471
+                      - generic [ref=e717]: NUR - ADMIN JA2PALU
+                  - cell "Budi" [ref=e718]:
+                    - link "Budi" [ref=e719] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1471
+                      - generic [ref=e720]: Budi
+                  - cell "GUDANG JAKARTA" [ref=e721]:
+                    - link "GUDANG JAKARTA" [ref=e722] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1471
+                      - generic [ref=e724]: GUDANG JAKARTA
+                  - cell "Rp 60.000,00" [ref=e725]:
+                    - link "Rp 60.000,00" [ref=e726] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1471
+                      - generic [ref=e727]: Rp 60.000,00
+                  - cell "Pending" [ref=e728]:
+                    - link "Pending" [ref=e729] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1471
+                      - generic [ref=e731]:
+                        - img [ref=e732]
+                        - text: Pending
+                  - cell "Lihat Ubah Hapus" [ref=e734]:
+                    - generic [ref=e735]:
+                      - link "Lihat" [ref=e736] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/penjualans/1471
+                        - img [ref=e737]
+                        - text: Lihat
+                      - link "Ubah" [ref=e740] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/penjualans/1471/edit
+                        - img [ref=e741]
+                        - text: Ubah
+                      - button "Hapus" [ref=e744] [cursor=pointer]:
+                        - img [ref=e745]
+                        - text: Hapus
+                - row "Buat/batalkan pilihan item 1470 untuk tindakan massal. 12/06/2026 13:31 INV-20260612-9-003 SALES M.B.K - UMAR NUR - ADMIN JA2PALU Toko Ade GUDANG GARUT Rp 42.000,00 Pending Lihat Ubah Hapus" [ref=e747]:
+                  - cell "Buat/batalkan pilihan item 1470 untuk tindakan massal." [ref=e748]:
+                    - checkbox "Buat/batalkan pilihan item 1470 untuk tindakan massal." [ref=e749]
+                  - cell "12/06/2026 13:31" [ref=e750]:
+                    - link "12/06/2026 13:31" [ref=e751] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1470
+                      - generic [ref=e752]:
+                        - paragraph [ref=e753]: 12/06/2026
+                        - paragraph [ref=e754]: 13:31
+                  - cell "INV-20260612-9-003" [ref=e755]:
+                    - link "INV-20260612-9-003" [ref=e756] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1470
+                      - generic [ref=e757]: INV-20260612-9-003
+                  - cell "SALES M.B.K - UMAR" [ref=e758]:
+                    - link "SALES M.B.K - UMAR" [ref=e759] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1470
+                      - generic [ref=e760]: SALES M.B.K - UMAR
+                  - cell "NUR - ADMIN JA2PALU" [ref=e761]:
+                    - link "NUR - ADMIN JA2PALU" [ref=e762] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1470
+                      - generic [ref=e763]: NUR - ADMIN JA2PALU
+                  - cell "Toko Ade" [ref=e764]:
+                    - link "Toko Ade" [ref=e765] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1470
+                      - generic [ref=e766]: Toko Ade
+                  - cell "GUDANG GARUT" [ref=e767]:
+                    - link "GUDANG GARUT" [ref=e768] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1470
+                      - generic [ref=e770]: GUDANG GARUT
+                  - cell "Rp 42.000,00" [ref=e771]:
+                    - link "Rp 42.000,00" [ref=e772] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1470
+                      - generic [ref=e773]: Rp 42.000,00
+                  - cell "Pending" [ref=e774]:
+                    - link "Pending" [ref=e775] [cursor=pointer]:
+                      - /url: https://new.hibiscusefsya.com/app/penjualans/1470
+                      - generic [ref=e777]:
+                        - img [ref=e778]
+                        - text: Pending
+                  - cell "Lihat Ubah Hapus" [ref=e780]:
+                    - generic [ref=e781]:
+                      - link "Lihat" [ref=e782] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/penjualans/1470
+                        - img [ref=e783]
+                        - text: Lihat
+                      - link "Ubah" [ref=e786] [cursor=pointer]:
+                        - /url: https://new.hibiscusefsya.com/app/penjualans/1470/edit
+                        - img [ref=e787]
+                        - text: Ubah
+                      - button "Hapus" [ref=e790] [cursor=pointer]:
+                        - img [ref=e791]
+                        - text: Hapus
+            - navigation "Navigasi halaman" [ref=e793]:
+              - generic [ref=e794]: Menampilkan 1 sampai 10 dari 1,410 hasil
+              - generic [ref=e797]:
+                - generic [ref=e799]: per halaman
+                - combobox "per halaman" [ref=e801]:
+                  - option "5"
+                  - option "10" [selected]
+                  - option "25"
+                  - option "50"
+              - list [ref=e802]:
+                - listitem [ref=e803]:
+                  - button "Ke halaman 1" [ref=e804] [cursor=pointer]:
+                    - generic [ref=e805]: "1"
+                - listitem [ref=e806]:
+                  - button "Ke halaman 2" [ref=e807] [cursor=pointer]:
+                    - generic [ref=e808]: "2"
+                - listitem [ref=e809]:
+                  - button "Ke halaman 3" [ref=e810] [cursor=pointer]:
+                    - generic [ref=e811]: "3"
+                - listitem [ref=e812]:
+                  - button "Ke halaman 4" [ref=e813] [cursor=pointer]:
+                    - generic [ref=e814]: "4"
+                - listitem [ref=e815]:
+                  - button "..." [disabled] [ref=e816]:
+                    - generic [ref=e817]: ...
+                - listitem [ref=e818]:
+                  - button "Ke halaman 140" [ref=e819] [cursor=pointer]:
+                    - generic [ref=e820]: "140"
+                - listitem [ref=e821]:
+                  - button "Ke halaman 141" [ref=e822] [cursor=pointer]:
+                    - generic [ref=e823]: "141"
+                - listitem [ref=e824]:
+                  - button "Selanjutnya" [ref=e825] [cursor=pointer]:
+                    - img [ref=e826]
+  - generic:
+    - status

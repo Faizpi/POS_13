@@ -157,7 +157,7 @@ class UsersTable
                     }),
             ])
             ->modifyQueryUsing(fn ($query) => $query
-                ->orderByRaw("FIELD(users.role, 'super_admin', 'spectator', 'admin', 'user')")
+                ->orderByRaw("CASE users.role WHEN 'super_admin' THEN 1 WHEN 'spectator' THEN 2 WHEN 'admin' THEN 3 WHEN 'user' THEN 4 ELSE 5 END")
                 ->orderByRaw("(SELECT MIN(g.nama_gudang) FROM admin_gudang ag JOIN gudangs g ON g.id = ag.gudang_id WHERE ag.user_id = users.id)")
                 ->orderByRaw("(SELECT MIN(g.nama_gudang) FROM spectator_gudang sg JOIN gudangs g ON g.id = sg.gudang_id WHERE sg.user_id = users.id)")
                 ->orderByRaw("(SELECT g.nama_gudang FROM gudangs g WHERE g.id = users.gudang_id)")

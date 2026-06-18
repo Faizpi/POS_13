@@ -6,11 +6,14 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Tables\Columns\IconColumn;
+use Filament\Forms\Components\Select;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use App\Models\Gudang;
 
 class UsersTable
 {
@@ -73,22 +76,41 @@ class UsersTable
                     ->placeholder('—')
                     ->toggleable(),
 
-                IconColumn::make('receives_transaction_email')
+                ToggleColumn::make('receives_transaction_email')
                     ->label('Email')
-                    ->boolean()
-                    ->alignCenter(),
+                    ->alignCenter()
+                    ->onIcon('heroicon-s-check-circle')
+                    ->offIcon('heroicon-s-x-circle')
+                    ->onColor('success')
+                    ->offColor('danger'),
 
-                IconColumn::make('can_export_pdf')
+                ToggleColumn::make('receives_transaction_whatsapp')
+                    ->label('WA')
+                    ->alignCenter()
+                    ->onIcon('heroicon-s-check-circle')
+                    ->offIcon('heroicon-s-x-circle')
+                    ->onColor('success')
+                    ->offColor('danger'),
+
+                ToggleColumn::make('can_export_pdf')
                     ->label('Exp PDF')
-                    ->boolean()
                     ->alignCenter()
-                    ->toggleable(),
+                    ->toggleable()
+                    ->onIcon('heroicon-s-check-circle')
+                    ->offIcon('heroicon-s-x-circle')
+                    ->onColor('success')
+                    ->offColor('danger')
+                    ->disabled(fn ($record) => $record?->role !== 'admin'),
 
-                IconColumn::make('can_export_excel')
+                ToggleColumn::make('can_export_excel')
                     ->label('Exp Excel')
-                    ->boolean()
                     ->alignCenter()
-                    ->toggleable(),
+                    ->toggleable()
+                    ->onIcon('heroicon-s-check-circle')
+                    ->offIcon('heroicon-s-x-circle')
+                    ->onColor('success')
+                    ->offColor('danger')
+                    ->disabled(fn ($record) => $record?->role !== 'admin'),
             ])
             ->filters([
                 SelectFilter::make('role')
@@ -98,8 +120,69 @@ class UsersTable
                         'admin' => 'Admin',
                         'user' => 'User',
                     ]),
+                Filter::make('gudang')
+                    ->form([
+                        Select::make('gudang_id')
+                            ->label('Gudang')
+                            ->options(Gudang::pluck('nama_gudang', 'id'))
+                            ->searchable()
+                            ->preload(),
+                    ])
+                    ->query(function ($query, array $data) {
+                        if (empty($data['gudang_id'])) return $query;
+
+                        $gudangId = $data['gudang_id'];
+
+                        return $query->where(function ($q) use ($gudangId) {
+                            $q->where(function ($q1) use ($gudangId) {
+                                    $q1->where('role', 'user')->where('gudang_id', $gudangId);
+                                })
+                                ->orWhere(function ($q2) use ($gudangId) {
+                                    $q2->where('role', 'admin')
+                                        ->whereIn('id', function ($sub) use ($gudangId) {
+                                            $sub->select('user_id')
+                                                ->from('admin_gudang')
+                                                ->where('gudang_id', $gudangId);
+                                        });
+                                })
+                                ->orWhere(function ($q3) use ($gudangId) {
+                                    $q3->where('role', 'spectator')
+                                        ->whereIn('id', function ($sub) use ($gudangId) {
+                                            $sub->select('user_id')
+                                                ->from('spectator_gudang')
+                                                ->where('gudang_id', $gudangId);
+                                        });
+                                });
+                        });
+                    }),
             ])
-            ->modifyQueryUsing(fn ($query) => $query->orderByRaw("FIELD(role, 'super_admin', 'spectator', 'admin', 'user')"))
+            ->modifyQueryUsing(fn ($query) => $query
+                ->leftJoin('gudangs as g_sort', function ($join) {
+                    $join->on('g_sort.id', '=', 'users.gudang_id');
+                })
+                ->leftJoin('admin_gudang as ag_sort', function ($join) {
+                    $join->on('ag_sort.user_id', '=', 'users.id')
+                         ->whereRaw('ag_sort.id = (SELECT MIN(id) FROM admin_gudang WHERE user_id = users.id)');
+                })
+                ->leftJoin('gudangs as g_admin_sort', function ($join) {
+                    $join->on('g_admin_sort.id', '=', 'ag_sort.gudang_id');
+                })
+                ->leftJoin('spectator_gudang as sg_sort', function ($join) {
+                    $join->on('sg_sort.user_id', '=', 'users.id')
+                         ->whereRaw('sg_sort.id = (SELECT MIN(id) FROM spectator_gudang WHERE user_id = users.id)');
+                })
+                ->leftJoin('gudangs as g_spec_sort', function ($join) {
+                    $join->on('g_spec_sort.id', '=', 'sg_sort.gudang_id');
+                })
+                ->groupBy('users.id')
+                ->orderByRaw("FIELD(users.role, 'super_admin', 'spectator', 'admin', 'user')")
+                ->orderByRaw("COALESCE(
+                    CASE WHEN users.role = 'admin' THEN g_admin_sort.nama_gudang END,
+                    CASE WHEN users.role = 'spectator' THEN g_spec_sort.nama_gudang END,
+                    g_sort.nama_gudang
+                )")
+                ->orderBy('users.name')
+            )
             ->recordActions([
                 EditAction::make(),
                 DeleteAction::make()

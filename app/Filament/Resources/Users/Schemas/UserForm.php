@@ -111,6 +111,11 @@ class UserForm
                             ->helperText('User akan menerima email saat ada transaksi baru/butuh approval')
                             ->default(true),
 
+                        Toggle::make('receives_transaction_whatsapp')
+                            ->label('Penerima WhatsApp Transaksi')
+                            ->helperText('User akan menerima notifikasi WhatsApp saat ada penjualan baru')
+                            ->default(true),
+
                         Toggle::make('can_export_pdf')
                             ->label('Hak Export PDF')
                             ->visible(fn(callable $get) => $get('role') === 'admin')

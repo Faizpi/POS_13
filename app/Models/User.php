@@ -23,6 +23,7 @@ class User extends Authenticatable implements FilamentUser
         'gudang_id',
         'current_gudang_id',
         'receives_transaction_email',
+        'receives_transaction_whatsapp',
         'can_export_pdf',
         'can_export_excel',
     ];
@@ -40,6 +41,7 @@ class User extends Authenticatable implements FilamentUser
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'receives_transaction_email' => 'boolean',
+            'receives_transaction_whatsapp' => 'boolean',
             'can_export_pdf' => 'boolean',
             'can_export_excel' => 'boolean',
         ];

@@ -137,6 +137,7 @@ class WhatsappNotificationService
     private static function getAdminPhones(?int $gudangId = null): array
     {
         $phones = User::where("role", "super_admin")
+            ->where("receives_transaction_whatsapp", true)
             ->whereNotNull("no_telp")
             ->where("no_telp", "!=", "")
             ->pluck("no_telp")
@@ -144,6 +145,7 @@ class WhatsappNotificationService
 
         if ($gudangId) {
             $adminPhones = User::where("role", "admin")
+                ->where("receives_transaction_whatsapp", true)
                 ->whereNotNull("no_telp")
                 ->where("no_telp", "!=", "")
                 ->where(function ($q) use ($gudangId) {

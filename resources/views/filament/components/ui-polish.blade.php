@@ -190,21 +190,19 @@
         border-top: none !important;
     }
 
-    /* Ungrouped items (Dasbor, Profil Saya) */
-    .fi-sidebar > nav > ul > li:not(.fi-sidebar-group) > a,
-    .fi-sidebar > nav > ul > li:not(.fi-sidebar-group) > .fi-sidebar-item-btn {
-        padding-top: 0.4rem !important;
-        padding-bottom: 0.4rem !important;
+    /* Spacing between groups (Dasbor, Neraca, Kunjungan, etc.) */
+    .fi-sidebar-nav-groups {
+        gap: 0.65rem !important; /* Bring groups closer together (default was too sparse) */
     }
 
-    /* Group header: tighter */
+    /* Group header label */
     .fi-sidebar-group > .fi-sidebar-group-label,
     .fi-sidebar-group-label {
         font-size: 0.82rem !important;
         font-weight: 700 !important;
         text-transform: uppercase !important;
         letter-spacing: 0.06em !important;
-        padding: 0.45rem 0 0.2rem 0 !important;
+        padding: 0.45rem 0 0.25rem 0 !important;
         margin: 0 !important;
         line-height: 1.1 !important;
         color: rgb(100, 116, 139) !important;
@@ -214,32 +212,32 @@
         color: rgb(148, 163, 184) !important;
     }
 
-    /* Garis pembatas antar group — minimal */
+    /* Remove excessive top margins on sibling groups */
     .fi-sidebar-group + .fi-sidebar-group,
     .fi-sidebar-group + li:not(.fi-sidebar-group),
     li:not(.fi-sidebar-group) + .fi-sidebar-group {
-        margin-top: 0.05rem !important;
+        margin-top: 0 !important;
         padding-top: 0 !important;
         border-top: none !important;
     }
 
-    /* Sub-menu items: very compact */
+    /* Sub-menu items container: add comfort gap */
     .fi-sidebar-group-items {
-        margin-top: 0 !important;
-        padding: 0.1rem 0 !important;
-        gap: 0 !important;
+        margin-top: 0.15rem !important;
+        padding: 0 !important;
+        gap: 0.15rem !important; /* Spacing between items in the same group */
     }
     .fi-sidebar-group-items > li,
     .fi-sidebar-group-items .fi-sidebar-item {
         margin: 0 !important;
     }
 
-    /* Item button: comfortable */
+    /* Item link / button inside sidebar: more breathing room */
     .fi-sidebar-item a,
     .fi-sidebar-item-btn,
     .fi-sidebar-group-items a {
-        padding-top: 0.5rem !important;
-        padding-bottom: 0.5rem !important;
+        padding-top: 0.65rem !important;
+        padding-bottom: 0.65rem !important;
         min-height: 0 !important;
         gap: 0.55rem !important;
     }

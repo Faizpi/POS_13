@@ -204,7 +204,7 @@
         font-weight: 700 !important;
         text-transform: uppercase !important;
         letter-spacing: 0.06em !important;
-        padding: 0.65rem 0 0.3rem 0 !important;
+        padding: 0.45rem 0 0.2rem 0 !important;
         margin: 0 !important;
         line-height: 1.1 !important;
         color: rgb(100, 116, 139) !important;
@@ -218,7 +218,7 @@
     .fi-sidebar-group + .fi-sidebar-group,
     .fi-sidebar-group + li:not(.fi-sidebar-group),
     li:not(.fi-sidebar-group) + .fi-sidebar-group {
-        margin-top: 0.2rem !important;
+        margin-top: 0.05rem !important;
         padding-top: 0 !important;
         border-top: none !important;
     }
@@ -234,12 +234,12 @@
         margin: 0 !important;
     }
 
-    /* Item button: tight */
+    /* Item button: comfortable */
     .fi-sidebar-item a,
     .fi-sidebar-item-btn,
     .fi-sidebar-group-items a {
-        padding-top: 0.38rem !important;
-        padding-bottom: 0.38rem !important;
+        padding-top: 0.5rem !important;
+        padding-bottom: 0.5rem !important;
         min-height: 0 !important;
         gap: 0.55rem !important;
     }

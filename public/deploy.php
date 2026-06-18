@@ -34,6 +34,7 @@ $commands = [
     'Storage Force Link' => 'storage:link --force',
     'Migrate Status'     => 'migrate:status',
     'Migrate'            => 'migrate',
+    'Mark Migrations Ran'=> 'migrate:mark-ran',
     'Migrate Fresh'      => 'migrate:fresh',
     'Migrate Seed'       => 'migrate --seed',
     'Filament Upgrade'   => 'filament:upgrade',
@@ -45,6 +46,7 @@ $presets = [
     'Full Clear'            => ['Cache Clear', 'Config Clear', 'Route Clear', 'View Clear', 'Optimize Clear'],
     'Filament Assets Update'=> ['Filament Upgrade', 'Cache Clear', 'View Clear', 'Optimize'],
     'Database Refresh'      => ['Migrate Fresh', 'Migrate Seed', 'Storage Force Link'],
+    'Import SQL'            => ['Mark Migrations Ran', 'Migrate', 'Cache Clear', 'View Clear', 'Optimize', 'Migrate Status'],
 ];
 
 $customHandlers = [

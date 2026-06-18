@@ -219,6 +219,22 @@ class PenerimaanBarangController extends Controller
         return response()->json(['message' => 'Penerimaan barang berhasil dibatalkan.']);
     }
 
+    public function uncancel($id)
+    {
+        $penerimaan = PenerimaanBarang::findOrFail($id);
+        $user = auth()->user();
+        if ($user->role !== 'super_admin') {
+            return response()->json(['message' => 'Hanya Super Admin yang dapat membatalkan pembatalan.'], 403);
+        }
+        if ($penerimaan->status !== 'Canceled') {
+            return response()->json(['message' => 'Transaksi ini tidak dalam status Canceled.'], 422);
+        }
+
+        $penerimaan->update(['status' => 'Pending']);
+
+        return response()->json(['message' => 'Penerimaan barang berhasil di-uncancel. Status kembali ke Pending.', 'data' => $penerimaan]);
+    }
+
     public function getPembelianByGudang($gudangId)
     {
         $user = auth()->user();

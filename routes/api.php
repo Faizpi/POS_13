@@ -43,6 +43,9 @@ Route::prefix('v1')->middleware('api.token')->group(function () {
     Route::get('gudang/stok', [Api\GudangController::class, 'stok']);
     Route::get('gudang/stok-log', [Api\GudangController::class, 'stokLog']);
     Route::get('gudang/stok/export', [Api\GudangController::class, 'exportStok']);
+    Route::post('gudang', [Api\GudangController::class, 'store']);
+    Route::put('gudang/{id}', [Api\GudangController::class, 'update']);
+    Route::delete('gudang/{id}', [Api\GudangController::class, 'destroy']);
 
     // Produk
     Route::get('produk/stok/{gudangId}', [Api\ProdukController::class, 'stokByGudang']);
@@ -97,7 +100,7 @@ Route::prefix('v1')->middleware('api.token')->group(function () {
     Route::post('kunjungan/{id}/cancel', [Api\KunjunganController::class, 'cancel']);
     Route::post('kunjungan/{id}/uncancel', [Api\KunjunganController::class, 'uncancel']);
 
-    // Pembayaran
+    // Pembayaran (Piutang)
     Route::get('pembayaran', [Api\PembayaranController::class, 'index']);
     Route::get('pembayaran/export-harian-pdf', [Api\PembayaranController::class, 'exportHarianPdf']);
     Route::get('pembayaran/penjualan-by-gudang/{gudangId}', [Api\PembayaranController::class, 'getPenjualanByGudang']);
@@ -108,6 +111,12 @@ Route::prefix('v1')->middleware('api.token')->group(function () {
     Route::post('pembayaran/{id}/cancel', [Api\PembayaranController::class, 'cancel']);
     Route::post('pembayaran/{id}/uncancel', [Api\PembayaranController::class, 'uncancel']);
 
+    // Pembayaran Hutang
+    Route::get('pembayaran-hutang', [Api\PembayaranController::class, 'indexHutang']);
+    Route::get('pembayaran-hutang/pembelian-by-gudang/{gudangId}', [Api\PembayaranController::class, 'getPembelianByGudang']);
+    Route::get('pembayaran-hutang/pembelian-detail/{id}', [Api\PembayaranController::class, 'getPembelianDetail']);
+    Route::post('pembayaran-hutang', [Api\PembayaranController::class, 'storeHutang']);
+
     // Penerimaan Barang
     Route::get('penerimaan-barang/pembelian-by-gudang/{gudangId}', [Api\PenerimaanBarangController::class, 'getPembelianByGudang']);
     Route::get('penerimaan-barang/pembelian-detail/{id}', [Api\PenerimaanBarangController::class, 'getPembelianDetail']);
@@ -116,11 +125,41 @@ Route::prefix('v1')->middleware('api.token')->group(function () {
     Route::post('penerimaan-barang', [Api\PenerimaanBarangController::class, 'store']);
     Route::post('penerimaan-barang/{id}/approve', [Api\PenerimaanBarangController::class, 'approve']);
     Route::post('penerimaan-barang/{id}/cancel', [Api\PenerimaanBarangController::class, 'cancel']);
+    Route::post('penerimaan-barang/{id}/uncancel', [Api\PenerimaanBarangController::class, 'uncancel']);
 
     // Stok
     Route::get('stok/log', [Api\StokController::class, 'log']);
     Route::get('stok', [Api\StokController::class, 'index']);
     Route::post('stok', [Api\StokController::class, 'store']);
+
+    // Stock Opname
+    Route::get('stock-opname', [Api\StockOpnameController::class, 'index']);
+    Route::get('stock-opname/{id}', [Api\StockOpnameController::class, 'show']);
+    Route::post('stock-opname', [Api\StockOpnameController::class, 'store']);
+    Route::post('stock-opname/{id}/submit', [Api\StockOpnameController::class, 'submit']);
+    Route::post('stock-opname/{id}/apply', [Api\StockOpnameController::class, 'apply']);
+
+    // Neraca
+    Route::get('neraca', [Api\NeracaController::class, 'index']);
+    Route::get('neraca/export-pdf', [Api\NeracaController::class, 'exportPdf']);
+    Route::get('neraca/export-excel', [Api\NeracaController::class, 'exportExcel']);
+
+    // Piutang Dashboard
+    Route::get('piutang', [Api\PiutangController::class, 'index']);
+    Route::get('piutang/export-pdf', [Api\PiutangController::class, 'exportPdf']);
+
+    // Hutang Dashboard
+    Route::get('hutang', [Api\HutangController::class, 'index']);
+    Route::get('hutang/export-pdf', [Api\HutangController::class, 'exportPdf']);
+
+    // Catatan Hutang
+    Route::get('catatan-hutang', [Api\CatatanHutangController::class, 'index']);
+
+    // Tutup Buku
+    Route::get('tutup-buku', [Api\TutupBukuController::class, 'index']);
+    Route::post('tutup-buku/execute', [Api\TutupBukuController::class, 'execute']);
+    Route::get('tutup-buku/backup-db', [Api\TutupBukuController::class, 'backupDb']);
+    Route::get('tutup-buku/export-data', [Api\TutupBukuController::class, 'exportData']);
 
     // User Management
     Route::get('users', [Api\UserController::class, 'index']);

@@ -115,4 +115,68 @@ class GudangController extends Controller
 
         return Excel::download(new StokExport($gudang, $stokData, $user->name), $fileName);
     }
+
+    public function store(Request $request)
+    {
+        $user = auth()->user();
+        if ($user->role !== 'super_admin') {
+            return response()->json(['message' => 'Hanya Super Admin yang dapat membuat gudang.'], 403);
+        }
+
+        $request->validate([
+            'nama_gudang' => 'required|string|max:255',
+            'alamat_gudang' => 'nullable|string|max:255',
+        ]);
+
+        $gudang = Gudang::create([
+            'nama_gudang' => $request->nama_gudang,
+            'alamat_gudang' => $request->alamat_gudang,
+        ]);
+
+        return response()->json(['message' => 'Gudang berhasil dibuat.', 'data' => $gudang], 201);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $user = auth()->user();
+        if ($user->role !== 'super_admin') {
+            return response()->json(['message' => 'Hanya Super Admin yang dapat mengubah gudang.'], 403);
+        }
+
+        $gudang = Gudang::findOrFail($id);
+
+        $request->validate([
+            'nama_gudang' => 'required|string|max:255',
+            'alamat_gudang' => 'nullable|string|max:255',
+        ]);
+
+        $gudang->update([
+            'nama_gudang' => $request->nama_gudang,
+            'alamat_gudang' => $request->alamat_gudang,
+        ]);
+
+        return response()->json(['message' => 'Gudang berhasil diperbarui.', 'data' => $gudang]);
+    }
+
+    public function destroy($id)
+    {
+        $user = auth()->user();
+        if ($user->role !== 'super_admin') {
+            return response()->json(['message' => 'Hanya Super Admin yang dapat menghapus gudang.'], 403);
+        }
+
+        $gudang = Gudang::findOrFail($id);
+
+        if ($gudang->users()->exists()) {
+            return response()->json(['message' => 'Gudang tidak dapat dihapus karena masih memiliki user terkait.'], 422);
+        }
+
+        if ($gudang->gudangProduks()->exists()) {
+            return response()->json(['message' => 'Gudang tidak dapat dihapus karena masih memiliki produk terkait.'], 422);
+        }
+
+        $gudang->delete();
+
+        return response()->json(['message' => 'Gudang berhasil dihapus.']);
+    }
 }

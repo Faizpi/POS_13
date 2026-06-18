@@ -89,6 +89,7 @@ class UserController extends Controller
             'gudang_id' => ($request->role === 'user') ? $request->gudang_id : null,
             'can_export_pdf' => $request->role === 'admin' ? (bool) $request->input('can_export_pdf', false) : false,
             'can_export_excel' => $request->role === 'admin' ? (bool) $request->input('can_export_excel', false) : false,
+            'receives_transaction_whatsapp' => $request->input('receives_transaction_whatsapp', true),
         ]);
 
         if ($request->role === 'admin' && $request->gudangs) {
@@ -133,6 +134,7 @@ class UserController extends Controller
         $data['gudang_id'] = ($request->role === 'user') ? $request->gudang_id : null;
         $data['can_export_pdf'] = $request->role === 'admin' ? (bool) $request->input('can_export_pdf', false) : false;
         $data['can_export_excel'] = $request->role === 'admin' ? (bool) $request->input('can_export_excel', false) : false;
+        $data['receives_transaction_whatsapp'] = (bool) $request->input('receives_transaction_whatsapp');
 
         if ($request->filled('password')) {
             $data['password'] = Hash::make($request->password);

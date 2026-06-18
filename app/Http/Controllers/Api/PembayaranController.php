@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Pembayaran;
+use App\Models\Pembelian;
 use App\Models\Penjualan;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
@@ -219,6 +220,137 @@ class PembayaranController extends Controller
         $pembayaran->update(['status' => 'Pending']);
 
         return response()->json(['message' => 'Pembayaran berhasil di-uncancel. Status kembali ke Pending.', 'data' => $pembayaran]);
+    }
+
+    public function indexHutang(Request $request)
+    {
+        $user = auth()->user();
+        $query = Pembayaran::with(['user:id,name', 'gudang:id,nama_gudang', 'pembelian:id,nomor,kontak_id,grand_total', 'pembelian.kontak:id,nama'])
+            ->where('type', 'hutang');
+
+        if ($user->role == 'super_admin') { /* all */
+        } elseif (in_array($user->role, ['admin', 'spectator'])) {
+            $cg = $user->getCurrentGudang();
+            if ($cg) {
+                $query->where('gudang_id', $cg->id);
+            }
+        } else {
+            $query->where('user_id', $user->id);
+        }
+
+        return response()->json($query->latest()->paginate($request->per_page ?? 20));
+    }
+
+    public function storeHutang(Request $request)
+    {
+        $user = auth()->user();
+        if ($user->isSpectator()) {
+            return response()->json(['message' => 'Spectator tidak bisa membuat transaksi.'], 403);
+        }
+
+        $request->validate([
+            'pembelian_id' => 'required|exists:pembelians,id',
+            'tgl_pembayaran' => 'required|date',
+            'metode_pembayaran' => 'required|string',
+            'jumlah_bayar' => 'required|numeric|min:1',
+        ]);
+
+        $pembelian = Pembelian::findOrFail($request->pembelian_id);
+
+        if (in_array($user->role, ['admin', 'spectator'])) {
+            $cg = $user->getCurrentGudang();
+            if (! $cg || (int) $pembelian->gudang_id !== (int) $cg->id) {
+                return response()->json(['message' => 'Gudang transaksi harus sesuai gudang aktif.'], 403);
+            }
+        } elseif ($user->role !== 'super_admin' && ! $user->canAccessGudang($pembelian->gudang_id)) {
+            return response()->json(['message' => 'Tidak memiliki akses ke gudang ini.'], 403);
+        }
+
+        DB::beginTransaction();
+        try {
+            $countToday = Pembayaran::where('user_id', $user->id)->whereDate('created_at', Carbon::today())->count();
+            $noUrut = $countToday + 1;
+            $nomor = 'BAYH-'.Carbon::now()->format('Ymd')."-{$user->id}-".str_pad($noUrut, 3, '0', STR_PAD_LEFT);
+
+            $pembayaran = Pembayaran::create([
+                'user_id' => $user->id, 'pembelian_id' => $pembelian->id,
+                'gudang_id' => $pembelian->gudang_id, 'nomor' => $nomor,
+                'type' => 'hutang',
+                'tgl_pembayaran' => $request->tgl_pembayaran,
+                'metode_pembayaran' => $request->metode_pembayaran,
+                'jumlah_bayar' => $request->jumlah_bayar,
+                'keterangan' => $request->keterangan, 'status' => 'Pending',
+                'lampiran_paths' => [],
+            ]);
+
+            DB::commit();
+
+            return response()->json(['message' => 'Pembayaran hutang berhasil dibuat.', 'data' => $pembayaran], 201);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json(['message' => 'Gagal membuat pembayaran hutang.'], 500);
+        }
+    }
+
+    public function getPembelianByGudang($gudangId)
+    {
+        $user = auth()->user();
+        if (in_array($user->role, ['admin', 'spectator'])) {
+            $cg = $user->getCurrentGudang();
+            if (! $cg || (int) $gudangId !== (int) $cg->id) {
+                return response()->json(['message' => 'Tidak memiliki akses ke gudang aktif ini.'], 403);
+            }
+        } elseif ($user->role !== 'super_admin' && ! $user->canAccessGudang($gudangId)) {
+            return response()->json(['message' => 'Tidak memiliki akses ke gudang ini.'], 403);
+        }
+
+        $pembelians = Pembelian::with('kontak:id,nama')
+            ->where('gudang_id', $gudangId)
+            ->whereIn('status', ['Approved', 'Lunas'])
+            ->whereNotNull('kontak_id')
+            ->orderByDesc('tgl_transaksi')
+            ->get()
+            ->map(function ($p) {
+                $sudahDibayar = (float) Pembayaran::where('pembelian_id', $p->id)
+                    ->where('type', 'hutang')
+                    ->where('status', 'Approved')
+                    ->sum('jumlah_bayar');
+                $sisa = max(0, (float) ($p->grand_total ?? 0) - $sudahDibayar);
+                if ($sisa <= 0) {
+                    return null;
+                }
+
+                return [
+                    'id' => $p->id, 'nomor' => $p->nomor ?? $p->custom_number ?? ('PR-'.$p->id),
+                    'kontak' => $p->kontak?->nama ?? '-',
+                    'tgl_transaksi' => optional($p->tgl_transaksi)->format('Y-m-d'),
+                    'grand_total' => $p->grand_total, 'sisa_hutang' => $sisa,
+                ];
+            })->filter()->values();
+
+        return response()->json($pembelians);
+    }
+
+    public function getPembelianDetail($id)
+    {
+        $user = auth()->user();
+        $pembelian = Pembelian::with(['items.produk', 'kontak:id,nama'])->findOrFail($id);
+
+        if ($user->role == 'user' && $pembelian->user_id != $user->id) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        return response()->json([
+            'id' => $pembelian->id, 'nomor' => $pembelian->nomor,
+            'kontak' => $pembelian->kontak?->nama,
+            'grand_total' => $pembelian->grand_total,
+            'gudang_id' => $pembelian->gudang_id,
+            'items' => $pembelian->items->map(fn ($i) => [
+                'produk_id' => $i->produk_id, 'nama_produk' => $i->produk?->nama_produk,
+                'kuantitas' => $i->kuantitas, 'harga_satuan' => $i->harga_satuan,
+            ])->values(),
+        ]);
     }
 
     public function exportHarianPdf(Request $request)

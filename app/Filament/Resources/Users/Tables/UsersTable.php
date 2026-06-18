@@ -157,30 +157,10 @@ class UsersTable
                     }),
             ])
             ->modifyQueryUsing(fn ($query) => $query
-                ->leftJoin('gudangs as g_sort', function ($join) {
-                    $join->on('g_sort.id', '=', 'users.gudang_id');
-                })
-                ->leftJoin('admin_gudang as ag_sort', function ($join) {
-                    $join->on('ag_sort.user_id', '=', 'users.id')
-                         ->whereRaw('ag_sort.id = (SELECT MIN(id) FROM admin_gudang WHERE user_id = users.id)');
-                })
-                ->leftJoin('gudangs as g_admin_sort', function ($join) {
-                    $join->on('g_admin_sort.id', '=', 'ag_sort.gudang_id');
-                })
-                ->leftJoin('spectator_gudang as sg_sort', function ($join) {
-                    $join->on('sg_sort.user_id', '=', 'users.id')
-                         ->whereRaw('sg_sort.id = (SELECT MIN(id) FROM spectator_gudang WHERE user_id = users.id)');
-                })
-                ->leftJoin('gudangs as g_spec_sort', function ($join) {
-                    $join->on('g_spec_sort.id', '=', 'sg_sort.gudang_id');
-                })
-                ->groupBy('users.id')
                 ->orderByRaw("FIELD(users.role, 'super_admin', 'spectator', 'admin', 'user')")
-                ->orderByRaw("COALESCE(
-                    CASE WHEN users.role = 'admin' THEN g_admin_sort.nama_gudang END,
-                    CASE WHEN users.role = 'spectator' THEN g_spec_sort.nama_gudang END,
-                    g_sort.nama_gudang
-                )")
+                ->orderByRaw("(SELECT MIN(g.nama_gudang) FROM admin_gudang ag JOIN gudangs g ON g.id = ag.gudang_id WHERE ag.user_id = users.id)")
+                ->orderByRaw("(SELECT MIN(g.nama_gudang) FROM spectator_gudang sg JOIN gudangs g ON g.id = sg.gudang_id WHERE sg.user_id = users.id)")
+                ->orderByRaw("(SELECT g.nama_gudang FROM gudangs g WHERE g.id = users.gudang_id)")
                 ->orderBy('users.name')
             )
             ->recordActions([

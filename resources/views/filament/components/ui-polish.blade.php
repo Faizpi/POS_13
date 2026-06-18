@@ -58,9 +58,13 @@
     }
 
     .fi-wi-stats-overview-stat-chart {
-        height: 3rem;
+        height: 1.5rem !important;
         margin-top: auto;
-        opacity: 0.86;
+        opacity: 0.45 !important;
+    }
+
+    .fi-wi-stats-overview-stat-chart canvas {
+        height: 1.5rem !important;
     }
 
     /* ===== Dashboard Charts ===== */

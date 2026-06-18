@@ -7,7 +7,7 @@
     }
 
     /* ===== Dashboard Stats Cards ===== */
-    .fi-dashboard-page .fi-wi-stats-overview-stat {
+    .fi-wi-stats-overview-stat {
         min-height: 8.5rem;
         overflow: hidden;
         border-radius: 0.875rem;
@@ -18,44 +18,46 @@
         box-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);
     }
 
-    .dark .fi-dashboard-page .fi-wi-stats-overview-stat {
+    .dark .fi-wi-stats-overview-stat {
         border-color: rgba(255, 255, 255, 0.08);
         background: rgb(9, 9, 11);
         box-shadow: 0 14px 34px rgba(0, 0, 0, 0.5);
     }
 
-    .fi-dashboard-page .fi-wi-stats-overview-stat-content {
+    .fi-wi-stats-overview-stat-content {
         gap: 0.45rem;
     }
 
-    .fi-dashboard-page .fi-wi-stats-overview-stat-label {
+    .fi-wi-stats-overview-stat-label {
         color: rgb(100, 116, 139);
         font-size: 0.72rem;
         font-weight: 700;
     }
 
-    .dark .fi-dashboard-page .fi-wi-stats-overview-stat-label {
+    .dark .fi-wi-stats-overview-stat-label {
         color: rgb(148, 163, 184);
     }
 
-    .fi-dashboard-page .fi-wi-stats-overview-stat-value {
-        color: rgb(15, 23, 42);
-        font-size: clamp(1rem, 1.35vw, 1.35rem);
-        font-weight: 800;
-        line-height: 1.15;
-        word-break: break-word;
+    .fi-wi-stats-overview-stat-value {
+        color: rgb(15, 23, 42) !important;
+        font-size: clamp(1.2rem, 1.8vw, 1.6rem) !important;
+        letter-spacing: -0.03em !important;
+        font-weight: 800 !important;
+        line-height: 1.15 !important;
+        word-break: break-all !important;
+        overflow-wrap: break-word !important;
     }
 
-    .dark .fi-dashboard-page .fi-wi-stats-overview-stat-value {
-        color: rgb(248, 250, 252);
+    .dark .fi-wi-stats-overview-stat-value {
+        color: rgb(248, 250, 252) !important;
     }
 
-    .fi-dashboard-page .fi-wi-stats-overview-stat-description {
+    .fi-wi-stats-overview-stat-description {
         font-size: 0.74rem;
         font-weight: 650;
     }
 
-    .fi-dashboard-page .fi-wi-stats-overview-stat-chart {
+    .fi-wi-stats-overview-stat-chart {
         height: 3rem;
         margin-top: auto;
         opacity: 0.86;

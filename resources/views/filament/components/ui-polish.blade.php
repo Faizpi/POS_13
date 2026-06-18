@@ -181,24 +181,32 @@
         padding: 0.5rem 0.75rem !important;
         gap: 0 !important;
     }
+    /* Remove any default Filament borders on sidebar items */
+    .fi-sidebar .fi-sidebar-item,
+    .fi-sidebar .fi-sidebar-item-btn,
+    .fi-sidebar .fi-sidebar-group-label,
+    .fi-sidebar > nav > ul > li {
+        border-bottom: none !important;
+        border-top: none !important;
+    }
 
     /* Ungrouped items (Dasbor, Profil Saya) */
     .fi-sidebar > nav > ul > li:not(.fi-sidebar-group) > a,
     .fi-sidebar > nav > ul > li:not(.fi-sidebar-group) > .fi-sidebar-item-btn {
-        padding-top: 0.35rem !important;
-        padding-bottom: 0.35rem !important;
+        padding-top: 0.4rem !important;
+        padding-bottom: 0.4rem !important;
     }
 
     /* Group header: tighter */
     .fi-sidebar-group > .fi-sidebar-group-label,
     .fi-sidebar-group-label {
-        font-size: 0.72rem !important;
+        font-size: 0.82rem !important;
         font-weight: 700 !important;
         text-transform: uppercase !important;
         letter-spacing: 0.06em !important;
-        padding: 0.55rem 0 0.25rem 0 !important;
+        padding: 0.65rem 0 0.3rem 0 !important;
         margin: 0 !important;
-        line-height: 1 !important;
+        line-height: 1.1 !important;
         color: rgb(100, 116, 139) !important;
     }
     .dark .fi-sidebar-group > .fi-sidebar-group-label,
@@ -206,24 +214,13 @@
         color: rgb(148, 163, 184) !important;
     }
 
-    /* Garis pembatas antar group — subtle */
+    /* Garis pembatas antar group — minimal */
     .fi-sidebar-group + .fi-sidebar-group,
     .fi-sidebar-group + li:not(.fi-sidebar-group),
     li:not(.fi-sidebar-group) + .fi-sidebar-group {
-        border-top: 1px solid rgba(148, 163, 184, 0.15);
-        margin-top: 0.35rem !important;
+        margin-top: 0.2rem !important;
         padding-top: 0 !important;
-    }
-    .dark .fi-sidebar-group + .fi-sidebar-group,
-    .dark .fi-sidebar-group + li:not(.fi-sidebar-group),
-    .dark li:not(.fi-sidebar-group) + .fi-sidebar-group {
-        border-top-color: rgba(100, 116, 139, 0.18);
-    }
-
-    /* Override old group label border (remove it) */
-    .fi-sidebar-group:not(:first-child) > .fi-sidebar-group-label {
         border-top: none !important;
-        margin-top: 0 !important;
     }
 
     /* Sub-menu items: very compact */
@@ -241,29 +238,29 @@
     .fi-sidebar-item a,
     .fi-sidebar-item-btn,
     .fi-sidebar-group-items a {
-        padding-top: 0.3rem !important;
-        padding-bottom: 0.3rem !important;
+        padding-top: 0.38rem !important;
+        padding-bottom: 0.38rem !important;
         min-height: 0 !important;
-        gap: 0.5rem !important;
+        gap: 0.55rem !important;
     }
 
     /* Item label */
     .fi-sidebar-item-label,
     .fi-sidebar-item-label > span {
-        font-size: 0.82rem !important;
-        line-height: 1.2 !important;
+        font-size: 0.88rem !important;
+        line-height: 1.25 !important;
     }
 
     /* Icon size */
     .fi-sidebar-item-icon {
-        width: 1.1rem !important;
-        height: 1.1rem !important;
+        width: 1.2rem !important;
+        height: 1.2rem !important;
     }
 
     /* Badge in sidebar */
     .fi-sidebar-item-badge {
-        font-size: 0.68rem !important;
-        padding: 0.1rem 0.4rem !important;
+        font-size: 0.72rem !important;
+        padding: 0.15rem 0.45rem !important;
     }
 
     /* Hover */

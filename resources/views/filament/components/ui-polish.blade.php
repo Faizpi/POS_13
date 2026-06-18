@@ -173,64 +173,128 @@
 
     /* ===== Sidebar polish ===== */
 
-    /* Group header: lebih gede */
+    /* Overall sidebar padding */
+    .fi-sidebar {
+        padding: 0.5rem 0 !important;
+    }
+    .fi-sidebar > nav {
+        padding: 0.5rem 0.75rem !important;
+        gap: 0 !important;
+    }
+
+    /* Ungrouped items (Dasbor, Profil Saya) */
+    .fi-sidebar > nav > ul > li:not(.fi-sidebar-group) > a,
+    .fi-sidebar > nav > ul > li:not(.fi-sidebar-group) > .fi-sidebar-item-btn {
+        padding-top: 0.35rem !important;
+        padding-bottom: 0.35rem !important;
+    }
+
+    /* Group header: tighter */
+    .fi-sidebar-group > .fi-sidebar-group-label,
     .fi-sidebar-group-label {
-        font-size: 0.95rem;
-        font-weight: 800;
-        text-transform: uppercase;
-        letter-spacing: 0.07em;
-        padding-top: 0.85rem;
-        padding-bottom: 0.4rem;
-        color: rgb(71, 85, 105);
+        font-size: 0.72rem !important;
+        font-weight: 700 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.06em !important;
+        padding: 0.55rem 0 0.25rem 0 !important;
+        margin: 0 !important;
+        line-height: 1 !important;
+        color: rgb(100, 116, 139) !important;
     }
+    .dark .fi-sidebar-group > .fi-sidebar-group-label,
     .dark .fi-sidebar-group-label {
-        color: rgb(203, 213, 225);
+        color: rgb(148, 163, 184) !important;
     }
 
-    /* Garis pembatas antar group */
+    /* Garis pembatas antar group — subtle */
+    .fi-sidebar-group + .fi-sidebar-group,
+    .fi-sidebar-group + li:not(.fi-sidebar-group),
+    li:not(.fi-sidebar-group) + .fi-sidebar-group {
+        border-top: 1px solid rgba(148, 163, 184, 0.15);
+        margin-top: 0.35rem !important;
+        padding-top: 0 !important;
+    }
+    .dark .fi-sidebar-group + .fi-sidebar-group,
+    .dark .fi-sidebar-group + li:not(.fi-sidebar-group),
+    .dark li:not(.fi-sidebar-group) + .fi-sidebar-group {
+        border-top-color: rgba(100, 116, 139, 0.18);
+    }
+
+    /* Override old group label border (remove it) */
     .fi-sidebar-group:not(:first-child) > .fi-sidebar-group-label {
-        border-top: 1px solid rgba(148, 163, 184, 0.22);
-        margin-top: 0.25rem;
-    }
-    .dark .fi-sidebar-group:not(:first-child) > .fi-sidebar-group-label {
-        border-top-color: rgba(100, 116, 139, 0.25);
+        border-top: none !important;
+        margin-top: 0 !important;
     }
 
-    /* Sub-menu item: compact */
+    /* Sub-menu items: very compact */
     .fi-sidebar-group-items {
         margin-top: 0 !important;
-        padding-top: 0.15rem;
-        padding-bottom: 0.15rem;
+        padding: 0.1rem 0 !important;
+        gap: 0 !important;
     }
+    .fi-sidebar-group-items > li,
     .fi-sidebar-group-items .fi-sidebar-item {
         margin: 0 !important;
     }
-    .fi-sidebar-item-btn {
-        padding-top: 0.4rem !important;
-        padding-bottom: 0.4rem !important;
+
+    /* Item button: tight */
+    .fi-sidebar-item a,
+    .fi-sidebar-item-btn,
+    .fi-sidebar-group-items a {
+        padding-top: 0.3rem !important;
+        padding-bottom: 0.3rem !important;
         min-height: 0 !important;
+        gap: 0.5rem !important;
     }
-    .fi-sidebar-item-label {
-        font-size: 0.85rem;
+
+    /* Item label */
+    .fi-sidebar-item-label,
+    .fi-sidebar-item-label > span {
+        font-size: 0.82rem !important;
+        line-height: 1.2 !important;
+    }
+
+    /* Icon size */
+    .fi-sidebar-item-icon {
+        width: 1.1rem !important;
+        height: 1.1rem !important;
+    }
+
+    /* Badge in sidebar */
+    .fi-sidebar-item-badge {
+        font-size: 0.68rem !important;
+        padding: 0.1rem 0.4rem !important;
     }
 
     /* Hover */
+    .fi-sidebar-group-items .fi-sidebar-item.fi-sidebar-item-has-url a:hover,
     .fi-sidebar-group-items .fi-sidebar-item.fi-sidebar-item-has-url .fi-sidebar-item-btn:hover {
         background: rgba(59, 130, 246, 0.07);
+        border-radius: 0.375rem;
     }
+    .dark .fi-sidebar-group-items .fi-sidebar-item.fi-sidebar-item-has-url a:hover,
     .dark .fi-sidebar-group-items .fi-sidebar-item.fi-sidebar-item-has-url .fi-sidebar-item-btn:hover {
         background: rgba(59, 130, 246, 0.12);
     }
 
     /* Active */
+    .fi-sidebar-group-items .fi-sidebar-item.fi-active a,
     .fi-sidebar-group-items .fi-sidebar-item.fi-active .fi-sidebar-item-btn {
         background: rgba(59, 130, 246, 0.09);
+        border-radius: 0.375rem;
     }
+    .dark .fi-sidebar-group-items .fi-sidebar-item.fi-active a,
     .dark .fi-sidebar-group-items .fi-sidebar-item.fi-active .fi-sidebar-item-btn {
         background: rgba(59, 130, 246, 0.15);
     }
     .fi-sidebar-group-items .fi-sidebar-item.fi-active .fi-sidebar-item-label {
         font-weight: 600;
+    }
+
+    /* Collapsible group toggle button */
+    .fi-sidebar-group-label > button,
+    .fi-sidebar-group > button:first-child {
+        padding: 0.35rem 0 !important;
     }
 
     /* ===== Badge fixes ===== */

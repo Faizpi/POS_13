@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jun 12, 2026 at 12:51 PM
+-- Generation Time: Jun 18, 2026 at 10:14 AM
 -- Server version: 11.8.6-MariaDB-log
 -- PHP Version: 7.2.34
 
@@ -417,8 +417,16 @@ INSERT INTO `biayas` (`id`, `uuid`, `user_id`, `gudang_id`, `approver_id`, `no_u
 (332, 'c37bef17-d225-4e00-844c-fe5ed5255696', 9, NULL, 2, 2, 'keluar', 'EXP-20260609-9-002', 'Kas (1-10001)', 'NURHASANAH - AKUNTAN EFSYA', NULL, '2026-06-09', 'Tunai', 'SALES M.B.K - UMAR', '-7.199408, 107.947415', NULL, NULL, '[\"lampiran_biaya\\/EXP-20260609-9-002-1.jpg\"]', 'Approved', 0.00, 150000.00, '2026-06-09 17:02:30', '2026-06-10 08:15:29'),
 (333, '53138a12-89b4-486c-8dbe-06ad10bb74a0', 9, NULL, 2, 1, 'keluar', 'EXP-20260610-9-001', 'Kas (1-10001)', 'NURHASANAH - AKUNTAN EFSYA', NULL, '2026-06-10', 'Tunai', 'SALES M.B.K - UMAR', '-7.199435, 107.947456', NULL, NULL, '[]', 'Approved', 0.00, 14000.00, '2026-06-10 15:40:04', '2026-06-11 08:35:31'),
 (334, 'a72df961-4baf-4898-9d9f-0b7de4a0f1ad', 9, NULL, 2, 2, 'keluar', 'EXP-20260610-9-002', 'Kas (1-10001)', 'NURHASANAH - AKUNTAN EFSYA', NULL, '2026-06-10', 'Tunai', 'SALES M.B.K - UMAR', '-7.199750, 107.947615', NULL, NULL, '[\"lampiran_biaya\\/EXP-20260610-9-002-1.jpg\"]', 'Approved', 0.00, 20000.00, '2026-06-10 17:39:20', '2026-06-11 08:35:41'),
-(335, 'e444a7f5-5871-4ac0-84b5-acb3e11321d0', 9, NULL, 2, 1, 'keluar', 'EXP-20260611-9-001', 'Kas (1-10001)', 'NURHASANAH - AKUNTAN EFSYA', NULL, '2026-06-11', 'Tunai', 'SALES M.B.K - UMAR', '-7.199515, 107.947520', NULL, NULL, '[\"lampiran_biaya\\/EXP-20260611-9-001-1.jpg\"]', 'Pending', 0.00, 34000.00, '2026-06-11 16:53:10', '2026-06-11 16:53:10'),
-(336, '0fc985d5-954d-4141-8636-91b7f724a40f', 9, NULL, 2, 2, 'keluar', 'EXP-20260611-9-002', 'Kas (1-10001)', 'NURHASANAH - AKUNTAN EFSYA', NULL, '2026-06-11', 'Tunai', 'SALES M.B.K - UMAR', '-7.199476, 107.947475', NULL, NULL, '[\"lampiran_biaya\\/EXP-20260611-9-002-1.jpg\",\"lampiran_biaya\\/EXP-20260611-9-002-2.jpg\"]', 'Pending', 0.00, 60000.00, '2026-06-11 16:54:21', '2026-06-11 16:54:21');
+(335, 'e444a7f5-5871-4ac0-84b5-acb3e11321d0', 9, NULL, 2, 1, 'keluar', 'EXP-20260611-9-001', 'Kas (1-10001)', 'NURHASANAH - AKUNTAN EFSYA', NULL, '2026-06-11', 'Tunai', 'SALES M.B.K - UMAR', '-7.199515, 107.947520', NULL, NULL, '[\"lampiran_biaya\\/EXP-20260611-9-001-1.jpg\"]', 'Approved', 0.00, 34000.00, '2026-06-11 16:53:10', '2026-06-13 09:31:42'),
+(336, '0fc985d5-954d-4141-8636-91b7f724a40f', 9, NULL, 2, 2, 'keluar', 'EXP-20260611-9-002', 'Kas (1-10001)', 'NURHASANAH - AKUNTAN EFSYA', NULL, '2026-06-11', 'Tunai', 'SALES M.B.K - UMAR', '-7.199476, 107.947475', NULL, NULL, '[\"lampiran_biaya\\/EXP-20260611-9-002-1.jpg\",\"lampiran_biaya\\/EXP-20260611-9-002-2.jpg\"]', 'Approved', 0.00, 60000.00, '2026-06-11 16:54:21', '2026-06-13 09:31:58'),
+(337, '059aa1fe-aca4-485d-a75e-d15323af8af8', 11, NULL, 2, 1, 'keluar', 'EXP-20260613-11-001', 'Kas (1-10001)', 'ROZAK - SALES CIAMIS', 'Ciamis', '2026-06-13', 'Tunai', 'SALES M.B.K - ROZAK', '-7.319805, 108.374478', NULL, NULL, '[\"lampiran_biaya\\/EXP-20260613-11-001-1.jpg\"]', 'Approved', 0.00, 32000.00, '2026-06-13 14:51:07', '2026-06-15 08:38:40'),
+(338, '0e5a4985-b8da-4b35-90df-de8db6922457', 9, NULL, 2, 1, 'keluar', 'EXP-20260613-9-001', 'Kas (1-10001)', 'NURHASANAH - AKUNTAN EFSYA', NULL, '2026-06-13', 'Tunai', 'SALES M.B.K - UMAR', '-7.199432, 107.947448', NULL, NULL, '[\"lampiran_biaya\\/EXP-20260613-9-001-1.jpg\"]', 'Approved', 0.00, 38000.00, '2026-06-13 18:50:35', '2026-06-15 08:38:25'),
+(339, '33056e1c-f47c-4112-a147-c7a5ff436d80', 2, NULL, 1, 1, 'keluar', 'EXP-20260613-2-001', 'Kas (1-10001)', NULL, NULL, '2026-06-13', 'Transfer Bank', 'NUR - ADMIN JA2PALU', NULL, NULL, NULL, '[\"lampiran_biaya\\/EXP-20260613-2-001-1.jpeg\"]', 'Pending', 0.00, 200000.00, '2026-06-15 08:41:20', '2026-06-15 08:41:20'),
+(340, '003c4e83-139a-4472-88ce-20d5e66619a2', 11, NULL, 2, 1, 'keluar', 'EXP-20260615-11-001', 'Kas (1-10001)', 'ROZAK - SALES CIAMIS', 'Ciamis', '2026-06-15', 'Tunai', 'SALES M.B.K - ROZAK', '-7.319779, 108.374401', NULL, NULL, '[\"lampiran_biaya\\/EXP-20260615-11-001-1.jpg\"]', 'Approved', 0.00, 47500.00, '2026-06-15 16:51:18', '2026-06-17 14:11:00'),
+(341, 'ce783a8a-4ece-462f-8d9b-0319dc44ac50', 9, NULL, 2, 1, 'keluar', 'EXP-20260615-9-001', 'Kas (1-10001)', 'NURHASANAH - AKUNTAN EFSYA', NULL, '2026-06-15', 'Tunai', 'SALES M.B.K - UMAR', '-7.199036, 107.948554', NULL, NULL, '[\"lampiran_biaya\\/EXP-20260615-9-001-1.jpg\"]', 'Approved', 0.00, 34000.00, '2026-06-15 19:38:42', '2026-06-17 14:10:47'),
+(342, '000f4bc9-022a-44ce-93f9-9c3f5aa6ced7', 11, NULL, 2, 1, 'keluar', 'EXP-20260617-11-001', 'Kas (1-10001)', 'ROZAK - SALES CIAMIS', 'Ciamis', '2026-06-17', 'Tunai', 'SALES M.B.K - ROZAK', '-7.320227, 108.374643', NULL, NULL, '[]', 'Approved', 0.00, 32000.00, '2026-06-17 16:59:10', '2026-06-18 09:16:22'),
+(343, '2cba3a61-5edf-4799-8f4e-5e6a3e336f47', 9, NULL, 2, 1, 'keluar', 'EXP-20260617-9-001', 'Kas (1-10001)', 'NURHASANAH - AKUNTAN EFSYA', NULL, '2026-06-17', 'Tunai', 'SALES M.B.K - UMAR', '-7.198714, 107.948554', NULL, NULL, '[]', 'Pending', 0.00, 14000.00, '2026-06-17 17:48:38', '2026-06-17 17:48:38'),
+(344, '21182c5e-08f6-4485-a0d8-b3570e2d2c1c', 11, NULL, 2, 1, 'keluar', 'EXP-20260618-11-001', 'Kas (1-10001)', 'ROZAK - SALES CIAMIS', 'Ciamis', '2026-06-18', 'Tunai', 'SALES M.B.K - ROZAK', '-7.319798, 108.374467', 'Bon struk lagi kosong 🙏', NULL, '[\"lampiran_biaya\\/EXP-20260618-11-001-1.jpg\"]', 'Pending', 0.00, 32000.00, '2026-06-18 16:33:52', '2026-06-18 16:33:52');
 
 -- --------------------------------------------------------
 
@@ -1053,7 +1061,24 @@ INSERT INTO `biaya_items` (`id`, `biaya_id`, `kategori`, `deskripsi`, `jumlah`, 
 (625, 335, 'Makan', NULL, 12000.00, NULL, NULL),
 (626, 335, 'Parkir', NULL, 2000.00, NULL, NULL),
 (627, 335, 'Bensin', NULL, 20000.00, NULL, NULL),
-(628, 336, 'Ganti ban dalem motor', NULL, 60000.00, NULL, NULL);
+(628, 336, 'Ganti ban dalem motor', NULL, 60000.00, NULL, NULL),
+(629, 337, 'Makan', NULL, 12000.00, NULL, NULL),
+(630, 337, 'Bensin', NULL, 20000.00, NULL, NULL),
+(631, 338, 'Makan', NULL, 12000.00, NULL, NULL),
+(632, 338, 'Parkir', NULL, 2000.00, NULL, NULL),
+(633, 338, 'Token listrik', NULL, 24000.00, NULL, NULL),
+(634, 339, 'Biaya operasional  kunjungan sampling wilayah Garut', 'selasa sampai jum\'at', 200000.00, NULL, NULL),
+(635, 340, 'Makan', NULL, 12000.00, NULL, NULL),
+(636, 340, 'Biaya fotocopy & beli ATK', NULL, 35500.00, NULL, NULL),
+(637, 341, 'Makan', NULL, 12000.00, NULL, NULL),
+(638, 341, 'Parkir', NULL, 2000.00, NULL, NULL),
+(639, 341, 'Bensin', NULL, 20000.00, NULL, NULL),
+(640, 342, 'Makan', NULL, 12000.00, NULL, NULL),
+(641, 342, 'Bensin', 'Maaf isi di pom mini biasa , tidak ada struk nya 🙏', 20000.00, NULL, NULL),
+(642, 343, 'Makan', NULL, 12000.00, NULL, NULL),
+(643, 343, 'Parkir', NULL, 2000.00, NULL, NULL),
+(644, 344, 'Makan', NULL, 12000.00, NULL, NULL),
+(645, 344, 'Bensin', NULL, 20000.00, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1112,13 +1137,13 @@ INSERT INTO `gudang_produk` (`id`, `gudang_id`, `produk_id`, `stok`, `stok_penju
 (10, 2, 7, 1393, 1061, 112, 220),
 (11, 2, 8, 1549, 1214, 115, 220),
 (12, 2, 9, 1520, 1185, 115, 220),
-(13, 3, 1, 2215, 109, 106, 2000),
-(14, 3, 2, 2353, 168, 185, 2000),
-(15, 3, 6, 478, 224, 134, 120),
-(16, 3, 7, 647, 393, 134, 120),
-(17, 3, 8, 458, 204, 134, 120),
-(18, 3, 9, 626, 372, 134, 120),
-(19, 3, 3, 74, 74, 0, 0),
+(13, 3, 1, 2204, 98, 106, 2000),
+(14, 3, 2, 2350, 165, 185, 2000),
+(15, 3, 6, 448, 194, 134, 120),
+(16, 3, 7, 570, 316, 134, 120),
+(17, 3, 8, 437, 183, 134, 120),
+(18, 3, 9, 567, 313, 134, 120),
+(19, 3, 3, 65, 65, 0, 0),
 (20, 3, 4, 48, 48, 0, 0),
 (21, 4, 1, 611, 611, 0, 0),
 (22, 4, 3, 994, 994, 0, 0),
@@ -1127,14 +1152,14 @@ INSERT INTO `gudang_produk` (`id`, `gudang_id`, `produk_id`, `stok`, `stok_penju
 (25, 4, 7, 293, 293, 0, 0),
 (26, 4, 8, 388, 388, 0, 0),
 (27, 4, 9, 397, 397, 0, 0),
-(28, 5, 1, 3236, 236, 0, 3000),
-(29, 5, 2, 3240, 240, 0, 3000),
+(28, 5, 1, 3218, 218, 0, 3000),
+(29, 5, 2, 3218, 218, 0, 3000),
 (30, 5, 3, 102, 102, 0, 0),
 (31, 5, 4, 93, 93, 0, 0),
-(32, 5, 6, 224, 224, 0, 0),
-(33, 5, 7, 292, 292, 0, 0),
-(34, 5, 8, 188, 188, 0, 0),
-(35, 5, 9, 251, 251, 0, 0),
+(32, 5, 6, 219, 219, 0, 0),
+(33, 5, 7, 267, 267, 0, 0),
+(34, 5, 8, 183, 183, 0, 0),
+(35, 5, 9, 242, 242, 0, 0),
 (36, 2, 16, 6, 6, 0, 0),
 (37, 2, 17, 36, 36, 0, 0),
 (38, 2, 14, 6, 6, 0, 0),
@@ -1685,7 +1710,17 @@ INSERT INTO `kontaks` (`id`, `kode_kontak`, `nama`, `email`, `no_telp`, `pin`, `
 (498, 'KT00498', 'Toko Lisna', NULL, NULL, NULL, 'Pasar Andir bayongbong_Garut', 0.00, 5, 9, '2026-06-10 10:34:35', '2026-06-10 10:34:35'),
 (499, 'KT00499', 'Mastiya', NULL, '_', '040799', 'Jl.doktor siwabessy \r\nBuluran kenali\r\nKec telanai pura', 0.00, 4, 8, '2026-06-10 11:21:01', '2026-06-10 11:21:01'),
 (500, 'KT00500', 'APOTIK SEHAT SEGAR M.BUNGO', NULL, '6285373013718', '040799', 'Pasar atas muaro bungo\r\nKabupaten muaro bungo', 0.00, 4, 8, '2026-06-11 09:28:35', '2026-06-11 09:28:35'),
-(501, 'KT00501', 'Dwi Berkah Kosmetik', NULL, NULL, NULL, 'Jl. Ahmad yani timur_Ciparay.kec. Karangpawitan_Garut', 0.00, 5, 9, '2026-06-12 13:26:47', '2026-06-12 13:26:47');
+(501, 'KT00501', 'Dwi Berkah Kosmetik', NULL, NULL, NULL, 'Jl. Ahmad yani timur_Ciparay.kec. Karangpawitan_Garut', 0.00, 5, 9, '2026-06-12 13:26:47', '2026-06-12 13:26:47'),
+(502, 'KT00502', 'Toko saribumi', NULL, NULL, NULL, 'Jln ry Sukamulya, Kec. Cihaurbeuti, Kabupaten Ciamis, Jawa Barat', 0.00, 3, 11, '2026-06-13 10:17:55', '2026-06-13 10:17:55'),
+(503, 'KT00503', 'IHSAN KOSMETIK S.PENUH', NULL, '6281366828098', '040799', 'PASAR SUNGAI PENUH ,KEC SUNGAI PENUH', 0.00, 4, 8, '2026-06-13 10:28:56', '2026-06-13 10:28:56'),
+(504, 'KT00504', 'Toko permata', NULL, NULL, NULL, 'Jl. Raya Cipaku No.161, Buniseuri, Kec. Cipaku, Kabupaten Ciamis, Jawa Barat', 0.00, 3, 11, '2026-06-15 10:50:06', '2026-06-15 10:50:06'),
+(505, 'KT00505', 'Apotek sinar farma', NULL, NULL, NULL, 'Jl. Raya Cipaku No.161, Buniseuri, Kec. Cipaku, Kabupaten Ciamis, Jawa Barat', 0.00, 3, 11, '2026-06-15 10:50:33', '2026-06-15 10:50:33'),
+(506, 'KT00506', 'Apotek khanza', NULL, '6287700031998', NULL, 'Sukamaju, Kec. Baregbeg, Kabupaten Ciamis, Jawa Barat', 0.00, 3, 11, '2026-06-15 10:51:44', '2026-06-15 10:51:44'),
+(507, 'KT00507', 'Apotek Cemara', NULL, NULL, NULL, 'Jl, Cintajaya, Kec. Lakbok, Kabupaten Ciamis, Jawa Barat 46184', 0.00, 3, 11, '2026-06-17 11:14:39', '2026-06-17 11:14:39'),
+(508, 'KT00508', 'Toko barokah sdj', NULL, NULL, NULL, ', Jl. Jenderal Ahmad Yani, Tegalsari, Kec. Sidareja, Kabupaten Cilacap, Jawa Tengah', 0.00, 3, 11, '2026-06-17 12:49:50', '2026-06-17 12:49:50'),
+(509, 'KT00509', 'TOKO AL BAHIR', NULL, '_', '040799', 'Jl.sari bakti\r\nBagan pete \r\nKec kota baru', 0.00, 4, 8, '2026-06-18 11:57:36', '2026-06-18 11:57:36'),
+(510, 'KT00510', 'TOKO ANEKA SERVIS', NULL, '_', '040799', 'Jl.sari bakti \r\nBagan pete \r\nKec kota baru', 0.00, 4, 8, '2026-06-18 12:01:39', '2026-06-18 12:01:39'),
+(511, 'KT00511', 'TOKO FANNY', NULL, '_', '040799', 'Beliung \r\nKec kota baru', 0.00, 4, 8, '2026-06-18 12:09:56', '2026-06-18 12:09:56');
 
 -- --------------------------------------------------------
 
@@ -2856,7 +2891,48 @@ INSERT INTO `kunjungans` (`id`, `uuid`, `user_id`, `approver_id`, `gudang_id`, `
 (1144, '28714f8d-f2de-44c1-8d58-93347efcd6b2', 9, 2, 5, 160, 2, 'VST-20260612-9-002', 'Toko endang', NULL, 'Jalan raya guntur, garut', '2026-06-12', 'Pemeriksaan Stock', '-7.199603, 107.947581', NULL, NULL, '[\"lampiran_kunjungan\\/VST-20260612-9-002-1.jpg\"]', 'Pending', '2026-06-12 11:21:56', '2026-06-12 11:21:56'),
 (1145, '6f09190f-2af8-4c82-a695-114766baa77e', 9, 2, 5, 354, 3, 'VST-20260612-9-003', 'Toko Ade', NULL, 'Pasar Ciawitali_Guntur_Garut', '2026-06-12', 'Pemeriksaan Stock', '-7.199534, 107.947527', NULL, NULL, '[\"lampiran_kunjungan\\/VST-20260612-9-003-1.jpg\"]', 'Pending', '2026-06-12 11:22:25', '2026-06-12 11:22:25'),
 (1146, '85c1d17c-7629-42a0-846a-743760f706b1', 9, 2, 5, 501, 4, 'VST-20260612-9-004', 'Dwi Berkah Kosmetik', NULL, 'Jl. Ahmad yani timur_Ciparay.kec. Karangpawitan_Garut', '2026-06-12', 'Pemeriksaan Stock', '-7.216197, 107.929536', NULL, NULL, '[\"lampiran_kunjungan\\/VST-20260612-9-004-1.jpg\"]', 'Pending', '2026-06-12 13:27:49', '2026-06-12 13:27:49'),
-(1147, '44b2725c-06cf-4206-975f-ddc47436f80b', 9, 2, 5, 8, 5, 'VST-20260612-9-005', 'UMAR - SALES GARUT', NULL, 'Ciawitali_Tarogong_Garut', '2026-06-12', 'Promo Sample', '-7.216203, 107.929521', NULL, NULL, '[\"lampiran_kunjungan\\/VST-20260612-9-005-1.jpg\",\"lampiran_kunjungan\\/VST-20260612-9-005-2.jpg\",\"lampiran_kunjungan\\/VST-20260612-9-005-3.jpg\",\"lampiran_kunjungan\\/VST-20260612-9-005-4.jpg\"]', 'Pending', '2026-06-12 13:29:21', '2026-06-12 13:29:21');
+(1147, '44b2725c-06cf-4206-975f-ddc47436f80b', 9, 2, 5, 8, 5, 'VST-20260612-9-005', 'UMAR - SALES GARUT', NULL, 'Ciawitali_Tarogong_Garut', '2026-06-12', 'Promo Sample', '-7.216203, 107.929521', NULL, NULL, '[\"lampiran_kunjungan\\/VST-20260612-9-005-1.jpg\",\"lampiran_kunjungan\\/VST-20260612-9-005-2.jpg\",\"lampiran_kunjungan\\/VST-20260612-9-005-3.jpg\",\"lampiran_kunjungan\\/VST-20260612-9-005-4.jpg\"]', 'Pending', '2026-06-12 13:29:21', '2026-06-12 13:29:21'),
+(1148, 'c3ce4aec-d3c8-445f-85fe-7ad28e1ea71f', 11, 1, 3, 327, 1, 'VST-20260613-11-001', 'Devi kosmetik', '6283129974543', 'Jln ps manonjaya \r\nKec manonjaya \r\nKel manonjaya \r\nKab Tasikmalaya', '2026-06-13', 'Pemeriksaan Stock', '-7.350448, 108.305246', 'Kunjungan', NULL, '[\"lampiran_kunjungan\\/VST-20260613-11-001-1.jpg\"]', 'Pending', '2026-06-13 09:38:44', '2026-06-13 09:38:44'),
+(1149, 'ac82392d-0be8-4c53-aeff-26e824a28b95', 11, 1, 3, 343, 2, 'VST-20260613-11-002', 'Hana kosmetik tasik', '6282318504459', 'Jln Ibrahim adjie no.166 \r\nKec indihiang \r\nSukamaju kidul\r\nKab Tasikmalaya', '2026-06-13', 'Pemeriksaan Stock', '-7.290741, 108.200382', 'Kunjungan, order', NULL, '[\"lampiran_kunjungan\\/VST-20260613-11-002-1.jpg\"]', 'Pending', '2026-06-13 10:30:16', '2026-06-13 10:30:16'),
+(1150, '56751040-4ea9-4a56-8fd6-8d7156c989ae', 11, 1, 3, 502, 3, 'VST-20260613-11-003', 'Toko saribumi', NULL, 'Jln ry Sukamulya, Kec. Cihaurbeuti, Kabupaten Ciamis, Jawa Barat', '2026-06-13', 'Pemeriksaan Stock', '-7.277270, 108.202604', 'Kunjungan', NULL, '[\"lampiran_kunjungan\\/VST-20260613-11-003-1.jpg\"]', 'Pending', '2026-06-13 10:40:30', '2026-06-13 10:40:30'),
+(1151, 'e60429ca-28e8-49bc-b422-8e699cadf683', 9, 2, 5, 176, 1, 'VST-20260613-9-001', 'Toko Kinanti', NULL, 'Pasar Samarang, Garut', '2026-06-13', 'Pemeriksaan Stock', '-7.219512, 107.839188', NULL, NULL, '[\"lampiran_kunjungan\\/VST-20260613-9-001-1.jpg\"]', 'Pending', '2026-06-13 11:02:29', '2026-06-13 11:02:29'),
+(1152, '78b69dea-9f59-4c6b-ade4-5260c1b84b27', 9, 2, 5, 58, 2, 'VST-20260613-9-002', 'Toko bj putra', NULL, 'Pasar Samarang,garut', '2026-06-13', 'Pemeriksaan Stock', '-7.219817, 107.838818', NULL, NULL, '[\"lampiran_kunjungan\\/VST-20260613-9-002-1.jpg\"]', 'Pending', '2026-06-13 11:03:31', '2026-06-13 11:03:31'),
+(1153, '45ada9dc-b0b4-4298-8371-94b927c02426', 9, 2, 5, 59, 3, 'VST-20260613-9-003', 'Toko aliffia', NULL, 'Pasar Samarang, garut', '2026-06-13', 'Pemeriksaan Stock', '-7.219829, 107.838849', NULL, NULL, '[\"lampiran_kunjungan\\/VST-20260613-9-003-1.jpg\"]', 'Pending', '2026-06-13 11:04:02', '2026-06-13 11:04:02'),
+(1154, '236780a8-1d2f-491e-aacb-13565d78724c', 9, 2, 5, 57, 4, 'VST-20260613-9-004', 'Toko ayu', NULL, 'Pasar Samarang, garut', '2026-06-13', 'Pemeriksaan Stock', '-7.219809, 107.838845', NULL, NULL, '[\"lampiran_kunjungan\\/VST-20260613-9-004-1.jpg\"]', 'Pending', '2026-06-13 11:04:46', '2026-06-13 11:04:46'),
+(1155, '52f2da19-94d2-4cf2-9891-ba681ea147a4', 8, 22, 4, 245, 1, 'VST-20260615-8-001', 'ALHIDAYAH MART', '6285266545871', 'Kenali asam bawah \r\nKec kota baru', '2026-06-15', 'Pemeriksaan Stock', '-1.665756, 103.595670', 'Belom nambah', NULL, '[\"lampiran_kunjungan\\/VST-20260615-8-001-1.jpg\",\"lampiran_kunjungan\\/VST-20260615-8-001-2.jpg\"]', 'Pending', '2026-06-15 10:56:31', '2026-06-15 10:56:31'),
+(1156, '1bfeeba6-bcf3-4855-ad74-db360503d048', 8, 22, 4, 157, 2, 'VST-20260615-8-002', 'L AND A MART', '6281366853755', 'Kenali Asam Bawah \r\nKec kota baru', '2026-06-15', 'Pemeriksaan Stock', '-1.663632, 103.595634', 'Masih cukup', NULL, '[\"lampiran_kunjungan\\/VST-20260615-8-002-1.jpg\",\"lampiran_kunjungan\\/VST-20260615-8-002-2.jpg\"]', 'Pending', '2026-06-15 11:00:23', '2026-06-15 11:00:23'),
+(1157, '39454a48-722a-4590-a5e2-d9e4a565f265', 11, 2, 3, 325, 1, 'VST-20260615-11-001', 'Anugrah kosmetik ciamis', '6285846242690', 'Jln rumah sakit no.45A \r\nKec ciamis \r\nKel ciamis \r\nKab Ciamis', '2026-06-15', 'Pemeriksaan Stock', '-7.330671, 108.359436', 'Kunjungan, order, tagihan', NULL, '[\"lampiran_kunjungan\\/VST-20260615-11-001-1.jpg\"]', 'Pending', '2026-06-15 11:11:12', '2026-06-15 11:11:12'),
+(1158, '77b39cfb-ed50-4fe6-8b7d-af4d9e20567e', 9, 1, 5, 346, 1, 'VST-20260615-9-001', 'Apotek Rizqy', NULL, 'Depan pasar Sukawening_Garut', '2026-06-15', 'Pemeriksaan Stock', '-7.164460, 107.993787', NULL, NULL, '[\"lampiran_kunjungan\\/VST-20260615-9-001-1.jpg\"]', 'Pending', '2026-06-15 11:36:37', '2026-06-15 11:36:37'),
+(1159, '057273bf-3fde-45d6-8ad0-b1a10ceafb2a', 9, 1, 5, 152, 2, 'VST-20260615-9-002', 'Toko vera', '6289532753031', 'Pasar sukawening, garut', '2026-06-15', 'Pemeriksaan Stock', '-7.176813, 107.979221', NULL, NULL, '[\"lampiran_kunjungan\\/VST-20260615-9-002-1.jpg\"]', 'Pending', '2026-06-15 11:37:05', '2026-06-15 11:37:05'),
+(1160, '92b6dc21-d58e-4f07-b099-d3324555db26', 9, 1, 5, 345, 3, 'VST-20260615-9-003', 'Rapih kosmetik', NULL, 'Pasar sukawening', '2026-06-15', 'Pemeriksaan Stock', '-7.176804, 107.979211', NULL, NULL, '[\"lampiran_kunjungan\\/VST-20260615-9-003-1.jpg\"]', 'Pending', '2026-06-15 11:37:38', '2026-06-15 11:37:38'),
+(1161, 'a785afd8-258a-4d9d-9621-37b588e4a634', 9, 1, 5, 347, 4, 'VST-20260615-9-004', 'Toko Banah', NULL, 'Pasar sukawening_Garut', '2026-06-15', 'Pemeriksaan Stock', '-7.176832, 107.979241', NULL, NULL, '[\"lampiran_kunjungan\\/VST-20260615-9-004-1.jpg\"]', 'Pending', '2026-06-15 11:38:18', '2026-06-15 11:38:18'),
+(1162, '3ead1608-9a55-46da-92b6-0b3b18121420', 9, 1, 5, 151, 5, 'VST-20260615-9-005', 'Apotik mutiara', '6289662847476', 'Pasar sukawening, garut', '2026-06-15', 'Pemeriksaan Stock', '-7.176856, 107.979274', NULL, NULL, '[\"lampiran_kunjungan\\/VST-20260615-9-005-1.jpg\"]', 'Pending', '2026-06-15 11:38:43', '2026-06-15 11:38:43'),
+(1163, 'a5439505-aa82-4090-a482-91867b6ade4e', 9, 1, 5, 153, 6, 'VST-20260615-9-006', 'Toko imas', NULL, 'Pasar sukawening, garut', '2026-06-15', 'Pemeriksaan Stock', '-7.176835, 107.979266', NULL, NULL, '[\"lampiran_kunjungan\\/VST-20260615-9-006-1.jpg\"]', 'Pending', '2026-06-15 11:40:11', '2026-06-15 11:40:11'),
+(1164, '6e1aaf55-0eeb-4a8b-8057-01ead3d4e15a', 11, 2, 3, 505, 2, 'VST-20260615-11-002', 'Apotek sinar farma', NULL, 'Jl. Raya Cipaku No.161, Buniseuri, Kec. Cipaku, Kabupaten Ciamis, Jawa Barat', '2026-06-15', 'Pemeriksaan Stock', '-7.244469, 108.376858', 'Kunjungan', NULL, '[\"lampiran_kunjungan\\/VST-20260615-11-002-1.jpg\"]', 'Pending', '2026-06-15 11:40:30', '2026-06-15 11:40:30'),
+(1165, '3a0f7761-3c3b-4ff0-baf4-7ca1cfbb3123', 11, 2, 3, 446, 3, 'VST-20260615-11-003', 'Toko yulia', NULL, 'Jln ry buniseri cipaku\r\nKec cipaku\r\nKel buniseri \r\nKab Ciamis', '2026-06-15', 'Pemeriksaan Stock', '-7.244109, 108.377203', 'Kunjungan', NULL, '[\"lampiran_kunjungan\\/VST-20260615-11-003-1.jpg\"]', 'Pending', '2026-06-15 11:48:33', '2026-06-15 11:48:33'),
+(1166, '36972be2-c2cd-4758-821a-682986a529c7', 8, 22, 4, 47, 3, 'VST-20260615-8-003', 'Minimarket Mentari Jaya', '6282179771066', 'Jl.sunan gunung jati\r\nKenali asam bawah \r\nKec kota baru', '2026-06-15', 'Pemeriksaan Stock', '-1.643145, 103.589291', 'Masih cukup', NULL, '[\"lampiran_kunjungan\\/VST-20260615-8-003-1.jpg\",\"lampiran_kunjungan\\/VST-20260615-8-003-2.jpg\"]', 'Pending', '2026-06-15 13:03:04', '2026-06-15 13:03:04'),
+(1167, 'fdfa949c-67f3-4181-beea-cf46acb65406', 11, 2, 3, 504, 4, 'VST-20260615-11-004', 'Toko permata', NULL, 'Jl. Raya Cipaku No.161, Buniseuri, Kec. Cipaku, Kabupaten Ciamis, Jawa Barat', '2026-06-15', 'Pemeriksaan Stock', '-7.242104, 108.377913', 'Kunjungan', NULL, '[\"lampiran_kunjungan\\/VST-20260615-11-004-1.jpg\"]', 'Pending', '2026-06-15 13:19:56', '2026-06-15 13:19:56'),
+(1168, 'da85f025-dc8b-43fb-9591-46de2da69f10', 11, 2, 3, 506, 5, 'VST-20260615-11-005', 'Apotek khanza', '6287700031998', 'Sukamaju, Kec. Baregbeg, Kabupaten Ciamis, Jawa Barat', '2026-06-15', 'Pemeriksaan Stock', '-7.301482, 108.367279', 'Kunjungan', NULL, '[\"lampiran_kunjungan\\/VST-20260615-11-005-1.jpg\"]', 'Pending', '2026-06-15 13:35:40', '2026-06-15 13:35:40'),
+(1169, '3b2e71fe-4991-49c4-b14a-35e502d826e8', 11, 2, 3, 316, 1, 'VST-20260617-11-001', 'Apotek barika', '6282317397493', 'Jln ry langensari \r\nKec langensari \r\nMuktisari \r\nKab banjarpatroman', '2026-06-17', 'Pemeriksaan Stock', '-7.366062, 108.640375', 'Kunjungan', NULL, '[\"lampiran_kunjungan\\/VST-20260617-11-001-1.jpg\"]', 'Pending', '2026-06-17 10:27:40', '2026-06-17 10:27:40'),
+(1170, '85c31a77-3468-448d-ae1d-337166705b43', 11, 2, 3, 417, 2, 'VST-20260617-11-002', 'Toko abadi', NULL, 'Jln ry langensari \r\nKec langensari \r\nKel langensari \r\nKab banjarpatroman', '2026-06-17', 'Pemeriksaan Stock', '-7.360361, 108.638840', 'Kunjungan', NULL, '[\"lampiran_kunjungan\\/VST-20260617-11-002-1.jpg\"]', 'Pending', '2026-06-17 10:32:41', '2026-06-17 10:32:41'),
+(1171, 'd06eb0d6-61aa-4de0-a9e9-fb535f8e1bbe', 9, 1, 5, 132, 1, 'VST-20260617-9-001', 'Toko mekar saluyu', NULL, 'Pasar wanaraja, garut', '2026-06-17', 'Pemeriksaan Stock', '-7.174135, 107.980712', NULL, NULL, '[\"lampiran_kunjungan\\/VST-20260617-9-001-1.jpg\"]', 'Pending', '2026-06-17 10:39:00', '2026-06-17 10:39:00'),
+(1172, '7c307525-fd71-4fe4-838f-39caa1bd5f53', 9, 1, 5, 329, 2, 'VST-20260617-9-002', 'Fathia cosmetik', NULL, 'Pasar wanaraja_Garut', '2026-06-17', 'Pemeriksaan Stock', '-7.173961, 107.980708', NULL, NULL, '[\"lampiran_kunjungan\\/VST-20260617-9-002-1.jpg\"]', 'Pending', '2026-06-17 10:39:28', '2026-06-17 10:39:28'),
+(1173, '2330d44f-a6cb-4298-893d-fdb76bfb7e2d', 9, 1, 5, 131, 3, 'VST-20260617-9-003', 'Toko boyke', NULL, 'Pasar wanaraja, garut', '2026-06-17', 'Pemeriksaan Stock', '-7.173981, 107.980643', NULL, NULL, '[\"lampiran_kunjungan\\/VST-20260617-9-003-1.jpg\"]', 'Pending', '2026-06-17 10:39:54', '2026-06-17 10:39:54'),
+(1174, 'a62a6b38-0463-42c2-84d4-b548cd1df260', 9, 1, 5, 332, 4, 'VST-20260617-9-004', 'Apt. Mustajab', NULL, 'Jl. Raya pasar wanaraja_Garut', '2026-06-17', 'Pemeriksaan Stock', '-7.173983, 107.980656', NULL, NULL, '[\"lampiran_kunjungan\\/VST-20260617-9-004-1.jpg\"]', 'Pending', '2026-06-17 10:40:22', '2026-06-17 10:40:22'),
+(1175, 'd0b7fa6f-116d-4692-a911-abf50883bd9a', 9, 1, 5, 330, 5, 'VST-20260617-9-005', 'Senjaya kosmetik', NULL, 'Pasar wanaraja_Garut', '2026-06-17', 'Pemeriksaan Stock', '-7.173973, 107.980716', NULL, NULL, '[\"lampiran_kunjungan\\/VST-20260617-9-005-1.jpg\"]', 'Pending', '2026-06-17 10:41:11', '2026-06-17 10:41:11'),
+(1176, '256e8afb-5e17-4043-8f24-4aa8ac73deee', 9, 1, 5, 331, 6, 'VST-20260617-9-006', 'Apt. Firdaus Farma', NULL, 'Jl. Raya pasar wanaraja_Garut', '2026-06-17', 'Pemeriksaan Stock', '-7.173968, 107.980671', NULL, NULL, '[\"lampiran_kunjungan\\/VST-20260617-9-006-1.jpg\"]', 'Pending', '2026-06-17 10:41:36', '2026-06-17 10:41:36'),
+(1177, 'b7cb296e-a024-4d48-a17f-b3082d4f9f71', 11, 2, 3, 419, 3, 'VST-20260617-11-003', 'Toko Aulia', NULL, 'Jln santoso \r\nKec langensari \r\nKel langensari \r\nLab banjarpatroman', '2026-06-17', 'Pemeriksaan Stock', '-7.346277, 108.636228', 'Kunjungan', NULL, '[\"lampiran_kunjungan\\/VST-20260617-11-003-1.jpg\"]', 'Pending', '2026-06-17 10:41:52', '2026-06-17 10:41:52'),
+(1178, '2c463e75-39c6-4287-bb8f-a9b598cab105', 9, 1, 5, 335, 7, 'VST-20260617-9-007', 'Gemma kosmetik', NULL, 'Jl. Pasar wanaraja_Garut', '2026-06-17', 'Pemeriksaan Stock', '-7.174145, 107.980702', NULL, NULL, '[\"lampiran_kunjungan\\/VST-20260617-9-007-1.jpg\"]', 'Pending', '2026-06-17 10:44:46', '2026-06-17 10:44:46'),
+(1179, '286d6ffe-dfcc-4734-84c1-3bce12a93381', 9, 1, 5, 133, 8, 'VST-20260617-9-008', 'Toko shahira', NULL, 'Pasar wanaraja, garut', '2026-06-17', 'Pemeriksaan Stock', '-7.176857, 107.979321', NULL, NULL, '[\"lampiran_kunjungan\\/VST-20260617-9-008-1.jpg\"]', 'Pending', '2026-06-17 11:14:17', '2026-06-17 11:14:17'),
+(1180, 'e237bf7c-b684-434f-abad-8bf8ecd4155d', 11, 2, 3, 507, 4, 'VST-20260617-11-004', 'Apotek Cemara', NULL, 'Jl, Cintajaya, Kec. Lakbok, Kabupaten Ciamis, Jawa Barat 46184', '2026-06-17', 'Pemeriksaan Stock', '-7.392517, 108.675896', 'Kunjungan', NULL, '[\"lampiran_kunjungan\\/VST-20260617-11-004-1.jpg\",\"lampiran_kunjungan\\/VST-20260617-11-004-2.jpg\"]', 'Pending', '2026-06-17 11:16:03', '2026-06-17 11:16:03'),
+(1181, '4ef57e93-0cd3-408e-af2f-dc57bc313236', 11, 2, 3, 451, 5, 'VST-20260617-11-005', 'Apotek Aasiyah', NULL, 'Jln bendungan Menganti \r\n Sidaharja, Kec. Lakbok, Kabupaten Ciamis, Jawa Barat', '2026-06-17', 'Pemeriksaan Stock', '-7.422187, 108.696382', 'Kunjungan', NULL, '[\"lampiran_kunjungan\\/VST-20260617-11-005-1.jpg\"]', 'Pending', '2026-06-17 13:48:34', '2026-06-17 13:48:34'),
+(1182, '5b2564be-1ef6-4a3f-8c03-2944423e1b26', 9, 1, 5, 277, 1, 'VST-20260618-9-001', 'Toko Entang', NULL, 'Pasar Kadungora', '2026-06-18', 'Pemeriksaan Stock', '-7.086471, 107.894870', NULL, NULL, '[\"lampiran_kunjungan\\/VST-20260618-9-001-1.jpg\"]', 'Pending', '2026-06-18 10:08:25', '2026-06-18 10:08:25'),
+(1183, '77bcdf7c-0ecc-4cd7-81cd-f02183eaa188', 9, 1, 5, 281, 2, 'VST-20260618-9-002', 'Toko Yusuf', NULL, 'Pasar kadungora', '2026-06-18', 'Pemeriksaan Stock', '-7.086384, 107.895214', NULL, NULL, '[\"lampiran_kunjungan\\/VST-20260618-9-002-1.jpg\"]', 'Pending', '2026-06-18 10:18:43', '2026-06-18 10:18:43'),
+(1184, 'ee8ecf0a-e5a2-42e7-b110-d6b202ccea64', 9, 1, 5, 276, 3, 'VST-20260618-9-003', 'Subur makmur', NULL, 'Pasar kadungora', '2026-06-18', 'Pemeriksaan Stock', '-7.086335, 107.895212', NULL, NULL, '[\"lampiran_kunjungan\\/VST-20260618-9-003-1.jpg\"]', 'Pending', '2026-06-18 10:20:01', '2026-06-18 10:20:01'),
+(1185, '861e2b39-5b40-448c-a347-bed3334a2d8f', 9, 1, 5, 280, 4, 'VST-20260618-9-004', 'Salma kosmetik', NULL, 'Pasar kadungora', '2026-06-18', 'Pemeriksaan Stock', '-7.086330, 107.894578', NULL, NULL, '[\"lampiran_kunjungan\\/VST-20260618-9-004-1.jpg\"]', 'Pending', '2026-06-18 10:49:25', '2026-06-18 10:49:25'),
+(1186, '61750721-0d12-4d25-853e-3c152603c15f', 9, 1, 5, 278, 5, 'VST-20260618-9-005', 'Deasy kosmetik', NULL, 'Pasar kadungora', '2026-06-18', 'Pemeriksaan Stock', '-7.086448, 107.894633', NULL, NULL, '[\"lampiran_kunjungan\\/VST-20260618-9-005-1.jpg\"]', 'Pending', '2026-06-18 10:53:49', '2026-06-18 10:53:49'),
+(1187, 'df162df6-a7f7-4f4c-8702-839f2863bf46', 8, 22, 4, 509, 1, 'VST-20260618-8-001', 'TOKO AL BAHIR', '_', 'Jl.sari bakti\r\nBagan pete \r\nKec kota baru', '2026-06-18', 'Pemeriksaan Stock', '-1.642640, 103.569679', 'Masih cukup', NULL, '[\"lampiran_kunjungan\\/VST-20260618-8-001-1.jpg\"]', 'Pending', '2026-06-18 11:58:02', '2026-06-18 11:58:02'),
+(1188, 'd3c67c7f-5017-49fc-9965-4dc5d3ee7893', 8, 22, 4, 510, 2, 'VST-20260618-8-002', 'TOKO ANEKA SERVIS', '_', 'Jl.sari bakti \r\nBagan pete \r\nKec kota baru', '2026-06-18', 'Pemeriksaan Stock', '-1.639684, 103.570112', 'Masih cukup', NULL, '[\"lampiran_kunjungan\\/VST-20260618-8-002-1.jpg\"]', 'Pending', '2026-06-18 12:02:04', '2026-06-18 12:02:04');
 
 -- --------------------------------------------------------
 
@@ -5022,7 +5098,58 @@ INSERT INTO `kunjungan_items` (`id`, `kunjungan_id`, `produk_id`, `jumlah`, `bat
 (2156, 1145, 1, 1, NULL, NULL, NULL, '2026-06-12 11:22:25', '2026-06-12 11:22:25'),
 (2157, 1146, 2, 3, NULL, NULL, NULL, '2026-06-12 13:27:49', '2026-06-12 13:27:49'),
 (2158, 1146, 1, 1, NULL, NULL, NULL, '2026-06-12 13:27:49', '2026-06-12 13:27:49'),
-(2159, 1147, 20, 1, NULL, NULL, NULL, '2026-06-12 13:29:21', '2026-06-12 13:29:21');
+(2159, 1147, 20, 1, NULL, NULL, NULL, '2026-06-12 13:29:21', '2026-06-12 13:29:21'),
+(2160, 1148, 2, 1, NULL, NULL, NULL, '2026-06-13 09:38:44', '2026-06-13 09:38:44'),
+(2161, 1149, 1, 1, NULL, NULL, NULL, '2026-06-13 10:30:16', '2026-06-13 10:30:16'),
+(2162, 1150, 2, 1, NULL, NULL, NULL, '2026-06-13 10:40:30', '2026-06-13 10:40:30'),
+(2163, 1151, 2, 1, NULL, NULL, NULL, '2026-06-13 11:02:29', '2026-06-13 11:02:29'),
+(2164, 1152, 2, 2, NULL, NULL, NULL, '2026-06-13 11:03:31', '2026-06-13 11:03:31'),
+(2165, 1152, 1, 1, NULL, NULL, NULL, '2026-06-13 11:03:31', '2026-06-13 11:03:31'),
+(2166, 1153, 2, 2, NULL, NULL, NULL, '2026-06-13 11:04:02', '2026-06-13 11:04:02'),
+(2167, 1154, 2, 1, NULL, NULL, NULL, '2026-06-13 11:04:46', '2026-06-13 11:04:46'),
+(2168, 1155, 8, 1, NULL, NULL, NULL, '2026-06-15 10:56:31', '2026-06-15 10:56:31'),
+(2169, 1156, 2, 1, NULL, NULL, NULL, '2026-06-15 11:00:23', '2026-06-15 11:00:23'),
+(2170, 1157, 2, 1, NULL, NULL, NULL, '2026-06-15 11:11:12', '2026-06-15 11:11:12'),
+(2171, 1158, 2, 1, NULL, NULL, NULL, '2026-06-15 11:36:37', '2026-06-15 11:36:37'),
+(2172, 1159, 1, 1, NULL, NULL, NULL, '2026-06-15 11:37:05', '2026-06-15 11:37:05'),
+(2173, 1160, 1, 1, NULL, NULL, NULL, '2026-06-15 11:37:38', '2026-06-15 11:37:38'),
+(2174, 1161, 2, 2, NULL, NULL, NULL, '2026-06-15 11:38:18', '2026-06-15 11:38:18'),
+(2175, 1162, 1, 2, NULL, NULL, NULL, '2026-06-15 11:38:43', '2026-06-15 11:38:43'),
+(2176, 1163, 2, 2, NULL, NULL, NULL, '2026-06-15 11:40:11', '2026-06-15 11:40:11'),
+(2177, 1163, 1, 1, NULL, NULL, NULL, '2026-06-15 11:40:11', '2026-06-15 11:40:11'),
+(2178, 1164, 2, 1, NULL, NULL, NULL, '2026-06-15 11:40:30', '2026-06-15 11:40:30'),
+(2179, 1165, 1, 1, NULL, NULL, NULL, '2026-06-15 11:48:33', '2026-06-15 11:48:33'),
+(2180, 1166, 1, 3, NULL, NULL, NULL, '2026-06-15 13:03:04', '2026-06-15 13:03:04'),
+(2181, 1167, 2, 1, NULL, NULL, NULL, '2026-06-15 13:19:56', '2026-06-15 13:19:56'),
+(2182, 1168, 2, 1, NULL, NULL, NULL, '2026-06-15 13:35:40', '2026-06-15 13:35:40'),
+(2183, 1169, 3, 1, NULL, NULL, NULL, '2026-06-17 10:27:40', '2026-06-17 10:27:40'),
+(2184, 1170, 1, 1, NULL, NULL, NULL, '2026-06-17 10:32:41', '2026-06-17 10:32:41'),
+(2185, 1171, 2, 2, NULL, NULL, NULL, '2026-06-17 10:39:00', '2026-06-17 10:39:00'),
+(2186, 1172, 2, 1, NULL, NULL, NULL, '2026-06-17 10:39:28', '2026-06-17 10:39:28'),
+(2187, 1172, 1, 1, NULL, NULL, NULL, '2026-06-17 10:39:28', '2026-06-17 10:39:28'),
+(2188, 1173, 2, 3, NULL, NULL, NULL, '2026-06-17 10:39:54', '2026-06-17 10:39:54'),
+(2189, 1174, 2, 1, NULL, NULL, NULL, '2026-06-17 10:40:22', '2026-06-17 10:40:22'),
+(2190, 1174, 1, 1, NULL, NULL, NULL, '2026-06-17 10:40:22', '2026-06-17 10:40:22'),
+(2191, 1175, 2, 2, NULL, NULL, NULL, '2026-06-17 10:41:11', '2026-06-17 10:41:11'),
+(2192, 1175, 1, 1, NULL, NULL, NULL, '2026-06-17 10:41:11', '2026-06-17 10:41:11'),
+(2193, 1176, 1, 1, NULL, NULL, NULL, '2026-06-17 10:41:36', '2026-06-17 10:41:36'),
+(2194, 1176, 2, 1, NULL, NULL, NULL, '2026-06-17 10:41:36', '2026-06-17 10:41:36'),
+(2195, 1177, 2, 1, NULL, NULL, NULL, '2026-06-17 10:41:52', '2026-06-17 10:41:52'),
+(2196, 1178, 2, 1, NULL, NULL, NULL, '2026-06-17 10:44:46', '2026-06-17 10:44:46'),
+(2197, 1179, 2, 1, NULL, NULL, NULL, '2026-06-17 11:14:17', '2026-06-17 11:14:17'),
+(2198, 1180, 2, 1, NULL, NULL, NULL, '2026-06-17 11:16:03', '2026-06-17 11:16:03'),
+(2199, 1181, 2, 1, NULL, NULL, NULL, '2026-06-17 13:48:34', '2026-06-17 13:48:34'),
+(2200, 1182, 2, 1, NULL, NULL, NULL, '2026-06-18 10:08:25', '2026-06-18 10:08:25'),
+(2201, 1182, 1, 1, NULL, NULL, NULL, '2026-06-18 10:08:25', '2026-06-18 10:08:25'),
+(2202, 1183, 2, 2, NULL, NULL, NULL, '2026-06-18 10:18:43', '2026-06-18 10:18:43'),
+(2203, 1183, 1, 2, NULL, NULL, NULL, '2026-06-18 10:18:43', '2026-06-18 10:18:43'),
+(2204, 1184, 2, 3, NULL, NULL, NULL, '2026-06-18 10:20:01', '2026-06-18 10:20:01'),
+(2205, 1184, 1, 2, NULL, NULL, NULL, '2026-06-18 10:20:01', '2026-06-18 10:20:01'),
+(2206, 1185, 2, 1, NULL, NULL, NULL, '2026-06-18 10:49:25', '2026-06-18 10:49:25'),
+(2207, 1186, 2, 1, NULL, NULL, NULL, '2026-06-18 10:53:49', '2026-06-18 10:53:49'),
+(2208, 1186, 1, 3, NULL, NULL, NULL, '2026-06-18 10:53:49', '2026-06-18 10:53:49'),
+(2209, 1187, 1, 1, NULL, NULL, NULL, '2026-06-18 11:58:02', '2026-06-18 11:58:02'),
+(2210, 1188, 8, 1, NULL, NULL, NULL, '2026-06-18 12:02:04', '2026-06-18 12:02:04');
 
 -- --------------------------------------------------------
 
@@ -5292,7 +5419,33 @@ INSERT INTO `pembayarans` (`id`, `uuid`, `user_id`, `approver_id`, `gudang_id`, 
 (163, '1e4550ad-71c0-472d-9257-b38c75700ecd', 2, 2, 5, 1443, 2, 'PAY-20260610-2-001-B', '2026-06-09', 'Transfer Bank', 80000.00, NULL, '[]', NULL, 'Approved', '2026-06-10 09:26:02', '2026-06-10 09:26:11'),
 (164, '2a22a350-9e95-4aa0-9769-6be3f6593f8c', 2, 2, 5, 1444, 3, 'PAY-20260610-2-001-C', '2026-06-09', 'Transfer Bank', 61000.00, NULL, '[]', NULL, 'Approved', '2026-06-10 09:26:02', '2026-06-10 09:26:15'),
 (165, 'c0c5c12d-da45-4701-a162-a60f8207be9e', 2, 2, 5, 1445, 4, 'PAY-20260610-2-001-D', '2026-06-09', 'Transfer Bank', 102000.00, NULL, '[]', NULL, 'Approved', '2026-06-10 09:26:02', '2026-06-10 09:26:19'),
-(166, '05a001a0-acbe-4295-9109-37e9e085f61d', 2, 2, 5, 1441, 5, 'PAY-20260610-2-001-E', '2026-06-09', 'Transfer Bank', 390000.00, NULL, '[]', NULL, 'Approved', '2026-06-10 09:26:02', '2026-06-10 09:26:23');
+(166, '05a001a0-acbe-4295-9109-37e9e085f61d', 2, 2, 5, 1441, 5, 'PAY-20260610-2-001-E', '2026-06-09', 'Transfer Bank', 390000.00, NULL, '[]', NULL, 'Approved', '2026-06-10 09:26:02', '2026-06-10 09:26:23'),
+(167, '2dbc64fa-1f8b-4396-804f-13448ff5ab4c', 2, 2, 3, 1471, 1, 'PAY-20260615-2-001-A', '2026-06-13', 'Transfer Bank', 160000.00, NULL, '[]', NULL, 'Approved', '2026-06-15 08:43:28', '2026-06-15 08:43:32'),
+(168, '67a4d54a-e6c8-462b-a442-b14657c00c25', 2, 2, 3, 1474, 2, 'PAY-20260615-2-001-B', '2026-06-13', 'Transfer Bank', 150000.00, NULL, '[]', NULL, 'Approved', '2026-06-15 08:43:28', '2026-06-15 08:43:35'),
+(169, 'b6dc5cd8-4e4e-42d1-8b30-f391ee2d105d', 2, 2, 3, 1323, 3, 'PAY-20260615-2-001-C', '2026-06-13', 'Transfer Bank', 3305000.00, NULL, '[]', NULL, 'Approved', '2026-06-15 08:43:28', '2026-06-15 08:43:37'),
+(170, '9893f7a4-85b6-46e0-82d6-6310aa73b90c', 2, 2, 5, 1461, 1, 'PAY-20260617-2-001-A', '2026-06-11', 'Transfer Bank', 30000.00, NULL, '[\"lampiran_pembayaran\\/PAY-20260617-2-001-1.jpeg\"]', NULL, 'Approved', '2026-06-17 14:05:27', '2026-06-17 14:09:58'),
+(171, 'd7bf485f-0242-4004-8256-8862ffce9384', 2, 2, 5, 1462, 2, 'PAY-20260617-2-001-B', '2026-06-11', 'Transfer Bank', 21000.00, NULL, '[]', NULL, 'Approved', '2026-06-17 14:05:27', '2026-06-17 14:10:01'),
+(172, 'efc3400d-c6fb-46a4-a475-f6a935333c63', 2, 2, 5, 1463, 3, 'PAY-20260617-2-001-C', '2026-06-11', 'Transfer Bank', 51000.00, NULL, '[]', NULL, 'Approved', '2026-06-17 14:05:27', '2026-06-17 14:10:03'),
+(173, 'cb730949-760d-4987-a571-6976642b0250', 2, 2, 5, 1464, 4, 'PAY-20260617-2-001-D', '2026-06-11', 'Transfer Bank', 72000.00, NULL, '[]', NULL, 'Approved', '2026-06-17 14:05:27', '2026-06-17 14:10:08'),
+(174, 'd8762ce0-7f2d-48b2-996d-32f0cab654e2', 2, 2, 5, 1448, 5, 'PAY-20260617-2-001-E', '2026-06-11', 'Transfer Bank', 51000.00, NULL, '[]', NULL, 'Approved', '2026-06-17 14:05:27', '2026-06-17 14:10:10'),
+(175, 'cbda8cc2-088b-414a-acd6-8c536ea603a4', 2, 2, 5, 1449, 6, 'PAY-20260617-2-001-F', '2026-06-11', 'Transfer Bank', 360000.00, NULL, '[]', NULL, 'Approved', '2026-06-17 14:05:27', '2026-06-17 14:10:15'),
+(176, '859d2867-6abc-4293-8095-8f8c97c732a1', 2, 2, 5, 1450, 7, 'PAY-20260617-2-001-G', '2026-06-11', 'Transfer Bank', 273000.00, NULL, '[]', NULL, 'Approved', '2026-06-17 14:05:27', '2026-06-17 14:10:18'),
+(177, '6c587b46-02d9-417e-ae94-8a456ff734f7', 2, 2, 5, 1451, 8, 'PAY-20260617-2-001-H', '2026-06-11', 'Transfer Bank', 72000.00, NULL, '[]', NULL, 'Approved', '2026-06-17 14:05:27', '2026-06-17 14:10:22'),
+(178, '7bf8a38b-ad1c-4ee7-806a-fbdc752d9a4a', 2, 2, 5, 1487, 9, 'PAY-20260617-2-009-A', '2026-06-15', 'Transfer Bank', 60000.00, NULL, '[\"lampiran_pembayaran\\/PAY-20260617-2-009-1.jpeg\"]', NULL, 'Approved', '2026-06-17 14:09:24', '2026-06-17 14:09:28'),
+(179, '3e3a1b37-cbcd-4d86-83c6-9f6e54af1ad0', 2, 2, 5, 1488, 10, 'PAY-20260617-2-009-B', '2026-06-15', 'Transfer Bank', 102000.00, NULL, '[]', NULL, 'Approved', '2026-06-17 14:09:24', '2026-06-17 14:09:31'),
+(180, 'afa55b54-8766-4c5a-bbf9-11a9e1cef785', 2, 2, 5, 1489, 11, 'PAY-20260617-2-009-C', '2026-06-15', 'Transfer Bank', 132000.00, NULL, '[]', NULL, 'Approved', '2026-06-17 14:09:24', '2026-06-17 14:09:34'),
+(181, '42b186e8-caa9-4218-8a36-a8e0f0661361', 2, 2, 5, 1490, 12, 'PAY-20260617-2-009-D', '2026-06-15', 'Transfer Bank', 60000.00, NULL, '[]', NULL, 'Approved', '2026-06-17 14:09:24', '2026-06-17 14:09:37'),
+(182, '2dff6861-c050-48b3-b242-1ea0bbc2b499', 2, 2, 5, 1491, 13, 'PAY-20260617-2-009-E', '2026-06-15', 'Transfer Bank', 63000.00, NULL, '[]', NULL, 'Approved', '2026-06-17 14:09:24', '2026-06-17 14:09:40'),
+(183, '9b6eda54-4a4f-4574-9dd3-b78ecc7aea5b', 2, 2, 5, 1475, 14, 'PAY-20260617-2-009-F', '2026-06-15', 'Transfer Bank', 153000.00, NULL, '[]', NULL, 'Approved', '2026-06-17 14:09:24', '2026-06-17 14:09:44'),
+(184, '6095bbb1-7a07-4082-9c61-ccfa53518719', 2, 2, 5, 1476, 15, 'PAY-20260617-2-009-G', '2026-06-15', 'Transfer Bank', 213000.00, NULL, '[]', NULL, 'Approved', '2026-06-17 14:09:24', '2026-06-17 14:09:47'),
+(185, '8d4db4f6-a672-4142-8a26-537ea7eee138', 2, 2, 5, 1468, 16, 'PAY-20260617-2-009-H', '2026-06-15', 'Transfer Bank', 60000.00, NULL, '[]', NULL, 'Approved', '2026-06-17 14:09:24', '2026-06-17 14:09:50'),
+(186, 'ee5983cb-fbb3-401f-8414-39436dfd55e2', 2, 2, 5, 1469, 17, 'PAY-20260617-2-009-I', '2026-06-15', 'Transfer Bank', 102000.00, NULL, '[]', NULL, 'Approved', '2026-06-17 14:09:24', '2026-06-17 14:09:52'),
+(187, '1888feda-39ac-4867-b1ce-5e405e4c9240', 2, 2, 5, 1470, 18, 'PAY-20260617-2-009-J', '2026-06-15', 'Transfer Bank', 42000.00, NULL, '[]', NULL, 'Approved', '2026-06-17 14:09:24', '2026-06-17 14:09:55'),
+(188, '2b1f4e9a-dcfe-4882-b405-9ab160ac51c8', 2, 2, 3, 1494, 1, 'PAY-20260618-2-001-A', '2026-06-17', 'Transfer Bank', 30000.00, NULL, '[\"lampiran_pembayaran\\/PAY-20260618-2-001-1.jpeg\"]', NULL, 'Approved', '2026-06-18 09:57:25', '2026-06-18 09:57:28'),
+(189, '08833741-6528-446a-b191-f4b2a1258a5a', 2, 2, 3, 1500, 2, 'PAY-20260618-2-001-B', '2026-06-17', 'Transfer Bank', 132000.00, NULL, '[]', NULL, 'Approved', '2026-06-18 09:57:25', '2026-06-18 09:57:31'),
+(190, 'b3567068-64f5-44be-bf74-8cd4805130ac', 2, 2, 3, 1504, 3, 'PAY-20260618-2-001-C', '2026-06-17', 'Transfer Bank', 180000.00, NULL, '[]', NULL, 'Approved', '2026-06-18 09:57:25', '2026-06-18 09:57:35'),
+(191, '45279022-486a-4a53-9e01-da8785c4bb82', 2, 2, 3, 1485, 4, 'PAY-20260618-2-001-D', '2026-06-17', 'Transfer Bank', 51000.00, NULL, '[]', NULL, 'Approved', '2026-06-18 09:57:25', '2026-06-18 09:57:39'),
+(192, '74431ebc-5d45-4c16-8e69-5ef009d3d8eb', 2, 2, 3, 1486, 5, 'PAY-20260618-2-001-E', '2026-06-17', 'Transfer Bank', 120000.00, NULL, '[]', NULL, 'Approved', '2026-06-18 09:57:25', '2026-06-18 09:57:42');
 
 -- --------------------------------------------------------
 
@@ -6844,7 +6997,7 @@ INSERT INTO `penjualans` (`id`, `uuid`, `user_id`, `gudang_id`, `tipe_harga`, `a
 (1320, '50652942-6262-40a0-82d4-21a92ed8ad81', 9, 5, 'retail', 22, 4, 'INV-20260519-9-004', 'Azmi kosmetik', '6285295499051', 'Jl. Bandrek_kersamenah', '2026-05-19', 'Cash', NULL, NULL, 'SALES M.B.K - UMAR', '-7.055497, 108.009065', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260519-9-004-1.jpg\"]', 'Lunas', 0.00, 0.00, 252000.00, '2026-05-19 10:34:08', '2026-05-20 10:31:23'),
 (1321, '71e2545c-ebe6-4d46-a1a1-b256be38f619', 11, 3, 'retail', 22, 2, 'INV-20260519-11-002', 'Toko RR', NULL, 'Lingkungan cimenyan II, RT.02/RW.09, Mekarsari, Kec. Banjar, Kota Banjar, Jawa Barat', '2026-05-19', 'Cash', NULL, NULL, 'SALES M.B.K - ROZAK', '-7.373281, 108.534013', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260519-11-002-1.jpg\"]', 'Lunas', 0.00, 0.00, 51000.00, '2026-05-19 10:34:36', '2026-05-20 10:25:45'),
 (1322, '6e193dbe-cff4-40a2-a25e-8c9fa738623b', 8, 4, 'retail', 2, 3, 'INV-20260519-8-003', 'TOKO TIA', '6285266399909', 'Penyengat rendah \r\nKec telanai pura', '2026-05-19', 'Cash', NULL, NULL, 'SALES M.B.K - DEO', '-1.606798, 103.549421', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260519-8-003-1.jpg\"]', 'Pending', 0.00, 0.00, 171000.00, '2026-05-19 10:38:12', '2026-05-19 10:38:12'),
-(1323, '35dfcf8b-7319-4be3-9bd4-1a0655718cf5', 11, 3, 'retail', 22, 3, 'INV-20260519-11-003', 'Muara kosmetik banjar', '6282120801377', 'Jln letjen Suwarto no49\r\nKec pataruman\r\nKel Hegarsari \r\nKab banjarpatroman', '2026-05-19', 'Net 14', '2026-06-02', NULL, 'SALES M.B.K - ROZAK', '-7.371116, 108.541810', 'Tempo 20 hari', NULL, '[\"lampiran_penjualan\\/INV-20260519-11-003-1.jpg\"]', 'Approved', 280000.00, 0.00, 3305000.00, '2026-05-19 11:24:58', '2026-05-19 12:58:35'),
+(1323, '35dfcf8b-7319-4be3-9bd4-1a0655718cf5', 11, 3, 'retail', 22, 3, 'INV-20260519-11-003', 'Muara kosmetik banjar', '6282120801377', 'Jln letjen Suwarto no49\r\nKec pataruman\r\nKel Hegarsari \r\nKab banjarpatroman', '2026-05-19', 'Net 14', '2026-06-02', NULL, 'SALES M.B.K - ROZAK', '-7.371116, 108.541810', 'Tempo 20 hari', NULL, '[\"lampiran_penjualan\\/INV-20260519-11-003-1.jpg\"]', 'Lunas', 280000.00, 0.00, 3305000.00, '2026-05-19 11:24:58', '2026-06-15 08:43:37'),
 (1324, '570f00c8-52f1-4395-bfdb-16dc0b32adc4', 8, 4, 'retail', 2, 4, 'INV-20260519-8-004', 'TOKO WATI', '_', 'Depan pasar Villa \r\nMayang mangurai \r\nKec kota baru', '2026-05-19', 'Cash', NULL, NULL, 'SALES M.B.K - DEO', '-1.646381, 103.582311', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260519-8-004-1.jpg\"]', 'Pending', 0.00, 0.00, 72000.00, '2026-05-19 13:07:28', '2026-05-19 13:07:28'),
 (1325, 'f4993ea4-3ceb-44bb-bad3-96a0e235baa4', 9, 5, 'retail', 2, 1, 'INV-20260520-9-001', 'Senjaya kosmetik', NULL, 'Pasar wanaraja_Garut', '2026-05-20', 'Cash', NULL, NULL, 'SALES M.B.K - UMAR', '-7.175555, 107.980198', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260520-9-001-1.jpg\"]', 'Lunas', 0.00, 0.00, 40000.00, '2026-05-20 09:55:57', '2026-05-22 09:30:44'),
 (1326, 'f8cbbfbf-cc3a-4b8f-80f4-a67734e74dee', 8, 4, 'retail', 2, 1, 'INV-20260520-8-001', 'APOTIK SARI ASIH 2', '6287788922777', 'Jl.patimura \r\nKenali besar\r\nKec kota baru', '2026-05-20', 'Cash', NULL, NULL, 'SALES M.B.K - DEO', '-1.624912, 103.550813', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260520-8-001-1.jpg\"]', 'Pending', 0.00, 0.00, 600000.00, '2026-05-20 10:07:18', '2026-05-20 10:07:18'),
@@ -6970,10 +7123,10 @@ INSERT INTO `penjualans` (`id`, `uuid`, `user_id`, `gudang_id`, `tipe_harga`, `a
 (1445, '976505de-c3ef-4a4d-a141-e1b96f60a53d', 9, 5, 'retail', 2, 4, 'INV-20260609-9-004', 'Apotek Assalam', NULL, 'Jl. Raya pasar Baraya_Banyuresmi_Garut', '2026-06-09', 'Cash', NULL, NULL, 'SALES M.B.K - UMAR', '-7.199036, 107.948554', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260609-9-004-1.jpg\"]', 'Lunas', 0.00, 0.00, 102000.00, '2026-06-09 11:38:29', '2026-06-10 09:26:19'),
 (1446, 'd71ca15c-cf85-4bed-9164-0316641111d2', 8, 4, 'grosir', 2, 1, 'INV-20260609-8-001', 'TOKO SUKSES JAYA TUNGKAL', '6283121871528', 'Tungkal ilir \r\nKuala tungkal\r\nKabupaten tanjung jabung barat', '2026-06-09', 'Cash', NULL, NULL, 'SALES M.B.K - DEO', '-1.649468, 103.583145', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260609-8-001-1.jpg\"]', 'Pending', 0.00, 0.00, 2803194.00, '2026-06-09 12:08:27', '2026-06-09 12:08:27'),
 (1447, '40c0423b-b4af-4d0a-aa12-066539aed4fa', 8, 4, 'grosir', 2, 2, 'INV-20260609-8-002', 'TOKO ROBIN MAYANG', '6282370528806', 'Mayang mangurai\r\nKec alam baraji', '2026-06-09', 'Cash', NULL, NULL, 'SALES M.B.K - DEO', '-1.637222, 103.584083', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260609-8-002-1.jpg\"]', 'Pending', 0.00, 0.00, 937417.20, '2026-06-09 13:14:04', '2026-06-09 13:14:04'),
-(1448, '453c74a5-1f14-4b86-a70a-1ef468c298cf', 9, 5, 'retail', 2, 1, 'INV-20260610-9-001', 'Evi kosmetik', NULL, 'Pasar Andir_Bayongbong_Garut', '2026-06-10', 'Cash', NULL, NULL, 'SALES M.B.K - UMAR', '-7.262004, 107.820418', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260610-9-001-1.jpg\"]', 'Approved', 0.00, 0.00, 51000.00, '2026-06-10 10:18:42', '2026-06-11 08:33:36'),
-(1449, '47f859d6-cd50-42aa-a9d4-d6e063b6db39', 9, 5, 'retail', 2, 2, 'INV-20260610-9-002', 'Larissa', NULL, 'Pasar Andir_Bayongbong', '2026-06-10', 'Cash', NULL, NULL, 'SALES M.B.K - UMAR', '-7.262058, 107.820297', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260610-9-002-1.jpg\"]', 'Approved', 0.00, 0.00, 360000.00, '2026-06-10 10:21:26', '2026-06-11 08:34:07'),
-(1450, 'a31d770f-4d33-4469-85c6-5a020cd8e020', 9, 5, 'retail', 2, 3, 'INV-20260610-9-003', 'Toko opik', NULL, 'Pasar andir bayongbong, garut', '2026-06-10', 'Cash', NULL, NULL, 'SALES M.B.K - UMAR', '-7.261988, 107.820471', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260610-9-003-1.jpg\"]', 'Approved', 0.00, 0.00, 273000.00, '2026-06-10 10:24:07', '2026-06-11 08:34:48'),
-(1451, '9c0ee278-27b9-4127-97f7-31a0cbc47d4e', 9, 5, 'retail', 2, 4, 'INV-20260610-9-004', 'Tk.Yuni', NULL, 'Pasar andir_Bayongbong', '2026-06-10', 'Cash', NULL, NULL, 'SALES M.B.K - UMAR', '-7.261972, 107.820499', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260610-9-004-1.jpg\"]', 'Approved', 0.00, 0.00, 72000.00, '2026-06-10 10:26:57', '2026-06-11 08:35:05'),
+(1448, '453c74a5-1f14-4b86-a70a-1ef468c298cf', 9, 5, 'retail', 2, 1, 'INV-20260610-9-001', 'Evi kosmetik', NULL, 'Pasar Andir_Bayongbong_Garut', '2026-06-10', 'Cash', NULL, NULL, 'SALES M.B.K - UMAR', '-7.262004, 107.820418', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260610-9-001-1.jpg\"]', 'Lunas', 0.00, 0.00, 51000.00, '2026-06-10 10:18:42', '2026-06-17 14:10:11'),
+(1449, '47f859d6-cd50-42aa-a9d4-d6e063b6db39', 9, 5, 'retail', 2, 2, 'INV-20260610-9-002', 'Larissa', NULL, 'Pasar Andir_Bayongbong', '2026-06-10', 'Cash', NULL, NULL, 'SALES M.B.K - UMAR', '-7.262058, 107.820297', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260610-9-002-1.jpg\"]', 'Lunas', 0.00, 0.00, 360000.00, '2026-06-10 10:21:26', '2026-06-17 14:10:15'),
+(1450, 'a31d770f-4d33-4469-85c6-5a020cd8e020', 9, 5, 'retail', 2, 3, 'INV-20260610-9-003', 'Toko opik', NULL, 'Pasar andir bayongbong, garut', '2026-06-10', 'Cash', NULL, NULL, 'SALES M.B.K - UMAR', '-7.261988, 107.820471', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260610-9-003-1.jpg\"]', 'Lunas', 0.00, 0.00, 273000.00, '2026-06-10 10:24:07', '2026-06-17 14:10:18'),
+(1451, '9c0ee278-27b9-4127-97f7-31a0cbc47d4e', 9, 5, 'retail', 2, 4, 'INV-20260610-9-004', 'Tk.Yuni', NULL, 'Pasar andir_Bayongbong', '2026-06-10', 'Cash', NULL, NULL, 'SALES M.B.K - UMAR', '-7.261972, 107.820499', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260610-9-004-1.jpg\"]', 'Lunas', 0.00, 0.00, 72000.00, '2026-06-10 10:26:57', '2026-06-17 14:10:22'),
 (1452, 'b18a6924-f669-4f86-b53a-15e11452f8b5', 8, 4, 'retail', 2, 1, 'INV-20260610-8-001', 'SRC FAMILY', '6285366026297', 'Penyengat rendah \r\nKec telanai pura', '2026-06-10', 'Cash', NULL, NULL, 'SALES M.B.K - DEO', '-1.622831, 103.588580', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260610-8-001-1.jpg\"]', 'Pending', 0.00, 0.00, 252000.00, '2026-06-10 10:30:38', '2026-06-10 10:30:38'),
 (1453, '59317052-59fd-4afd-a69d-44097bfb1972', 8, 4, 'retail', 2, 2, 'INV-20260610-8-002', 'TOKO TIA', '6285266399909', 'Penyengat rendah \r\nKec telanai pura', '2026-06-10', 'Cash', NULL, NULL, 'SALES M.B.K - DEO', '-1.606822, 103.549407', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260610-8-002-1.jpg\"]', 'Pending', 0.00, 0.00, 270000.00, '2026-06-10 10:45:23', '2026-06-10 10:45:23'),
 (1454, 'f402d639-9040-4679-9859-f6720ba45f0d', 8, 4, 'retail', 2, 3, 'INV-20260610-8-003', 'TOKO MAJID TELANAI', '6282269600692', 'Jl.depati parbo \r\nPematang sulur \r\nKec telanai pura', '2026-06-10', 'Cash', NULL, NULL, 'SALES M.B.K - DEO', '-1.598594, 103.560105', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260610-8-003-1.jpg\"]', 'Pending', 0.00, 0.00, 40000.00, '2026-06-10 11:08:51', '2026-06-10 11:08:51'),
@@ -6983,16 +7136,61 @@ INSERT INTO `penjualans` (`id`, `uuid`, `user_id`, `gudang_id`, `tipe_harga`, `a
 (1458, 'd5fa0778-a93b-4693-b96a-9910cb1f24a6', 8, 4, 'retail', 2, 1, 'INV-20260611-8-001', 'MM.RAHMA RIMBO BUJANG', '6282176412338', 'Jl.pahlawan unit 2\r\nTebo rimbo bujang', '2026-06-11', 'Net 14', '2026-06-25', NULL, 'SALES M.B.K - DEO', '-1.649508, 103.583221', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260611-8-001-1.jpg\"]', 'Pending', 0.00, 0.00, 786000.00, '2026-06-11 09:27:13', '2026-06-11 09:27:13'),
 (1459, 'ad92d32c-e5a9-49b5-8979-43e30b410f94', 8, 4, 'retail', 2, 2, 'INV-20260611-8-002', 'APOTIK SEHAT SEGAR M.BUNGO', '6285373013718', 'Pasar atas muaro bungo\r\nKabupaten muaro bungo', '2026-06-11', 'Net 30', '2026-07-11', NULL, 'SALES M.B.K - DEO', '-1.649463, 103.583297', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260611-8-002-1.jpg\"]', 'Pending', 0.00, 0.00, 480000.00, '2026-06-11 09:30:52', '2026-06-11 09:30:52'),
 (1460, '1cdb35ff-b3e4-450a-8e6d-3425edd07185', 8, 4, 'grosir', 2, 3, 'INV-20260611-8-003', 'APOTIK SEHAT SEGAR M.BUNGO', '6285373013718', 'Pasar atas muaro bungo\r\nKabupaten muaro bungo', '2026-06-11', 'Net 30', '2026-07-11', NULL, 'SALES M.B.K - DEO', '-1.649435, 103.583250', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260611-8-003-1.jpg\"]', 'Pending', 0.00, 0.00, 991918.20, '2026-06-11 09:31:17', '2026-06-11 09:31:17'),
-(1461, '4ba21e25-b8dd-4a68-9b1a-e61c5640d206', 9, 5, 'retail', 2, 1, 'INV-20260611-9-001', 'Apotek DNH', NULL, 'Pasar cibatu_Garut', '2026-06-11', 'Cash', NULL, NULL, 'SALES M.B.K - UMAR', '-7.055361, 108.009333', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260611-9-001-1.jpg\"]', 'Pending', 0.00, 0.00, 30000.00, '2026-06-11 10:54:10', '2026-06-11 10:54:10'),
-(1462, '5c7477a6-86c7-4433-b86e-733026b604b3', 9, 5, 'retail', 2, 2, 'INV-20260611-9-002', 'Toko Rofi', NULL, 'Jl. Bandrek_kersamenah', '2026-06-11', 'Cash', NULL, NULL, 'SALES M.B.K - UMAR', '-7.055404, 108.009359', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260611-9-002-1.jpg\"]', 'Pending', 0.00, 0.00, 21000.00, '2026-06-11 10:54:49', '2026-06-11 10:54:49'),
-(1463, '16c36a94-7f38-4d18-bbca-b81eb7e66cbd', 9, 5, 'retail', 2, 3, 'INV-20260611-9-003', 'Toko Rafi', NULL, 'Jl. Raya pasar cibatu_Garut', '2026-06-11', 'Cash', NULL, NULL, 'SALES M.B.K - UMAR', '-7.055360, 108.009314', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260611-9-003-1.jpg\"]', 'Pending', 0.00, 0.00, 51000.00, '2026-06-11 10:57:18', '2026-06-11 10:57:18'),
-(1464, 'a725b15d-c378-4cb6-9271-dc7583da15b8', 9, 5, 'retail', 2, 4, 'INV-20260611-9-004', 'Toko ima kosmetik', NULL, 'Pasar malangbong, malangbong', '2026-06-11', 'Cash', NULL, NULL, 'SALES M.B.K - UMAR', '-7.053087, 108.047284', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260611-9-004-1.jpg\"]', 'Pending', 0.00, 0.00, 72000.00, '2026-06-11 11:19:12', '2026-06-11 11:19:12'),
+(1461, '4ba21e25-b8dd-4a68-9b1a-e61c5640d206', 9, 5, 'retail', 2, 1, 'INV-20260611-9-001', 'Apotek DNH', NULL, 'Pasar cibatu_Garut', '2026-06-11', 'Cash', NULL, NULL, 'SALES M.B.K - UMAR', '-7.055361, 108.009333', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260611-9-001-1.jpg\"]', 'Lunas', 0.00, 0.00, 30000.00, '2026-06-11 10:54:10', '2026-06-17 14:09:58'),
+(1462, '5c7477a6-86c7-4433-b86e-733026b604b3', 9, 5, 'retail', 2, 2, 'INV-20260611-9-002', 'Toko Rofi', NULL, 'Jl. Bandrek_kersamenah', '2026-06-11', 'Cash', NULL, NULL, 'SALES M.B.K - UMAR', '-7.055404, 108.009359', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260611-9-002-1.jpg\"]', 'Lunas', 0.00, 0.00, 21000.00, '2026-06-11 10:54:49', '2026-06-17 14:10:01'),
+(1463, '16c36a94-7f38-4d18-bbca-b81eb7e66cbd', 9, 5, 'retail', 2, 3, 'INV-20260611-9-003', 'Toko Rafi', NULL, 'Jl. Raya pasar cibatu_Garut', '2026-06-11', 'Cash', NULL, NULL, 'SALES M.B.K - UMAR', '-7.055360, 108.009314', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260611-9-003-1.jpg\"]', 'Lunas', 0.00, 0.00, 51000.00, '2026-06-11 10:57:18', '2026-06-17 14:10:03'),
+(1464, 'a725b15d-c378-4cb6-9271-dc7583da15b8', 9, 5, 'retail', 2, 4, 'INV-20260611-9-004', 'Toko ima kosmetik', NULL, 'Pasar malangbong, malangbong', '2026-06-11', 'Cash', NULL, NULL, 'SALES M.B.K - UMAR', '-7.053087, 108.047284', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260611-9-004-1.jpg\"]', 'Lunas', 0.00, 0.00, 72000.00, '2026-06-11 11:19:12', '2026-06-17 14:10:08'),
 (1465, '1ff85046-4ece-4d5a-ba3c-ead8632d0731', 8, 4, 'retail', 2, 4, 'INV-20260611-8-004', 'Toko Muraqabah', '6281365411862', 'Jl.penerangan \r\nBagan pete\r\nKec kota baru', '2026-06-11', 'Cash', NULL, NULL, 'SALES M.B.K - DEO', '-1.649341, 103.547450', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260611-8-004-1.jpg\"]', 'Pending', 0.00, 0.00, 162000.00, '2026-06-11 11:31:56', '2026-06-11 11:31:56'),
 (1466, '2a5e40b0-6728-43cd-bddb-e9baa41418c6', 8, 4, 'retail', 2, 1, 'INV-20260612-8-001', 'TOKO AQILA', '6282247536440', 'Sungai duren \r\nKec jambi luar kota', '2026-06-12', 'Cash', NULL, NULL, 'SALES M.B.K - DEO', '-1.577232, 103.507588', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260612-8-001-1.jpg\"]', 'Pending', 0.00, 0.00, 60000.00, '2026-06-12 10:33:35', '2026-06-12 10:33:35'),
 (1467, '2c96ed74-96be-40f5-8459-43d282fbc674', 8, 4, 'retail', 2, 2, 'INV-20260612-8-002', 'TOKO SANTI', '6289602732093', 'Sungai duren \r\nKec jambi luar kota \r\nKab muaro jambi', '2026-06-12', 'Cash', NULL, NULL, 'SALES M.B.K - DEO', '-1.585014, 103.502203', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260612-8-002-1.jpg\"]', 'Pending', 0.00, 0.00, 120000.00, '2026-06-12 11:01:56', '2026-06-12 11:01:56'),
-(1468, 'fb025afe-203d-40b4-a18a-49eb0fec156a', 9, 5, 'retail', 2, 1, 'INV-20260612-9-001', 'Apotik biru farma', NULL, 'Karangpawitan, garut', '2026-06-12', 'Cash', NULL, NULL, 'SALES M.B.K - UMAR', '-7.216202, 107.929531', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260612-9-001-1.jpg\"]', 'Pending', 0.00, 0.00, 60000.00, '2026-06-12 13:30:05', '2026-06-12 13:30:05'),
-(1469, '97be7721-5244-453a-a923-df1a3b62f555', 9, 5, 'retail', 2, 2, 'INV-20260612-9-002', 'Toko endang', NULL, 'Jalan raya guntur, garut', '2026-06-12', 'Cash', NULL, NULL, 'SALES M.B.K - UMAR', '-7.216191, 107.929521', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260612-9-002-1.jpg\"]', 'Pending', 0.00, 0.00, 102000.00, '2026-06-12 13:30:39', '2026-06-12 13:30:39'),
-(1470, 'c42c40a6-40b4-44bb-a86e-a2f105a0b9db', 9, 5, 'retail', 2, 3, 'INV-20260612-9-003', 'Toko Ade', NULL, 'Pasar Ciawitali_Guntur_Garut', '2026-06-12', 'Cash', NULL, NULL, 'SALES M.B.K - UMAR', '-7.216206, 107.929526', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260612-9-003-1.jpg\"]', 'Pending', 0.00, 0.00, 42000.00, '2026-06-12 13:31:02', '2026-06-12 13:31:02');
+(1468, 'fb025afe-203d-40b4-a18a-49eb0fec156a', 9, 5, 'retail', 2, 1, 'INV-20260612-9-001', 'Apotik biru farma', NULL, 'Karangpawitan, garut', '2026-06-12', 'Cash', NULL, NULL, 'SALES M.B.K - UMAR', '-7.216202, 107.929531', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260612-9-001-1.jpg\"]', 'Lunas', 0.00, 0.00, 60000.00, '2026-06-12 13:30:05', '2026-06-17 14:09:50'),
+(1469, '97be7721-5244-453a-a923-df1a3b62f555', 9, 5, 'retail', 2, 2, 'INV-20260612-9-002', 'Toko endang', NULL, 'Jalan raya guntur, garut', '2026-06-12', 'Cash', NULL, NULL, 'SALES M.B.K - UMAR', '-7.216191, 107.929521', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260612-9-002-1.jpg\"]', 'Lunas', 0.00, 0.00, 102000.00, '2026-06-12 13:30:39', '2026-06-17 14:09:52'),
+(1470, 'c42c40a6-40b4-44bb-a86e-a2f105a0b9db', 9, 5, 'retail', 2, 3, 'INV-20260612-9-003', 'Toko Ade', NULL, 'Pasar Ciawitali_Guntur_Garut', '2026-06-12', 'Cash', NULL, NULL, 'SALES M.B.K - UMAR', '-7.216206, 107.929526', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260612-9-003-1.jpg\"]', 'Lunas', 0.00, 0.00, 42000.00, '2026-06-12 13:31:02', '2026-06-17 14:09:55'),
+(1471, '63d7adb3-a57f-4615-9113-db1b11273dad', 11, 3, 'retail', 2, 1, 'INV-20260613-11-001', 'Devi kosmetik', '6283129974543', 'Jln ps manonjaya \r\nKec manonjaya \r\nKel manonjaya \r\nKab Tasikmalaya', '2026-06-13', 'Cash', NULL, NULL, 'SALES M.B.K - ROZAK', '-7.350539, 108.305044', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260613-11-001-1.jpg\"]', 'Lunas', 0.00, 0.00, 160000.00, '2026-06-13 09:39:33', '2026-06-15 08:43:32'),
+(1472, '525fa357-67dc-42a9-9e14-7c177f1c6827', 8, 4, 'grosir', 2, 1, 'INV-20260613-8-001', 'IHSAN KOSMETIK S.PENUH', '6281366828098', 'PASAR SUNGAI PENUH ,KEC SUNGAI PENUH', '2026-06-13', 'Net 7', '2026-06-20', NULL, 'SALES M.B.K - DEO', '-1.649571, 103.583237', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260613-8-001-1.jpg\"]', 'Pending', 0.00, 0.00, 1437018.00, '2026-06-13 10:29:46', '2026-06-13 10:29:46'),
+(1473, '417eac3f-75f0-49b3-8ba4-8bdc6dcc44f0', 11, 3, 'retail', 2, 2, 'INV-20260613-11-002', 'Hana kosmetik tasik', '6282318504459', 'Jln Ibrahim adjie no.166 \r\nKec indihiang \r\nSukamaju kidul\r\nKab Tasikmalaya', '2026-06-13', 'Net 14', '2026-06-27', NULL, 'SALES M.B.K - ROZAK', '-7.290746, 108.200320', 'Tempo 14 hari', NULL, '[\"lampiran_penjualan\\/INV-20260613-11-002-1.jpg\"]', 'Approved', 30000.00, 0.00, 570000.00, '2026-06-13 10:31:30', '2026-06-15 08:33:16'),
+(1474, '0c224b80-ecd0-4697-bcc0-b881178b3add', 11, 3, 'retail', 2, 3, 'INV-20260613-11-003', 'Toko saribumi', NULL, 'Jln ry Sukamulya, Kec. Cihaurbeuti, Kabupaten Ciamis, Jawa Barat', '2026-06-13', 'Cash', NULL, NULL, 'SALES M.B.K - ROZAK', '-7.277389, 108.202672', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260613-11-003-1.jpg\"]', 'Lunas', 0.00, 0.00, 150000.00, '2026-06-13 10:47:57', '2026-06-15 08:43:35'),
+(1475, 'abf12d70-cd2f-41a6-8fe7-9760f17f45df', 9, 5, 'retail', 2, 1, 'INV-20260613-9-001', 'Toko Kinanti', NULL, 'Pasar Samarang, Garut', '2026-06-13', 'Cash', NULL, NULL, 'SALES M.B.K - UMAR', '-7.219838, 107.838803', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260613-9-001-1.jpg\"]', 'Lunas', 0.00, 0.00, 153000.00, '2026-06-13 11:05:40', '2026-06-17 14:09:44'),
+(1476, 'c1decf80-be42-4848-87a0-ccf64639385c', 9, 5, 'retail', 2, 2, 'INV-20260613-9-002', 'Toko ayu', NULL, 'Pasar Samarang, garut', '2026-06-13', 'Cash', NULL, NULL, 'SALES M.B.K - UMAR', '-7.219875, 107.838777', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260613-9-002-1.jpg\"]', 'Lunas', 0.00, 0.00, 213000.00, '2026-06-13 11:07:19', '2026-06-17 14:09:47'),
+(1477, '47599f78-a93b-4dac-9c48-57d8a9a2051f', 8, 4, 'grosir', 2, 2, 'INV-20260613-8-002', 'APOTIK SARI ASIH 2', '6287788922777', 'Jl.patimura \r\nKenali besar\r\nKec kota baru', '2026-06-13', 'Cash', NULL, NULL, 'SALES M.B.K - DEO', '-1.649587, 103.583236', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260613-8-002-1.jpg\"]', 'Pending', 0.00, 0.00, 841158.00, '2026-06-13 11:13:24', '2026-06-13 11:13:24'),
+(1478, 'd5d88916-02a4-42b3-860a-5839da04e3ea', 8, 4, 'retail', 2, 3, 'INV-20260613-8-003', 'APOTIK SARI ASIH 2', '6287788922777', 'Jl.patimura \r\nKenali besar\r\nKec kota baru', '2026-06-13', 'Cash', NULL, NULL, 'SALES M.B.K - DEO', '-1.619894, 103.555558', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260613-8-003-1.jpg\"]', 'Pending', 0.00, 0.00, 240000.00, '2026-06-13 11:14:09', '2026-06-13 11:14:09'),
+(1479, '5f658871-9ffd-4c43-ac95-ef6c5798c8b2', 8, 4, 'retail', 2, 1, 'INV-20260615-8-001', 'APOTIK HUSNA FARMA', '6282362087671', 'Jl. Lintas Sumatera, Bukit Tigo, Kec. Singkut, Kabupaten Sarolangun, Jambi 37482', '2026-06-15', 'Net 7', '2026-06-22', NULL, 'SALES M.B.K - DEO', '-1.649579, 103.583223', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260615-8-001-1.jpg\"]', 'Pending', 0.00, 0.00, 300000.00, '2026-06-15 09:48:40', '2026-06-15 09:48:40'),
+(1480, '67e2556e-0dc0-460e-b131-c5ab5df704ae', 8, 4, 'retail', 2, 2, 'INV-20260615-8-002', 'SRC KAKA', '_', 'Kenali Asam Bawah\r\nKec kota baru', '2026-06-15', 'Cash', NULL, NULL, 'SALES M.B.K - DEO', '-1.666775, 103.595915', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260615-8-002-1.jpg\"]', 'Pending', 0.00, 0.00, 50000.00, '2026-06-15 10:53:07', '2026-06-15 10:53:07'),
+(1481, 'e8f7fe70-9ee4-43d3-8906-ae5837ae3794', 8, 4, 'retail', 2, 3, 'INV-20260615-8-003', 'APOTIK KIRANI FARMA PALL 9', '6282282128626', 'JL.MARSDA SURYA DHARMA \r\nKENALI ASAM BAWAH \r\nKEC KOTA BARU', '2026-06-15', 'Cash', NULL, NULL, 'SALES M.B.K - DEO', '-1.661358, 103.597287', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260615-8-003-1.jpg\"]', 'Pending', 0.00, 0.00, 41000.00, '2026-06-15 11:11:26', '2026-06-15 11:11:26'),
+(1482, '2a131474-b82f-4044-8601-1bdd825f993c', 11, 3, 'retail', 2, 1, 'INV-20260615-11-001', 'Anugrah kosmetik ciamis', '6285846242690', 'Jln rumah sakit no.45A \r\nKec ciamis \r\nKel ciamis \r\nKab Ciamis', '2026-06-15', 'Net 14', '2026-06-29', NULL, 'SALES M.B.K - ROZAK', '-7.330701, 108.359445', 'Tempo 14 hari', NULL, '[\"lampiran_penjualan\\/INV-20260615-11-001-1.jpg\"]', 'Approved', 60000.00, 0.00, 924000.00, '2026-06-15 11:16:23', '2026-06-18 09:56:38'),
+(1483, 'e7f0771c-816f-4908-9e19-460a079a4f4f', 8, 4, 'retail', 2, 4, 'INV-20260615-8-004', 'TOKO ASENG', '6282186183292', 'Jl.darma karya \r\nKenali asam bawah\r\nKec kota baru', '2026-06-15', 'Cash', NULL, NULL, 'SALES M.B.K - DEO', '-1.657518, 103.593213', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260615-8-004-1.jpg\"]', 'Pending', 0.00, 0.00, 70000.00, '2026-06-15 11:19:44', '2026-06-15 11:19:44'),
+(1484, 'bfba39dc-61c6-4f56-b662-cde142d9361e', 8, 4, 'retail', 2, 5, 'INV-20260615-8-005', 'GOLD MART', '_', 'Jl.hutan kota\r\nKenali Asam Bawah', '2026-06-15', 'Cash', NULL, NULL, 'SALES M.B.K - DEO', '-1.654780, 103.589238', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260615-8-005-1.jpg\"]', 'Pending', 0.00, 0.00, 31000.00, '2026-06-15 11:37:06', '2026-06-15 11:37:06'),
+(1485, '5dbb8cdb-f63b-4452-8c8d-313d90d7358b', 11, 3, 'retail', 2, 2, 'INV-20260615-11-002', 'Apotek sinar farma', NULL, 'Jl. Raya Cipaku No.161, Buniseuri, Kec. Cipaku, Kabupaten Ciamis, Jawa Barat', '2026-06-15', 'Cash', NULL, NULL, 'SALES M.B.K - ROZAK', '-7.244473, 108.376791', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260615-11-002-1.jpg\"]', 'Lunas', 0.00, 0.00, 51000.00, '2026-06-15 11:46:00', '2026-06-18 09:57:39'),
+(1486, 'ce556fce-7db5-42e3-ba36-82c732755d75', 11, 3, 'retail', 2, 3, 'INV-20260615-11-003', 'Toko yulia', NULL, 'Jln ry buniseri cipaku\r\nKec cipaku\r\nKel buniseri \r\nKab Ciamis', '2026-06-15', 'Cash', NULL, NULL, 'SALES M.B.K - ROZAK', '-7.244114, 108.377062', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260615-11-003-1.jpg\"]', 'Lunas', 0.00, 0.00, 120000.00, '2026-06-15 11:56:24', '2026-06-18 09:57:42'),
+(1487, '5f5ee7a8-9968-4f8a-a29c-46f699c475d3', 9, 5, 'retail', 2, 1, 'INV-20260615-9-001', 'Toko Banah', NULL, 'Pasar sukawening_Garut', '2026-06-15', 'Cash', NULL, NULL, 'SALES M.B.K - UMAR', '-7.176798, 107.979190', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260615-9-001-1.jpg\"]', 'Lunas', 0.00, 0.00, 60000.00, '2026-06-15 11:57:01', '2026-06-17 14:09:28'),
+(1488, 'e45847b8-c9f9-4c09-a002-ac9015351f25', 9, 5, 'retail', 2, 2, 'INV-20260615-9-002', 'Rapih kosmetik', NULL, 'Pasar sukawening', '2026-06-15', 'Cash', NULL, NULL, 'SALES M.B.K - UMAR', '-7.176808, 107.979239', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260615-9-002-1.jpg\"]', 'Lunas', 0.00, 0.00, 102000.00, '2026-06-15 11:59:21', '2026-06-17 14:09:31'),
+(1489, '68269dd1-2933-4e4c-92dc-64c00622d948', 9, 5, 'retail', 2, 3, 'INV-20260615-9-003', 'Toko vera', '6289532753031', 'Pasar sukawening, garut', '2026-06-15', 'Cash', NULL, NULL, 'SALES M.B.K - UMAR', '-7.176792, 107.979205', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260615-9-003-1.jpg\"]', 'Lunas', 0.00, 0.00, 132000.00, '2026-06-15 12:00:07', '2026-06-17 14:09:34'),
+(1490, '28bd7f8f-63c8-4648-9d9d-ba4cc1adf046', 9, 5, 'retail', 2, 4, 'INV-20260615-9-004', 'Apotek Rizqy', NULL, 'Depan pasar Sukawening_Garut', '2026-06-15', 'Cash', NULL, NULL, 'SALES M.B.K - UMAR', '-7.176819, 107.979227', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260615-9-004-1.jpg\"]', 'Lunas', 0.00, 0.00, 60000.00, '2026-06-15 12:00:29', '2026-06-17 14:09:37'),
+(1491, 'e2265f4e-00e2-4d50-9ef9-bb0b27cb4bfc', 9, 5, 'retail', 2, 5, 'INV-20260615-9-005', 'Apotik mutiara', '6289662847476', 'Pasar sukawening, garut', '2026-06-15', 'Cash', NULL, NULL, 'SALES M.B.K - UMAR', '-7.176814, 107.979220', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260615-9-005-1.jpg\"]', 'Lunas', 0.00, 0.00, 63000.00, '2026-06-15 12:00:51', '2026-06-17 14:09:40'),
+(1492, 'c102a290-5861-4663-ad5b-f2aabc4cd8cf', 8, 4, 'retail', 2, 6, 'INV-20260615-8-006', 'DEO - SALES JAMBI', NULL, 'Kenali asam bawah \r\nKec kota baru', '2026-06-15', 'Cash', NULL, NULL, 'SALES M.B.K - DEO', '-1.650398, 103.592465', 'Toko Kejora', NULL, '[\"lampiran_penjualan\\/INV-20260615-8-006-1.jpg\"]', 'Pending', 0.00, 0.00, 42000.00, '2026-06-15 12:06:01', '2026-06-15 12:06:01'),
+(1493, 'cc820e75-74a5-4bf5-9b03-6706d8bc96bf', 8, 4, 'retail', 2, 7, 'INV-20260615-8-007', 'TOKO INDIRA', '6285317613016', 'Jl.sunan drajat \r\nSukakarya\r\nKec kota baru', '2026-06-15', 'Cash', NULL, NULL, 'SALES M.B.K - DEO', '-1.637351, 103.601730', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260615-8-007-1.jpg\"]', 'Pending', 0.00, 0.00, 91000.00, '2026-06-15 12:52:34', '2026-06-15 12:52:34'),
+(1494, '3da1286a-40ac-4efb-a157-6a9699a5eafe', 11, 3, 'retail', 2, 1, 'INV-20260617-11-001', 'Toko abadi', '6281373492244', 'Jln ry langensari \r\nKec langensari \r\nKel langensari \r\nKab banjarpatroman', '2026-06-17', 'Cash', NULL, NULL, 'SALES M.B.K - ROZAK', '-7.360366, 108.638854', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260617-11-001-1.jpg\"]', 'Lunas', 0.00, 0.00, 30000.00, '2026-06-17 10:36:16', '2026-06-18 09:57:28'),
+(1495, '3cdfbbf4-904e-4b10-ad96-b8d22bd8a222', 9, 5, 'retail', 2, 1, 'INV-20260617-9-001', 'Apt. Firdaus Farma', NULL, 'Jl. Raya pasar wanaraja_Garut', '2026-06-17', 'Cash', NULL, NULL, 'SALES M.B.K - UMAR', '-7.173971, 107.980790', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260617-9-001-1.jpg\"]', 'Approved', 0.00, 0.00, 51000.00, '2026-06-17 10:42:32', '2026-06-18 09:07:22'),
+(1496, '02487b17-47d8-4ce3-89a1-473e754a6ad3', 9, 5, 'retail', 2, 2, 'INV-20260617-9-002', 'Toko mekar saluyu', NULL, 'Pasar wanaraja, garut', '2026-06-17', 'Cash', NULL, NULL, 'SALES M.B.K - UMAR', '-7.174038, 107.980675', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260617-9-002-1.jpg\"]', 'Approved', 0.00, 0.00, 30000.00, '2026-06-17 10:42:52', '2026-06-18 09:15:27'),
+(1497, 'df6da956-2533-4de0-b28a-b9f10f49258c', 9, 5, 'retail', 2, 3, 'INV-20260617-9-003', 'Fathia cosmetik', NULL, 'Pasar wanaraja_Garut', '2026-06-17', 'Cash', NULL, NULL, 'SALES M.B.K - UMAR', '-7.173969, 107.980678', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260617-9-003-1.jpg\"]', 'Approved', 0.00, 0.00, 100000.00, '2026-06-17 10:43:38', '2026-06-18 09:15:49');
+INSERT INTO `penjualans` (`id`, `uuid`, `user_id`, `gudang_id`, `tipe_harga`, `approver_id`, `no_urut_harian`, `nomor`, `pelanggan`, `no_telepon`, `alamat_penagihan`, `tgl_transaksi`, `syarat_pembayaran`, `tgl_jatuh_tempo`, `no_referensi`, `tag`, `koordinat`, `memo`, `lampiran_path`, `lampiran_paths`, `status`, `diskon_akhir`, `tax_percentage`, `grand_total`, `created_at`, `updated_at`) VALUES
+(1498, 'ace19f74-898b-49f2-8c13-2cbbdb1d204a', 8, 4, 'grosir', 2, 1, 'INV-20260617-8-001', 'TOKO CHERY TUNGKAL', '628127411158', 'JL.MERDEKA DEPAN TOKO TRENDY \r\nTUNGKAL ILIR KUALA TUNGKAL\r\nKAB.TANJUNG JABUNG BARAT', '2026-06-17', 'Net 7', '2026-06-24', NULL, 'SALES M.B.K - DEO', '-1.649365, 103.583142', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260617-8-001-1.jpg\"]', 'Pending', 0.00, 0.00, 1822176.00, '2026-06-17 11:10:37', '2026-06-17 11:10:37'),
+(1499, '379c8333-f5d1-453e-9019-924df87ac201', 9, 5, 'retail', 2, 4, 'INV-20260617-9-004', 'Toko shahira', NULL, 'Pasar wanaraja, garut', '2026-06-17', 'Cash', NULL, NULL, 'SALES M.B.K - UMAR', '-7.173961, 107.980754', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260617-9-004-1.jpg\"]', 'Approved', 0.00, 0.00, 100000.00, '2026-06-17 11:13:55', '2026-06-18 09:16:10'),
+(1500, '7fb12946-3e9d-469f-88e0-031f223d55b1', 11, 3, 'retail', 2, 2, 'INV-20260617-11-002', 'Apotek Cemara', NULL, 'Jl, Cintajaya, Kec. Lakbok, Kabupaten Ciamis, Jawa Barat 46184', '2026-06-17', 'Cash', NULL, NULL, 'SALES M.B.K - ROZAK', '-7.392714, 108.675826', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260617-11-002-1.jpg\"]', 'Lunas', 0.00, 0.00, 132000.00, '2026-06-17 11:15:24', '2026-06-18 09:57:31'),
+(1501, 'ebcc92e1-1952-4b92-866a-a014068b58ac', 8, 4, 'retail', 2, 2, 'INV-20260617-8-002', 'ZAHRA KOSMETIK', '6285273445221', 'Jl.sersan darphin \r\nEka jaya\r\nKec jambi selatan', '2026-06-17', 'Cash', NULL, NULL, 'SALES M.B.K - DEO', '-1.608889, 103.650806', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260617-8-002-1.jpg\"]', 'Pending', 0.00, 0.00, 240000.00, '2026-06-17 12:04:42', '2026-06-17 12:04:42'),
+(1502, 'e3ced579-6392-4351-be5c-27658450134f', 8, 4, 'retail', 2, 3, 'INV-20260617-8-003', 'APOTIK INDONESIA', '6285266612348', 'Jl.sentot alibasa \r\nPayo selincah \r\nKec jambi selatan', '2026-06-17', 'Cash', NULL, NULL, 'SALES M.B.K - DEO', '-1.606726, 103.649865', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260617-8-003-1.jpg\"]', 'Pending', 0.00, 0.00, 63000.00, '2026-06-17 12:18:14', '2026-06-17 12:18:14'),
+(1503, 'f922ce2d-60a1-4f06-a755-bf2b93fb007b', 8, 4, 'retail', 2, 4, 'INV-20260617-8-004', 'NARINA BEAUTY', '628980965889', 'Jl.jendral sudirman\r\nTambak sari\r\nKec jambi selatan', '2026-06-17', 'Cash', NULL, NULL, 'SALES M.B.K - DEO', '-1.613289, 103.625876', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260617-8-004-1.jpg\"]', 'Pending', 0.00, 0.00, 194000.00, '2026-06-17 12:34:44', '2026-06-17 12:34:44'),
+(1504, '66aabd05-dcdb-4376-99ab-1d7ac474b99c', 11, 3, 'retail', 2, 3, 'INV-20260617-11-003', 'Toko barokah sdj', NULL, ', Jl. Jenderal Ahmad Yani, Tegalsari, Kec. Sidareja, Kabupaten Cilacap, Jawa Tengah', '2026-06-17', 'Cash', NULL, NULL, 'SALES M.B.K - ROZAK', '-7.480594, 108.765589', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260617-11-003-1.jpg\"]', 'Lunas', 0.00, 0.00, 180000.00, '2026-06-17 12:51:29', '2026-06-18 09:57:35'),
+(1505, '2f481f26-1c7b-4323-b96d-151992aa30cb', 9, 5, 'retail', 2, 1, 'INV-20260618-9-001', 'Toko Entang', NULL, 'Pasar Kadungora', '2026-06-18', 'Cash', NULL, NULL, 'SALES M.B.K - UMAR', '-7.086474, 107.894875', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260618-9-001-1.jpg\"]', 'Pending', 0.00, 0.00, 342000.00, '2026-06-18 10:10:05', '2026-06-18 10:10:05'),
+(1506, '409a8f41-b181-4825-ba96-485d85b59411', 11, 3, 'retail', 2, 1, 'INV-20260618-11-001', 'Apotek Makmur', '6282214367652', 'Jln.ry rancah \r\nKec rancah \r\nKel situmandala \r\nKab ciamis', '2026-06-18', 'Cash', NULL, NULL, 'SALES M.B.K - ROZAK', '-7.198856, 108.505145', NULL, NULL, '[]', 'Pending', 0.00, 0.00, 183000.00, '2026-06-18 10:38:09', '2026-06-18 10:38:09'),
+(1507, '6a7ff3f5-5efd-4a4d-aced-64a2ed56a043', 11, 3, 'retail', 2, 2, 'INV-20260618-11-002', 'Apotek Hikmah', '62812802114399', 'Jln ry rancah no 168\r\nKec rancah \r\nKel rancah \r\nKab Ciamis', '2026-06-18', 'Cash', NULL, NULL, 'SALES M.B.K - ROZAK', '-7.198607, 108.505162', NULL, NULL, '[]', 'Pending', 0.00, 0.00, 292000.00, '2026-06-18 10:49:29', '2026-06-18 10:49:29'),
+(1508, 'b4195711-297f-49a9-993a-ec535c17f688', 9, 5, 'retail', 2, 2, 'INV-20260618-9-002', 'Salma kosmetik', NULL, 'Pasar kadungora', '2026-06-18', 'Cash', NULL, NULL, 'SALES M.B.K - UMAR', '-7.086320, 107.894622', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260618-9-002-1.jpg\"]', 'Pending', 0.00, 0.00, 80000.00, '2026-06-18 10:50:52', '2026-06-18 10:50:52'),
+(1509, '7d882c68-19c9-4d1b-a488-588b379ae03b', 9, 5, 'retail', 2, 3, 'INV-20260618-9-003', 'Deasy kosmetik', NULL, 'Pasar kadungora', '2026-06-18', 'Cash', NULL, NULL, 'SALES M.B.K - UMAR', '-7.086326, 107.894585', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260618-9-003-1.jpg\"]', 'Pending', 0.00, 0.00, 504000.00, '2026-06-18 10:53:04', '2026-06-18 10:53:04'),
+(1510, 'b45c3c6c-c43a-4665-931e-e825caed2917', 11, 3, 'retail', 2, 3, 'INV-20260618-11-003', 'Apotek Cahaya', NULL, 'Jln ps Rancah, Kec. Rancah, Kabupaten Ciamis, Jawa Barat', '2026-06-18', 'Cash', NULL, NULL, 'SALES M.B.K - ROZAK', '-7.201175, 108.504412', NULL, NULL, '[]', 'Pending', 0.00, 0.00, 120000.00, '2026-06-18 11:05:45', '2026-06-18 11:05:45'),
+(1511, '07d271f0-eb97-4974-9bf3-314e17a3954f', 8, 4, 'retail', 2, 1, 'INV-20260618-8-001', 'TOKO VALISHA KUALA TUNGKAL', '6282182292788', 'Jl. Panglima Cama, Tungkal III, Kec. Tungkal Ilir, Kabupaten Tanjung Jabung Barat, Jambi 36514', '2026-06-18', 'Net 7', '2026-06-25', NULL, 'SALES M.B.K - DEO', '-1.649447, 103.582946', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260618-8-001-1.jpg\"]', 'Pending', 0.00, 0.00, 720000.00, '2026-06-18 11:11:53', '2026-06-18 11:11:53'),
+(1512, '4bb8b51e-ab08-4232-aeb3-968f86310f5c', 8, 4, 'retail', 2, 2, 'INV-20260618-8-002', 'TOKO FANNY', '_', 'Beliung \r\nKec kota baru', '2026-06-18', 'Cash', NULL, NULL, 'SALES M.B.K - DEO', '-1.631966, 103.573355', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260618-8-002-1.jpg\"]', 'Pending', 0.00, 0.00, 20000.00, '2026-06-18 12:10:18', '2026-06-18 12:10:18'),
+(1513, '41c47901-ffc0-462b-aa10-687310fd9cb0', 8, 4, 'retail', 2, 3, 'INV-20260618-8-003', 'TOKO YUSNI', '_', 'Beliung \r\nKec kota baru', '2026-06-18', 'Cash', NULL, NULL, 'SALES M.B.K - DEO', '-1.632519, 103.571287', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260618-8-003-1.jpg\"]', 'Pending', 0.00, 0.00, 42000.00, '2026-06-18 12:14:06', '2026-06-18 12:14:06'),
+(1514, '4e00c91a-12a4-4cb9-93ad-d9b47ea9e4e6', 8, 4, 'retail', 2, 4, 'INV-20260618-8-004', 'BEAUTY DAY', '6283157573050', 'RAWA SARI \r\nKEC KOTA BARU', '2026-06-18', 'Cash', NULL, NULL, 'SALES M.B.K - DEO', '-1.622000, 103.565643', NULL, NULL, '[\"lampiran_penjualan\\/INV-20260618-8-004-1.jpg\"]', 'Pending', 0.00, 0.00, 150000.00, '2026-06-18 12:56:21', '2026-06-18 12:56:21');
 
 -- --------------------------------------------------------
 
@@ -11202,7 +11400,128 @@ INSERT INTO `penjualan_items` (`id`, `penjualan_id`, `produk_id`, `deskripsi`, `
 (4248, 1468, 7, NULL, 6, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 60000.00),
 (4249, 1469, 2, NULL, 2, 'Pcs', 21000.00, 0.00, 0.00, NULL, NULL, 42000.00),
 (4250, 1469, 7, NULL, 6, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 60000.00),
-(4251, 1470, 2, NULL, 2, 'Pcs', 21000.00, 0.00, 0.00, NULL, NULL, 42000.00);
+(4251, 1470, 2, NULL, 2, 'Pcs', 21000.00, 0.00, 0.00, NULL, NULL, 42000.00),
+(4252, 1471, 1, NULL, 1, 'Pcs', 30000.00, 0.00, 0.00, NULL, NULL, 30000.00),
+(4253, 1471, 7, NULL, 5, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 50000.00),
+(4254, 1471, 9, NULL, 5, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 50000.00),
+(4255, 1471, 8, NULL, 3, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 30000.00),
+(4256, 1472, 2, NULL, 50, 'Pcs', 21800.40, 10.00, 0.00, NULL, NULL, 981018.00),
+(4257, 1472, 7, NULL, 24, 'Pcs', 9500.00, 0.00, 0.00, NULL, NULL, 228000.00),
+(4258, 1472, 9, NULL, 24, 'Pcs', 9500.00, 0.00, 0.00, NULL, NULL, 228000.00),
+(4259, 1473, 7, NULL, 24, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 240000.00),
+(4260, 1473, 9, NULL, 24, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 240000.00),
+(4261, 1473, 6, NULL, 12, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 120000.00),
+(4262, 1474, 1, NULL, 5, 'Pcs', 30000.00, 0.00, 0.00, NULL, NULL, 150000.00),
+(4263, 1475, 1, NULL, 3, 'Pcs', 30000.00, 0.00, 0.00, NULL, NULL, 90000.00),
+(4264, 1475, 2, NULL, 3, 'Pcs', 21000.00, 0.00, 0.00, NULL, NULL, 63000.00),
+(4265, 1476, 1, NULL, 3, 'Pcs', 30000.00, 0.00, 0.00, NULL, NULL, 90000.00),
+(4266, 1476, 2, NULL, 3, 'Pcs', 21000.00, 0.00, 0.00, NULL, NULL, 63000.00),
+(4267, 1476, 6, NULL, 1, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 10000.00),
+(4268, 1476, 7, NULL, 3, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 30000.00),
+(4269, 1476, 9, NULL, 2, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 20000.00),
+(4270, 1477, 1, NULL, 30, 'Pcs', 31154.00, 10.00, 0.00, NULL, NULL, 841158.00),
+(4271, 1478, 8, NULL, 12, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 120000.00),
+(4272, 1478, 6, NULL, 12, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 120000.00),
+(4273, 1479, 7, NULL, 12, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 120000.00),
+(4274, 1479, 9, NULL, 12, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 120000.00),
+(4275, 1479, 6, NULL, 6, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 60000.00),
+(4276, 1480, 8, NULL, 3, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 30000.00),
+(4277, 1480, 9, NULL, 2, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 20000.00),
+(4278, 1481, 2, NULL, 1, 'Pcs', 21000.00, 0.00, 0.00, NULL, NULL, 21000.00),
+(4279, 1481, 7, NULL, 2, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 20000.00),
+(4280, 1482, 3, NULL, 9, 'Pcs', 16000.00, 0.00, 0.00, NULL, NULL, 144000.00),
+(4281, 1482, 6, NULL, 12, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 120000.00),
+(4282, 1482, 8, NULL, 12, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 120000.00),
+(4283, 1482, 7, NULL, 36, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 360000.00),
+(4284, 1482, 9, NULL, 24, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 240000.00),
+(4285, 1483, 7, NULL, 5, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 50000.00),
+(4286, 1483, 9, NULL, 2, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 20000.00),
+(4287, 1484, 2, NULL, 1, 'Pcs', 21000.00, 0.00, 0.00, NULL, NULL, 21000.00),
+(4288, 1484, 8, NULL, 1, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 10000.00),
+(4289, 1485, 1, NULL, 1, 'Pcs', 30000.00, 0.00, 0.00, NULL, NULL, 30000.00),
+(4290, 1485, 2, NULL, 1, 'Pcs', 21000.00, 0.00, 0.00, NULL, NULL, 21000.00),
+(4291, 1486, 6, NULL, 3, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 30000.00),
+(4292, 1486, 7, NULL, 3, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 30000.00),
+(4293, 1486, 8, NULL, 3, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 30000.00),
+(4294, 1486, 9, NULL, 3, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 30000.00),
+(4295, 1487, 1, NULL, 2, 'Pcs', 30000.00, 0.00, 0.00, NULL, NULL, 60000.00),
+(4296, 1488, 1, NULL, 1, 'Pcs', 30000.00, 0.00, 0.00, NULL, NULL, 30000.00),
+(4297, 1488, 2, NULL, 2, 'Pcs', 21000.00, 0.00, 0.00, NULL, NULL, 42000.00),
+(4298, 1488, 7, NULL, 1, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 10000.00),
+(4299, 1488, 8, NULL, 1, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 10000.00),
+(4300, 1488, 9, NULL, 1, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 10000.00),
+(4301, 1489, 1, NULL, 3, 'Pcs', 30000.00, 0.00, 0.00, NULL, NULL, 90000.00),
+(4302, 1489, 2, NULL, 2, 'Pcs', 21000.00, 0.00, 0.00, NULL, NULL, 42000.00),
+(4303, 1490, 1, NULL, 2, 'Pcs', 30000.00, 0.00, 0.00, NULL, NULL, 60000.00),
+(4304, 1491, 2, NULL, 3, 'Pcs', 21000.00, 0.00, 0.00, NULL, NULL, 63000.00),
+(4305, 1492, 2, NULL, 2, 'Pcs', 21000.00, 0.00, 0.00, NULL, NULL, 42000.00),
+(4306, 1493, 2, NULL, 1, 'Pcs', 21000.00, 0.00, 0.00, NULL, NULL, 21000.00),
+(4307, 1493, 1, NULL, 1, 'Pcs', 30000.00, 0.00, 0.00, NULL, NULL, 30000.00),
+(4308, 1493, 9, NULL, 2, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 20000.00),
+(4309, 1493, 8, NULL, 2, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 20000.00),
+(4310, 1494, 7, NULL, 3, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 30000.00),
+(4311, 1495, 1, NULL, 1, 'Pcs', 30000.00, 0.00, 0.00, NULL, NULL, 30000.00),
+(4312, 1495, 2, NULL, 1, 'Pcs', 21000.00, 0.00, 0.00, NULL, NULL, 21000.00),
+(4313, 1496, 7, NULL, 3, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 30000.00),
+(4314, 1497, 6, NULL, 2, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 20000.00),
+(4315, 1497, 7, NULL, 3, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 30000.00),
+(4316, 1497, 8, NULL, 2, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 20000.00),
+(4317, 1497, 9, NULL, 3, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 30000.00),
+(4318, 1498, 2, NULL, 50, 'Pcs', 21800.40, 10.00, 0.00, NULL, NULL, 981018.00),
+(4319, 1498, 1, NULL, 30, 'Pcs', 31154.00, 10.00, 0.00, NULL, NULL, 841158.00),
+(4320, 1499, 6, NULL, 2, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 20000.00),
+(4321, 1499, 7, NULL, 3, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 30000.00),
+(4322, 1499, 8, NULL, 2, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 20000.00),
+(4323, 1499, 9, NULL, 3, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 30000.00),
+(4324, 1500, 1, NULL, 2, 'Pcs', 30000.00, 0.00, 0.00, NULL, NULL, 60000.00),
+(4325, 1500, 2, NULL, 2, 'Pcs', 21000.00, 0.00, 0.00, NULL, NULL, 42000.00),
+(4326, 1500, 7, NULL, 3, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 30000.00),
+(4327, 1501, 7, NULL, 12, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 120000.00),
+(4328, 1501, 9, NULL, 6, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 60000.00),
+(4329, 1501, 6, NULL, 6, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 60000.00),
+(4330, 1502, 2, NULL, 3, 'Pcs', 21000.00, 0.00, 0.00, NULL, NULL, 63000.00),
+(4331, 1503, 1, NULL, 1, 'Pcs', 30000.00, 0.00, 0.00, NULL, NULL, 30000.00),
+(4332, 1503, 3, NULL, 1, 'Pcs', 16000.00, 0.00, 2000.00, NULL, NULL, 14000.00),
+(4333, 1503, 7, NULL, 6, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 60000.00),
+(4334, 1503, 9, NULL, 6, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 60000.00),
+(4335, 1503, 8, NULL, 3, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 30000.00),
+(4336, 1504, 1, NULL, 2, 'Pcs', 30000.00, 0.00, 0.00, NULL, NULL, 60000.00),
+(4337, 1504, 6, NULL, 3, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 30000.00),
+(4338, 1504, 7, NULL, 3, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 30000.00),
+(4339, 1504, 8, NULL, 3, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 30000.00),
+(4340, 1504, 9, NULL, 3, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 30000.00),
+(4341, 1505, 1, NULL, 2, 'Pcs', 30000.00, 0.00, 0.00, NULL, NULL, 60000.00),
+(4342, 1505, 2, NULL, 2, 'Pcs', 21000.00, 0.00, 0.00, NULL, NULL, 42000.00),
+(4343, 1505, 6, NULL, 6, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 60000.00),
+(4344, 1505, 7, NULL, 6, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 60000.00),
+(4345, 1505, 8, NULL, 6, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 60000.00),
+(4346, 1505, 9, NULL, 6, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 60000.00),
+(4347, 1506, 2, NULL, 3, 'Pcs', 21000.00, 0.00, 0.00, NULL, NULL, 63000.00),
+(4348, 1506, 7, NULL, 12, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 120000.00),
+(4349, 1507, 2, NULL, 2, 'Pcs', 21000.00, 0.00, 0.00, NULL, NULL, 42000.00),
+(4350, 1507, 6, NULL, 7, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 70000.00),
+(4351, 1507, 7, NULL, 7, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 70000.00),
+(4352, 1507, 8, NULL, 4, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 40000.00),
+(4353, 1507, 9, NULL, 7, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 70000.00),
+(4354, 1508, 6, NULL, 2, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 20000.00),
+(4355, 1508, 7, NULL, 2, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 20000.00),
+(4356, 1508, 8, NULL, 2, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 20000.00),
+(4357, 1508, 9, NULL, 2, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 20000.00),
+(4358, 1509, 1, NULL, 5, 'Pcs', 30000.00, 0.00, 0.00, NULL, NULL, 150000.00),
+(4359, 1509, 2, NULL, 14, 'Pcs', 21000.00, 0.00, 0.00, NULL, NULL, 294000.00),
+(4360, 1509, 7, NULL, 6, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 60000.00),
+(4361, 1510, 7, NULL, 2, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 20000.00),
+(4362, 1510, 8, NULL, 6, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 60000.00),
+(4363, 1510, 9, NULL, 4, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 40000.00),
+(4364, 1511, 7, NULL, 24, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 240000.00),
+(4365, 1511, 9, NULL, 24, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 240000.00),
+(4366, 1511, 6, NULL, 24, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 240000.00),
+(4367, 1512, 7, NULL, 1, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 10000.00),
+(4368, 1512, 9, NULL, 1, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 10000.00),
+(4369, 1513, 2, NULL, 2, 'Pcs', 21000.00, 0.00, 0.00, NULL, NULL, 42000.00),
+(4370, 1514, 1, NULL, 1, 'Pcs', 30000.00, 0.00, 0.00, NULL, NULL, 30000.00),
+(4371, 1514, 7, NULL, 6, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 60000.00),
+(4372, 1514, 9, NULL, 6, 'Pcs', 10000.00, 0.00, 0.00, NULL, NULL, 60000.00);
 
 -- --------------------------------------------------------
 
@@ -11269,10 +11588,10 @@ INSERT INTO `personal_access_tokens` (`id`, `user_id`, `name`, `token`, `last_us
 (96, 22, 'flutter_mobile', 'b5801d2aad8c459ccca171b150d56f6c4258e81ce2b1e73ed4ee95757a9d7333', '2026-05-19 13:00:21', '2026-06-16 17:50:30', '2026-05-17 17:50:30', '2026-05-19 13:00:21'),
 (97, 22, 'flutter_mobile', '60637a2e4e7b15c5551ed21f636167d50a88353ce57cdc8489c3e92ac985d6a0', '2026-05-25 05:54:10', '2026-06-21 12:52:55', '2026-05-22 12:52:55', '2026-05-25 05:54:10'),
 (98, 22, 'flutter_mobile', '7bc6bd7ea68612d5443817550fff79419d5fb41c1e6d012327d762e4805605c4', '2026-05-30 14:38:25', '2026-06-24 06:00:49', '2026-05-25 06:00:49', '2026-05-30 14:38:25'),
-(103, 11, 'flutter_mobile', 'e8b75f256d5ecc134b2fc80cb0e426e2d7949d6dbfb3d426a747ed2dc4452fc3', '2026-06-11 11:37:41', '2026-07-02 18:27:10', '2026-06-02 18:27:10', '2026-06-11 11:37:41'),
+(103, 11, 'flutter_mobile', 'e8b75f256d5ecc134b2fc80cb0e426e2d7949d6dbfb3d426a747ed2dc4452fc3', '2026-06-18 07:44:44', '2026-07-02 18:27:10', '2026-06-02 18:27:10', '2026-06-18 07:44:44'),
 (104, 1, 'flutter_mobile', 'e9b702bfb59ce420fc08263ceb87e8e740e3fc5c44b1ea84694a23bda6f6195f', '2026-06-02 20:24:09', '2026-07-02 20:24:08', '2026-06-02 20:24:08', '2026-06-02 20:24:09'),
 (105, 22, 'flutter_mobile', '0bf60e2d8a0449fa46143b684f5af9315204d234ed9a22082d220ec7234f37ef', '2026-06-03 06:06:31', '2026-07-03 06:05:45', '2026-06-03 06:05:45', '2026-06-03 06:06:31'),
-(106, 22, 'flutter_mobile', 'a3279b0140b7e7493426b7700564850b76b5b52587f0e974e36fdfc237f04194', '2026-06-08 22:28:41', '2026-07-04 06:36:58', '2026-06-04 06:36:58', '2026-06-08 22:28:41');
+(106, 22, 'flutter_mobile', 'a3279b0140b7e7493426b7700564850b76b5b52587f0e974e36fdfc237f04194', '2026-06-16 06:04:10', '2026-07-04 06:36:58', '2026-06-04 06:36:58', '2026-06-16 06:04:10');
 
 -- --------------------------------------------------------
 
@@ -11580,10 +11899,10 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `role`, `alamat`, `no_telp`, `avatar`, `gudang_id`, `current_gudang_id`, `receives_transaction_email`, `can_export_pdf`, `can_export_excel`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'Hibiscus Efsya', 'jurnal@hibiscusefsya.com', NULL, '$2y$10$QjC7zZtQNMC22fB2opwt0OxESrjQCQW70SnNQ/iw84svt5.Sg5Zru', 'super_admin', NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, '2025-12-16 23:39:21', '2026-05-17 11:01:12'),
-(2, 'NUR - ADMIN JA2PALU', 'akuntanefsya@gmail.com', NULL, '$2y$10$mKxg9EXvNmR3ZQKpNdutdOINALYYJCZl3sXcY7mxUcYbkLcLskZee', 'admin', NULL, NULL, NULL, NULL, 5, 1, 1, 0, NULL, '2025-12-16 23:39:21', '2026-06-10 08:15:42'),
+(2, 'NUR - ADMIN JA2PALU', 'akuntanefsya@gmail.com', NULL, '$2y$10$mKxg9EXvNmR3ZQKpNdutdOINALYYJCZl3sXcY7mxUcYbkLcLskZee', 'admin', NULL, NULL, NULL, NULL, 3, 1, 1, 0, NULL, '2025-12-16 23:39:21', '2026-06-18 09:55:12'),
 (3, 'PROMO - HUMAI', 'humai@hibiscusefsya.com', NULL, '$2y$10$P2yUSfefAo3nM542d.tZAuqQuIj9bv2sYrAMPaBlz2knLfFwl9VTC', 'user', 'JAKARTA', '0881025040954', NULL, 1, NULL, 1, 0, 0, NULL, '2025-12-16 23:39:21', '2026-03-07 22:57:43'),
 (4, 'Syifa Yasfani', 'hibiscusefsya@gmail.com', NULL, '$2y$10$6OUzon2O9.jjNP4ELVDW1.eYBCCPa/CvaZYc1JSiZ6BMGpx9wo5HO', 'super_admin', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, '2025-12-17 11:52:54', '2026-01-02 16:55:42'),
-(5, 'AINI - ADMIN JAPALU', 'aini@hibiscusefsya.com', NULL, '$2y$10$TJXF83BYTdYRvYXWSi.zNOwbt5BNEXT5o4pvnqq6pPx5WispdmlU.', 'admin', NULL, NULL, NULL, NULL, 4, 0, 1, 0, NULL, '2025-12-17 12:03:08', '2026-05-25 20:12:17'),
+(5, 'AINI - ADMIN JAPALU', 'aini@hibiscusefsya.com', NULL, '$2y$10$TJXF83BYTdYRvYXWSi.zNOwbt5BNEXT5o4pvnqq6pPx5WispdmlU.', 'admin', NULL, NULL, NULL, NULL, 2, 0, 1, 0, NULL, '2025-12-17 12:03:08', '2026-06-14 18:10:18'),
 (6, 'SALES M.B.K - HADI', 'hadi@hibiscusefsya.com', NULL, '$2y$10$2Gs9Vha.gYIbWia.Qz40AesSM0kgOmUl8MxJkmp6XKfZ5A50Cy2yi', 'user', 'PALEMBANG', '081211928982', NULL, 2, NULL, 1, 0, 0, NULL, '2025-12-17 12:04:47', '2026-04-28 19:50:10'),
 (7, 'SALES M.B.K - ANGGA', 'angga@hibiscusefsya.com', NULL, '$2y$10$kZtU.cvQDZca5d/U2e/nPeHJ2Jpfx2THeojPzSd0r3I4jYWKavSk.', 'user', 'PALEMBANG', '085609327221', NULL, 2, NULL, 1, 0, 0, NULL, '2025-12-17 12:05:54', '2026-04-28 19:50:30'),
 (8, 'SALES M.B.K - DEO', 'deo@hibiscusefsya.com', NULL, '$2y$10$wDQdJ9xGrgbAtzi7Ry/OOeyK5eEsPlyNMhn84PgK9KZ3Ar2LfbJ7C', 'user', 'Jambi', '081214127606', NULL, 4, NULL, 1, 0, 0, NULL, '2025-12-17 12:08:49', '2026-04-28 19:50:51'),
@@ -11833,13 +12152,13 @@ ALTER TABLE `admin_gudang`
 -- AUTO_INCREMENT for table `biayas`
 --
 ALTER TABLE `biayas`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=337;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=345;
 
 --
 -- AUTO_INCREMENT for table `biaya_items`
 --
 ALTER TABLE `biaya_items`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=629;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=646;
 
 --
 -- AUTO_INCREMENT for table `gudangs`
@@ -11857,19 +12176,19 @@ ALTER TABLE `gudang_produk`
 -- AUTO_INCREMENT for table `kontaks`
 --
 ALTER TABLE `kontaks`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=502;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=512;
 
 --
 -- AUTO_INCREMENT for table `kunjungans`
 --
 ALTER TABLE `kunjungans`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1148;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1189;
 
 --
 -- AUTO_INCREMENT for table `kunjungan_items`
 --
 ALTER TABLE `kunjungan_items`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2160;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2211;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -11881,7 +12200,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `pembayarans`
 --
 ALTER TABLE `pembayarans`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=167;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=193;
 
 --
 -- AUTO_INCREMENT for table `pembelians`
@@ -11911,13 +12230,13 @@ ALTER TABLE `penerimaan_barang_items`
 -- AUTO_INCREMENT for table `penjualans`
 --
 ALTER TABLE `penjualans`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1471;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1515;
 
 --
 -- AUTO_INCREMENT for table `penjualan_items`
 --
 ALTER TABLE `penjualan_items`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4252;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4373;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`

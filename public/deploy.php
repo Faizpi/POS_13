@@ -34,6 +34,7 @@ $commands = [
     'Storage Force Link' => 'storage:link --force',
     'Migrate Status'     => 'migrate:status',
     'Migrate'            => 'migrate',
+    'Migrate Sync'       => 'migrate --path=database/migrations/2026_06_19_120000_sync_schema_after_import.php --force',
     'Mark Migrations Ran'=> 'migrate:mark-ran',
     'Fix Missing Tables' => 'fix-tables',
     'Migrate Fresh'      => 'migrate:fresh',
@@ -46,8 +47,9 @@ $presets = [
     'Quick Deploy'          => ['Cache Clear', 'Config Clear', 'Route Clear', 'View Clear', 'Optimize'],
     'Full Clear'            => ['Cache Clear', 'Config Clear', 'Route Clear', 'View Clear', 'Optimize Clear'],
     'Filament Assets Update'=> ['Filament Upgrade', 'Cache Clear', 'View Clear', 'Optimize'],
+    'Sync Schema (Import)'  => ['Migrate Sync', 'Cache Clear', 'Optimize', 'Migrate Status'],
     'Database Refresh'      => ['Migrate Fresh', 'Migrate Seed', 'Storage Force Link'],
-    'Import SQL'            => ['Mark Migrations Ran', 'Fix Missing Tables', 'Migrate', 'Cache Clear', 'View Clear', 'Optimize', 'Migrate Status'],
+    'Import SQL'            => ['Migrate Sync', 'Mark Migrations Ran', 'Fix Missing Tables', 'Migrate', 'Cache Clear', 'View Clear', 'Optimize', 'Migrate Status'],
 ];
 
 $customHandlers = [

@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Kontaks\Pages;
 
 use App\Filament\Resources\Kontaks\KontakResource;
+use App\Models\Kontak;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateKontak extends CreateRecord
@@ -12,6 +13,11 @@ class CreateKontak extends CreateRecord
     protected function mutateFormDataBeforeCreate(array $data): array
     {
         $user = auth()->user();
+
+        // Auto-generate kode_kontak jika kosong
+        if (empty($data['kode_kontak'])) {
+            $data['kode_kontak'] = Kontak::generateKodeKontak();
+        }
 
         // Gap A3: Set created_by (legacy always sets this)
         $data['created_by'] = $user->id;

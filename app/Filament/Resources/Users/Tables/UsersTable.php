@@ -14,6 +14,7 @@ use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use App\Models\Gudang;
+use Illuminate\Support\Facades\Schema;
 
 class UsersTable
 {
@@ -90,7 +91,8 @@ class UsersTable
                     ->onIcon('heroicon-s-check-circle')
                     ->offIcon('heroicon-s-x-circle')
                     ->onColor('success')
-                    ->offColor('danger'),
+                    ->offColor('danger')
+                    ->visible(fn () => Schema::hasColumn('users', 'receives_transaction_whatsapp')),
 
                 ToggleColumn::make('can_export_pdf')
                     ->label('Exp PDF')

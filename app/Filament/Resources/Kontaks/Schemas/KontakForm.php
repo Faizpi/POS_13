@@ -7,6 +7,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use App\Models\Kontak;
 
 class KontakForm
 {
@@ -21,8 +22,8 @@ class KontakForm
                         TextInput::make('kode_kontak')
                             ->label('Kode Kontak')
                             ->maxLength(50)
-                            ->placeholder('Auto-generate jika kosong')
-                            ->helperText('Contoh: KT00001, CUST-001')
+                            ->placeholder(fn () => 'Contoh: ' . Kontak::generateKodeKontak())
+                            ->helperText('Kosongkan untuk auto-generate')
                             ->disabled(fn() => !in_array(auth()->user()?->role, ['admin', 'super_admin'])),
 
                         TextInput::make('nama')

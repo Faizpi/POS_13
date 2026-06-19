@@ -77,10 +77,10 @@ class KontakController extends Controller
         $currentGudang = $user->getCurrentGudang();
 
         $kontak = Kontak::create([
-            'kode_kontak'   => $request->kode_kontak,
+            'kode_kontak'   => $request->kode_kontak ?: Kontak::generateKodeKontak(),
             'nama'          => $request->nama,
             'email'         => $request->email,
-            'no_telp'       => $request->no_telp,
+            'no_telp'       => $request->no_telp ? self::normalizePhone($request->no_telp) : null,
             'pin'           => $request->pin,
             'alamat'        => $request->alamat,
             'diskon_persen' => $request->diskon_persen ?? 0,
@@ -165,5 +165,20 @@ class KontakController extends Controller
         }
 
         return false;
+    }
+
+    private static function normalizePhone(string $phone): string
+    {
+        $phone = preg_replace('/[\s\-\.\(\)]+/', '', $phone);
+        if (str_starts_with($phone, '+')) {
+            $phone = substr($phone, 1);
+        }
+        if (str_starts_with($phone, '08')) {
+            $phone = '62' . substr($phone, 1);
+        }
+        if (str_starts_with($phone, '8') && strlen($phone) >= 9 && strlen($phone) <= 13) {
+            $phone = '62' . $phone;
+        }
+        return $phone;
     }
 }

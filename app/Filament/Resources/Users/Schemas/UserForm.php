@@ -11,6 +11,7 @@ use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Schema as DbSchema;
 
 class UserForm
 {
@@ -114,7 +115,8 @@ class UserForm
                         Toggle::make('receives_transaction_whatsapp')
                             ->label('Penerima WhatsApp Transaksi')
                             ->helperText('User akan menerima notifikasi WhatsApp saat ada penjualan baru')
-                            ->default(true),
+                            ->default(true)
+                            ->visible(fn () => DbSchema::hasColumn('users', 'receives_transaction_whatsapp')),
 
                         Toggle::make('can_export_pdf')
                             ->label('Hak Export PDF')

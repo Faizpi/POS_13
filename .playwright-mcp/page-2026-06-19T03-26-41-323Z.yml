@@ -1,0 +1,91 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - img "Hibiscus Efsya" [ref=e4]
+    - heading "Invoice Penjualan" [level=1] [ref=e5]
+    - generic [ref=e6]: INV-20260618-8-004
+  - generic [ref=e7]:
+    - generic [ref=e8]:
+      - generic [ref=e9]:
+        - generic [ref=e10]: 
+        - text: Informasi Transaksi
+      - generic [ref=e11]:
+        - generic [ref=e12]: Tanggal
+        - generic [ref=e13]: 18 Jun 2026
+      - generic [ref=e14]:
+        - generic [ref=e15]: Waktu
+        - generic [ref=e16]: 12:56 WIB
+      - generic [ref=e17]:
+        - generic [ref=e18]: Jatuh Tempo
+        - generic [ref=e19]: "-"
+      - generic [ref=e20]:
+        - generic [ref=e21]: Syarat Bayar
+        - generic [ref=e22]: Cash
+      - generic [ref=e23]:
+        - generic [ref=e24]: Status
+        - generic [ref=e26]: Pending
+    - generic [ref=e27]:
+      - generic [ref=e28]:
+        - generic [ref=e29]: 
+        - text: Detail Pelanggan
+      - generic [ref=e30]:
+        - generic [ref=e31]: Nama
+        - generic [ref=e32]: BEAUTY DAY
+      - generic [ref=e33]:
+        - generic [ref=e34]: Kontak
+        - generic [ref=e35]: +62 831-5757-3050
+      - generic [ref=e36]:
+        - generic [ref=e37]: Sales
+        - generic [ref=e38]: SALES M.B.K - DEO
+      - generic [ref=e39]:
+        - generic [ref=e40]: Gudang
+        - generic [ref=e41]: GUDANG JAMBI
+    - generic [ref=e42]:
+      - generic [ref=e43]:
+        - generic [ref=e44]: 
+        - text: Daftar Item
+      - generic [ref=e45]:
+        - generic [ref=e47]:
+          - text: P.O SACHET SILVER
+          - generic [ref=e48]: (8991977120025)
+        - generic [ref=e50]: 1 Pcs × Rp30.000,00
+        - generic [ref=e51]:
+          - generic [ref=e52]: "Batch: N/A"
+          - generic [ref=e53]: "Exp: N/A"
+        - generic [ref=e54]:
+          - generic [ref=e55]: Subtotal Item
+          - generic [ref=e56]: Rp30.000,00
+      - generic [ref=e57]:
+        - generic [ref=e59]:
+          - text: ROLL ON MERAH MUDA (PINK)
+          - generic [ref=e60]: (8991977659785)
+        - generic [ref=e62]: 6 Pcs × Rp10.000,00
+        - generic [ref=e63]:
+          - generic [ref=e64]: "Batch: N/A"
+          - generic [ref=e65]: "Exp: N/A"
+        - generic [ref=e66]:
+          - generic [ref=e67]: Subtotal Item
+          - generic [ref=e68]: Rp60.000,00
+      - generic [ref=e69]:
+        - generic [ref=e71]:
+          - text: ROLL ON UNGU (PURPLE)
+          - generic [ref=e72]: (8991977659792)
+        - generic [ref=e74]: 6 Pcs × Rp10.000,00
+        - generic [ref=e75]:
+          - generic [ref=e76]: "Batch: N/A"
+          - generic [ref=e77]: "Exp: N/A"
+        - generic [ref=e78]:
+          - generic [ref=e79]: Subtotal Item
+          - generic [ref=e80]: Rp60.000,00
+    - generic [ref=e81]:
+      - generic [ref=e82]:
+        - generic [ref=e83]: Subtotal Keseluruhan
+        - generic [ref=e84]: Rp150.000,00
+      - generic [ref=e85]:
+        - generic [ref=e86]: Total Bayar
+        - generic [ref=e87]: Rp150.000,00
+    - generic [ref=e88]:
+      - img "QR Code" [ref=e89]
+      - paragraph [ref=e90]: Scan untuk verifikasi invoice ini
+  - generic [ref=e91]:
+    - strong [ref=e92]: HIBISCUS EFSYA
+    - text: marketing@hibiscusefsya.com

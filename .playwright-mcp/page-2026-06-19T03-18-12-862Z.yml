@@ -1,0 +1,61 @@
+- generic [ref=e1]:
+  - main [ref=e4]:
+    - generic [ref=e6]:
+      - region "Hibiscus Efsya POS" [ref=e7]:
+        - generic [ref=e8]:
+          - img "Hibiscus Efsya" [ref=e9]
+          - generic [ref=e10]:
+            - generic [ref=e11]: Hibiscus Efsya POS
+            - generic [ref=e12]: Sales, inventory, and approval workspace
+        - generic [ref=e13]:
+          - heading "Kelola Keuangan Bisnis Lebih Cepat dan Akurat." [level=1] [ref=e14]
+          - paragraph [ref=e15]: Jurnal Hibiscus Efsya membantu Anda mengelola pencatatan transaksi, pembukuan arus kas, hingga laporan bulanan secara otomatis. Pantau bisnis Anda secara real-time kapan pun dan di mana pun melalui satu dashboard terpusat.
+        - generic "Fitur utama" [ref=e16]:
+          - generic [ref=e17]:
+            - generic [ref=e18]: "01"
+            - generic [ref=e19]: Real-time sales control
+            - generic [ref=e20]: Invoice, payment, and approval status stay visible across every team role.
+          - generic [ref=e21]:
+            - generic [ref=e22]: "02"
+            - generic [ref=e23]: Inventory visibility
+            - generic [ref=e24]: Track warehouse stock, batch information, and goods receipt without switching tools.
+          - generic [ref=e25]:
+            - generic [ref=e26]: "03"
+            - generic [ref=e27]: Field visit workflow
+            - generic [ref=e28]: Capture customer visits, coordinates, products, and notes in one operational flow.
+          - generic [ref=e29]:
+            - generic [ref=e30]: "04"
+            - generic [ref=e31]: Thermal-ready documents
+            - generic [ref=e32]: Print invoices, receipts, and product cards for fast retail and field execution.
+      - region "Login form" [ref=e33]:
+        - generic [ref=e34]:
+          - generic [ref=e35]: Secure access
+          - heading "Masuk ke Hibiscus Efsya POS" [level=2] [ref=e36]
+          - paragraph [ref=e37]: Gunakan akun staff untuk mengelola transaksi, stok, kunjungan, dan approval.
+          - generic [ref=e42]:
+            - generic [ref=e46]:
+              - generic [ref=e49]:
+                - generic [ref=e53]:
+                  - text: Alamat email
+                  - superscript [ref=e54]: "*"
+                - textbox "Alamat email*" [active] [ref=e58]
+              - generic [ref=e61]:
+                - generic [ref=e65]:
+                  - text: Kata sandi
+                  - superscript [ref=e66]: "*"
+                - generic [ref=e68]:
+                  - textbox "Kata sandi*" [ref=e70]
+                  - button "Tampilkan kata sandi" [ref=e73] [cursor=pointer]:
+                    - img [ref=e74]
+              - generic [ref=e82]:
+                - checkbox "Ingat saya" [ref=e83]
+                - generic [ref=e84]: Ingat saya
+            - button "Masuk" [ref=e90] [cursor=pointer]:
+              - generic [ref=e91]: Masuk
+          - generic [ref=e92]:
+            - generic [ref=e93]:
+              - strong [ref=e94]: Need account access?
+              - text: Hubungi admin gudang atau super admin untuk aktivasi akun.
+            - generic [ref=e95]: Protected
+  - generic:
+    - status

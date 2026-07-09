@@ -43,7 +43,7 @@ $commands = [
     'Migrate Seed' => 'migrate --seed',
     'Filament Upgrade' => 'filament:upgrade',
     'Import Legacy Data' => 'import:legacy-data',
-    'Apply Transaction Integrity Fixes' => 'migrate --path=database/migrations/2026_07_09_100000_make_pembayarans_penjualan_id_nullable.php,2026_07_09_200000_add_non_negative_constraints_to_transaction_tables.php,2026_07_09_200000_add_unique_indexes_on_nomor_columns.php,2026_07_09_200000_add_foreign_keys_for_audit_integrity.php --force',
+    'Apply Transaction Integrity Fixes' => 'migrate --force',
     'Audit Transaction Integrity' => 'audit:transaction-integrity',
     'Audit Duplicate Nomor' => 'audit:duplicate-nomor',
     'Audit Stock Consistency' => 'audit:stock-consistency',

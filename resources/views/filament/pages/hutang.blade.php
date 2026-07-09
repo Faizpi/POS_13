@@ -116,7 +116,7 @@
 
         @if($listTempo->hasPages())
             <div class="mt-4 border-t border-gray-100 pt-4 dark:border-gray-800">
-                {{ $listTempo->links() }}
+                <x-filament::pagination :paginator="$listTempo" />
             </div>
         @endif
     </x-filament::section>

@@ -128,7 +128,7 @@
 
         @if($listToko->hasPages())
             <div class="mt-4 border-t border-gray-100 pt-4 dark:border-gray-800">
-                {{ $listToko->links() }}
+                <x-filament::pagination :paginator="$listToko" />
             </div>
         @endif
     </x-filament::section>

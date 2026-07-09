@@ -1,89 +1,97 @@
 <?php
+
+use Illuminate\Contracts\Console\Kernel;
+
 /**
  * DEPLOY CONSOLE
  * Helper script to execute artisan commands safely from web interface.
  */
+$projectPath = realpath(__DIR__.'/..');
 
-$projectPath = realpath(__DIR__ . '/..');
-
-if (!is_dir($projectPath)) {
+if (! is_dir($projectPath)) {
     http_response_code(500);
-    exit("Path not found");
+    exit('Path not found');
 }
 
 chdir($projectPath);
 
-if (!file_exists($projectPath . '/vendor/autoload.php')) {
+if (! file_exists($projectPath.'/vendor/autoload.php')) {
     http_response_code(500);
-    exit("vendor/autoload.php not found. Please run composer install first.");
+    exit('vendor/autoload.php not found. Please run composer install first.');
 }
 
-require_once $projectPath . '/vendor/autoload.php';
-$app    = require_once $projectPath . '/bootstrap/app.php';
-$kernel = $app->make(Illuminate\Contracts\Console\Kernel::class);
+require_once $projectPath.'/vendor/autoload.php';
+$app = require_once $projectPath.'/bootstrap/app.php';
+$kernel = $app->make(Kernel::class);
 
 $commands = [
-    'Cache Clear'        => 'cache:clear',
-    'Config Clear'       => 'config:clear',
-    'Route Clear'        => 'route:clear',
-    'View Clear'         => 'view:clear',
-    'Optimize'           => 'optimize',
-    'Optimize Clear'     => 'optimize:clear',
-    'Storage Link'       => 'storage:link',
-    'Storage Unlink'     => 'storage:unlink',
+    'Cache Clear' => 'cache:clear',
+    'Config Clear' => 'config:clear',
+    'Route Clear' => 'route:clear',
+    'View Clear' => 'view:clear',
+    'Optimize' => 'optimize',
+    'Optimize Clear' => 'optimize:clear',
+    'Storage Link' => 'storage:link',
+    'Storage Unlink' => 'storage:unlink',
     'Storage Force Link' => 'storage:link --force',
-    'Migrate Status'     => 'migrate:status',
-    'Migrate'            => 'migrate',
-    'Migrate Sync'       => 'migrate --path=database/migrations/2026_06_19_120000_sync_schema_after_import.php --force',
-    'Mark Migrations Ran'=> 'migrate:mark-ran',
+    'Migrate Status' => 'migrate:status',
+    'Migrate' => 'migrate',
+    'Migrate Sync' => 'migrate --path=database/migrations/2026_06_19_120000_sync_schema_after_import.php --force',
+    'Mark Migrations Ran' => 'migrate:mark-ran',
     'Fix Missing Tables' => 'fix-tables',
-    'Migrate Fresh'      => 'migrate:fresh',
-    'Migrate Seed'       => 'migrate --seed',
-    'Filament Upgrade'   => 'filament:upgrade',
+    'Migrate Fresh' => 'migrate:fresh',
+    'Migrate Seed' => 'migrate --seed',
+    'Filament Upgrade' => 'filament:upgrade',
     'Import Legacy Data' => 'import:legacy-data',
+    'Apply Transaction Integrity Fixes' => 'migrate --path=database/migrations/2026_07_09_100000_make_pembayarans_penjualan_id_nullable.php,2026_07_09_200000_add_non_negative_constraints_to_transaction_tables.php,2026_07_09_200000_add_unique_indexes_on_nomor_columns.php,2026_07_09_200000_add_foreign_keys_for_audit_integrity.php --force',
+    'Audit Transaction Integrity' => 'audit:transaction-integrity',
+    'Audit Duplicate Nomor' => 'audit:duplicate-nomor',
+    'Audit Stock Consistency' => 'audit:stock-consistency',
 ];
 
 $presets = [
-    'Quick Deploy'          => ['Cache Clear', 'Config Clear', 'Route Clear', 'View Clear', 'Optimize'],
-    'Full Clear'            => ['Cache Clear', 'Config Clear', 'Route Clear', 'View Clear', 'Optimize Clear'],
-    'Filament Assets Update'=> ['Filament Upgrade', 'Cache Clear', 'View Clear', 'Optimize'],
-    'Sync Schema (Import)'  => ['Migrate Sync', 'Cache Clear', 'Optimize', 'Migrate Status'],
-    'Database Refresh'      => ['Migrate Fresh', 'Migrate Seed', 'Storage Force Link'],
-    'Import SQL'            => ['Migrate Sync', 'Mark Migrations Ran', 'Fix Missing Tables', 'Migrate', 'Cache Clear', 'View Clear', 'Optimize', 'Migrate Status'],
+    'Quick Deploy' => ['Cache Clear', 'Config Clear', 'Route Clear', 'View Clear', 'Optimize'],
+    'Full Clear' => ['Cache Clear', 'Config Clear', 'Route Clear', 'View Clear', 'Optimize Clear'],
+    'Filament Assets Update' => ['Filament Upgrade', 'Cache Clear', 'View Clear', 'Optimize'],
+    'Sync Schema (Import)' => ['Migrate Sync', 'Cache Clear', 'Optimize', 'Migrate Status'],
+    'Database Refresh' => ['Migrate Fresh', 'Migrate Seed', 'Storage Force Link'],
+    'Import SQL' => ['Migrate Sync', 'Mark Migrations Ran', 'Fix Missing Tables', 'Migrate', 'Cache Clear', 'View Clear', 'Optimize', 'Migrate Status'],
+    'Transaction Integrity Update' => ['Apply Transaction Integrity Fixes', 'Audit Transaction Integrity', 'Audit Duplicate Nomor', 'Audit Stock Consistency', 'Cache Clear', 'View Clear', 'Optimize', 'Migrate Status'],
 ];
 
 $customHandlers = [
-    'Storage Force Link' => function() use ($projectPath, $kernel) {
-        $publicStorage = $projectPath . '/public/storage';
+    'Storage Force Link' => function () use ($projectPath, $kernel) {
+        $publicStorage = $projectPath.'/public/storage';
         if (file_exists($publicStorage)) {
             if (is_link($publicStorage)) {
                 unlink($publicStorage);
                 echo "✓ Old symlink removed\n";
             } elseif (is_dir($publicStorage)) {
-                $backup = $publicStorage . '_backup_' . date('YmdHis');
+                $backup = $publicStorage.'_backup_'.date('YmdHis');
                 rename($publicStorage, $backup);
                 echo "⚠ Directory moved to: $backup\n";
             }
         }
         $status = $kernel->call('storage:link', ['--force' => true]);
         echo $kernel->output();
+
         return $status;
-    }
+    },
 ];
 
 // ─── Log Viewer ──────────────────────────────────────────────────────────────
-$logAction   = isset($_GET['log']) ? $_GET['log'] : null;
-$logContent  = null;
-$logLines    = (int)($_GET['lines'] ?? 100);
-$logSearch   = trim($_GET['search'] ?? '');
-$logFile     = $projectPath . '/storage/logs/laravel.log';
+$logAction = isset($_GET['log']) ? $_GET['log'] : null;
+$logContent = null;
+$logLines = (int) ($_GET['lines'] ?? 100);
+$logSearch = trim($_GET['search'] ?? '');
+$logFile = $projectPath.'/storage/logs/laravel.log';
 
 if ($logAction === 'view') {
     if (file_exists($logFile)) {
         $allLines = file($logFile, FILE_IGNORE_NEW_LINES);
         $allLines = array_reverse($allLines); // newest first
         if ($logSearch !== '') {
-            $allLines = array_filter($allLines, fn($l) => stripos($l, $logSearch) !== false);
+            $allLines = array_filter($allLines, fn ($l) => stripos($l, $logSearch) !== false);
             $allLines = array_values($allLines);
         }
         $logContent = implode("\n", array_slice($allLines, 0, $logLines));
@@ -101,25 +109,26 @@ if ($logAction === 'clear' && file_exists($logFile)) {
 // ─── Execute logic ────────────────────────────────────────────────────────────
 $executionResults = null;
 $selectedCommands = isset($_POST['commands']) && is_array($_POST['commands']) ? $_POST['commands'] : [];
-$customCommand    = isset($_POST['custom_command']) ? trim($_POST['custom_command']) : '';
+$customCommand = isset($_POST['custom_command']) ? trim($_POST['custom_command']) : '';
 
-if (!empty($selectedCommands) || !empty($customCommand)) {
-    if (!empty($customCommand)) {
-        $cleanCommand     = htmlspecialchars($customCommand);
-        $label            = "Custom: $cleanCommand";
+if (! empty($selectedCommands) || ! empty($customCommand)) {
+    if (! empty($customCommand)) {
+        $cleanCommand = htmlspecialchars($customCommand);
+        $label = "Custom: $cleanCommand";
         $commands[$label] = $customCommand;
         $selectedCommands[] = $label;
     }
 
     $totalCommands = count($selectedCommands);
-    $successCount  = 0;
-    $failCount     = 0;
-    $resultLines   = [];
+    $successCount = 0;
+    $failCount = 0;
+    $resultLines = [];
 
     foreach ($selectedCommands as $index => $label) {
-        if (!isset($commands[$label])) {
+        if (! isset($commands[$label])) {
             $resultLines[] = ['label' => $label, 'cmd' => '—', 'output' => "✗ Invalid command: $label", 'ok' => false, 'ms' => 0];
             $failCount++;
+
             continue;
         }
         ob_start();
@@ -131,28 +140,28 @@ if (!empty($selectedCommands) || !empty($customCommand)) {
                 $status = $kernel->call($commands[$label]);
                 echo $kernel->output();
             }
-            $ms  = round((microtime(true) - $t0) * 1000, 2);
+            $ms = round((microtime(true) - $t0) * 1000, 2);
             $out = ob_get_clean();
-            $ok  = ($status === 0);
+            $ok = ($status === 0);
             $resultLines[] = ['label' => $label, 'cmd' => $commands[$label], 'output' => $out, 'ok' => $ok, 'ms' => $ms, 'status' => $status];
             $ok ? $successCount++ : $failCount++;
         } catch (Exception $e) {
             $ms = round((microtime(true) - $t0) * 1000, 2);
             ob_get_clean();
-            $resultLines[] = ['label' => $label, 'cmd' => $commands[$label], 'output' => "✗ EXCEPTION: " . $e->getMessage(), 'ok' => false, 'ms' => $ms];
+            $resultLines[] = ['label' => $label, 'cmd' => $commands[$label], 'output' => '✗ EXCEPTION: '.$e->getMessage(), 'ok' => false, 'ms' => $ms];
             $failCount++;
         }
     }
     $executionResults = ['lines' => $resultLines, 'total' => $totalCommands, 'success' => $successCount, 'fail' => $failCount];
 }
 
-$publicStorage = $projectPath . '/public/storage';
-$storageStatus = is_link($publicStorage) ? ['ok',    'Symlink aktif → ' . readlink($publicStorage)]
-               : (is_dir($publicStorage)  ? ['warn',  '/public/storage adalah direktori (bukan symlink)']
-               :                            ['error', 'Storage link tidak ditemukan']);
+$publicStorage = $projectPath.'/public/storage';
+$storageStatus = is_link($publicStorage) ? ['ok',    'Symlink aktif → '.readlink($publicStorage)]
+               : (is_dir($publicStorage) ? ['warn',  '/public/storage adalah direktori (bukan symlink)']
+               : ['error', 'Storage link tidak ditemukan']);
 
 // Log file size
-$logSize = file_exists($logFile) ? round(filesize($logFile) / 1024, 1) . ' KB' : 'N/A';
+$logSize = file_exists($logFile) ? round(filesize($logFile) / 1024, 1).' KB' : 'N/A';
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -257,7 +266,7 @@ h2 { font-size: 16px; margin-bottom: 16px; display: flex; align-items: center; g
         <div class="header-path"><?= htmlspecialchars($projectPath) ?></div>
     </div>
 
-    <?php if ($executionResults): ?>
+    <?php if ($executionResults) { ?>
     <div class="card" id="results">
         <h2>Output Eksekusi</h2>
         <div style="font-size: 13px; margin-bottom: 10px;">
@@ -268,57 +277,57 @@ h2 { font-size: 16px; margin-bottom: 16px; display: flex; align-items: center; g
         <div class="terminal">
             <div class="terminal-header">Terminal Output</div>
             <div class="terminal-body"><?php
-                foreach ($executionResults['lines'] as $i => $r):
-                    echo "<span style='color:#475569'>[" . ($i+1) . "]</span> <span class='t-cmd'>{$r['label']}</span>\n";
+                foreach ($executionResults['lines'] as $i => $r) {
+                    echo "<span style='color:#475569'>[".($i + 1)."]</span> <span class='t-cmd'>{$r['label']}</span>\n";
                     $out = htmlspecialchars($r['output']);
                     $out = preg_replace('/(✓|SUCCESS|DONE)/i', '<span class="t-ok">$1</span>', $out);
                     $out = preg_replace('/(✗|ERROR|FAILED|FAIL)/i', '<span class="t-err">$1</span>', $out);
                     $out = preg_replace('/(⚠|WARNING)/i', '<span class="t-warn">$1</span>', $out);
-                    echo $out . "\n";
+                    echo $out."\n";
                     echo $r['ok']
                         ? "<span class='t-ok'>✓ Sukses</span> ({$r['ms']}ms)\n\n"
                         : "<span class='t-err'>✗ Gagal</span> ({$r['ms']}ms)\n\n";
-                endforeach;
-            ?></div>
+                }
+        ?></div>
         </div>
     </div>
-    <?php endif; ?>
+    <?php } ?>
 
     <!-- TABS -->
     <div>
         <div class="tabs">
-            <a class="tab <?= !$logAction ? 'active' : '' ?>" href="?">🚀 Deploy</a>
+            <a class="tab <?= ! $logAction ? 'active' : '' ?>" href="?">🚀 Deploy</a>
             <a class="tab <?= $logAction ? 'active' : '' ?>" href="?log=view">📋 Log Viewer</a>
         </div>
 
-        <?php if (!$logAction): ?>
+        <?php if (! $logAction) { ?>
         <!-- ── DEPLOY TAB ── -->
         <div class="tab-content">
             <h2 style="margin-bottom:16px">🚀 Quick Presets</h2>
             <div class="preset-grid">
-                <?php foreach ($presets as $name => $cmds): ?>
+                <?php foreach ($presets as $name => $cmds) { ?>
                 <form method="post" style="display:inline-block">
-                    <?php foreach ($cmds as $c): ?>
+                    <?php foreach ($cmds as $c) { ?>
                     <input type="hidden" name="commands[]" value="<?= htmlspecialchars($c) ?>">
-                    <?php endforeach; ?>
+                    <?php } ?>
                     <button type="submit" class="preset-btn"><?= htmlspecialchars($name) ?></button>
                 </form>
-                <?php endforeach; ?>
+                <?php } ?>
             </div>
 
             <form method="post" style="margin-top:24px">
                 <h2>📦 All Commands</h2>
                 <div class="cmd-grid" id="tileGrid">
-                    <?php foreach ($commands as $label => $cmd):
+                    <?php foreach ($commands as $label => $cmd) {
                         $isDanger = str_contains($label, 'Fresh') || str_contains($label, 'Unlink');
-                    ?>
+                        ?>
                     <div class="cmd-tile <?= $isDanger ? 'danger-tile' : '' ?>">
                         <label>
                             <input type="checkbox" name="commands[]" value="<?= htmlspecialchars($label) ?>">
                             <span><?= htmlspecialchars($label) ?></span>
                         </label>
                     </div>
-                    <?php endforeach; ?>
+                    <?php } ?>
                 </div>
 
                 <div class="custom-input">
@@ -336,14 +345,14 @@ h2 { font-size: 16px; margin-bottom: 16px; display: flex; align-items: center; g
             <div style="margin-top:24px">
                 <h2>💾 Status Storage</h2>
                 <?php
-                    [$st, $msg] = $storageStatus;
-                    $cls = $st === 'ok' ? 'spl-ok' : ($st === 'warn' ? 'spl-warn' : 'spl-error');
-                    echo "<div class='storage-pill {$cls}'>{$msg}</div>";
-                ?>
+                        [$st, $msg] = $storageStatus;
+            $cls = $st === 'ok' ? 'spl-ok' : ($st === 'warn' ? 'spl-warn' : 'spl-error');
+            echo "<div class='storage-pill {$cls}'>{$msg}</div>";
+            ?>
             </div>
         </div>
 
-        <?php else: ?>
+        <?php } else { ?>
         <!-- ── LOG VIEWER TAB ── -->
         <div class="tab-content">
             <div class="log-toolbar">
@@ -351,9 +360,9 @@ h2 { font-size: 16px; margin-bottom: 16px; display: flex; align-items: center; g
                     <input type="hidden" name="log" value="view">
                     <input type="text" name="search" placeholder="Filter: WA, Fonnte, ERROR..." value="<?= htmlspecialchars($logSearch) ?>">
                     <select name="lines">
-                        <?php foreach ([50, 100, 200, 500, 1000] as $n): ?>
+                        <?php foreach ([50, 100, 200, 500, 1000] as $n) { ?>
                         <option value="<?= $n ?>" <?= $logLines === $n ? 'selected' : '' ?>><?= $n ?> baris</option>
-                        <?php endforeach; ?>
+                        <?php } ?>
                     </select>
                     <button type="submit" class="btn btn-blue">🔍 Tampilkan</button>
                 </form>
@@ -371,39 +380,39 @@ h2 { font-size: 16px; margin-bottom: 16px; display: flex; align-items: center; g
 
             <div class="terminal">
                 <div class="terminal-header">
-                    <span>storage/logs/laravel.log <?= $logSearch ? "| filter: \"" . htmlspecialchars($logSearch) . "\"" : '' ?> | <?= $logLines ?> baris terbaru</span>
+                    <span>storage/logs/laravel.log <?= $logSearch ? '| filter: "'.htmlspecialchars($logSearch).'"' : '' ?> | <?= $logLines ?> baris terbaru</span>
                     <span style="color:var(--muted)">terbaru di atas</span>
                 </div>
                 <div class="terminal-body"><?php
-                    if ($logContent !== null) {
-                        $lines = explode("\n", $logContent);
-                        foreach ($lines as $line) {
-                            $escaped = htmlspecialchars($line);
-                            // Highlight berdasarkan konten
-                            if (stripos($line, 'WA customer') !== false || stripos($line, 'WA admin') !== false || stripos($line, 'Fonnte') !== false) {
-                                echo "<span class='log-highlight-wa'>{$escaped}</span>\n";
-                            } elseif (stripos($line, '.ERROR') !== false || stripos($line, 'EXCEPTION') !== false) {
-                                echo "<span class='log-highlight-err'>{$escaped}</span>\n";
-                            } elseif (stripos($line, '.INFO') !== false) {
-                                echo "<span class='log-highlight-info'>{$escaped}</span>\n";
-                            } else {
-                                echo "{$escaped}\n";
-                            }
+                if ($logContent !== null) {
+                    $lines = explode("\n", $logContent);
+                    foreach ($lines as $line) {
+                        $escaped = htmlspecialchars($line);
+                        // Highlight berdasarkan konten
+                        if (stripos($line, 'WA customer') !== false || stripos($line, 'WA admin') !== false || stripos($line, 'Fonnte') !== false) {
+                            echo "<span class='log-highlight-wa'>{$escaped}</span>\n";
+                        } elseif (stripos($line, '.ERROR') !== false || stripos($line, 'EXCEPTION') !== false) {
+                            echo "<span class='log-highlight-err'>{$escaped}</span>\n";
+                        } elseif (stripos($line, '.INFO') !== false) {
+                            echo "<span class='log-highlight-info'>{$escaped}</span>\n";
+                        } else {
+                            echo "{$escaped}\n";
                         }
                     }
-                ?></div>
+                }
+            ?></div>
             </div>
         </div>
-        <?php endif; ?>
+        <?php } ?>
     </div>
 </div>
 
 <script>
 function selectAll()   { document.querySelectorAll('#tileGrid input').forEach(cb => cb.checked = true); }
 function deselectAll() { document.querySelectorAll('#tileGrid input').forEach(cb => cb.checked = false); }
-<?php if ($executionResults): ?>
+<?php if ($executionResults) { ?>
 window.scrollTo({ top: 0, behavior: 'smooth' });
-<?php endif; ?>
+<?php } ?>
 </script>
 
 </body>

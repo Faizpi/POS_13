@@ -2,6 +2,11 @@
 
 namespace App\Filament\Widgets;
 
+use App\Filament\Resources\Biayas\BiayaResource;
+use App\Filament\Resources\Kunjungans\KunjunganResource;
+use App\Filament\Resources\Pembayarans\PembayaranResource;
+use App\Filament\Resources\Pembelians\PembelianResource;
+use App\Filament\Resources\Penjualans\PenjualanResource;
 use App\Models\Biaya;
 use App\Models\Kunjungan;
 use App\Models\Pembayaran;
@@ -10,6 +15,7 @@ use App\Models\Penjualan;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseTableWidget;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
 class MenungguApproval extends BaseTableWidget
@@ -18,9 +24,9 @@ class MenungguApproval extends BaseTableWidget
 
     protected static ?int $sort = 6;
 
-    protected int | string | array $columnSpan = 'full';
+    protected int|string|array $columnSpan = 'full';
 
-    protected function getTableQuery(): \Illuminate\Database\Eloquent\Builder
+    protected function getTableQuery(): Builder
     {
         return Penjualan::query()->whereRaw('1=0');
     }
@@ -30,22 +36,22 @@ class MenungguApproval extends BaseTableWidget
         $limit = 10;
         $records = collect();
         $user = auth()->user();
-        
+
         // Apply warehouse filtering for non-super-admin
         $gudangId = null;
-        if (!$user?->isSuperAdmin()) {
+        if (! $user?->isSuperAdmin()) {
             $gudangId = $user?->getCurrentGudang()?->id;
         }
 
         // Get recent 10 pending from each type, then merge, sort, and limit
         $penjualans = Penjualan::with('user:id,name')
             ->where('status', 'Pending')
-            ->when($gudangId, fn($q) => $q->where('gudang_id', $gudangId))
+            ->when($gudangId, fn ($q) => $q->where('gudang_id', $gudangId))
             ->latest('tgl_transaksi')
             ->take($limit)
             ->get()
             ->map(fn ($m) => [
-                '__key' => 'penjualan-' . $m->id,
+                '__key' => 'penjualan-'.$m->id,
                 'id' => $m->id,
                 'tanggal' => $m->tgl_transaksi,
                 'tipe' => 'Penjualan',
@@ -57,12 +63,12 @@ class MenungguApproval extends BaseTableWidget
 
         $pembelians = Pembelian::with('user:id,name')
             ->where('status', 'Pending')
-            ->when($gudangId, fn($q) => $q->where('gudang_id', $gudangId))
+            ->when($gudangId, fn ($q) => $q->where('gudang_id', $gudangId))
             ->latest('tgl_transaksi')
             ->take($limit)
             ->get()
             ->map(fn ($m) => [
-                '__key' => 'pembelian-' . $m->id,
+                '__key' => 'pembelian-'.$m->id,
                 'id' => $m->id,
                 'tanggal' => $m->tgl_transaksi,
                 'tipe' => 'Pembelian',
@@ -74,12 +80,12 @@ class MenungguApproval extends BaseTableWidget
 
         $biayas = Biaya::with('user:id,name')
             ->where('status', 'Pending')
-            ->when($gudangId, fn($q) => $q->where('gudang_id', $gudangId))
+            ->when($gudangId, fn ($q) => $q->where('gudang_id', $gudangId))
             ->latest('tgl_transaksi')
             ->take($limit)
             ->get()
             ->map(fn ($m) => [
-                '__key' => 'biaya-' . $m->id,
+                '__key' => 'biaya-'.$m->id,
                 'id' => $m->id,
                 'tanggal' => $m->tgl_transaksi,
                 'tipe' => 'Biaya',
@@ -91,12 +97,12 @@ class MenungguApproval extends BaseTableWidget
 
         $kunjungans = Kunjungan::with('user:id,name')
             ->where('status', 'Pending')
-            ->when($gudangId, fn($q) => $q->where('gudang_id', $gudangId))
+            ->when($gudangId, fn ($q) => $q->where('gudang_id', $gudangId))
             ->latest('tgl_kunjungan')
             ->take($limit)
             ->get()
             ->map(fn ($m) => [
-                '__key' => 'kunjungan-' . $m->id,
+                '__key' => 'kunjungan-'.$m->id,
                 'id' => $m->id,
                 'tanggal' => $m->tgl_kunjungan,
                 'tipe' => 'Kunjungan',
@@ -108,12 +114,12 @@ class MenungguApproval extends BaseTableWidget
 
         $pembayarans = Pembayaran::with('user:id,name')
             ->where('status', 'Pending')
-            ->when($gudangId, fn($q) => $q->where('gudang_id', $gudangId))
+            ->when($gudangId, fn ($q) => $q->where('gudang_id', $gudangId))
             ->latest('tgl_pembayaran')
             ->take($limit)
             ->get()
             ->map(fn ($m) => [
-                '__key' => 'pembayaran-' . $m->id,
+                '__key' => 'pembayaran-'.$m->id,
                 'id' => $m->id,
                 'tanggal' => $m->tgl_pembayaran,
                 'tipe' => 'Pembayaran',
@@ -178,18 +184,18 @@ class MenungguApproval extends BaseTableWidget
 
                 TextColumn::make('total')
                     ->label('Total')
-                    ->formatStateUsing(fn($state) => format_rupiah($state))
+                    ->formatStateUsing(fn ($state) => format_rupiah($state))
                     ->alignRight()
                     ->weight('bold'),
             ])
             ->paginated(false)
             ->recordUrl(function (array $record): string {
                 return match ($record['tipe']) {
-                    'Penjualan' => \App\Filament\Resources\Penjualans\PenjualanResource::getUrl('view', ['record' => $record['id']]),
-                    'Pembelian' => \App\Filament\Resources\Pembelians\PembelianResource::getUrl('view', ['record' => $record['id']]),
-                    'Biaya' => \App\Filament\Resources\Biayas\BiayaResource::getUrl('view', ['record' => $record['id']]),
-                    'Kunjungan' => \App\Filament\Resources\Kunjungans\KunjunganResource::getUrl('view', ['record' => $record['id']]),
-                    'Pembayaran' => \App\Filament\Resources\Pembayarans\PembayaranResource::getUrl('view', ['record' => $record['id']]),
+                    'Penjualan' => PenjualanResource::getUrl('view', ['record' => $record['id']]),
+                    'Pembelian' => PembelianResource::getUrl('view', ['record' => $record['id']]),
+                    'Biaya' => BiayaResource::getUrl('view', ['record' => $record['id']]),
+                    'Kunjungan' => KunjunganResource::getUrl('view', ['record' => $record['id']]),
+                    'Pembayaran' => PembayaranResource::getUrl('view', ['record' => $record['id']]),
                     default => '#',
                 };
             });

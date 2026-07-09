@@ -5,6 +5,7 @@ namespace Tests\Feature\Api;
 use App\Models\PersonalAccessToken;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class AuthContractTest extends TestCase
@@ -95,7 +96,7 @@ class AuthContractTest extends TestCase
     public function test_expired_token_returns_401(): void
     {
         $user = User::where('email', 'salesa@hibiscusefsya.com')->first();
-        $plainToken = \Illuminate\Support\Str::random(64);
+        $plainToken = Str::random(64);
 
         PersonalAccessToken::create([
             'user_id' => $user->id,
@@ -105,7 +106,7 @@ class AuthContractTest extends TestCase
         ]);
 
         $response = $this->getJson('/api/v1/profile', [
-            'Authorization' => 'Bearer ' . $plainToken,
+            'Authorization' => 'Bearer '.$plainToken,
         ]);
 
         $response->assertStatus(401)
@@ -119,7 +120,7 @@ class AuthContractTest extends TestCase
         $token = $this->loginAndGetToken('salesa@hibiscusefsya.com');
 
         $response = $this->getJson('/api/v1/profile', [
-            'Authorization' => 'Bearer ' . $token,
+            'Authorization' => 'Bearer '.$token,
         ]);
 
         $response->assertStatus(200)
@@ -139,7 +140,7 @@ class AuthContractTest extends TestCase
         $this->assertDatabaseHas('personal_access_tokens', ['token' => $hashed]);
 
         $response = $this->postJson('/api/v1/logout', [], [
-            'Authorization' => 'Bearer ' . $token,
+            'Authorization' => 'Bearer '.$token,
         ]);
 
         $response->assertStatus(200)
@@ -158,7 +159,7 @@ class AuthContractTest extends TestCase
             'current_password' => 'wrongold',
             'new_password' => 'newpass123',
             'new_password_confirmation' => 'newpass123',
-        ], ['Authorization' => 'Bearer ' . $token]);
+        ], ['Authorization' => 'Bearer '.$token]);
 
         $response->assertStatus(422)
             ->assertJson(['message' => 'Password lama salah.']);
@@ -172,7 +173,7 @@ class AuthContractTest extends TestCase
             'current_password' => 'password123',
             'new_password' => 'newpassword1',
             'new_password_confirmation' => 'newpassword1',
-        ], ['Authorization' => 'Bearer ' . $token]);
+        ], ['Authorization' => 'Bearer '.$token]);
 
         $response->assertStatus(200)
             ->assertJson(['message' => 'Password berhasil diubah.']);

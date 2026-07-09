@@ -2,7 +2,10 @@
 
 namespace App\Filament\Resources\Pembelians\RelationManagers;
 
+use App\Filament\Concerns\TransactionDeleteGuard;
+use App\Models\Gudang;
 use App\Models\Pembayaran;
+use App\Services\PaymentSettlementService;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
@@ -37,7 +40,8 @@ class PembayaransRelationManager extends RelationManager
                         $countToday = Pembayaran::where('type', 'hutang')
                             ->whereDate('created_at', now())
                             ->count();
-                        return 'BAYH-' . now()->format('Ymd') . '-' . auth()->id() . '-' . str_pad($countToday + 1, 3, '0', STR_PAD_LEFT);
+
+                        return 'BAYH-'.now()->format('Ymd').'-'.auth()->id().'-'.str_pad($countToday + 1, 3, '0', STR_PAD_LEFT);
                     })
                     ->disabled()
                     ->dehydrated()
@@ -46,14 +50,14 @@ class PembayaransRelationManager extends RelationManager
                 Select::make('gudang_id')
                     ->label('Gudang')
                     ->required()
-                    ->options(fn() => \App\Models\Gudang::pluck('nama_gudang', 'id'))
-                    ->default(fn() => $this->getOwnerRecord()->gudang_id)
+                    ->options(fn () => Gudang::pluck('nama_gudang', 'id'))
+                    ->default(fn () => $this->getOwnerRecord()->gudang_id)
                     ->disabled()
                     ->dehydrated(),
 
                 TextInput::make('invoice_pembelian')
                     ->label('Invoice Pembelian')
-                    ->default(fn() => $this->getOwnerRecord()->nomor)
+                    ->default(fn () => $this->getOwnerRecord()->nomor)
                     ->disabled()
                     ->dehydrated(),
 
@@ -78,7 +82,7 @@ class PembayaransRelationManager extends RelationManager
                     ->required()
                     ->numeric()
                     ->prefix('Rp')
-                    ->default(fn() => $this->getOwnerRecord()->grand_total),
+                    ->default(fn () => $this->getOwnerRecord()->grand_total),
 
                 Textarea::make('keterangan')
                     ->label('Keterangan')
@@ -127,7 +131,7 @@ class PembayaransRelationManager extends RelationManager
                 TextColumn::make('status')
                     ->label('Status')
                     ->badge()
-                    ->color(fn(string $state): string => match($state) {
+                    ->color(fn (string $state): string => match ($state) {
                         'Pending' => 'warning',
                         'Approved' => 'success',
                         'Canceled' => 'gray',
@@ -143,9 +147,11 @@ class PembayaransRelationManager extends RelationManager
             ->headerActions([
                 CreateAction::make()
                     ->label('Catat Pembayaran')
-                    ->visible(fn() => in_array(auth()->user()?->role, ['user', 'admin', 'super_admin']))
+                    ->visible(fn () => in_array(auth()->user()?->role, ['user', 'admin', 'super_admin']))
                     ->mutateFormDataUsing(function (array $data): array {
                         $owner = $this->getOwnerRecord();
+                        app(PaymentSettlementService::class)->assertHutangPaymentCanBeCreated($owner, $data['jumlah_bayar']);
+
                         $data['type'] = 'hutang';
                         $data['user_id'] = auth()->id();
                         $data['gudang_id'] = $owner->gudang_id;
@@ -157,7 +163,7 @@ class PembayaransRelationManager extends RelationManager
                         $countToday = Pembayaran::where('type', 'hutang')
                             ->whereDate('created_at', now())
                             ->count();
-                        $data['nomor'] = 'BAYH-' . now()->format('Ymd') . '-' . auth()->id() . '-' . str_pad($countToday + 1, 3, '0', STR_PAD_LEFT);
+                        $data['nomor'] = 'BAYH-'.now()->format('Ymd').'-'.auth()->id().'-'.str_pad($countToday + 1, 3, '0', STR_PAD_LEFT);
 
                         return $data;
                     }),
@@ -165,14 +171,14 @@ class PembayaransRelationManager extends RelationManager
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make()
-                    ->visible(fn() => auth()->user()?->isSuperAdmin()),
+                    ->visible(fn () => auth()->user()?->isSuperAdmin()),
                 DeleteAction::make()
-                    ->visible(fn() => auth()->user()?->isSuperAdmin()),
+                    ->visible(fn ($record): bool => auth()->user()?->isSuperAdmin() && TransactionDeleteGuard::canDeletePembayaran($record)),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make()
-                        ->visible(fn() => auth()->user()?->isSuperAdmin()),
+                        ->visible(fn (): bool => false),
                 ]),
             ])
             ->defaultSort('created_at', 'desc')
@@ -183,7 +189,10 @@ class PembayaransRelationManager extends RelationManager
     public static function canViewForRecord($ownerRecord, string $pageClass): bool
     {
         $user = auth()->user();
-        if (!$user) return false;
+        if (! $user) {
+            return false;
+        }
+
         // Sales & Admin bisa add+view, Spectator view only, SuperAdmin all
         return in_array($user->role, ['user', 'admin', 'spectator', 'super_admin']);
     }

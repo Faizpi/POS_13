@@ -18,6 +18,13 @@ class PembelianItem extends Model
         return ['harga_satuan' => 'decimal:2'];
     }
 
-    public function pembelian() { return $this->belongsTo(Pembelian::class); }
-    public function produk() { return $this->belongsTo(Produk::class); }
+    public function pembelian()
+    {
+        return $this->belongsTo(Pembelian::class);
+    }
+
+    public function produk()
+    {
+        return $this->belongsTo(Produk::class);
+    }
 }

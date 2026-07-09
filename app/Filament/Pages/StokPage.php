@@ -7,14 +7,17 @@ use App\Models\Gudang;
 use App\Models\GudangProduk;
 use App\Models\Produk;
 use App\Models\StokLog;
+use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-use BackedEnum;
+use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Excel;
 use UnitEnum;
 
 class StokPage extends Page
@@ -33,10 +36,15 @@ class StokPage extends Page
 
     // Form state for manual stok update (super_admin)
     public ?int $form_gudang_id = null;
+
     public ?int $form_produk_id = null;
+
     public int $form_stok_penjualan = 0;
+
     public int $form_stok_gratis = 0;
+
     public int $form_stok_sample = 0;
+
     public ?string $form_keterangan = null;
 
     public static function canAccess(): bool
@@ -76,15 +84,15 @@ class StokPage extends Page
      * Data Stock Barang 7 Hari Terakhir (untuk widget dashboard gudang).
      * Group by produk_id, total selisih perubahan stok 7 hari terakhir.
      */
-    public function getStok7HariData(): \Illuminate\Support\Collection
+    public function getStok7HariData(): Collection
     {
         $user = Auth::user();
 
-        $query = \App\Models\StokLog::where('created_at', '>=', now()->subDays(7))
+        $query = StokLog::where('created_at', '>=', now()->subDays(7))
             ->select('produk_id', 'produk_nama',
-                \Illuminate\Support\Facades\DB::raw('SUM(ABS(selisih)) as total_perubahan'),
-                \Illuminate\Support\Facades\DB::raw('COUNT(*) as frekuensi'),
-                \Illuminate\Support\Facades\DB::raw('MAX(created_at) as last_change')
+                DB::raw('SUM(ABS(selisih)) as total_perubahan'),
+                DB::raw('COUNT(*) as frekuensi'),
+                DB::raw('MAX(created_at) as last_change')
             )
             ->groupBy('produk_id', 'produk_nama')
             ->orderByDesc('total_perubahan');
@@ -127,24 +135,26 @@ class StokPage extends Page
             ->form([
                 Select::make('gudang_id')
                     ->label('Pilih Gudang')
-                    ->options(fn() => Gudang::pluck('nama_gudang', 'id'))
+                    ->options(fn () => Gudang::pluck('nama_gudang', 'id'))
                     ->required()
                     ->searchable()
                     ->preload(),
             ])
             ->action(function (array $data) use ($user) {
                 $gudang = Gudang::findOrFail($data['gudang_id']);
-                if (!$user->isSuperAdmin() && !$user->canAccessGudang($gudang->id)) {
+                if (! $user->isSuperAdmin() && ! $user->canAccessGudang($gudang->id)) {
                     Notification::make()->title('Tidak memiliki akses ke gudang ini.')->danger()->send();
+
                     return;
                 }
                 $stokData = GudangProduk::where('gudang_id', $gudang->id)->with('produk')->get();
+
                 return response()->streamDownload(function () use ($gudang, $stokData, $user) {
                     echo \Maatwebsite\Excel\Facades\Excel::raw(
                         new StokExport($gudang, $stokData, $user->name),
-                        \Maatwebsite\Excel\Excel::XLSX
+                        Excel::XLSX
                     );
-                }, 'Stok_' . str_replace(' ', '_', $gudang->nama_gudang) . '_' . now()->format('Ymd') . '.xlsx');
+                }, 'Stok_'.str_replace(' ', '_', $gudang->nama_gudang).'_'.now()->format('Ymd').'.xlsx');
             })
             ->modalSubmitActionLabel('Export')
             ->modalCancelActionLabel('Batal');
@@ -158,12 +168,12 @@ class StokPage extends Page
                 ->form([
                     Select::make('gudang_id')
                         ->label('Gudang')
-                        ->options(fn() => Gudang::pluck('nama_gudang', 'id'))
+                        ->options(fn () => Gudang::pluck('nama_gudang', 'id'))
                         ->required()->searchable()->preload(),
 
                     Select::make('produk_id')
                         ->label('Produk')
-                        ->options(fn() => Produk::orderBy('nama_produk')->pluck('nama_produk', 'id'))
+                        ->options(fn () => Produk::orderBy('nama_produk')->pluck('nama_produk', 'id'))
                         ->required()->searchable()->preload(),
 
                     TextInput::make('stok_penjualan')

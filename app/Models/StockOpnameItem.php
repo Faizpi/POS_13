@@ -23,8 +23,15 @@ class StockOpnameItem extends Model
     }
 
     // Relationships
-    public function stockOpname() { return $this->belongsTo(StockOpname::class); }
-    public function produk() { return $this->belongsTo(Produk::class); }
+    public function stockOpname()
+    {
+        return $this->belongsTo(StockOpname::class);
+    }
+
+    public function produk()
+    {
+        return $this->belongsTo(Produk::class);
+    }
 
     // Auto-calculate selisih before saving
     protected static function boot()

@@ -6,8 +6,8 @@ use App\Mail\TransaksiInvoiceMail;
 use App\Mail\TransaksiNotificationMail;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class InvoiceEmailService
 {
@@ -25,12 +25,16 @@ class InvoiceEmailService
             $pdfContent = $pdf->output();
 
             $email = $toEmail ?? $transaksi->user?->email;
-            if (!$email) return false;
+            if (! $email) {
+                return false;
+            }
 
             Mail::to($email)->send(new TransaksiInvoiceMail($transaksi, $type, $pdfContent));
+
             return true;
         } catch (\Throwable $e) {
-            Log::error("InvoiceEmailService::sendInvoice [{$type}#{$transaksi->id}]: " . $e->getMessage());
+            Log::error("InvoiceEmailService::sendInvoice [{$type}#{$transaksi->id}]: ".$e->getMessage());
+
             return false;
         }
     }
@@ -41,13 +45,15 @@ class InvoiceEmailService
      */
     public static function sendCreatedNotification($transaksi, string $type): void
     {
-        $id    = $transaksi->id;
+        $id = $transaksi->id;
         $class = get_class($transaksi);
 
         dispatch(function () use ($id, $class, $type): void {
             try {
                 $transaksi = $class::find($id);
-                if (!$transaksi) return;
+                if (! $transaksi) {
+                    return;
+                }
 
                 $transaksi->load(self::relationsFor($type));
 
@@ -55,8 +61,8 @@ class InvoiceEmailService
                 $pdf->setPaper('a4', 'portrait');
                 $pdfContent = $pdf->output();
 
-                $nomor     = $transaksi->nomor ?? $transaksi->custom_number ?? $transaksi->id;
-                $gudangId  = $transaksi->gudang_id;
+                $nomor = $transaksi->nomor ?? $transaksi->custom_number ?? $transaksi->id;
+                $gudangId = $transaksi->gudang_id;
 
                 // 1. Creator
                 $creatorEmail = $transaksi->user?->email;
@@ -67,12 +73,14 @@ class InvoiceEmailService
 
                 // 2. Approvers (admin gudang + super_admin yang aktif terima email)
                 foreach (self::getApproverEmails($gudangId) as $email) {
-                    if ($email === $creatorEmail) continue;
+                    if ($email === $creatorEmail) {
+                        continue;
+                    }
                     Mail::to($email)->send(new TransaksiNotificationMail($transaksi, $type, 'needs_approval', $pdfContent));
                     Log::info("Email needs_approval [{$type}#{$nomor}] → {$email}");
                 }
             } catch (\Throwable $e) {
-                Log::error("InvoiceEmailService::sendCreatedNotification [{$type}#{$id}]: " . $e->getMessage());
+                Log::error("InvoiceEmailService::sendCreatedNotification [{$type}#{$id}]: ".$e->getMessage());
             }
         })->afterResponse();
     }
@@ -83,13 +91,15 @@ class InvoiceEmailService
      */
     public static function sendApprovedNotification($transaksi, string $type): void
     {
-        $id    = $transaksi->id;
+        $id = $transaksi->id;
         $class = get_class($transaksi);
 
         dispatch(function () use ($id, $class, $type): void {
             try {
                 $transaksi = $class::find($id);
-                if (!$transaksi) return;
+                if (! $transaksi) {
+                    return;
+                }
 
                 $transaksi->load(self::relationsFor($type, true));
 
@@ -97,7 +107,7 @@ class InvoiceEmailService
                 $pdf->setPaper('a4', 'portrait');
                 $pdfContent = $pdf->output();
 
-                $nomor        = $transaksi->nomor ?? $transaksi->custom_number ?? $transaksi->id;
+                $nomor = $transaksi->nomor ?? $transaksi->custom_number ?? $transaksi->id;
                 $creatorEmail = $transaksi->user?->email;
 
                 if ($creatorEmail) {
@@ -105,7 +115,7 @@ class InvoiceEmailService
                     Log::info("Email approved [{$type}#{$nomor}] → {$creatorEmail}");
                 }
             } catch (\Throwable $e) {
-                Log::error("InvoiceEmailService::sendApprovedNotification [{$type}#{$id}]: " . $e->getMessage());
+                Log::error("InvoiceEmailService::sendApprovedNotification [{$type}#{$id}]: ".$e->getMessage());
             }
         })->afterResponse();
     }
@@ -125,7 +135,7 @@ class InvoiceEmailService
                 ->where('receives_transaction_email', true)
                 ->where(function ($q) use ($gudangId) {
                     $q->where('gudang_id', $gudangId)
-                      ->orWhereHas('gudangs', fn($s) => $s->where('gudangs.id', $gudangId));
+                        ->orWhereHas('gudangs', fn ($s) => $s->where('gudangs.id', $gudangId));
                 })
                 ->pluck('email')
                 ->toArray();
@@ -139,11 +149,11 @@ class InvoiceEmailService
     /** Eager-load relations per tipe transaksi. */
     private static function relationsFor(string $type, bool $withApprover = false): array
     {
-        $base = match($type) {
+        $base = match ($type) {
             'penjualan' => ['items.produk', 'user', 'gudang'],
             'pembelian' => ['items.produk', 'user', 'gudang'],
             'kunjungan' => ['items.produk', 'user', 'gudang', 'kontak'],
-            default     => ['items', 'user', 'gudang'],
+            default => ['items', 'user', 'gudang'],
         };
 
         return $withApprover ? array_merge($base, ['approver']) : $base;

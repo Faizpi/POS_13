@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Pembayaran;
 use App\Models\Penjualan;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Carbon\Carbon;

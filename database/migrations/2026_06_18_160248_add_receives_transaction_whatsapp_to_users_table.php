@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (!Schema::hasColumn('users', 'receives_transaction_whatsapp')) {
+        if (! Schema::hasColumn('users', 'receives_transaction_whatsapp')) {
             Schema::table('users', function (Blueprint $table) {
                 $table->boolean('receives_transaction_whatsapp')->default(true)->after('receives_transaction_email');
             });

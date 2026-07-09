@@ -11,10 +11,12 @@ use Maatwebsite\Excel\Concerns\WithTitle;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class TransactionsExport implements FromView, WithTitle, ShouldAutoSize, WithStyles, WithColumnFormatting
+class TransactionsExport implements FromView, ShouldAutoSize, WithColumnFormatting, WithStyles, WithTitle
 {
     protected $transactions;
+
     protected string $exportType;
+
     protected ?string $generatedBy;
 
     public function __construct($transactions, string $exportType = 'all', ?string $generatedBy = null)
@@ -26,7 +28,7 @@ class TransactionsExport implements FromView, WithTitle, ShouldAutoSize, WithSty
 
     public function view(): View
     {
-        $viewName = match($this->exportType) {
+        $viewName = match ($this->exportType) {
             'penjualan' => 'reports.penjualan',
             'pembelian' => 'reports.pembelian',
             'biaya' => 'reports.biaya',
@@ -45,7 +47,7 @@ class TransactionsExport implements FromView, WithTitle, ShouldAutoSize, WithSty
 
     public function title(): string
     {
-        return match($this->exportType) {
+        return match ($this->exportType) {
             'penjualan' => 'Laporan Penjualan',
             'pembelian' => 'Laporan Pembelian',
             'biaya' => 'Laporan Biaya',
@@ -65,7 +67,7 @@ class TransactionsExport implements FromView, WithTitle, ShouldAutoSize, WithSty
     public function columnFormats(): array
     {
         // Phone number columns - set as TEXT to prevent Excel from auto-converting.
-        $phoneColumns = match($this->exportType) {
+        $phoneColumns = match ($this->exportType) {
             'penjualan' => ['E'],
             'kunjungan' => ['F', 'H'],
             'biaya' => ['G'],

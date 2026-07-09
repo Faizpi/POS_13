@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources\Pembayarans\Pages;
 
-use App\Filament\Concerns\ResolvesApprover;
 use App\Filament\Concerns\RenamesLampiran;
+use App\Filament\Concerns\ResolvesApprover;
 use App\Filament\Resources\Pembayarans\PembayaranResource;
 use App\Models\Pembayaran;
 use App\Models\Penjualan;
@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\DB;
 
 class CreatePembayaran extends CreateRecord
 {
-    use ResolvesApprover, RenamesLampiran;
+    use RenamesLampiran, ResolvesApprover;
 
     protected static string $resource = PembayaranResource::class;
 
@@ -27,27 +27,27 @@ class CreatePembayaran extends CreateRecord
             ->whereDate('created_at', Carbon::today())
             ->count();
         $noUrut = $countToday + 1;
-        $now    = Carbon::now();
+        $now = Carbon::now();
 
-        $data['user_id']        = auth()->id();
+        $data['user_id'] = auth()->id();
         $data['no_urut_harian'] = $noUrut;
-        $data['nomor']          = Pembayaran::generateNomor(auth()->id(), $noUrut, $now);
+        $data['nomor'] = Pembayaran::generateNomor(auth()->id(), $noUrut, $now);
 
         // Tentukan gudang (fallback dari penjualan pertama jika tidak ada di form)
-        if (empty($data['gudang_id']) && !empty($data['penjualan_ids'])) {
-            $firstId            = (array) $data['penjualan_ids'];
-            $penjualan          = Penjualan::find($firstId[0]);
-            $data['gudang_id']  = $penjualan?->gudang_id;
+        if (empty($data['gudang_id']) && ! empty($data['penjualan_ids'])) {
+            $firstId = (array) $data['penjualan_ids'];
+            $penjualan = Penjualan::find($firstId[0]);
+            $data['gudang_id'] = $penjualan?->gudang_id;
         }
 
         $gudangId = (int) ($data['gudang_id'] ?? 0);
 
         // Super admin: langsung Approved, lainnya: Pending
         if ($user->isSuperAdmin()) {
-            $data['status']      = 'Approved';
+            $data['status'] = 'Approved';
             $data['approver_id'] = $user->id;
         } else {
-            $data['status']      = 'Pending';
+            $data['status'] = 'Pending';
             $data['approver_id'] = $this->resolveApproverId($gudangId ?: null);
         }
 
@@ -61,7 +61,7 @@ class CreatePembayaran extends CreateRecord
      */
     protected function handleRecordCreation(array $data): Model
     {
-        $user       = auth()->user();
+        $user = auth()->user();
         $penjualanIds = (array) ($data['penjualan_ids'] ?? []);
         unset($data['penjualan_ids']);
 
@@ -70,14 +70,16 @@ class CreatePembayaran extends CreateRecord
             return Pembayaran::create($data);
         }
 
-        $jumlahBayar  = (float) ($data['jumlah_bayar'] ?? 0);
+        $jumlahBayar = (float) ($data['jumlah_bayar'] ?? 0);
         $lampiranPaths = $data['lampiran_paths'] ?? [];
 
         // Hitung sisa hutang per invoice
         $penjualanDetails = [];
         foreach ($penjualanIds as $penjualanId) {
             $penjualan = Penjualan::find($penjualanId);
-            if (!$penjualan) continue;
+            if (! $penjualan) {
+                continue;
+            }
 
             $sudahBayar = (float) Pembayaran::where('penjualan_id', $penjualanId)
                 ->where('status', 'Approved')
@@ -90,28 +92,30 @@ class CreatePembayaran extends CreateRecord
         }
 
         $firstRecord = null;
-        $sisaBayar   = $jumlahBayar;
+        $sisaBayar = $jumlahBayar;
 
         DB::beginTransaction();
         try {
             foreach ($penjualanDetails as $index => $detail) {
-                if ($sisaBayar <= 0) break;
+                if ($sisaBayar <= 0) {
+                    break;
+                }
 
                 $bayarUntukIni = min($sisaBayar, $detail['sisa']);
-                $sisaBayar    -= $bayarUntukIni;
+                $sisaBayar -= $bayarUntukIni;
 
                 // Suffix -A, -B, dst jika multi-invoice; tanpa suffix jika hanya 1
                 $nomorPembayaran = count($penjualanDetails) > 1
-                    ? $data['nomor'] . '-' . chr(65 + $index)
+                    ? $data['nomor'].'-'.chr(65 + $index)
                     : $data['nomor'];
 
                 $pembayaran = Pembayaran::create(array_merge($data, [
-                    'penjualan_id'    => $detail['penjualan']->id,
-                    'nomor'           => $nomorPembayaran,
-                    'no_urut_harian'  => ($data['no_urut_harian'] ?? 1) + $index,
-                    'jumlah_bayar'    => $bayarUntukIni,
+                    'penjualan_id' => $detail['penjualan']->id,
+                    'nomor' => $nomorPembayaran,
+                    'no_urut_harian' => ($data['no_urut_harian'] ?? 1) + $index,
+                    'jumlah_bayar' => $bayarUntukIni,
                     // Lampiran hanya di record pertama
-                    'lampiran_paths'  => $index === 0 ? $lampiranPaths : [],
+                    'lampiran_paths' => $index === 0 ? $lampiranPaths : [],
                 ]));
 
                 // Jika langsung Approved (super_admin), cek apakah invoice sudah lunas
@@ -134,7 +138,7 @@ class CreatePembayaran extends CreateRecord
             if ($sisaBayar > 0 && $firstRecord) {
                 $ket = $firstRecord->keterangan;
                 $firstRecord->update([
-                    'keterangan' => ($ket ? $ket . '. ' : '') . 'Kelebihan bayar: ' . format_rupiah($sisaBayar),
+                    'keterangan' => ($ket ? $ket.'. ' : '').'Kelebihan bayar: '.format_rupiah($sisaBayar),
                 ]);
             }
 
@@ -166,6 +170,7 @@ class CreatePembayaran extends CreateRecord
         $status = $record->status === 'Approved'
             ? 'Pembayaran langsung disetujui.'
             : 'Pembayaran berhasil diajukan untuk approval.';
+
         return $status;
     }
 }

@@ -4,13 +4,15 @@ namespace App\Filament\Pages;
 
 use App\Models\Gudang;
 use App\Models\Penjualan;
+use BackedEnum;
+use Carbon\Carbon;
 use Filament\Actions\Action;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Pages\Page;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use BackedEnum;
 use UnitEnum;
 
 class PiutangPage extends Page
@@ -28,7 +30,9 @@ class PiutangPage extends Page
     protected string $view = 'filament.pages.piutang';
 
     public ?string $filter_from = null;
+
     public ?string $filter_to = null;
+
     public ?int $filter_gudang_id = null;
 
     public function mount(): void
@@ -40,6 +44,7 @@ class PiutangPage extends Page
     public static function canAccess(): bool
     {
         $user = Auth::user();
+
         return in_array($user?->role, ['user', 'admin', 'spectator', 'super_admin']);
     }
 
@@ -52,8 +57,8 @@ class PiutangPage extends Page
             DB::raw('SUM(grand_total) as total'),
             DB::raw('COUNT(*) as jumlah')
         )
-        ->whereNotNull('tgl_jatuh_tempo')
-        ->whereIn('status', ['Approved', 'Lunas']);
+            ->whereNotNull('tgl_jatuh_tempo')
+            ->whereIn('status', ['Approved', 'Lunas']);
 
         if ($user->role === 'user') {
             $query->where('user_id', $user->id);
@@ -77,17 +82,17 @@ class PiutangPage extends Page
         $rows = $query->groupBy('bulan')->orderBy('bulan')->get();
 
         return [
-            'labels' => $rows->pluck('bulan')->map(fn($b) => \Carbon\Carbon::parse($b . '-01')->format('M Y'))->toArray(),
-            'totals' => $rows->pluck('total')->map(fn($v) => (float) $v)->toArray(),
+            'labels' => $rows->pluck('bulan')->map(fn ($b) => Carbon::parse($b.'-01')->format('M Y'))->toArray(),
+            'totals' => $rows->pluck('total')->map(fn ($v) => (float) $v)->toArray(),
             'counts' => $rows->pluck('jumlah')->toArray(),
         ];
     }
 
-    public function getListToko(): \Illuminate\Support\Collection
+    public function getListToko(): Collection
     {
         $user = Auth::user();
 
-        if (!in_array($user->role, ['spectator', 'super_admin'])) {
+        if (! in_array($user->role, ['spectator', 'super_admin'])) {
             return collect();
         }
 
@@ -108,6 +113,7 @@ class PiutangPage extends Page
         return $query->orderBy('tgl_jatuh_tempo')->get()->map(function ($p) {
             $totalBayar = $p->pembayarans()->where('status', 'Approved')->sum('jumlah_bayar');
             $sisa = max(0, $p->grand_total - $totalBayar);
+
             return [
                 'nomor' => $p->custom_number,
                 'pelanggan' => $p->pelanggan,
@@ -136,7 +142,7 @@ class PiutangPage extends Page
                     DatePicker::make('to')->label('Sampai Tanggal')->default($this->filter_to)->required(),
                     Select::make('gudang_id')
                         ->label('Gudang (Opsional)')
-                        ->options(fn() => Gudang::pluck('nama_gudang', 'id'))
+                        ->options(fn () => Gudang::pluck('nama_gudang', 'id'))
                         ->placeholder('Semua Gudang')
                         ->searchable()->preload(),
                 ])
@@ -152,7 +158,7 @@ class PiutangPage extends Page
                 ->label('Export PDF Harian')
                 ->icon('heroicon-o-document-arrow-down')
                 ->color('danger')
-                ->visible(fn() => $user?->canExportPdf())
+                ->visible(fn () => $user?->canExportPdf())
                 ->action(function () use ($user) {
                     $pdf = app('dompdf.wrapper');
                     $pdf->loadView('reports.piutang-pdf', [
@@ -161,8 +167,9 @@ class PiutangPage extends Page
                         'to' => $this->filter_to,
                         'generatedBy' => $user->name,
                     ]);
-                    $filename = 'Piutang_' . now()->format('Ymd') . '.pdf';
-                    return response()->streamDownload(fn() => print($pdf->output()), $filename);
+                    $filename = 'Piutang_'.now()->format('Ymd').'.pdf';
+
+                    return response()->streamDownload(fn () => print ($pdf->output()), $filename);
                 }),
         ];
     }

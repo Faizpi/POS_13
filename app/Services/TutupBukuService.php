@@ -58,13 +58,13 @@ class TutupBukuService
         } catch (\Exception $e) {
             DB::rollBack();
 
-            Log::error("Tutup Buku Tahunan {$tahun} Gagal: " . $e->getMessage(), [
+            Log::error("Tutup Buku Tahunan {$tahun} Gagal: ".$e->getMessage(), [
                 'exception' => $e,
             ]);
 
             $tutupBuku->update([
                 'status' => 'failed',
-                'notes' => ($tutupBuku->notes ? $tutupBuku->notes . "\n" : '') . "Proses gagal: " . $e->getMessage(),
+                'notes' => ($tutupBuku->notes ? $tutupBuku->notes."\n" : '').'Proses gagal: '.$e->getMessage(),
             ]);
 
             throw $e;
@@ -101,17 +101,17 @@ class TutupBukuService
             $pendingCount = DB::table($table)
                 ->where(function ($q) use ($dateCol, $tahun) {
                     $q->whereYear($dateCol, $tahun)
-                      ->orWhere(function ($q2) use ($dateCol, $tahun) {
-                          $q2->whereNull($dateCol)
-                             ->whereYear('created_at', $tahun);
-                      });
+                        ->orWhere(function ($q2) use ($dateCol, $tahun) {
+                            $q2->whereNull($dateCol)
+                                ->whereYear('created_at', $tahun);
+                        });
                 })
                 ->where('status', 'Pending')
                 ->count();
 
             if ($pendingCount > 0) {
                 throw new \InvalidArgumentException(
-                    "Terdapat {$pendingCount} transaksi berstatus 'Pending' pada tabel " . ucfirst($table) . ". Semua transaksi harus diproses (Lunas/Approved/Rejected/Canceled) sebelum tutup buku."
+                    "Terdapat {$pendingCount} transaksi berstatus 'Pending' pada tabel ".ucfirst($table).'. Semua transaksi harus diproses (Lunas/Approved/Rejected/Canceled) sebelum tutup buku.'
                 );
             }
         }
@@ -144,7 +144,7 @@ class TutupBukuService
             ->whereYear('tgl_transaksi', $tahun)
             ->orWhere(function ($q) use ($tahun) {
                 $q->whereNull('tgl_transaksi')
-                  ->whereYear('created_at', $tahun);
+                    ->whereYear('created_at', $tahun);
             })
             ->get();
 
@@ -217,7 +217,7 @@ class TutupBukuService
             ->whereYear('tgl_transaksi', $tahun)
             ->orWhere(function ($q) use ($tahun) {
                 $q->whereNull('tgl_transaksi')
-                  ->whereYear('created_at', $tahun);
+                    ->whereYear('created_at', $tahun);
             })
             ->get();
 
@@ -283,7 +283,7 @@ class TutupBukuService
             ->whereYear('tgl_transaksi', $tahun)
             ->orWhere(function ($q) use ($tahun) {
                 $q->whereNull('tgl_transaksi')
-                  ->whereYear('created_at', $tahun);
+                    ->whereYear('created_at', $tahun);
             })
             ->get();
 
@@ -343,7 +343,7 @@ class TutupBukuService
             ->whereYear('tgl_kunjungan', $tahun)
             ->orWhere(function ($q) use ($tahun) {
                 $q->whereNull('tgl_kunjungan')
-                  ->whereYear('created_at', $tahun);
+                    ->whereYear('created_at', $tahun);
             })
             ->get();
 
@@ -402,7 +402,7 @@ class TutupBukuService
             ->whereYear('tgl_pembayaran', $tahun)
             ->orWhere(function ($q) use ($tahun) {
                 $q->whereNull('tgl_pembayaran')
-                  ->whereYear('created_at', $tahun);
+                    ->whereYear('created_at', $tahun);
             })
             ->get();
 
@@ -450,7 +450,7 @@ class TutupBukuService
             ->whereYear('tgl_penerimaan', $tahun)
             ->orWhere(function ($q) use ($tahun) {
                 $q->whereNull('tgl_penerimaan')
-                  ->whereYear('created_at', $tahun);
+                    ->whereYear('created_at', $tahun);
             })
             ->get();
 

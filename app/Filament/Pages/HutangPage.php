@@ -4,14 +4,15 @@ namespace App\Filament\Pages;
 
 use App\Models\Gudang;
 use App\Models\Pembelian;
-use App\Models\Pembayaran;
+use BackedEnum;
+use Carbon\Carbon;
 use Filament\Actions\Action;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Pages\Page;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use BackedEnum;
 use UnitEnum;
 
 class HutangPage extends Page
@@ -29,7 +30,9 @@ class HutangPage extends Page
     protected string $view = 'filament.pages.hutang';
 
     public ?string $filter_from = null;
+
     public ?string $filter_to = null;
+
     public ?int $filter_gudang_id = null;
 
     public function mount(): void
@@ -41,6 +44,7 @@ class HutangPage extends Page
     public static function canAccess(): bool
     {
         $user = Auth::user();
+
         return in_array($user?->role, ['spectator', 'super_admin']);
     }
 
@@ -51,8 +55,8 @@ class HutangPage extends Page
             DB::raw('SUM(grand_total) as total'),
             DB::raw('COUNT(*) as jumlah')
         )
-        ->whereNotNull('tgl_jatuh_tempo')
-        ->whereIn('status', ['Approved', 'Lunas']);
+            ->whereNotNull('tgl_jatuh_tempo')
+            ->whereIn('status', ['Approved', 'Lunas']);
 
         if ($this->filter_gudang_id) {
             $query->where('gudang_id', $this->filter_gudang_id);
@@ -67,13 +71,13 @@ class HutangPage extends Page
         $rows = $query->groupBy('bulan')->orderBy('bulan')->get();
 
         return [
-            'labels' => $rows->pluck('bulan')->map(fn($b) => \Carbon\Carbon::parse($b . '-01')->format('M Y'))->toArray(),
-            'totals' => $rows->pluck('total')->map(fn($v) => (float) $v)->toArray(),
+            'labels' => $rows->pluck('bulan')->map(fn ($b) => Carbon::parse($b.'-01')->format('M Y'))->toArray(),
+            'totals' => $rows->pluck('total')->map(fn ($v) => (float) $v)->toArray(),
             'counts' => $rows->pluck('jumlah')->toArray(),
         ];
     }
 
-    public function getListTempo(): \Illuminate\Support\Collection
+    public function getListTempo(): Collection
     {
         $query = Pembelian::with(['gudang', 'kontak'])
             ->whereIn('status', ['Approved', 'Lunas'])
@@ -92,6 +96,7 @@ class HutangPage extends Page
         return $query->orderBy('tgl_jatuh_tempo')->get()->map(function ($p) {
             $totalBayar = $p->pembayarans()->where('status', 'Approved')->sum('jumlah_bayar');
             $sisa = max(0, $p->grand_total - $totalBayar);
+
             return [
                 'nomor' => $p->custom_number,
                 'supplier' => $p->kontak?->nama ?? '—',
@@ -120,7 +125,7 @@ class HutangPage extends Page
                     DatePicker::make('to')->label('Sampai Tanggal')->default($this->filter_to)->required(),
                     Select::make('gudang_id')
                         ->label('Gudang (Opsional)')
-                        ->options(fn() => Gudang::pluck('nama_gudang', 'id'))
+                        ->options(fn () => Gudang::pluck('nama_gudang', 'id'))
                         ->placeholder('Semua Gudang')
                         ->searchable()->preload(),
                 ])
@@ -136,7 +141,7 @@ class HutangPage extends Page
                 ->label('Export PDF Harian')
                 ->icon('heroicon-o-document-arrow-down')
                 ->color('danger')
-                ->visible(fn() => $user?->canExportPdf())
+                ->visible(fn () => $user?->canExportPdf())
                 ->action(function () use ($user) {
                     $pdf = app('dompdf.wrapper');
                     $pdf->loadView('reports.hutang-pdf', [
@@ -145,8 +150,9 @@ class HutangPage extends Page
                         'to' => $this->filter_to,
                         'generatedBy' => $user->name,
                     ]);
-                    $filename = 'Hutang_' . now()->format('Ymd') . '.pdf';
-                    return response()->streamDownload(fn() => print($pdf->output()), $filename);
+                    $filename = 'Hutang_'.now()->format('Ymd').'.pdf';
+
+                    return response()->streamDownload(fn () => print ($pdf->output()), $filename);
                 }),
         ];
     }

@@ -3,12 +3,12 @@
 namespace App\Filament\Pages;
 
 use App\Models\Kontak;
-use App\Models\Pembelian;
 use App\Models\Pembayaran;
+use App\Models\Pembelian;
+use BackedEnum;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use BackedEnum;
+use Illuminate\Support\Facades\Schema;
 use UnitEnum;
 
 class CatatanHutang extends Page
@@ -35,7 +35,7 @@ class CatatanHutang extends Page
         $user = Auth::user();
 
         // Defensive check: pastikan kolom kontak_id ada di tabel pembelians
-        if (!\Illuminate\Support\Facades\Schema::hasColumn('pembelians', 'kontak_id')) {
+        if (! Schema::hasColumn('pembelians', 'kontak_id')) {
             return [];
         }
 
@@ -47,8 +47,12 @@ class CatatanHutang extends Page
         // Scoping by role
         if ($user->role === 'admin') {
             $gudangIds = $user->gudangs->pluck('id')->toArray();
-            if ($user->current_gudang_id) $gudangIds[] = $user->current_gudang_id;
-            if ($user->gudang_id) $gudangIds[] = $user->gudang_id;
+            if ($user->current_gudang_id) {
+                $gudangIds[] = $user->current_gudang_id;
+            }
+            if ($user->gudang_id) {
+                $gudangIds[] = $user->gudang_id;
+            }
             $gudangIds = array_unique($gudangIds);
             $query->whereIn('gudang_id', $gudangIds);
         } elseif ($user->role === 'user') {
@@ -94,7 +98,7 @@ class CatatanHutang extends Page
         }
 
         // Sort by sisa hutang terbesar
-        usort($result, fn($a, $b) => $b['total_sisa'] <=> $a['total_sisa']);
+        usort($result, fn ($a, $b) => $b['total_sisa'] <=> $a['total_sisa']);
 
         return $result;
     }

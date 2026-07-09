@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Biaya;
+use App\Models\Kontak;
 use App\Models\Kunjungan;
 use App\Models\Pembelian;
 use App\Models\Penjualan;
-use Carbon\Carbon;
 
 class BluetoothPrintController extends Controller
 {
@@ -14,8 +14,8 @@ class BluetoothPrintController extends Controller
     {
         $p = Penjualan::with(['items.produk', 'user', 'gudang', 'approver'])->findOrFail($id);
 
-        $items = $p->items->map(fn($i) => [
-            'nama' => $i->produk?->nama_produk . ($i->produk?->item_code ? ' (' . $i->produk->item_code . ')' : ''),
+        $items = $p->items->map(fn ($i) => [
+            'nama' => $i->produk?->nama_produk.($i->produk?->item_code ? ' ('.$i->produk->item_code.')' : ''),
             'nama_produk' => $i->produk?->nama_produk,
             'item_code' => $i->produk?->item_code,
             'qty' => $i->kuantitas,
@@ -40,18 +40,18 @@ class BluetoothPrintController extends Controller
 
         // Resolve nomor telepon pelanggan with fallback
         $noTelepon = '';
-        if (!empty($p->no_telepon)) {
+        if (! empty($p->no_telepon)) {
             $noTelepon = $p->no_telepon;
-        } elseif (!empty($p->pelanggan)) {
-            $kontak = \App\Models\Kontak::where('nama', $p->pelanggan)->first();
-            if ($kontak && !empty($kontak->no_telp)) {
+        } elseif (! empty($p->pelanggan)) {
+            $kontak = Kontak::where('nama', $p->pelanggan)->first();
+            if ($kontak && ! empty($kontak->no_telp)) {
                 $noTelepon = $kontak->no_telp;
             }
         }
 
         return response()->json([
-            'nomor' => $p->nomor ?? $p->custom_number ?? ('INV-' . $p->id),
-            'tanggal' => ($p->tgl_transaksi ?? $p->created_at)?->format('d/m/Y') . ' | ' . $p->created_at->format('H:i'),
+            'nomor' => $p->nomor ?? $p->custom_number ?? ('INV-'.$p->id),
+            'tanggal' => ($p->tgl_transaksi ?? $p->created_at)?->format('d/m/Y').' | '.$p->created_at->format('H:i'),
             'jatuh_tempo' => $p->tgl_jatuh_tempo?->format('d/m/Y') ?? '-',
             'pembayaran' => $p->syarat_pembayaran ?? '-',
             'pelanggan' => $p->pelanggan ?? '-',
@@ -81,7 +81,7 @@ class BluetoothPrintController extends Controller
     {
         $p = Pembelian::with(['items.produk', 'user', 'gudang', 'approver'])->findOrFail($id);
 
-        $items = $p->items->map(fn($i) => [
+        $items = $p->items->map(fn ($i) => [
             'nama' => $i->produk?->nama_produk ?? $i->deskripsi ?? '-',
             'nama_produk' => $i->produk?->nama_produk,
             'qty' => $i->kuantitas,
@@ -129,7 +129,7 @@ class BluetoothPrintController extends Controller
     {
         $b = Biaya::with(['items', 'user', 'gudang', 'approver'])->findOrFail($id);
 
-        $items = $b->items->map(fn($i) => [
+        $items = $b->items->map(fn ($i) => [
             'kategori' => $i->kategori,
             'deskripsi' => $i->deskripsi,
             'jumlah' => $i->jumlah,
@@ -167,7 +167,7 @@ class BluetoothPrintController extends Controller
     {
         $k = Kunjungan::with(['items.produk', 'user', 'gudang', 'approver', 'kontak'])->findOrFail($id);
 
-        $items = $k->items->map(fn($i) => [
+        $items = $k->items->map(fn ($i) => [
             'nama' => $i->produk?->nama_produk ?? '-',
             'nama_produk' => $i->produk?->nama_produk,
             'kode' => $i->produk?->item_code ?? '-',

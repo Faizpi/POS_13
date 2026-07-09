@@ -15,14 +15,19 @@ class KunjunganStatsWidget extends BaseStatsOverviewWidget
 
     protected function getStats(): array
     {
-        $user         = auth()->user();
+        $user = auth()->user();
         $isSuperAdmin = $user?->isSuperAdmin();
-        $isAdmin      = $user?->isAdmin();
-        $gudangId     = ($isAdmin && !$isSuperAdmin) ? $user?->getCurrentGudang()?->id : null;
+        $isAdmin = $user?->isAdmin();
+        $gudangId = ($isAdmin && ! $isSuperAdmin) ? $user?->getCurrentGudang()?->id : null;
 
         $scope = function ($query) use ($isSuperAdmin, $isAdmin, $gudangId, $user) {
-            if ($isSuperAdmin) return $query;
-            if ($isAdmin && $gudangId) return $query->where('gudang_id', $gudangId);
+            if ($isSuperAdmin) {
+                return $query;
+            }
+            if ($isAdmin && $gudangId) {
+                return $query->where('gudang_id', $gudangId);
+            }
+
             return $query->where('user_id', $user->id);
         };
 
@@ -49,27 +54,27 @@ class KunjunganStatsWidget extends BaseStatsOverviewWidget
         )->count();
 
         return [
-            Stat::make('Pemeriksaan Stock', number_format($totalPemeriksaanStock) . ' kunjungan')
+            Stat::make('Pemeriksaan Stock', number_format($totalPemeriksaanStock).' kunjungan')
                 ->description('Pending + Approved')
                 ->descriptionIcon('heroicon-o-clipboard-document-check')
                 ->color('info'),
 
-            Stat::make('Penagihan', number_format($totalPenagihan) . ' kunjungan')
+            Stat::make('Penagihan', number_format($totalPenagihan).' kunjungan')
                 ->description('Pending + Approved')
                 ->descriptionIcon('heroicon-o-currency-dollar')
                 ->color('warning'),
 
-            Stat::make('Promo Gratis', number_format($totalPromoGratis) . ' kunjungan')
+            Stat::make('Promo Gratis', number_format($totalPromoGratis).' kunjungan')
                 ->description('Pending + Approved')
                 ->descriptionIcon('heroicon-o-gift')
                 ->color('success'),
 
-            Stat::make('Promo Sample', number_format($totalPromoSample) . ' kunjungan')
+            Stat::make('Promo Sample', number_format($totalPromoSample).' kunjungan')
                 ->description('Pending + Approved')
                 ->descriptionIcon('heroicon-o-beaker')
                 ->color('primary'),
 
-            Stat::make('Total Canceled', number_format($totalCanceled) . ' kunjungan')
+            Stat::make('Total Canceled', number_format($totalCanceled).' kunjungan')
                 ->description('Semua periode')
                 ->descriptionIcon('heroicon-o-x-circle')
                 ->color($totalCanceled > 0 ? 'gray' : 'success'),

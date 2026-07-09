@@ -55,7 +55,7 @@ class StockOpnameController extends Controller
 
         if ($user->role === 'admin') {
             $currentGudang = $user->getCurrentGudang();
-            if (!$currentGudang || (int) $opname->gudang_id !== (int) $currentGudang->id) {
+            if (! $currentGudang || (int) $opname->gudang_id !== (int) $currentGudang->id) {
                 return response()->json(['message' => 'Unauthorized'], 403);
             }
         }
@@ -67,7 +67,7 @@ class StockOpnameController extends Controller
     {
         $user = auth()->user();
 
-        if (!in_array($user->role, ['admin', 'super_admin'])) {
+        if (! in_array($user->role, ['admin', 'super_admin'])) {
             return response()->json(['message' => 'Hanya admin dan super admin yang dapat membuat stock opname.'], 403);
         }
 
@@ -84,7 +84,7 @@ class StockOpnameController extends Controller
         // Gudang access check for admin
         if ($user->role === 'admin') {
             $currentGudang = $user->getCurrentGudang();
-            if (!$currentGudang || (int) $request->gudang_id !== (int) $currentGudang->id) {
+            if (! $currentGudang || (int) $request->gudang_id !== (int) $currentGudang->id) {
                 return response()->json(['message' => 'Gudang harus sesuai gudang aktif.'], 403);
             }
         }
@@ -131,6 +131,7 @@ class StockOpnameController extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
+
             return response()->json(['message' => 'Gagal membuat stock opname.'], 500);
         }
     }
@@ -140,7 +141,7 @@ class StockOpnameController extends Controller
         $user = auth()->user();
         $opname = StockOpname::findOrFail($id);
 
-        if (!$opname->isDraft()) {
+        if (! $opname->isDraft()) {
             return response()->json(['message' => 'Hanya stock opname dengan status Draft yang bisa disubmit.'], 422);
         }
 
@@ -151,7 +152,7 @@ class StockOpnameController extends Controller
 
         if ($user->role === 'admin') {
             $currentGudang = $user->getCurrentGudang();
-            if (!$currentGudang || (int) $opname->gudang_id !== (int) $currentGudang->id) {
+            if (! $currentGudang || (int) $opname->gudang_id !== (int) $currentGudang->id) {
                 return response()->json(['message' => 'Hanya bisa submit stock opname di gudang aktif.'], 403);
             }
         }
@@ -165,13 +166,13 @@ class StockOpnameController extends Controller
     {
         $user = auth()->user();
 
-        if (!$user->isSuperAdmin()) {
+        if (! $user->isSuperAdmin()) {
             return response()->json(['message' => 'Hanya Super Admin yang dapat apply stock opname.'], 403);
         }
 
         $opname = StockOpname::with(['items.produk', 'gudang'])->findOrFail($id);
 
-        if (!$opname->isSubmitted()) {
+        if (! $opname->isSubmitted()) {
             return response()->json(['message' => 'Hanya stock opname dengan status Submitted yang bisa di-apply.'], 422);
         }
 
@@ -208,7 +209,7 @@ class StockOpnameController extends Controller
                     'stok_sebelum' => $stokSebelum,
                     'stok_sesudah' => $stokSesudah,
                     'selisih' => $selisih,
-                    'keterangan' => 'Stock Opname: ' . $opname->nomor,
+                    'keterangan' => 'Stock Opname: '.$opname->nomor,
                 ]);
             }
 
@@ -223,6 +224,7 @@ class StockOpnameController extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
+
             return response()->json(['message' => 'Gagal apply stock opname.'], 500);
         }
     }

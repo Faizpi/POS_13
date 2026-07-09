@@ -28,7 +28,7 @@ class CreateKontak extends CreateRecord
         }
 
         // Gap A5: Normalize phone number 08xxx → 628xxx (legacy normalizePhone)
-        if (!empty($data['no_telp'])) {
+        if (! empty($data['no_telp'])) {
             $data['no_telp'] = self::normalizePhone($data['no_telp']);
         }
 
@@ -46,11 +46,12 @@ class CreateKontak extends CreateRecord
             $phone = substr($phone, 1);
         }
         if (str_starts_with($phone, '08')) {
-            $phone = '62' . substr($phone, 1);
+            $phone = '62'.substr($phone, 1);
         }
         if (str_starts_with($phone, '8') && strlen($phone) >= 9 && strlen($phone) <= 13) {
-            $phone = '62' . $phone;
+            $phone = '62'.$phone;
         }
+
         return $phone;
     }
 }

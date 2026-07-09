@@ -21,7 +21,7 @@ class EditKontak extends EditRecord
     {
         $user = auth()->user();
 
-        if (!$user?->isSuperAdmin()) {
+        if (! $user?->isSuperAdmin()) {
             // User dan admin: hanya PIN yang bisa diedit
             return $schema->components([
                 Section::make('Edit PIN Customer')
@@ -47,7 +47,7 @@ class EditKontak extends EditRecord
     {
         return [
             DeleteAction::make()
-                ->visible(fn() => auth()->user()?->isSuperAdmin()),
+                ->visible(fn () => auth()->user()?->isSuperAdmin()),
         ];
     }
 }

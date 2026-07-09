@@ -18,7 +18,7 @@ class ChartPenjualanSales extends ChartWidget
 
     protected ?string $maxHeight = '230px';
 
-    protected int | string | array $columnSpan = 'full';
+    protected int|string|array $columnSpan = 'full';
 
     public ?string $filter = 'month';
 
@@ -105,11 +105,11 @@ class ChartPenjualanSales extends ChartWidget
         $values = $data->map(fn ($item) => (float) $item->total)->toArray();
 
         // Build gradient-like color array from indigo→violet based on rank
-        $count  = count($values);
+        $count = count($values);
         $colors = [];
         for ($i = 0; $i < $count; $i++) {
-            $ratio    = $count > 1 ? $i / ($count - 1) : 0;
-            $opacity  = round(0.95 - $ratio * 0.25, 2);
+            $ratio = $count > 1 ? $i / ($count - 1) : 0;
+            $opacity = round(0.95 - $ratio * 0.25, 2);
             $colors[] = $i % 2 === 0
                 ? "rgba(99, 102, 241, {$opacity})"
                 : "rgba(139, 92, 246, {$opacity})";
@@ -118,13 +118,13 @@ class ChartPenjualanSales extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label'                => 'Total Penjualan',
-                    'data'                 => $values,
-                    'backgroundColor'      => $colors ?: '#6366f1',
+                    'label' => 'Total Penjualan',
+                    'data' => $values,
+                    'backgroundColor' => $colors ?: '#6366f1',
                     'hoverBackgroundColor' => '#818cf8',
-                    'borderRadius'         => 10,
-                    'borderSkipped'        => false,
-                    'barThickness'         => 18,
+                    'borderRadius' => 10,
+                    'borderSkipped' => false,
+                    'barThickness' => 18,
                 ],
             ],
             'labels' => $labels,
@@ -188,12 +188,12 @@ class ChartPenjualanSales extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label'           => 'Total Penjualan',
-                    'data'            => [],
+                    'label' => 'Total Penjualan',
+                    'data' => [],
                     'backgroundColor' => '#6366f1',
-                    'borderRadius'    => 10,
-                    'borderSkipped'   => false,
-                    'barThickness'    => 18,
+                    'borderRadius' => 10,
+                    'borderSkipped' => false,
+                    'barThickness' => 18,
                 ],
             ],
             'labels' => [],

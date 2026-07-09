@@ -5,8 +5,8 @@ namespace App\Filament\Resources\Users\Schemas;
 use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
@@ -79,16 +79,16 @@ class UserForm
                             ->relationship('gudang', 'nama_gudang')
                             ->searchable()
                             ->preload()
-                            ->required(fn(callable $get) => $get('role') === 'user')
-                            ->visible(fn(callable $get) => $get('role') === 'user')
+                            ->required(fn (callable $get) => $get('role') === 'user')
+                            ->visible(fn (callable $get) => $get('role') === 'user')
                             ->helperText('Wajib untuk role User'),
 
                         CheckboxList::make('gudangs')
                             ->label('Gudang yang Dikelola')
                             ->relationship('gudangs', 'nama_gudang')
                             ->bulkToggleable()
-                            ->required(fn(callable $get) => in_array($get('role'), ['admin', 'spectator']))
-                            ->visible(fn(callable $get) => $get('role') === 'admin')
+                            ->required(fn (callable $get) => in_array($get('role'), ['admin', 'spectator']))
+                            ->visible(fn (callable $get) => $get('role') === 'admin')
                             ->columns(2)
                             ->helperText('Pilih satu atau lebih gudang yang akan dikelola admin ini'),
 
@@ -96,8 +96,8 @@ class UserForm
                             ->label('Gudang yang Dapat Diakses')
                             ->relationship('spectatorGudangs', 'nama_gudang')
                             ->bulkToggleable()
-                            ->required(fn(callable $get) => $get('role') === 'spectator')
-                            ->visible(fn(callable $get) => $get('role') === 'spectator')
+                            ->required(fn (callable $get) => $get('role') === 'spectator')
+                            ->visible(fn (callable $get) => $get('role') === 'spectator')
                             ->columns(2)
                             ->helperText('Spectator hanya bisa melihat (read-only) data dari gudang yang dipilih'),
                     ])
@@ -120,12 +120,12 @@ class UserForm
 
                         Toggle::make('can_export_pdf')
                             ->label('Hak Export PDF')
-                            ->visible(fn(callable $get) => $get('role') === 'admin')
+                            ->visible(fn (callable $get) => $get('role') === 'admin')
                             ->default(false),
 
                         Toggle::make('can_export_excel')
                             ->label('Hak Export Excel')
-                            ->visible(fn(callable $get) => $get('role') === 'admin')
+                            ->visible(fn (callable $get) => $get('role') === 'admin')
                             ->default(false),
                     ])
                     ->columns(3),
@@ -138,18 +138,18 @@ class UserForm
                             ->label('Password')
                             ->password()
                             ->revealable()
-                            ->required(fn(string $operation): bool => $operation === 'create')
+                            ->required(fn (string $operation): bool => $operation === 'create')
                             ->minLength(8)
-                            ->dehydrateStateUsing(fn($state) => filled($state) ? Hash::make($state) : null)
-                            ->dehydrated(fn($state) => filled($state))
-                            ->helperText(fn(string $operation): string => $operation === 'edit' ? 'Kosongkan jika tidak ingin mengubah password' : 'Minimal 8 karakter'),
+                            ->dehydrateStateUsing(fn ($state) => filled($state) ? Hash::make($state) : null)
+                            ->dehydrated(fn ($state) => filled($state))
+                            ->helperText(fn (string $operation): string => $operation === 'edit' ? 'Kosongkan jika tidak ingin mengubah password' : 'Minimal 8 karakter'),
 
                         TextInput::make('password_confirmation')
                             ->label('Konfirmasi Password')
                             ->password()
                             ->revealable()
                             ->same('password')
-                            ->required(fn(string $operation): bool => $operation === 'create')
+                            ->required(fn (string $operation): bool => $operation === 'create')
                             ->dehydrated(false),
                     ])
                     ->columns(2),

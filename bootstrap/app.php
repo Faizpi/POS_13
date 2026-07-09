@@ -1,10 +1,14 @@
 <?php
 
+use App\Http\Middleware\ApiTokenAuth;
+use App\Http\Middleware\CheckRole;
+use App\Http\Middleware\CustomerAuth;
+use App\Http\Middleware\CustomerSubdomainRedirect;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
-use Illuminate\Auth\AuthenticationException;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -14,15 +18,15 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
-->withMiddleware(function (Middleware $middleware): void {
+    ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
-            'role' => \App\Http\Middleware\CheckRole::class,
-            'api.token' => \App\Http\Middleware\ApiTokenAuth::class,
-            'customer.auth' => \App\Http\Middleware\CustomerAuth::class,
+            'role' => CheckRole::class,
+            'api.token' => ApiTokenAuth::class,
+            'customer.auth' => CustomerAuth::class,
         ]);
 
         $middleware->web(append: [
-            \App\Http\Middleware\CustomerSubdomainRedirect::class,
+            CustomerSubdomainRedirect::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
@@ -41,6 +45,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
                 // Fallback berdasarkan guard
                 $guard = $e->guards()[0] ?? null;
+
                 return redirect()->guest(match ($guard) {
                     'customer' => '/customer/login',
                     default => '/app/login',
@@ -71,6 +76,6 @@ return Application::configure(basePath: dirname(__DIR__))
                 ], $statusCode);
             }
 
-            return; // Biarkan default Laravel
+             // Biarkan default Laravel
         });
     })->create();

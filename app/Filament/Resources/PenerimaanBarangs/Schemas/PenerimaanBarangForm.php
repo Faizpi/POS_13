@@ -6,20 +6,25 @@ use App\Exports\PenerimaanBarangTemplateExport;
 use App\Imports\PenerimaanBarangItemImport;
 use App\Models\Gudang;
 use App\Models\Pembelian;
+use App\Models\PenerimaanBarang;
 use App\Models\PenerimaanBarangItem;
 use App\Models\Produk;
+use Carbon\Carbon;
 use Filament\Actions\Action;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Validators\ValidationException;
 
 class PenerimaanBarangForm
 {
@@ -30,13 +35,14 @@ class PenerimaanBarangForm
                 Section::make('Detail Penerimaan')
                     ->icon('heroicon-o-truck')
                     ->schema([
-                        \Filament\Forms\Components\Placeholder::make('preview_nomor')
+                        Placeholder::make('preview_nomor')
                             ->label('No Transaksi (Preview)')
                             ->content(function () {
-                                $countToday = \App\Models\PenerimaanBarang::where('user_id', auth()->id())
-                                    ->whereDate('created_at', \Carbon\Carbon::today())
+                                $countToday = PenerimaanBarang::where('user_id', auth()->id())
+                                    ->whereDate('created_at', Carbon::today())
                                     ->count();
-                                return \App\Models\PenerimaanBarang::generateNomor(auth()->id(), $countToday + 1, \Carbon\Carbon::now()) . ' (Auto)';
+
+                                return PenerimaanBarang::generateNomor(auth()->id(), $countToday + 1, Carbon::now()).' (Auto)';
                             })
                             ->hiddenOn(['view', 'edit'])
                             ->extraAttributes(['class' => 'text-primary-600 font-bold']),
@@ -44,9 +50,9 @@ class PenerimaanBarangForm
                         Select::make('gudang_id')
                             ->label('Gudang')
                             ->required()
-                            ->options(fn() => Gudang::pluck('nama_gudang', 'id'))
-                            ->default(fn() => auth()->user()?->getCurrentGudang()?->id)
-                            ->disabled(fn() => !auth()->user()?->isSuperAdmin())
+                            ->options(fn () => Gudang::pluck('nama_gudang', 'id'))
+                            ->default(fn () => auth()->user()?->getCurrentGudang()?->id)
+                            ->disabled(fn () => ! auth()->user()?->isSuperAdmin())
                             ->dehydrated()
                             ->live(),
 
@@ -60,7 +66,9 @@ class PenerimaanBarangForm
                             ->preload()
                             ->options(function (callable $get) {
                                 $gudangId = $get('gudang_id');
-                                if (!$gudangId) return [];
+                                if (! $gudangId) {
+                                    return [];
+                                }
 
                                 return Pembelian::where('gudang_id', $gudangId)
                                     ->whereIn('status', ['Approved', 'Pending'])
@@ -73,12 +81,15 @@ class PenerimaanBarangForm
                                             })->where('produk_id', $item->produk_id)->sum('qty_diterima');
 
                                             $qtySisa = ($item->kuantitas ?? $item->jumlah ?? 0) - $qtyDiterima;
-                                            if ($qtySisa > 0) return true;
+                                            if ($qtySisa > 0) {
+                                                return true;
+                                            }
                                         }
+
                                         return false;
                                     })
                                     ->mapWithKeys(fn ($p) => [
-                                        $p->id => $p->nomor . ($p->kontak ? ' — ' . $p->kontak->nama : ''),
+                                        $p->id => $p->nomor.($p->kontak ? ' — '.$p->kontak->nama : ''),
                                     ]);
                             })
                             ->live()
@@ -86,13 +97,16 @@ class PenerimaanBarangForm
                             ->afterStateUpdated(function ($state, callable $set, callable $get) {
                                 if (empty($state)) {
                                     $set('items', []);
+
                                     return;
                                 }
 
                                 $newItems = [];
                                 foreach ((array) $state as $pembelianId) {
                                     $pembelian = Pembelian::with('items.produk')->find($pembelianId);
-                                    if (!$pembelian) continue;
+                                    if (! $pembelian) {
+                                        continue;
+                                    }
 
                                     foreach ($pembelian->items as $item) {
                                         // Hitung qty yang sudah diterima (approved only)
@@ -101,19 +115,21 @@ class PenerimaanBarangForm
                                         })->where('produk_id', $item->produk_id)->sum('qty_diterima');
 
                                         $qtyPesan = $item->kuantitas ?? $item->jumlah ?? 0;
-                                        $qtySisa  = max(0, $qtyPesan - $qtyDiterima);
+                                        $qtySisa = max(0, $qtyPesan - $qtyDiterima);
 
-                                        if ($qtySisa <= 0) continue; // Skip item yang sudah penuh diterima
+                                        if ($qtySisa <= 0) {
+                                            continue;
+                                        } // Skip item yang sudah penuh diterima
 
                                         $newItems[] = [
-                                            'pembelian_id'  => $pembelianId,
-                                            'produk_id'     => $item->produk_id,
-                                            'qty_diterima'  => $qtySisa, // Pre-fill dengan qty sisa
-                                            'qty_reject'    => 0,
-                                            'tipe_stok'     => 'penjualan',
-                                            'batch_number'  => null,
-                                            'expired_date'  => null,
-                                            'keterangan'    => null,
+                                            'pembelian_id' => $pembelianId,
+                                            'produk_id' => $item->produk_id,
+                                            'qty_diterima' => $qtySisa, // Pre-fill dengan qty sisa
+                                            'qty_reject' => 0,
+                                            'tipe_stok' => 'penjualan',
+                                            'batch_number' => null,
+                                            'expired_date' => null,
+                                            'keterangan' => null,
                                         ];
                                     }
                                 }
@@ -152,21 +168,21 @@ class PenerimaanBarangForm
                             ])
                             ->action(function (array $data, callable $set, callable $get) {
                                 $file = $data['file'] ?? null;
-                                if (!$file) {
+                                if (! $file) {
                                     return;
                                 }
 
-                                $path = $file instanceof \Livewire\Features\SupportFileUploads\TemporaryUploadedFile
+                                $path = $file instanceof TemporaryUploadedFile
                                     ? $file->getRealPath()
                                     : $file;
 
-                                $import = new PenerimaanBarangItemImport();
+                                $import = new PenerimaanBarangItemImport;
 
                                 try {
                                     Excel::import($import, $path);
-                                } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+                                } catch (ValidationException $e) {
                                     $errorMessages = collect($e->failures())
-                                        ->map(fn($failure) => "Baris {$failure->row()}: " . implode(', ', $failure->errors()))
+                                        ->map(fn ($failure) => "Baris {$failure->row()}: ".implode(', ', $failure->errors()))
                                         ->implode("\n");
 
                                     Notification::make()
@@ -179,21 +195,21 @@ class PenerimaanBarangForm
                                 }
 
                                 $existingItems = $get('items') ?? [];
-                                $newItems = $import->importedItems->map(fn($item) => [
-                                    'produk_id'     => $item['produk_id'],
-                                    'qty_diterima'  => $item['qty_diterima'],
-                                    'batch_number'  => $item['batch_number'],
-                                    'expired_date'  => $item['expired_date'],
-                                    'qty_reject'    => 0,
-                                    'tipe_stok'     => 'penjualan',
-                                    'keterangan'    => null,
+                                $newItems = $import->importedItems->map(fn ($item) => [
+                                    'produk_id' => $item['produk_id'],
+                                    'qty_diterima' => $item['qty_diterima'],
+                                    'batch_number' => $item['batch_number'],
+                                    'expired_date' => $item['expired_date'],
+                                    'qty_reject' => 0,
+                                    'tipe_stok' => 'penjualan',
+                                    'keterangan' => null,
                                 ])->toArray();
 
                                 $set('items', array_merge($existingItems, $newItems));
 
                                 Notification::make()
                                     ->title('Import Berhasil')
-                                    ->body(count($newItems) . ' item berhasil diimport dari Excel.')
+                                    ->body(count($newItems).' item berhasil diimport dari Excel.')
                                     ->success()
                                     ->send();
                             }),
@@ -203,7 +219,7 @@ class PenerimaanBarangForm
                             ->color('info')
                             ->action(function () {
                                 return response()->streamDownload(function () {
-                                    echo \Maatwebsite\Excel\Facades\Excel::raw(
+                                    echo Excel::raw(
                                         new PenerimaanBarangTemplateExport,
                                         \Maatwebsite\Excel\Excel::XLSX
                                     );
@@ -220,7 +236,7 @@ class PenerimaanBarangForm
                                 Select::make('produk_id')
                                     ->label('Produk')
                                     ->required()
-                                    ->options(fn() => Produk::orderBy('nama_produk')->pluck('nama_produk', 'id'))
+                                    ->options(fn () => Produk::orderBy('nama_produk')->pluck('nama_produk', 'id'))
                                     ->searchable()
                                     ->disabled() // Auto-filled dari PO, tidak boleh diubah manual
                                     ->dehydrated()
@@ -243,8 +259,8 @@ class PenerimaanBarangForm
                                     ->label('Tipe Stok')
                                     ->options([
                                         'penjualan' => 'Penjualan',
-                                        'gratis'    => 'Gratis',
-                                        'sample'    => 'Sample',
+                                        'gratis' => 'Gratis',
+                                        'sample' => 'Sample',
                                     ])
                                     ->default('penjualan')
                                     ->native(false),
@@ -259,10 +275,13 @@ class PenerimaanBarangForm
                             ->deletable(true)  // Bisa hapus item tertentu jika tidak perlu diterima
                             ->reorderableWithButtons()
                             ->itemLabel(function (array $state): ?string {
-                                if (!isset($state['produk_id'])) return null;
+                                if (! isset($state['produk_id'])) {
+                                    return null;
+                                }
                                 $produk = Produk::find($state['produk_id']);
-                                $qty    = $state['qty_diterima'] ?? 0;
-                                return $produk?->nama_produk . ' × ' . $qty;
+                                $qty = $state['qty_diterima'] ?? 0;
+
+                                return $produk?->nama_produk.' × '.$qty;
                             })
                             ->required()
                             ->minItems(1),
@@ -277,16 +296,17 @@ class PenerimaanBarangForm
                             ->multiple()
                             ->disk('public')
                             ->directory('lampiran_penerimaan')
-                            ->getUploadedFileNameForStorageUsing(function (\Livewire\Features\SupportFileUploads\TemporaryUploadedFile $file, $record): string {
+                            ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file, $record): string {
                                 $user = auth()->user();
                                 $now = now();
                                 if ($record && $record->exists) {
                                     $nomor = $record->nomor;
                                 } else {
-                                    $countToday = \App\Models\PenerimaanBarang::where('user_id', $user->id)->whereDate('created_at', $now)->count();
-                                    $nomor = "RCV-{$now->format('Ymd')}-{$user->id}-" . str_pad($countToday + 1, 3, '0', STR_PAD_LEFT);
+                                    $countToday = PenerimaanBarang::where('user_id', $user->id)->whereDate('created_at', $now)->count();
+                                    $nomor = "RCV-{$now->format('Ymd')}-{$user->id}-".str_pad($countToday + 1, 3, '0', STR_PAD_LEFT);
                                 }
-                                return "{$nomor}-" . time() . ".{$file->extension()}";
+
+                                return "{$nomor}-".time().".{$file->extension()}";
                             })
                             ->columnSpanFull(),
                     ]),

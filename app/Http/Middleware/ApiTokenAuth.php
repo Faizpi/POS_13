@@ -13,21 +13,21 @@ class ApiTokenAuth
     {
         $token = $request->bearerToken();
 
-        if (!$token) {
+        if (! $token) {
             return response()->json(['message' => 'Unauthenticated.'], 401);
         }
 
         $hashedToken = hash('sha256', $token);
         $accessToken = PersonalAccessToken::where('token', $hashedToken)->first();
 
-        if (!$accessToken || $accessToken->isExpired()) {
+        if (! $accessToken || $accessToken->isExpired()) {
             return response()->json(['message' => 'Token invalid atau sudah expired.'], 401);
         }
 
         $accessToken->update(['last_used_at' => now()]);
 
         $user = $accessToken->user;
-        if (!$user) {
+        if (! $user) {
             return response()->json(['message' => 'User tidak ditemukan.'], 401);
         }
 

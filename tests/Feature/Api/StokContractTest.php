@@ -46,7 +46,7 @@ class StokContractTest extends TestCase
         $response->assertStatus(200);
         $gudangs = $response->json();
         // Verify stok is normalized (sum of types)
-        if (!empty($gudangs) && isset($gudangs[0]['gudang_produks'])) {
+        if (! empty($gudangs) && isset($gudangs[0]['gudang_produks'])) {
             $first = $gudangs[0]['gudang_produks'][0];
             $expected = $first['stok_penjualan'] + $first['stok_gratis'] + $first['stok_sample'];
             $this->assertEquals($expected, $first['stok']);

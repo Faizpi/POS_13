@@ -13,39 +13,39 @@ return new class extends Migration
 
         // 1. pembelians: tambah kolom kontak_id + 4 field baru
         Schema::table('pembelians', function (Blueprint $table) {
-            if (!Schema::hasColumn('pembelians', 'kontak_id')) {
+            if (! Schema::hasColumn('pembelians', 'kontak_id')) {
                 $table->foreignId('kontak_id')->nullable()->after('gudang_id')->constrained('kontaks')->nullOnDelete();
             }
-            if (!Schema::hasColumn('pembelians', 'tipe_harga')) {
+            if (! Schema::hasColumn('pembelians', 'tipe_harga')) {
                 $table->string('tipe_harga')->default('retail');
             }
-            if (!Schema::hasColumn('pembelians', 'no_referensi')) {
+            if (! Schema::hasColumn('pembelians', 'no_referensi')) {
                 $table->string('no_referensi')->nullable();
             }
-            if (!Schema::hasColumn('pembelians', 'no_resi')) {
+            if (! Schema::hasColumn('pembelians', 'no_resi')) {
                 $table->string('no_resi')->nullable();
             }
-            if (!Schema::hasColumn('pembelians', 'biaya_pengiriman')) {
+            if (! Schema::hasColumn('pembelians', 'biaya_pengiriman')) {
                 $table->decimal('biaya_pengiriman', 15, 2)->nullable()->default(0);
             }
         });
 
         // 2. penjualans: tambah 2 field baru
         Schema::table('penjualans', function (Blueprint $table) {
-            if (!Schema::hasColumn('penjualans', 'no_resi')) {
+            if (! Schema::hasColumn('penjualans', 'no_resi')) {
                 $table->string('no_resi')->nullable();
             }
-            if (!Schema::hasColumn('penjualans', 'biaya_pengiriman')) {
+            if (! Schema::hasColumn('penjualans', 'biaya_pengiriman')) {
                 $table->decimal('biaya_pengiriman', 15, 2)->nullable()->default(0);
             }
         });
 
         // 3. pembayarans: extend untuk support hutang
         Schema::table('pembayarans', function (Blueprint $table) {
-            if (!Schema::hasColumn('pembayarans', 'type')) {
+            if (! Schema::hasColumn('pembayarans', 'type')) {
                 $table->string('type')->default('piutang')->comment('piutang = dari penjualan, hutang = dari pembelian');
             }
-            if (!Schema::hasColumn('pembayarans', 'pembelian_id')) {
+            if (! Schema::hasColumn('pembayarans', 'pembelian_id')) {
                 $table->unsignedBigInteger('pembelian_id')->nullable()->index();
                 $table->foreign('pembelian_id', 'pembayarans_pembelian_fk')
                     ->references('id')->on('pembelians')->nullOnDelete();
@@ -53,7 +53,7 @@ return new class extends Migration
         });
 
         // 4. stock_opnames: tabel baru (jika belum ada)
-        if (!Schema::hasTable('stock_opnames')) {
+        if (! Schema::hasTable('stock_opnames')) {
             Schema::create('stock_opnames', function (Blueprint $table) {
                 $table->id();
                 $table->uuid('uuid')->unique();
@@ -74,7 +74,7 @@ return new class extends Migration
         }
 
         // 5. stock_opname_items: tabel baru
-        if (!Schema::hasTable('stock_opname_items')) {
+        if (! Schema::hasTable('stock_opname_items')) {
             Schema::create('stock_opname_items', function (Blueprint $table) {
                 $table->id();
                 $table->foreignId('stock_opname_id')->constrained('stock_opnames')->cascadeOnDelete();

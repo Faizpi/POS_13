@@ -1,11 +1,11 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiDocController;
 use App\Http\Controllers\BluetoothPrintController;
 use App\Http\Controllers\CustomerPortalController;
 use App\Http\Controllers\PrintController;
 use App\Http\Controllers\PublicDocumentController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +18,7 @@ Route::get('/', function () {
     if (auth()->check()) {
         return redirect('/app');
     }
+
     return redirect('/app/login');
 });
 

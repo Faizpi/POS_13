@@ -2,8 +2,10 @@
 
 namespace App\Filament\Pages;
 
+use App\Exports\NeracaExport;
 use App\Models\Gudang;
 use App\Services\NeracaService;
+use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
@@ -11,8 +13,6 @@ use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\NeracaExport;
-use BackedEnum;
 use UnitEnum;
 
 class NeracaPage extends Page
@@ -31,7 +31,9 @@ class NeracaPage extends Page
 
     // Filter state
     public ?string $filter_from = null;
+
     public ?string $filter_to = null;
+
     public ?int $filter_gudang_id = null;
 
     public function mount(): void
@@ -48,6 +50,7 @@ class NeracaPage extends Page
     public function getData(): array
     {
         $service = app(NeracaService::class);
+
         return $service->getRingkasan(
             $this->filter_from,
             $this->filter_to,
@@ -86,7 +89,7 @@ class NeracaPage extends Page
 
                     Select::make('gudang_id')
                         ->label('Gudang (Opsional)')
-                        ->options(fn() => Gudang::pluck('nama_gudang', 'id'))
+                        ->options(fn () => Gudang::pluck('nama_gudang', 'id'))
                         ->placeholder('Semua Gudang')
                         ->searchable()
                         ->preload(),
@@ -104,7 +107,7 @@ class NeracaPage extends Page
                 ->label('Export Excel')
                 ->icon('heroicon-o-arrow-down-tray')
                 ->color('success')
-                ->visible(fn() => $user?->canExportExcel())
+                ->visible(fn () => $user?->canExportExcel())
                 ->action(function () {
                     $service = app(NeracaService::class);
                     $data = $service->getRingkasan(
@@ -112,8 +115,9 @@ class NeracaPage extends Page
                         $this->filter_to,
                         $this->filter_gudang_id
                     );
-                    $filename = 'Neraca_' . ($this->filter_from ?? 'all') . '_' . ($this->filter_to ?? 'all') . '.xlsx';
-                    return response()->streamDownload(function () use ($data, $filename) {
+                    $filename = 'Neraca_'.($this->filter_from ?? 'all').'_'.($this->filter_to ?? 'all').'.xlsx';
+
+                    return response()->streamDownload(function () use ($data) {
                         echo Excel::raw(new NeracaExport($data), \Maatwebsite\Excel\Excel::XLSX);
                     }, $filename);
                 }),
@@ -122,7 +126,7 @@ class NeracaPage extends Page
                 ->label('Export PDF')
                 ->icon('heroicon-o-document-arrow-down')
                 ->color('danger')
-                ->visible(fn() => $user?->canExportPdf())
+                ->visible(fn () => $user?->canExportPdf())
                 ->action(function () {
                     $service = app(NeracaService::class);
                     $data = $service->getRingkasan(
@@ -139,8 +143,9 @@ class NeracaPage extends Page
                             ? Gudang::find($this->filter_gudang_id)?->nama_gudang
                             : 'Semua Gudang',
                     ]);
-                    $filename = 'Neraca_' . ($this->filter_from ?? 'all') . '_' . ($this->filter_to ?? 'all') . '.pdf';
-                    return response()->streamDownload(fn() => print($pdf->output()), $filename);
+                    $filename = 'Neraca_'.($this->filter_from ?? 'all').'_'.($this->filter_to ?? 'all').'.pdf';
+
+                    return response()->streamDownload(fn () => print ($pdf->output()), $filename);
                 }),
         ];
     }

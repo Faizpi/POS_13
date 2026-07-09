@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\PembayaranHutangs\Pages;
 
+use App\Filament\Concerns\TransactionDeleteGuard;
 use App\Filament\Resources\PembayaranHutangs\PembayaranHutangResource;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
@@ -13,7 +14,8 @@ class EditPembayaranHutang extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            DeleteAction::make(),
+            DeleteAction::make()
+                ->visible(fn (): bool => auth()->user()?->isSuperAdmin() && TransactionDeleteGuard::canDeletePembayaran($this->getRecord())),
         ];
     }
 }

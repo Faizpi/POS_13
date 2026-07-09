@@ -12,8 +12,23 @@ class StokLog extends Model
         'stok_sebelum', 'stok_sesudah', 'selisih', 'keterangan',
     ];
 
-    public function gudangProduk() { return $this->belongsTo(GudangProduk::class); }
-    public function produk() { return $this->belongsTo(Produk::class); }
-    public function gudang() { return $this->belongsTo(Gudang::class); }
-    public function user() { return $this->belongsTo(User::class); }
+    public function gudangProduk()
+    {
+        return $this->belongsTo(GudangProduk::class);
+    }
+
+    public function produk()
+    {
+        return $this->belongsTo(Produk::class);
+    }
+
+    public function gudang()
+    {
+        return $this->belongsTo(Gudang::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

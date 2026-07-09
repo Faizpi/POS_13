@@ -16,7 +16,7 @@ return new class extends Migration
     {
         // ── 1. USERS: kolom baru ──────────────────────────────────────────
         Schema::table('users', function (Blueprint $table) {
-            if (!Schema::hasColumn('users', 'receives_transaction_whatsapp')) {
+            if (! Schema::hasColumn('users', 'receives_transaction_whatsapp')) {
                 $table->boolean('receives_transaction_whatsapp')
                     ->default(true)
                     ->after('receives_transaction_email');
@@ -25,44 +25,44 @@ return new class extends Migration
 
         // ── 2. PEMBELIANS: kolom baru ─────────────────────────────────────
         Schema::table('pembelians', function (Blueprint $table) {
-            if (!Schema::hasColumn('pembelians', 'kontak_id')) {
+            if (! Schema::hasColumn('pembelians', 'kontak_id')) {
                 $table->foreignId('kontak_id')
                     ->nullable()
                     ->after('gudang_id')
                     ->constrained('kontaks')
                     ->nullOnDelete();
             }
-            if (!Schema::hasColumn('pembelians', 'tipe_harga')) {
+            if (! Schema::hasColumn('pembelians', 'tipe_harga')) {
                 $table->string('tipe_harga')->default('retail');
             }
-            if (!Schema::hasColumn('pembelians', 'no_referensi')) {
+            if (! Schema::hasColumn('pembelians', 'no_referensi')) {
                 $table->string('no_referensi')->nullable();
             }
-            if (!Schema::hasColumn('pembelians', 'no_resi')) {
+            if (! Schema::hasColumn('pembelians', 'no_resi')) {
                 $table->string('no_resi')->nullable();
             }
-            if (!Schema::hasColumn('pembelians', 'biaya_pengiriman')) {
+            if (! Schema::hasColumn('pembelians', 'biaya_pengiriman')) {
                 $table->decimal('biaya_pengiriman', 15, 2)->nullable()->default(0);
             }
         });
 
         // ── 3. PENJUALANS: kolom baru ────────────────────────────────────
         Schema::table('penjualans', function (Blueprint $table) {
-            if (!Schema::hasColumn('penjualans', 'no_resi')) {
+            if (! Schema::hasColumn('penjualans', 'no_resi')) {
                 $table->string('no_resi')->nullable();
             }
-            if (!Schema::hasColumn('penjualans', 'biaya_pengiriman')) {
+            if (! Schema::hasColumn('penjualans', 'biaya_pengiriman')) {
                 $table->decimal('biaya_pengiriman', 15, 2)->nullable()->default(0);
             }
         });
 
         // ── 4. PEMBAYARANS: kolom baru untuk hutang ──────────────────────
         Schema::table('pembayarans', function (Blueprint $table) {
-            if (!Schema::hasColumn('pembayarans', 'type')) {
+            if (! Schema::hasColumn('pembayarans', 'type')) {
                 $table->string('type')->default('piutang')
                     ->comment('piutang = dari penjualan, hutang = dari pembelian');
             }
-            if (!Schema::hasColumn('pembayarans', 'pembelian_id')) {
+            if (! Schema::hasColumn('pembayarans', 'pembelian_id')) {
                 $table->unsignedBigInteger('pembelian_id')->nullable()->index();
                 $table->foreign('pembelian_id', 'pembayarans_pembelian_fk')
                     ->references('id')->on('pembelians')->nullOnDelete();
@@ -70,7 +70,7 @@ return new class extends Migration
         });
 
         // ── 5. STOCK OPNAMES: tabel baru ──────────────────────────────────
-        if (!Schema::hasTable('stock_opnames')) {
+        if (! Schema::hasTable('stock_opnames')) {
             Schema::create('stock_opnames', function (Blueprint $table) {
                 $table->id();
                 $table->uuid('uuid')->unique();
@@ -89,7 +89,7 @@ return new class extends Migration
             });
         }
 
-        if (!Schema::hasTable('stock_opname_items')) {
+        if (! Schema::hasTable('stock_opname_items')) {
             Schema::create('stock_opname_items', function (Blueprint $table) {
                 $table->id();
                 $table->foreignId('stock_opname_id')->constrained('stock_opnames')->cascadeOnDelete();
@@ -105,7 +105,7 @@ return new class extends Migration
         }
 
         // ── 6. TUTUP BUKU: tabel baru ────────────────────────────────────
-        if (!Schema::hasTable('tutup_buku')) {
+        if (! Schema::hasTable('tutup_buku')) {
             Schema::create('tutup_buku', function (Blueprint $table) {
                 $table->id();
                 $table->foreignId('user_id')->constrained()->cascadeOnDelete();
@@ -123,7 +123,7 @@ return new class extends Migration
         }
 
         // ── 7. NOTIFICATIONS: tabel baru ──────────────────────────────────
-        if (!Schema::hasTable('notifications')) {
+        if (! Schema::hasTable('notifications')) {
             Schema::create('notifications', function (Blueprint $table) {
                 $table->uuid('id')->primary();
                 $table->string('type');
@@ -135,7 +135,7 @@ return new class extends Migration
         }
 
         // ── 8. SESSIONS: tabel baru ───────────────────────────────────────
-        if (!Schema::hasTable('sessions')) {
+        if (! Schema::hasTable('sessions')) {
             Schema::create('sessions', function (Blueprint $table) {
                 $table->string('id')->primary();
                 $table->foreignId('user_id')->nullable()->index();
@@ -147,7 +147,7 @@ return new class extends Migration
         }
 
         // ── 9. CACHE: tabel baru ──────────────────────────────────────────
-        if (!Schema::hasTable('cache')) {
+        if (! Schema::hasTable('cache')) {
             Schema::create('cache', function (Blueprint $table) {
                 $table->string('key')->primary();
                 $table->mediumText('value');
@@ -155,7 +155,7 @@ return new class extends Migration
             });
         }
 
-        if (!Schema::hasTable('cache_locks')) {
+        if (! Schema::hasTable('cache_locks')) {
             Schema::create('cache_locks', function (Blueprint $table) {
                 $table->string('key')->primary();
                 $table->string('owner');
@@ -164,7 +164,7 @@ return new class extends Migration
         }
 
         // ── 10. JOBS: tabel baru ──────────────────────────────────────────
-        if (!Schema::hasTable('jobs')) {
+        if (! Schema::hasTable('jobs')) {
             Schema::create('jobs', function (Blueprint $table) {
                 $table->id();
                 $table->string('queue')->index();
@@ -176,7 +176,7 @@ return new class extends Migration
             });
         }
 
-        if (!Schema::hasTable('failed_jobs')) {
+        if (! Schema::hasTable('failed_jobs')) {
             Schema::create('failed_jobs', function (Blueprint $table) {
                 $table->id();
                 $table->string('uuid')->unique();

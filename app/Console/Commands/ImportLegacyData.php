@@ -29,8 +29,9 @@ class ImportLegacyData extends Command
     {
         $file = base_path($this->argument('file'));
 
-        if (!File::exists($file)) {
+        if (! File::exists($file)) {
             $this->error("File not found: {$file}");
+
             return 1;
         }
 
@@ -61,14 +62,14 @@ class ImportLegacyData extends Command
 
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 
-        $this->info("Truncating tables...");
+        $this->info('Truncating tables...');
         foreach (array_reverse($tables) as $table) {
             DB::table($table)->truncate();
         }
 
-        $this->info("Parsing and importing data...");
-        $handle = fopen($file, "r");
-        
+        $this->info('Parsing and importing data...');
+        $handle = fopen($file, 'r');
+
         $tablePattern = implode('|', $tables);
         $regex = "/^INSERT INTO \`($tablePattern)\`/i";
 
@@ -79,14 +80,14 @@ class ImportLegacyData extends Command
         DB::beginTransaction();
         try {
             while (($line = fgets($handle)) !== false) {
-                if (!$isInsert && preg_match($regex, $line, $matches)) {
+                if (! $isInsert && preg_match($regex, $line, $matches)) {
                     $isInsert = true;
                     $currentTable = $matches[1];
                     $currentQuery = $line;
                 } elseif ($isInsert) {
                     $currentQuery .= $line;
                 }
-                
+
                 if ($isInsert && trim($line) !== '' && substr(trim($line), -1) === ';') {
                     $this->info("Executing insert for table: {$currentTable}");
                     DB::unprepared($currentQuery);
@@ -95,24 +96,25 @@ class ImportLegacyData extends Command
                     $currentTable = '';
                 }
             }
-            
+
             DB::commit();
-            $this->info("Data imported successfully.");
+            $this->info('Data imported successfully.');
         } catch (\Exception $e) {
             DB::rollBack();
-            $this->error("Error during import on table {$currentTable}: " . $e->getMessage());
+            $this->error("Error during import on table {$currentTable}: ".$e->getMessage());
             DB::statement('SET FOREIGN_KEY_CHECKS=1;');
             fclose($handle);
+
             return 1;
         }
 
         fclose($handle);
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
-        $this->info("Verifying row counts:");
+        $this->info('Verifying row counts:');
         $this->table(
             ['Table', 'Rows'],
-            collect($tables)->map(fn($table) => [$table, DB::table($table)->count()])->toArray()
+            collect($tables)->map(fn ($table) => [$table, DB::table($table)->count()])->toArray()
         );
 
         return 0;

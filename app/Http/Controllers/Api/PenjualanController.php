@@ -9,10 +9,19 @@ use App\Models\Penjualan;
 use App\Models\PenjualanItem;
 use App\Models\Produk;
 use App\Models\User;
+use App\Services\InventoryMutationService;
+use App\Services\InvoiceEmailService;
+use App\Services\SaleCashSettlementService;
+use App\Services\SalesMoneyCalculator;
+use App\Services\WhatsappNotificationService;
 use Carbon\Carbon;
+use DomainException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
+use InvalidArgumentException;
 
 class PenjualanController extends Controller
 {
@@ -61,18 +70,18 @@ class PenjualanController extends Controller
 
         if (in_array($user->role, ['admin', 'spectator'])) {
             $currentGudang = $user->getCurrentGudang();
-            if (!$currentGudang || (int) $penjualan->gudang_id !== (int) $currentGudang->id) {
+            if (! $currentGudang || (int) $penjualan->gudang_id !== (int) $currentGudang->id) {
                 return response()->json(['message' => 'Unauthorized'], 403);
             }
         }
 
         // Resolve phone 3-level fallback
         $resolvedPhone = '';
-        if (!empty($penjualan->no_telepon)) {
+        if (! empty($penjualan->no_telepon)) {
             $resolvedPhone = $penjualan->no_telepon;
-        } elseif (!empty($penjualan->pelanggan)) {
+        } elseif (! empty($penjualan->pelanggan)) {
             $kontak = Kontak::where('nama', $penjualan->pelanggan)->first();
-            if ($kontak && !empty($kontak->no_telp)) {
+            if ($kontak && ! empty($kontak->no_telp)) {
                 $resolvedPhone = $kontak->no_telp;
             }
         }
@@ -97,23 +106,24 @@ class PenjualanController extends Controller
             'syarat_pembayaran' => 'required|string',
             'gudang_id' => 'required|exists:gudangs,id',
             'tipe_harga' => 'nullable|in:retail,grosir',
-            'tax_percentage' => 'required|numeric|min:0',
-            'diskon_akhir' => 'nullable',
+            'tax_percentage' => 'required|numeric|min:0|max:100',
+            'diskon_akhir' => 'nullable|numeric|min:0',
+            'biaya_pengiriman' => 'nullable|numeric|min:0',
             'items' => 'required|array|min:1',
             'items.*.produk_id' => 'required|exists:produks,id',
             'items.*.kuantitas' => 'required|numeric|min:1',
-            'items.*.harga_satuan' => 'nullable',
+            'items.*.harga_satuan' => 'nullable|numeric|min:0',
             'items.*.diskon' => 'nullable|numeric|min:0|max:100',
-            'items.*.diskon_nominal' => 'nullable',
+            'items.*.diskon_nominal' => 'nullable|numeric|min:0',
         ]);
 
         // Gudang access check
         if (in_array($user->role, ['admin', 'spectator'])) {
             $currentGudang = $user->getCurrentGudang();
-            if (!$currentGudang || (int) $request->gudang_id !== (int) $currentGudang->id) {
+            if (! $currentGudang || (int) $request->gudang_id !== (int) $currentGudang->id) {
                 return response()->json(['message' => 'Gudang transaksi harus sesuai gudang aktif.'], 403);
             }
-        } elseif ($user->role !== 'super_admin' && !$user->canAccessGudang($request->gudang_id)) {
+        } elseif ($user->role !== 'super_admin' && ! $user->canAccessGudang($request->gudang_id)) {
             return response()->json(['message' => 'Tidak memiliki akses ke gudang ini.'], 403);
         }
 
@@ -133,7 +143,7 @@ class PenjualanController extends Controller
             }
         }
 
-        if (!empty($stokErrors)) {
+        if (! empty($stokErrors)) {
             return response()->json(['message' => 'Stok tidak mencukupi.', 'errors' => $stokErrors], 422);
         }
 
@@ -149,12 +159,13 @@ class PenjualanController extends Controller
         }
 
         $tipeHarga = $request->tipe_harga ?? 'retail';
-        $itemRows = $this->buildItemRows($request->items, $tipeHarga);
-        $subTotal = round(array_sum(array_column($itemRows, 'jumlah_baris')), 2);
-        $diskonAkhir = max(0, $this->normalizeMoneyInput($request->diskon_akhir ?? 0));
-        $kenaPajak = max(0, $subTotal - $diskonAkhir);
-        $pajakPersen = $request->tax_percentage ?? 0;
-        $grandTotal = $kenaPajak + ($kenaPajak * ($pajakPersen / 100));
+        $totals = $this->calculateSalesTotals(
+            $request->items,
+            $request->diskon_akhir ?? 0,
+            $request->tax_percentage ?? 0,
+            $request->biaya_pengiriman ?? 0,
+            $tipeHarga,
+        );
 
         // Generate nomor
         $countToday = Penjualan::where('user_id', $user->id)
@@ -185,28 +196,30 @@ class PenjualanController extends Controller
                 'tag' => $request->tag,
                 'koordinat' => $request->koordinat,
                 'memo' => $request->memo,
-                'diskon_akhir' => $diskonAkhir,
-                'tax_percentage' => $pajakPersen,
-                'grand_total' => $grandTotal,
+                'diskon_akhir' => $totals['diskon_akhir'],
+                'tax_percentage' => $totals['tax_percentage'],
+                'biaya_pengiriman' => $totals['biaya_pengiriman'],
+                'grand_total' => $totals['grand_total'],
                 'lampiran_paths' => [],
             ]);
 
-            foreach ($itemRows as $itemRow) {
+            foreach ($totals['items'] as $itemRow) {
                 PenjualanItem::create(['penjualan_id' => $penjualan->id] + $itemRow);
             }
 
             DB::commit();
 
             try {
-                \App\Services\InvoiceEmailService::sendCreatedNotification($penjualan, 'penjualan');
-            } catch (\Exception $e) { /* Email tidak gagalkan transaksi */ }
+                InvoiceEmailService::sendCreatedNotification($penjualan, 'penjualan');
+            } catch (\Exception $e) { /* Email tidak gagalkan transaksi */
+            }
 
             try {
-                \Illuminate\Support\Facades\Log::channel('single')->info('WA: mencoba kirim notifikasi penjualan #' . $penjualan->id);
-                \App\Services\WhatsappNotificationService::sendPenjualanCreated($penjualan);
-                \Illuminate\Support\Facades\Log::channel('single')->info('WA: selesai kirim penjualan #' . $penjualan->id);
+                Log::channel('single')->info('WA: mencoba kirim notifikasi penjualan #'.$penjualan->id);
+                WhatsappNotificationService::sendPenjualanCreated($penjualan);
+                Log::channel('single')->info('WA: selesai kirim penjualan #'.$penjualan->id);
             } catch (\Throwable $e) {
-                \Illuminate\Support\Facades\Log::channel('single')->error('WA ERROR: ' . $e->getMessage() . ' | ' . $e->getFile() . ':' . $e->getLine());
+                Log::channel('single')->error('WA ERROR: '.$e->getMessage().' | '.$e->getFile().':'.$e->getLine());
             }
 
             return response()->json([
@@ -216,6 +229,7 @@ class PenjualanController extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
+
             return response()->json(['message' => 'Gagal membuat penjualan.'], 500);
         }
     }
@@ -228,8 +242,8 @@ class PenjualanController extends Controller
         // Attachment-only mode detection
         $coreFields = ['pelanggan', 'tgl_transaksi', 'syarat_pembayaran', 'gudang_id', 'items'];
         $hasLampiran = $request->hasFile('lampiran');
-        $hasCoreFields = !empty(array_intersect(array_keys($request->all()), $coreFields));
-        $isOnlyLampiran = $hasLampiran && !$hasCoreFields;
+        $hasCoreFields = ! empty(array_intersect(array_keys($request->all()), $coreFields));
+        $isOnlyLampiran = $hasLampiran && ! $hasCoreFields;
 
         if ($isOnlyLampiran) {
             if ($user->role == 'user' && $penjualan->user_id != $user->id) {
@@ -238,18 +252,19 @@ class PenjualanController extends Controller
 
             $lampiranPaths = $penjualan->lampiran_paths ?? [];
             $publicFolder = public_path('storage/lampiran_penjualan');
-            if (!File::exists($publicFolder)) {
+            if (! File::exists($publicFolder)) {
                 File::makeDirectory($publicFolder, 0755, true);
             }
             $counter = count($lampiranPaths) + 1;
             foreach ($request->file('lampiran') as $file) {
                 $extension = $file->getClientOriginalExtension();
-                $filename = $penjualan->nomor . '-' . $counter . '.' . $extension;
+                $filename = $penjualan->nomor.'-'.$counter.'.'.$extension;
                 $file->move($publicFolder, $filename);
-                $lampiranPaths[] = 'lampiran_penjualan/' . $filename;
+                $lampiranPaths[] = 'lampiran_penjualan/'.$filename;
                 $counter++;
             }
             $penjualan->update(['lampiran_paths' => $lampiranPaths]);
+
             return response()->json(['message' => 'Lampiran berhasil ditambahkan.', 'data' => $penjualan->load('items')]);
         }
 
@@ -258,20 +273,27 @@ class PenjualanController extends Controller
             return response()->json(['message' => 'Hanya Super Admin yang dapat mengubah data penjualan.'], 403);
         }
 
+        if (in_array($penjualan->status, ['Approved', 'Lunas'], true)) {
+            return response()->json([
+                'message' => 'Penjualan Approved/Lunas tidak dapat diedit untuk field stok atau nominal. Batalkan transaksi lalu buat penjualan pengganti.',
+            ], 422);
+        }
+
         $request->validate([
             'pelanggan' => 'required|string',
             'tgl_transaksi' => 'required|date',
             'syarat_pembayaran' => 'required|string',
             'gudang_id' => 'required|exists:gudangs,id',
             'tipe_harga' => 'nullable|in:retail,grosir',
-            'tax_percentage' => 'required|numeric|min:0',
-            'diskon_akhir' => 'nullable',
+            'tax_percentage' => 'required|numeric|min:0|max:100',
+            'diskon_akhir' => 'nullable|numeric|min:0',
+            'biaya_pengiriman' => 'nullable|numeric|min:0',
             'items' => 'required|array|min:1',
             'items.*.produk_id' => 'required|exists:produks,id',
             'items.*.kuantitas' => 'required|numeric|min:1',
-            'items.*.harga_satuan' => 'nullable',
+            'items.*.harga_satuan' => 'nullable|numeric|min:0',
             'items.*.diskon' => 'nullable|numeric|min:0|max:100',
-            'items.*.diskon_nominal' => 'nullable',
+            'items.*.diskon_nominal' => 'nullable|numeric|min:0',
         ]);
 
         // Stock validation
@@ -285,24 +307,23 @@ class PenjualanController extends Controller
                 $stokErrors[] = "Stok {$produk->nama_produk} tidak cukup. Tersedia: {$stokTersedia}, Diminta: {$item['kuantitas']}";
             }
         }
-        if (!empty($stokErrors)) {
+        if (! empty($stokErrors)) {
             return response()->json(['message' => 'Stok tidak mencukupi.', 'errors' => $stokErrors], 422);
         }
 
         $tipeHarga = $request->tipe_harga ?? 'retail';
-        $itemRows = $this->buildItemRows($request->items, $tipeHarga);
-        $subTotal = round(array_sum(array_column($itemRows, 'jumlah_baris')), 2);
-        $diskonAkhir = max(0, $this->normalizeMoneyInput($request->diskon_akhir ?? 0));
-        $kenaPajak = max(0, $subTotal - $diskonAkhir);
-        $pajakPersen = $request->tax_percentage ?? 0;
-        $grandTotal = $kenaPajak + ($kenaPajak * ($pajakPersen / 100));
+        $totals = $this->calculateSalesTotals(
+            $request->items,
+            $request->diskon_akhir ?? 0,
+            $request->tax_percentage ?? 0,
+            $request->biaya_pengiriman ?? 0,
+            $tipeHarga,
+        );
 
         $term = $request->syarat_pembayaran;
         $tglJatuhTempo = null;
         $statusBaru = 'Pending';
-        if ($term == 'Cash') {
-            $statusBaru = 'Lunas';
-        } else {
+        if ($term != 'Cash') {
             $tglJatuhTempo = Carbon::parse($request->tgl_transaksi);
             $days = ['Net 7' => 7, 'Net 14' => 14, 'Net 30' => 30, 'Net 60' => 60];
             if (isset($days[$term])) {
@@ -310,7 +331,7 @@ class PenjualanController extends Controller
             }
         }
 
-        $approverId = $statusBaru == 'Pending' ? $this->findApprover($user, $request->gudang_id) : $penjualan->approver_id;
+        $approverId = $this->findApprover($user, $request->gudang_id);
 
         DB::beginTransaction();
         try {
@@ -329,30 +350,33 @@ class PenjualanController extends Controller
                 'tag' => $request->tag,
                 'koordinat' => $request->koordinat,
                 'memo' => $request->memo,
-                'diskon_akhir' => $diskonAkhir,
-                'tax_percentage' => $pajakPersen,
-                'grand_total' => $grandTotal,
+                'diskon_akhir' => $totals['diskon_akhir'],
+                'tax_percentage' => $totals['tax_percentage'],
+                'biaya_pengiriman' => $totals['biaya_pengiriman'],
+                'grand_total' => $totals['grand_total'],
             ]);
 
             $penjualan->items()->delete();
-            foreach ($itemRows as $itemRow) {
+            foreach ($totals['items'] as $itemRow) {
                 PenjualanItem::create(['penjualan_id' => $penjualan->id] + $itemRow);
             }
 
             DB::commit();
+
             return response()->json(['message' => 'Penjualan berhasil diperbarui.', 'data' => $penjualan->load('items')]);
         } catch (\Exception $e) {
             DB::rollBack();
+
             return response()->json(['message' => 'Gagal mengubah penjualan.'], 500);
         }
     }
 
-    public function approve($id)
+    public function approve($id, InventoryMutationService $inventoryMutationService)
     {
         $user = auth()->user();
         $penjualan = Penjualan::findOrFail($id);
 
-        if (!in_array($user->role, ['admin', 'super_admin'])) {
+        if (! in_array($user->role, ['admin', 'super_admin'])) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
@@ -362,21 +386,52 @@ class PenjualanController extends Controller
 
         if ($user->role === 'admin') {
             $currentGudang = $user->getCurrentGudang();
-            if (!$currentGudang || (int) $penjualan->gudang_id !== (int) $currentGudang->id) {
+            if (! $currentGudang || (int) $penjualan->gudang_id !== (int) $currentGudang->id) {
                 return response()->json(['message' => 'Hanya bisa approve transaksi di gudang aktif.'], 403);
             }
         }
 
-        $penjualan->update(['status' => 'Approved', 'approver_id' => $user->id]);
+        try {
+            $penjualan = DB::transaction(function () use ($id, $inventoryMutationService, $user) {
+                $lockedPenjualan = Penjualan::with('items')
+                    ->lockForUpdate()
+                    ->findOrFail($id);
+
+                if ($lockedPenjualan->status !== 'Pending') {
+                    throw new DomainException('Hanya transaksi Pending yang bisa di-approve.');
+                }
+
+                foreach ($lockedPenjualan->items as $item) {
+                    $inventoryMutationService->decrement(
+                        (int) $lockedPenjualan->gudang_id,
+                        (int) $item->produk_id,
+                        (int) $item->kuantitas,
+                        'penjualan',
+                        [
+                            'transaction_type' => 'Penjualan Approve',
+                            'transaction_id' => $lockedPenjualan->id,
+                            'transaction_nomor' => $lockedPenjualan->nomor,
+                        ]
+                    );
+                }
+
+                $lockedPenjualan->update(['status' => 'Approved', 'approver_id' => $user->id]);
+
+                return $lockedPenjualan->refresh();
+            });
+        } catch (DomainException $e) {
+            return response()->json(['message' => $e->getMessage()], 422);
+        }
 
         try {
-            \App\Services\InvoiceEmailService::sendApprovedNotification($penjualan, 'penjualan');
-        } catch (\Exception $e) {}
+            InvoiceEmailService::sendApprovedNotification($penjualan, 'penjualan');
+        } catch (\Exception $e) {
+        }
 
         return response()->json(['message' => 'Penjualan berhasil di-approve.', 'data' => $penjualan]);
     }
 
-    public function cancel($id)
+    public function cancel($id, InventoryMutationService $inventoryMutationService)
     {
         $penjualan = Penjualan::findOrFail($id);
         $user = auth()->user();
@@ -387,12 +442,46 @@ class PenjualanController extends Controller
 
         if ($user->role === 'admin') {
             $currentGudang = $user->getCurrentGudang();
-            if (!$currentGudang || (int) $penjualan->gudang_id !== (int) $currentGudang->id) {
+            if (! $currentGudang || (int) $penjualan->gudang_id !== (int) $currentGudang->id) {
                 return response()->json(['message' => 'Hanya bisa cancel transaksi di gudang aktif.'], 403);
             }
         }
 
-        $penjualan->update(['status' => 'Canceled']);
+        if ($penjualan->status === 'Canceled') {
+            return response()->json(['message' => 'Transaksi sudah dibatalkan.'], 422);
+        }
+
+        try {
+            DB::transaction(function () use ($id, $inventoryMutationService): void {
+                $lockedPenjualan = Penjualan::with('items')
+                    ->lockForUpdate()
+                    ->findOrFail($id);
+
+                if ($lockedPenjualan->status === 'Canceled') {
+                    throw new DomainException('Transaksi sudah dibatalkan.');
+                }
+
+                if (in_array($lockedPenjualan->status, ['Approved', 'Lunas'], true)) {
+                    foreach ($lockedPenjualan->items as $item) {
+                        $inventoryMutationService->increment(
+                            (int) $lockedPenjualan->gudang_id,
+                            (int) $item->produk_id,
+                            (int) $item->kuantitas,
+                            'penjualan',
+                            [
+                                'transaction_type' => 'Penjualan Cancel',
+                                'transaction_id' => $lockedPenjualan->id,
+                                'transaction_nomor' => $lockedPenjualan->nomor,
+                            ]
+                        );
+                    }
+                }
+
+                $lockedPenjualan->update(['status' => 'Canceled']);
+            });
+        } catch (DomainException $e) {
+            return response()->json(['message' => $e->getMessage()], 422);
+        }
 
         return response()->json(['message' => 'Penjualan berhasil dibatalkan.']);
     }
@@ -416,12 +505,12 @@ class PenjualanController extends Controller
         return response()->json(['message' => 'Transaksi berhasil di-uncancel. Status kembali ke Pending.', 'data' => $penjualan]);
     }
 
-    public function markAsPaid($id)
+    public function markAsPaid($id, SaleCashSettlementService $cashSettlementService)
     {
         $penjualan = Penjualan::findOrFail($id);
         $user = auth()->user();
 
-        if (!in_array($user->role, ['admin', 'super_admin'])) {
+        if (! in_array($user->role, ['admin', 'super_admin'])) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
@@ -431,14 +520,18 @@ class PenjualanController extends Controller
 
         if ($user->role === 'admin') {
             $currentGudang = $user->getCurrentGudang();
-            if (!$currentGudang || (int) $penjualan->gudang_id !== (int) $currentGudang->id) {
+            if (! $currentGudang || (int) $penjualan->gudang_id !== (int) $currentGudang->id) {
                 return response()->json(['message' => 'Hanya bisa ubah transaksi di gudang aktif.'], 403);
             }
         }
 
-        $penjualan->update(['status' => 'Lunas']);
+        try {
+            $cashSettlementService->settleRemainingWithCash($penjualan, $user);
+        } catch (DomainException $e) {
+            return response()->json(['message' => $e->getMessage()], 422);
+        }
 
-        return response()->json(['message' => 'Penjualan ditandai LUNAS.', 'data' => $penjualan]);
+        return response()->json(['message' => 'Penjualan ditandai LUNAS dengan pembayaran cash.', 'data' => $penjualan->refresh()]);
     }
 
     public function unmarkAsPaid($id)
@@ -461,69 +554,73 @@ class PenjualanController extends Controller
 
     // === PRIVATE HELPERS ===
 
-    private function buildItemRows(array $items, string $tipeHarga): array
+    /**
+     * @param  array<int, array<string, mixed>>  $items
+     * @return array<string, mixed>
+     *
+     * @throws ValidationException
+     */
+    private function calculateSalesTotals(array $items, mixed $diskonAkhir, mixed $taxPercentage, mixed $biayaPengiriman, string $tipeHarga): array
     {
         $produkIds = collect($items)->pluck('produk_id')->filter()->values()->all();
         $produks = Produk::whereIn('id', $produkIds)->get()->keyBy('id');
-        $rows = [];
 
-        foreach ($items as $item) {
-            $produk = $produks->get($item['produk_id']);
-            if (!$produk) continue;
+        $calculatorItems = collect($items)
+            ->map(function (array $item) use ($produks): array {
+                $produk = $produks->get($item['produk_id']);
 
-            $qty = (float) ($item['kuantitas'] ?? 0);
-            $price = $this->getProdukHarga($produk, $tipeHarga);
-            $discPercent = max(0, min(100, (float) ($item['diskon'] ?? 0)));
-            $discNominal = max(0, $this->normalizeMoneyInput($item['diskon_nominal'] ?? 0));
-            $gross = $qty * $price;
-            $jumlahBaris = round(max(0, ($gross * (1 - ($discPercent / 100))) - $discNominal), 2);
+                if (! $produk) {
+                    throw ValidationException::withMessages([
+                        'items' => ['Produk tidak ditemukan.'],
+                    ]);
+                }
 
-            $rows[] = [
-                'produk_id' => $produk->id,
-                'deskripsi' => $item['deskripsi'] ?? null,
-                'kuantitas' => $qty,
-                'unit' => $item['unit'] ?? $produk->satuan,
-                'harga_satuan' => $price,
-                'diskon' => $discPercent,
-                'diskon_nominal' => $discNominal,
-                'batch_number' => $item['batch_number'] ?? null,
-                'expired_date' => $item['expired_date'] ?? null,
-                'jumlah_baris' => $jumlahBaris,
-            ];
+                unset($item['harga_satuan'], $item['unit_price'], $item['price']);
+
+                $item['kuantitas'] = (string) ($item['kuantitas'] ?? 0);
+                $item['diskon'] = (string) ($item['diskon'] ?? 0);
+                $item['diskon_nominal'] = (string) ($item['diskon_nominal'] ?? 0);
+
+                return $item + [
+                    'harga_retail' => $produk->harga,
+                    'harga_grosir' => ((float) ($produk->harga_grosir ?? 0) > 0) ? $produk->harga_grosir : null,
+                    'harga' => $produk->harga,
+                    'unit' => $item['unit'] ?? $produk->satuan,
+                    'deskripsi' => $item['deskripsi'] ?? null,
+                ];
+            })
+            ->all();
+
+        try {
+            $totals = app(SalesMoneyCalculator::class)->calculateTotals(
+                $calculatorItems,
+                (string) $diskonAkhir,
+                (string) $taxPercentage,
+                (string) $biayaPengiriman,
+                $tipeHarga,
+            );
+        } catch (InvalidArgumentException $e) {
+            throw ValidationException::withMessages([
+                'items' => [$e->getMessage()],
+            ]);
         }
 
-        return $rows;
-    }
+        $totals['items'] = collect($totals['items'])
+            ->map(fn (array $item, int $index): array => [
+                'produk_id' => $item['produk_id'],
+                'deskripsi' => $item['deskripsi'],
+                'kuantitas' => $item['kuantitas'],
+                'unit' => $item['unit'],
+                'harga_satuan' => $item['harga_satuan'],
+                'diskon' => $item['diskon'],
+                'diskon_nominal' => $item['diskon_nominal'],
+                'batch_number' => $items[$index]['batch_number'] ?? null,
+                'expired_date' => $items[$index]['expired_date'] ?? null,
+                'jumlah_baris' => $item['jumlah_baris'],
+            ])
+            ->all();
 
-    private function getProdukHarga(Produk $produk, string $tipeHarga): float
-    {
-        $hargaRetail = $this->normalizeMoneyInput($produk->harga);
-        $hargaGrosir = $this->normalizeMoneyInput($produk->harga_grosir ?? 0);
-
-        if ($tipeHarga === 'grosir' && $hargaGrosir > 0) {
-            return $hargaGrosir;
-        }
-        return $hargaRetail;
-    }
-
-    private function normalizeMoneyInput($value): float
-    {
-        if (is_numeric($value)) {
-            return round((float) $value, 2);
-        }
-
-        $value = trim((string) ($value ?? ''));
-        if ($value === '') return 0.0;
-
-        $value = str_replace(['Rp', 'rp', ' ', "\xc2\xa0"], '', $value);
-        if (strpos($value, ',') !== false) {
-            $value = str_replace('.', '', $value);
-            $value = str_replace(',', '.', $value);
-        } else {
-            $value = str_replace(',', '', $value);
-        }
-
-        return is_numeric($value) ? round((float) $value, 2) : 0.0;
+        return $totals;
     }
 
     private function findApprover($user, $gudangId): ?int
@@ -536,6 +633,7 @@ class PenjualanController extends Controller
                             $sub->where('gudangs.id', $gudangId);
                         });
                 })->first();
+
             return $admin ? $admin->id : optional(User::where('role', 'super_admin')->first())->id;
         }
 

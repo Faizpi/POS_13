@@ -15,7 +15,7 @@ class StokController extends Controller
     {
         $user = auth()->user();
 
-        if (!in_array($user->role, ['admin', 'spectator', 'super_admin'])) {
+        if (! in_array($user->role, ['admin', 'spectator', 'super_admin'])) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
@@ -31,7 +31,7 @@ class StokController extends Controller
 
         if ($request->filled('gudang_id')) {
             $gudangId = (int) $request->gudang_id;
-            if ($user->role !== 'super_admin' && !$user->canAccessGudang($gudangId)) {
+            if ($user->role !== 'super_admin' && ! $user->canAccessGudang($gudangId)) {
                 return response()->json(['message' => 'Tidak memiliki akses ke gudang ini.'], 403);
             }
             $gudangQuery->where('gudangs.id', $gudangId);
@@ -114,7 +114,7 @@ class StokController extends Controller
     {
         $user = auth()->user();
 
-        if (!in_array($user->role, ['admin', 'super_admin'])) {
+        if (! in_array($user->role, ['admin', 'super_admin'])) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 

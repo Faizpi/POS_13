@@ -68,6 +68,6 @@ class Kontak extends Authenticatable
             ? ((int) str_replace('KT', '', $last)) + 1
             : 1;
 
-        return 'KT' . str_pad($nextNumber, 5, '0', STR_PAD_LEFT);
+        return 'KT'.str_pad($nextNumber, 5, '0', STR_PAD_LEFT);
     }
 }

@@ -3,6 +3,7 @@
 namespace Tests\Feature\Api;
 
 use App\Models\Kontak;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -65,7 +66,7 @@ class KontakContractTest extends TestCase
         // Verify created_by is set
         $this->assertDatabaseHas('kontaks', [
             'nama' => 'Toko Baru',
-            'created_by' => \App\Models\User::where('email', 'salesa@hibiscusefsya.com')->first()->id,
+            'created_by' => User::where('email', 'salesa@hibiscusefsya.com')->first()->id,
         ]);
     }
 

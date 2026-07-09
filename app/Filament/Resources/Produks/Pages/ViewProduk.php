@@ -5,12 +5,12 @@ namespace App\Filament\Resources\Produks\Pages;
 use App\Filament\Resources\Produks\ProdukResource;
 use Filament\Actions\Action;
 use Filament\Actions\EditAction;
+use Filament\Infolists\Components\RepeatableEntry;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Pages\ViewRecord;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\View;
 use Filament\Schemas\Schema;
-use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Components\RepeatableEntry;
 
 class ViewProduk extends ViewRecord
 {
@@ -70,12 +70,12 @@ class ViewProduk extends ViewRecord
                                 TextEntry::make('stok')
                                     ->label('Stok')
                                     ->badge()
-                                    ->color(fn($state) => $state > 10 ? 'success' : ($state > 0 ? 'warning' : 'danger'))
+                                    ->color(fn ($state) => $state > 10 ? 'success' : ($state > 0 ? 'warning' : 'danger'))
                                     ->weight('bold'),
                             ]),
                         TextEntry::make('totalStok')
                             ->label('Total Stok')
-                            ->state(fn($record) => $record->stokDiGudang->sum('stok'))
+                            ->state(fn ($record) => $record->stokDiGudang->sum('stok'))
                             ->weight('bold')
                             ->size('lg'),
                     ]),
@@ -93,23 +93,23 @@ class ViewProduk extends ViewRecord
         $user = auth()->user();
 
         return [
-            EditAction::make()->visible(fn() => $user->isSuperAdmin()),
+            EditAction::make()->visible(fn () => $user->isSuperAdmin()),
 
             Action::make('downloadPdf')
                 ->label('Download PDF')
                 ->icon('heroicon-o-arrow-down-tray')
                 ->color('primary')
-                ->url(fn($record) => route('produk.download', $record->id))
+                ->url(fn ($record) => route('produk.download', $record->id))
                 ->openUrlInNewTab()
-                ->visible(fn() => $user->isSuperAdmin()),
+                ->visible(fn () => $user->isSuperAdmin()),
 
             Action::make('print')
                 ->label('Print')
                 ->icon('heroicon-o-printer')
                 ->color('gray')
-                ->url(fn($record) => route('produk.print', $record->id))
+                ->url(fn ($record) => route('produk.print', $record->id))
                 ->openUrlInNewTab()
-                ->visible(fn() => $user->isSuperAdmin()),
+                ->visible(fn () => $user->isSuperAdmin()),
         ];
     }
 }

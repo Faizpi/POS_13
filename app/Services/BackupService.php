@@ -58,7 +58,7 @@ class BackupService
         $createResult = DB::select("SHOW CREATE TABLE `{$table}`");
         $createSql = $createResult[0]->{'Create Table'};
         yield "DROP TABLE IF EXISTS `{$table}`;\n";
-        yield $createSql . ";\n\n";
+        yield $createSql.";\n\n";
 
         // Dump data in chunks to avoid memory issues
         $chunkSize = 500;
@@ -82,12 +82,13 @@ class BackupService
                     if ($value === null) {
                         return 'NULL';
                     }
-                    return "'" . addslashes((string) $value) . "'";
+
+                    return "'".addslashes((string) $value)."'";
                 }, (array) $row);
 
                 $valueList = implode(', ', $values);
                 $isLast = ($index === $rowCount - 1);
-                yield "({$valueList})" . ($isLast ? ";\n" : ",\n");
+                yield "({$valueList})".($isLast ? ";\n" : ",\n");
             }
 
             yield "\n";
@@ -102,6 +103,7 @@ class BackupService
     {
         $dbName = config('database.connections.mysql.database');
         $timestamp = now()->format('Y-m-d_H-i-s');
+
         return "backup_{$dbName}_{$timestamp}.sql";
     }
 }

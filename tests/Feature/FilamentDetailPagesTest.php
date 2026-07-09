@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Filament\Concerns\TransactionDeleteGuard;
 use App\Models\Biaya;
 use App\Models\BiayaItem;
 use App\Models\Kontak;
@@ -44,6 +45,33 @@ class FilamentDetailPagesTest extends TestCase
         foreach ($paths as $path) {
             $this->actingAs($user)->get($path)->assertOk();
         }
+    }
+
+    /** @covers-finding B06 Hard delete blocked */
+    public function test_transaction_delete_guard_blocks_side_effect_records(): void
+    {
+        $records = $this->makeRecords();
+
+        $this->assertFalse(TransactionDeleteGuard::canDeletePenjualan($records['penjualan']));
+        $this->assertFalse(TransactionDeleteGuard::canDeletePembelian($records['pembelian']));
+        $this->assertFalse(TransactionDeleteGuard::canDeletePembayaran($records['pembayaran']));
+        $this->assertFalse(TransactionDeleteGuard::canDeletePenerimaanBarang($records['penerimaan']));
+        $this->assertFalse(TransactionDeleteGuard::canDeleteKunjungan($records['kunjungan']));
+    }
+
+    public function test_transaction_delete_guard_allows_pending_records(): void
+    {
+        $records = $this->makeRecords();
+
+        foreach (['penjualan', 'pembelian', 'pembayaran', 'penerimaan', 'kunjungan'] as $key) {
+            $records[$key]->status = 'Pending';
+        }
+
+        $this->assertTrue(TransactionDeleteGuard::canDeletePenjualan($records['penjualan']));
+        $this->assertTrue(TransactionDeleteGuard::canDeletePembelian($records['pembelian']));
+        $this->assertTrue(TransactionDeleteGuard::canDeletePembayaran($records['pembayaran']));
+        $this->assertTrue(TransactionDeleteGuard::canDeletePenerimaanBarang($records['penerimaan']));
+        $this->assertTrue(TransactionDeleteGuard::canDeleteKunjungan($records['kunjungan']));
     }
 
     private function makeRecords(): array

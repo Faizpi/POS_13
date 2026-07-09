@@ -10,13 +10,18 @@ class EscPosHelper
 {
     // ESC/POS Commands
     const ESC = "\x1B";
-    const GS  = "\x1D";
-    const LF  = "\x0A";
-    const CR  = "\x0D";
 
-    const ALIGN_LEFT   = 0;
+    const GS = "\x1D";
+
+    const LF = "\x0A";
+
+    const CR = "\x0D";
+
+    const ALIGN_LEFT = 0;
+
     const ALIGN_CENTER = 1;
-    const ALIGN_RIGHT  = 2;
+
+    const ALIGN_RIGHT = 2;
 
     private string $buffer = '';
 
@@ -27,66 +32,76 @@ class EscPosHelper
 
     public function initialize(): static
     {
-        $this->buffer .= self::ESC . "@";
+        $this->buffer .= self::ESC.'@';
+
         return $this;
     }
 
     public function align(int $align = self::ALIGN_LEFT): static
     {
-        $this->buffer .= self::ESC . "a" . chr($align);
+        $this->buffer .= self::ESC.'a'.chr($align);
+
         return $this;
     }
 
     public function bold(bool $bold = true): static
     {
-        $this->buffer .= self::ESC . "E" . ($bold ? chr(1) : chr(0));
+        $this->buffer .= self::ESC.'E'.($bold ? chr(1) : chr(0));
+
         return $this;
     }
 
     public function textSize(int $width = 1, int $height = 1): static
     {
-        $width  = max(1, min(8, $width));
+        $width = max(1, min(8, $width));
         $height = max(1, min(8, $height));
         $n = (($width - 1) << 4) | ($height - 1);
-        $this->buffer .= self::GS . "!" . chr($n);
+        $this->buffer .= self::GS.'!'.chr($n);
+
         return $this;
     }
 
     public function text(string $text = ''): static
     {
         $this->buffer .= $text;
+
         return $this;
     }
 
     public function line(string $text = ''): static
     {
-        $this->buffer .= $text . self::LF;
+        $this->buffer .= $text.self::LF;
+
         return $this;
     }
 
     public function feed(int $lines = 1): static
     {
         $this->buffer .= str_repeat(self::LF, $lines);
+
         return $this;
     }
 
     public function cut(int $mode = 0): static
     {
-        $this->buffer .= self::GS . "V" . chr($mode);
+        $this->buffer .= self::GS.'V'.chr($mode);
+
         return $this;
     }
 
     public function separator(string $char = '=', int $length = 32): static
     {
         $this->line(str_repeat($char, $length));
+
         return $this;
     }
 
     public function twoColumn(string $left, string $right, int $width = 32): static
     {
         $rightLen = mb_strlen($right);
-        $leftLen  = max(1, $width - $rightLen);
-        $this->line(str_pad($left, $leftLen) . $right);
+        $leftLen = max(1, $width - $rightLen);
+        $this->line(str_pad($left, $leftLen).$right);
+
         return $this;
     }
 
@@ -98,6 +113,7 @@ class EscPosHelper
     public function clear(): static
     {
         $this->buffer = '';
+
         return $this;
     }
 

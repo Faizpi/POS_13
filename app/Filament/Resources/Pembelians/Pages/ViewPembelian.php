@@ -2,21 +2,19 @@
 
 namespace App\Filament\Resources\Pembelians\Pages;
 
+use App\Filament\Concerns\TransactionDeleteGuard;
 use App\Filament\Resources\Pembelians\PembelianResource;
-use App\Models\Pembelian;
 use App\Models\User;
-use Carbon\Carbon;
+use App\Services\InvoiceEmailService;
 use Filament\Actions\Action;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
+use Filament\Infolists\Components\RepeatableEntry;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
-use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
-use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Components\RepeatableEntry;
-use Filament\Support\Enums\IconPosition;
 
 class ViewPembelian extends ViewRecord
 {
@@ -36,7 +34,7 @@ class ViewPembelian extends ViewRecord
                         TextEntry::make('urgensi')
                             ->label('Urgensi')
                             ->badge()
-                            ->color(fn(string $state): string => match($state) {
+                            ->color(fn (string $state): string => match ($state) {
                                 'Tinggi' => 'danger',
                                 'Sedang' => 'warning',
                                 'Rendah' => 'success',
@@ -47,14 +45,14 @@ class ViewPembelian extends ViewRecord
                         TextEntry::make('tgl_jatuh_tempo')->label('Jatuh Tempo')->date('d F Y')->placeholder('—'),
                         TextEntry::make('created_at')->label('Dibuat')->dateTime('d M Y, H:i'),
                         TextEntry::make('syarat_pembayaran')->label('Syarat Bayar'),
-                        TextEntry::make('tipe_harga')->label('Tipe Harga')->badge()->color(fn($state) => $state === 'grosir' ? 'info' : 'success'),
+                        TextEntry::make('tipe_harga')->label('Tipe Harga')->badge()->color(fn ($state) => $state === 'grosir' ? 'info' : 'success'),
                         TextEntry::make('no_referensi')->label('No Referensi')->placeholder('—'),
                         TextEntry::make('no_resi')->label('Nomor Resi')->placeholder('—'),
                         TextEntry::make('biaya_pengiriman')->label('Biaya Pengiriman')->money('IDR')->placeholder('—'),
                         TextEntry::make('status')
                             ->label('Status')
                             ->badge()
-                            ->color(fn(string $state): string => match($state) {
+                            ->color(fn (string $state): string => match ($state) {
                                 'Pending' => 'warning',
                                 'Approved' => 'primary',
                                 'Lunas' => 'success',
@@ -66,7 +64,7 @@ class ViewPembelian extends ViewRecord
                         TextEntry::make('koordinat')
                             ->label('Koordinat')
                             ->placeholder('—')
-                            ->url(fn($record) => $record->koordinat ? 'https://www.google.com/maps?q=' . urlencode($record->koordinat) : null, true),
+                            ->url(fn ($record) => $record->koordinat ? 'https://www.google.com/maps?q='.urlencode($record->koordinat) : null, true),
                     ])
                     ->columns(3),
 
@@ -78,7 +76,7 @@ class ViewPembelian extends ViewRecord
                             ->schema([
                                 TextEntry::make('produk.nama_produk')->label('Produk')->weight('bold'),
                                 TextEntry::make('produk.item_code')->label('Kode')->placeholder('—'),
-                                TextEntry::make('kuantitas')->label('Qty')->suffix(fn($record) => ' ' . $record->unit),
+                                TextEntry::make('kuantitas')->label('Qty')->suffix(fn ($record) => ' '.$record->unit),
                                 TextEntry::make('harga_satuan')->label('Harga')->money('IDR'),
                                 TextEntry::make('diskon')->label('Disc')->suffix('%'),
                                 TextEntry::make('batch_number')->label('Batch')->placeholder('—'),
@@ -97,7 +95,7 @@ class ViewPembelian extends ViewRecord
                     ->schema([
                         TextEntry::make('subtotal')
                             ->label('Subtotal')
-                            ->state(fn($record) => $record->items->sum(fn($i) => ($i->kuantitas * $i->harga_satuan) * (1 - ($i->diskon / 100))))
+                            ->state(fn ($record) => $record->items->sum(fn ($i) => ($i->kuantitas * $i->harga_satuan) * (1 - ($i->diskon / 100))))
                             ->money('IDR'),
                         TextEntry::make('diskon_akhir')->label('Diskon Akhir')->money('IDR'),
                         TextEntry::make('tax_percentage')->label('Pajak')->suffix('%'),
@@ -118,13 +116,13 @@ class ViewPembelian extends ViewRecord
                         TextEntry::make('updated_at')
                             ->label('Diupdate')
                             ->dateTime('d M Y, H:i')
-                            ->visible(fn($record) => $record->updated_at && $record->updated_at->ne($record->created_at)),
+                            ->visible(fn ($record) => $record->updated_at && $record->updated_at->ne($record->created_at)),
                     ]),
 
                 Section::make('Lampiran')
                     ->icon('heroicon-o-photo')
                     ->collapsible()
-                    ->visible(fn() => !empty($this->getRecord()->lampiran_paths) || !empty($this->getRecord()->lampiran_path))
+                    ->visible(fn () => ! empty($this->getRecord()->lampiran_paths) || ! empty($this->getRecord()->lampiran_path))
                     ->schema([
                         TextEntry::make('lampiran_display')
                             ->label('')
@@ -137,25 +135,26 @@ class ViewPembelian extends ViewRecord
 
                                 $html = '<div class="grid grid-cols-2 md:grid-cols-3 gap-4">';
                                 foreach ($paths as $path) {
-                                    $url = asset('storage/' . $path);
+                                    $url = asset('storage/'.$path);
                                     $ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
                                     $isImage = in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp']);
 
                                     $html .= '<div class="flex flex-col items-center justify-center p-4 rounded-lg shadow-sm">';
                                     if ($isImage) {
-                                        $html .= '<a href="' . $url . '" target="_blank" class="block w-full h-32 mb-2 bg-gray-100 rounded flex items-center justify-center overflow-hidden hover:opacity-75 transition">';
-                                        $html .= '<img src="' . $url . '" class="max-w-full max-h-full object-contain" alt="Lampiran" loading="lazy">';
+                                        $html .= '<a href="'.$url.'" target="_blank" class="block w-full h-32 mb-2 bg-gray-100 rounded flex items-center justify-center overflow-hidden hover:opacity-75 transition">';
+                                        $html .= '<img src="'.$url.'" class="max-w-full max-h-full object-contain" alt="Lampiran" loading="lazy">';
                                         $html .= '</a>';
                                     } else {
-                                        $html .= '<a href="' . $url . '" target="_blank" class="block w-full h-32 mb-2 bg-gray-100 rounded flex flex-col items-center justify-center text-primary-600 hover:text-primary-800 hover:bg-gray-200 transition">';
+                                        $html .= '<a href="'.$url.'" target="_blank" class="block w-full h-32 mb-2 bg-gray-100 rounded flex flex-col items-center justify-center text-primary-600 hover:text-primary-800 hover:bg-gray-200 transition">';
                                         $html .= '<svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>';
-                                        $html .= '<span class="text-xs mt-2 uppercase font-semibold">' . $ext . '</span>';
+                                        $html .= '<span class="text-xs mt-2 uppercase font-semibold">'.$ext.'</span>';
                                         $html .= '</a>';
                                     }
-                                    $html .= '<span class="text-xs text-center truncate w-full" title="' . basename($path) . '">' . basename($path) . '</span>';
+                                    $html .= '<span class="text-xs text-center truncate w-full" title="'.basename($path).'">'.basename($path).'</span>';
                                     $html .= '</div>';
                                 }
                                 $html .= '</div>';
+
                                 return $html;
                             })
                             ->columnSpanFull(),
@@ -177,19 +176,20 @@ class ViewPembelian extends ViewRecord
                 ->requiresConfirmation()
                 ->modalHeading('Setujui Pembelian?')
                 ->modalDescription('Status akan berubah menjadi "Approved".')
-                ->visible(fn() => $record->status === 'Pending' && in_array($user->role, ['admin', 'super_admin']))
+                ->visible(fn () => $record->status === 'Pending' && in_array($user->role, ['admin', 'super_admin']))
                 ->action(function () use ($record, $user) {
                     if ($user->role === 'admin') {
                         $cg = $user?->getCurrentGudang();
-                        if (!$cg || $cg->id !== $record->gudang_id) {
+                        if (! $cg || $cg->id !== $record->gudang_id) {
                             Notification::make()->title('Hanya bisa approve transaksi di gudang aktif.')->danger()->send();
+
                             return;
                         }
                     }
                     $record->update(['status' => 'Approved', 'approver_id' => $user->id]);
-                    
+
                     // Send email notification to creator
-                    \App\Services\InvoiceEmailService::sendApprovedNotification($record, 'pembelian');
+                    InvoiceEmailService::sendApprovedNotification($record, 'pembelian');
 
                     Notification::make()->title('Pembelian berhasil di-approve.')->success()->send();
                 }),
@@ -203,17 +203,27 @@ class ViewPembelian extends ViewRecord
                 ->modalHeading('Batalkan Transaksi?')
                 ->modalDescription('Transaksi yang dibatalkan tidak dapat diproses kembali tanpa Super Admin.')
                 ->visible(function () use ($record, $user) {
-                    if ($record->status === 'Canceled') return false;
-                    if ($user->isSuperAdmin()) return true;
-                    if ($record->status !== 'Pending') return false;
-                    if ($user->role === 'user') return $record->user_id === $user->id;
+                    if ($record->status === 'Canceled') {
+                        return false;
+                    }
+                    if ($user->isSuperAdmin()) {
+                        return true;
+                    }
+                    if ($record->status !== 'Pending') {
+                        return false;
+                    }
+                    if ($user->role === 'user') {
+                        return $record->user_id === $user->id;
+                    }
+
                     return $user->role === 'admin';
                 })
                 ->action(function () use ($record, $user) {
                     if ($user->role === 'admin') {
                         $cg = $user?->getCurrentGudang();
-                        if (!$cg || $cg->id !== $record->gudang_id) {
+                        if (! $cg || $cg->id !== $record->gudang_id) {
                             Notification::make()->title('Hanya bisa cancel di gudang aktif.')->danger()->send();
+
                             return;
                         }
                     }
@@ -227,17 +237,17 @@ class ViewPembelian extends ViewRecord
                 ->icon('heroicon-o-arrow-path')
                 ->color('info')
                 ->requiresConfirmation()
-                ->visible(fn() => $record->status === 'Canceled' && $user->isSuperAdmin())
+                ->visible(fn () => $record->status === 'Canceled' && $user->isSuperAdmin())
                 ->action(function () use ($record) {
                     $gudangId = $record->gudang_id;
-                    $adminGudang = \App\Models\User::where('role', 'admin')
+                    $adminGudang = User::where('role', 'admin')
                         ->where(function ($q) use ($gudangId) {
                             $q->where('gudang_id', $gudangId)
-                                ->orWhereHas('gudangs', fn($sub) => $sub->where('gudangs.id', $gudangId));
+                                ->orWhereHas('gudangs', fn ($sub) => $sub->where('gudangs.id', $gudangId));
                         })
                         ->first();
                     $approverId = $adminGudang?->id ?? auth()->id();
-                    
+
                     $record->update(['status' => 'Pending', 'approver_id' => $approverId]);
                     Notification::make()->title('Status kembali ke Pending. Perlu di-approve ulang.')->success()->send();
                 }),
@@ -248,14 +258,14 @@ class ViewPembelian extends ViewRecord
                 ->icon('heroicon-o-printer')
                 ->color('primary')
                 ->extraAttributes([
-                    'onclick' => "window.printViaBluetooth(this, 'pembelian', '" . route('bluetooth.pembelian', $record->id) . "', { printLogo: false }); return false;",
+                    'onclick' => "window.printViaBluetooth(this, 'pembelian', '".route('bluetooth.pembelian', $record->id)."', { printLogo: false }); return false;",
                 ]),
 
             Action::make('print')
                 ->label('Print')
                 ->icon('heroicon-o-printer')
                 ->color('info')
-                ->url(fn() => route('pembelian.print', $record))
+                ->url(fn () => route('pembelian.print', $record))
                 ->openUrlInNewTab(),
 
             // ===== QR CODE =====
@@ -264,18 +274,18 @@ class ViewPembelian extends ViewRecord
                 ->icon('heroicon-o-qr-code')
                 ->color('success')
                 ->modalHeading('QR Code Dokumen')
-                ->modalDescription(fn() => 'Scan QR Code untuk melihat dokumen publik.')
-                ->modalContent(fn() => view('filament.modals.qr-code', [
+                ->modalDescription(fn () => 'Scan QR Code untuk melihat dokumen publik.')
+                ->modalContent(fn () => view('filament.modals.qr-code', [
                     'url' => url("invoice/pembelian/{$record->uuid}"),
                 ]))
                 ->modalSubmitAction(false)
                 ->modalCancelActionLabel('Tutup'),
 
             // ===== EDIT (super_admin only) =====
-            EditAction::make()->visible(fn() => $user->isSuperAdmin()),
+            EditAction::make()->visible(fn () => $user->isSuperAdmin()),
 
             // ===== DELETE =====
-            DeleteAction::make()->visible(fn() => $user->isSuperAdmin()),
+            DeleteAction::make()->visible(fn (): bool => $user->isSuperAdmin() && TransactionDeleteGuard::canDeletePembelian($record)),
         ];
     }
 }

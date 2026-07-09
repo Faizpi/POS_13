@@ -15,7 +15,7 @@ class ExportService
      */
     public function exportYearlyData(int $tahun, ?int $gudangId = null): string
     {
-        $tmpDir = storage_path('app/temp/export_' . $tahun . '_' . now()->timestamp);
+        $tmpDir = storage_path('app/temp/export_'.$tahun.'_'.now()->timestamp);
         $this->ensureDirExists($tmpDir);
 
         try {
@@ -31,12 +31,12 @@ class ExportService
             $this->exportGudangCsv($tmpDir);
 
             // 2. Export lampiran (foto) tahun tersebut
-            $lampiranDir = $tmpDir . '/lampiran';
+            $lampiranDir = $tmpDir.'/lampiran';
             $this->ensureDirExists($lampiranDir);
             $this->collectLampiranFiles($tahun, $lampiranDir);
 
             // 3. Buat ZIP
-            $zipPath = storage_path("app/backup_data_{$tahun}_" . now()->format('Y-m-d') . ".zip");
+            $zipPath = storage_path("app/backup_data_{$tahun}_".now()->format('Y-m-d').'.zip');
             $this->createZip($tmpDir, $zipPath);
 
             return $zipPath;
@@ -58,7 +58,7 @@ class ExportService
             ->whereYear('penjualans.tgl_transaksi', $tahun)
             ->orWhere(function ($q) use ($tahun) {
                 $q->whereYear('penjualans.created_at', $tahun)
-                  ->whereNull('penjualans.tgl_transaksi');
+                    ->whereNull('penjualans.tgl_transaksi');
             })
             ->select([
                 'penjualans.id', 'penjualans.nomor', 'penjualans.tgl_transaksi',
@@ -73,7 +73,7 @@ class ExportService
         }
 
         $rows = $query->get();
-        $this->writeCsv($dir . '/penjualan.csv', [
+        $this->writeCsv($dir.'/penjualan.csv', [
             'ID', 'Nomor', 'Tgl Transaksi', 'Pelanggan', 'Status',
             'Grand Total', 'Diskon', 'Tax %', 'Sales', 'Gudang',
         ], $rows);
@@ -87,7 +87,7 @@ class ExportService
             ->whereYear('pembelians.tgl_transaksi', $tahun)
             ->orWhere(function ($q) use ($tahun) {
                 $q->whereYear('pembelians.created_at', $tahun)
-                  ->whereNull('pembelians.tgl_transaksi');
+                    ->whereNull('pembelians.tgl_transaksi');
             })
             ->select([
                 'pembelians.id', 'pembelians.nomor', 'pembelians.tgl_transaksi',
@@ -101,7 +101,7 @@ class ExportService
         }
 
         $rows = $query->get();
-        $this->writeCsv($dir . '/pembelian.csv', [
+        $this->writeCsv($dir.'/pembelian.csv', [
             'ID', 'Nomor', 'Tgl Transaksi', 'Urgensi',
             'Status', 'Grand Total', 'Sales', 'Gudang',
         ], $rows);
@@ -115,7 +115,7 @@ class ExportService
             ->whereYear('biayas.tgl_transaksi', $tahun)
             ->orWhere(function ($q) use ($tahun) {
                 $q->whereYear('biayas.created_at', $tahun)
-                  ->whereNull('biayas.tgl_transaksi');
+                    ->whereNull('biayas.tgl_transaksi');
             })
             ->select([
                 'biayas.id', 'biayas.nomor', 'biayas.tgl_transaksi',
@@ -130,7 +130,7 @@ class ExportService
         }
 
         $rows = $query->get();
-        $this->writeCsv($dir . '/biaya.csv', [
+        $this->writeCsv($dir.'/biaya.csv', [
             'ID', 'Nomor', 'Tgl Transaksi', 'Jenis Biaya', 'Penerima',
             'Status', 'Grand Total', 'Cara Bayar', 'User', 'Gudang',
         ], $rows);
@@ -156,7 +156,7 @@ class ExportService
         }
 
         $rows = $query->get();
-        $this->writeCsv($dir . '/kunjungan.csv', [
+        $this->writeCsv($dir.'/kunjungan.csv', [
             'ID', 'Nomor', 'Tgl Kunjungan', 'Tujuan', 'Status',
             'Sales', 'Gudang', 'Kontak',
         ], $rows);
@@ -170,7 +170,7 @@ class ExportService
             ->whereYear('pembayarans.tgl_pembayaran', $tahun)
             ->orWhere(function ($q) use ($tahun) {
                 $q->whereYear('pembayarans.created_at', $tahun)
-                  ->whereNull('pembayarans.tgl_pembayaran');
+                    ->whereNull('pembayarans.tgl_pembayaran');
             })
             ->select([
                 'pembayarans.id', 'pembayarans.nomor', 'pembayarans.tgl_pembayaran',
@@ -185,7 +185,7 @@ class ExportService
         }
 
         $rows = $query->get();
-        $this->writeCsv($dir . '/pembayaran.csv', [
+        $this->writeCsv($dir.'/pembayaran.csv', [
             'ID', 'Nomor', 'Tgl Pembayaran', 'Metode', 'Jumlah Bayar',
             'Status', 'Penjualan ID', 'User', 'Gudang',
         ], $rows);
@@ -210,7 +210,7 @@ class ExportService
         }
 
         $rows = $query->get();
-        $this->writeCsv($dir . '/penerimaan_barang.csv', [
+        $this->writeCsv($dir.'/penerimaan_barang.csv', [
             'ID', 'Nomor', 'Tgl Penerimaan', 'No Surat Jalan',
             'Status', 'User', 'Gudang',
         ], $rows);
@@ -228,7 +228,7 @@ class ExportService
             ->orderBy('produks.nama_produk')
             ->get();
 
-        $this->writeCsv($dir . '/produk.csv', [
+        $this->writeCsv($dir.'/produk.csv', [
             'ID', 'Item Code', 'Nama Produk', 'Harga',
             'Harga Grosir', 'Satuan', 'Deskripsi',
         ], $rows);
@@ -241,7 +241,7 @@ class ExportService
             ->orderBy('nama')
             ->get();
 
-        $this->writeCsv($dir . '/kontak.csv', [
+        $this->writeCsv($dir.'/kontak.csv', [
             'ID', 'Kode Kontak', 'Nama', 'Email', 'No Telepon', 'Alamat', 'Diskon %',
         ], $rows);
     }
@@ -253,7 +253,7 @@ class ExportService
             ->orderBy('nama_gudang')
             ->get();
 
-        $this->writeCsv($dir . '/gudang.csv', [
+        $this->writeCsv($dir.'/gudang.csv', [
             'ID', 'Nama Gudang', 'Alamat',
         ], $rows);
     }
@@ -268,39 +268,39 @@ class ExportService
         $lampiranEntries = $this->getAllLampiranPaths($tahun);
 
         // Filament FileUpload default saves to default disk, which is 'local' (storage/app/private)
-        $disk = Storage::disk('local'); 
+        $disk = Storage::disk('local');
 
         foreach ($lampiranEntries as $entry) {
             $sourcePath = $entry['disk_path']; // ex: lampiran_penjualan/file.jpg
             $type = $entry['type']; // penjualan, pembelian, etc.
 
-            // Handle Filament FileUpload which sometimes stores path as 'lampiran_penjualan/file.jpg' 
+            // Handle Filament FileUpload which sometimes stores path as 'lampiran_penjualan/file.jpg'
             // and sometimes just 'file.jpg'. We ensure the prefix is correct.
             $actualSourcePath = $sourcePath;
-            if (!$disk->exists($sourcePath)) {
+            if (! $disk->exists($sourcePath)) {
                 // Try checking without the directory prefix if it was stored as just filename
                 $basename = basename($sourcePath);
                 $dirPrefix = explode('/', $sourcePath)[0];
-                if ($disk->exists($dirPrefix . '/' . $basename)) {
-                    $actualSourcePath = $dirPrefix . '/' . $basename;
+                if ($disk->exists($dirPrefix.'/'.$basename)) {
+                    $actualSourcePath = $dirPrefix.'/'.$basename;
                 } else {
                     continue; // File not found in storage
                 }
             }
 
             // Buat subfolder berdasarkan tipe
-            $typeDir = $targetDir . '/' . str_replace('s', '', $type); // remove trailing 's' for folder name
+            $typeDir = $targetDir.'/'.str_replace('s', '', $type); // remove trailing 's' for folder name
             $this->ensureDirExists($typeDir);
 
             // Copy file
             $filename = basename($actualSourcePath);
-            $destPath = $typeDir . '/' . $filename;
+            $destPath = $typeDir.'/'.$filename;
 
             // Handle nama file duplikat
             $counter = 1;
             while (file_exists($destPath)) {
                 $info = pathinfo($filename);
-                $destPath = $typeDir . '/' . $info['filename'] . "_({$counter})." . ($info['extension'] ?? '');
+                $destPath = $typeDir.'/'.$info['filename']."_({$counter}).".($info['extension'] ?? '');
                 $counter++;
             }
 
@@ -316,12 +316,12 @@ class ExportService
         // FileUpload stores files at: storage/app/private/{directory}/{filename}
         // DB column lampiran_path/lampiran_paths stores just the filename(s)
         $types = [
-            'penjualans'          => ['tgl_transaksi', 'lampiran_penjualan'],
-            'pembelians'          => ['tgl_transaksi', 'lampiran_pembelian'],
-            'biayas'              => ['tgl_transaksi', 'lampiran_biaya'],
-            'kunjungans'          => ['tgl_kunjungan', 'lampiran_kunjungan'],
-            'pembayarans'         => ['tgl_pembayaran', 'lampiran_pembayaran'],
-            'penerimaan_barangs'  => ['tgl_penerimaan', 'lampiran_penerimaan'],
+            'penjualans' => ['tgl_transaksi', 'lampiran_penjualan'],
+            'pembelians' => ['tgl_transaksi', 'lampiran_pembelian'],
+            'biayas' => ['tgl_transaksi', 'lampiran_biaya'],
+            'kunjungans' => ['tgl_kunjungan', 'lampiran_kunjungan'],
+            'pembayarans' => ['tgl_pembayaran', 'lampiran_pembayaran'],
+            'penerimaan_barangs' => ['tgl_penerimaan', 'lampiran_penerimaan'],
         ];
 
         foreach ($types as $table => [$dateField, $diskDir]) {
@@ -330,14 +330,14 @@ class ExportService
                 $records = DB::table($table)
                     ->where(function ($q) use ($dateField, $tahun) {
                         $q->whereYear($dateField, $tahun)
-                          ->orWhere(function ($q2) use ($dateField, $tahun) {
-                              $q2->whereNull($dateField)
-                                 ->whereYear('created_at', $tahun);
-                          });
+                            ->orWhere(function ($q2) use ($dateField, $tahun) {
+                                $q2->whereNull($dateField)
+                                    ->whereYear('created_at', $tahun);
+                            });
                     })
                     ->where(function ($q) {
                         $q->whereNotNull('lampiran_path')
-                          ->orWhereNotNull('lampiran_paths');
+                            ->orWhereNotNull('lampiran_paths');
                     })
                     ->select('lampiran_path', 'lampiran_paths')
                     ->get();
@@ -345,7 +345,7 @@ class ExportService
                 foreach ($records as $record) {
                     if ($record->lampiran_path) {
                         $paths[] = [
-                            'disk_path' => $diskDir . '/' . $record->lampiran_path,
+                            'disk_path' => $diskDir.'/'.$record->lampiran_path,
                             'type' => $table,
                         ];
                     }
@@ -358,7 +358,7 @@ class ExportService
                         if (is_array($files)) {
                             foreach ($files as $file) {
                                 $paths[] = [
-                                    'disk_path' => $diskDir . '/' . $file,
+                                    'disk_path' => $diskDir.'/'.$file,
                                     'type' => $table,
                                 ];
                             }
@@ -410,7 +410,7 @@ class ExportService
 
     private function createZip(string $sourceDir, string $zipPath): void
     {
-        $zip = new ZipArchive();
+        $zip = new ZipArchive;
 
         if ($zip->open($zipPath, ZipArchive::CREATE | ZipArchive::OVERWRITE) !== true) {
             throw new \RuntimeException("Gagal membuat ZIP: {$zipPath}");

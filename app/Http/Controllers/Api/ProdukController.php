@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Produk;
 use App\Models\GudangProduk;
+use App\Models\Produk;
 use Illuminate\Http\Request;
 
 class ProdukController extends Controller
@@ -49,7 +49,7 @@ class ProdukController extends Controller
     {
         $user = auth()->user();
 
-        if ($user->role != 'super_admin' && !$user->canAccessGudang($gudangId)) {
+        if ($user->role != 'super_admin' && ! $user->canAccessGudang($gudangId)) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
@@ -92,7 +92,7 @@ class ProdukController extends Controller
 
         $request->validate([
             'nama_produk' => 'required|string|max:255',
-            'item_code' => 'nullable|string|max:255|unique:produks,item_code,' . $produk->id,
+            'item_code' => 'nullable|string|max:255|unique:produks,item_code,'.$produk->id,
             'harga' => 'required|numeric|min:0',
             'harga_grosir' => 'nullable|numeric|min:0',
             'satuan' => 'required|in:Pcs,Lusin,Karton',

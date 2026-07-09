@@ -3,7 +3,6 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Pembelian;
-use Carbon\Carbon;
 use Filament\Widgets\StatsOverviewWidget as BaseStatsOverviewWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 
@@ -16,14 +15,19 @@ class PembelianStatsWidget extends BaseStatsOverviewWidget
 
     protected function getStats(): array
     {
-        $user         = auth()->user();
+        $user = auth()->user();
         $isSuperAdmin = $user?->isSuperAdmin();
-        $isAdmin      = $user?->isAdmin();
-        $gudangId     = ($isAdmin && !$isSuperAdmin) ? $user?->getCurrentGudang()?->id : null;
+        $isAdmin = $user?->isAdmin();
+        $gudangId = ($isAdmin && ! $isSuperAdmin) ? $user?->getCurrentGudang()?->id : null;
 
         $scope = function ($query) use ($isSuperAdmin, $isAdmin, $gudangId, $user) {
-            if ($isSuperAdmin) return $query;
-            if ($isAdmin && $gudangId) return $query->where('gudang_id', $gudangId);
+            if ($isSuperAdmin) {
+                return $query;
+            }
+            if ($isAdmin && $gudangId) {
+                return $query->where('gudang_id', $gudangId);
+            }
+
             return $query->where('user_id', $user->id);
         };
 
@@ -65,7 +69,7 @@ class PembelianStatsWidget extends BaseStatsOverviewWidget
                 ->descriptionIcon('heroicon-o-exclamation-triangle')
                 ->color($fakturTelatBayar > 0 ? 'danger' : 'success'),
 
-            Stat::make('Dibatalkan (Canceled)', number_format($fakturCanceled) . ' Transaksi')
+            Stat::make('Dibatalkan (Canceled)', number_format($fakturCanceled).' Transaksi')
                 ->description('Semua periode')
                 ->descriptionIcon('heroicon-o-x-circle')
                 ->color($fakturCanceled > 0 ? 'gray' : 'success'),

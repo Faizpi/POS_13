@@ -55,7 +55,7 @@ class KontakController extends Controller
         $user = auth()->user();
         $kontak = Kontak::findOrFail($id);
 
-        if (!$this->canAccessKontak($user, $kontak)) {
+        if (! $this->canAccessKontak($user, $kontak)) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
@@ -77,15 +77,15 @@ class KontakController extends Controller
         $currentGudang = $user->getCurrentGudang();
 
         $kontak = Kontak::create([
-            'kode_kontak'   => $request->kode_kontak ?: Kontak::generateKodeKontak(),
-            'nama'          => $request->nama,
-            'email'         => $request->email,
-            'no_telp'       => $request->no_telp ? self::normalizePhone($request->no_telp) : null,
-            'pin'           => $request->pin,
-            'alamat'        => $request->alamat,
+            'kode_kontak' => $request->kode_kontak ?: Kontak::generateKodeKontak(),
+            'nama' => $request->nama,
+            'email' => $request->email,
+            'no_telp' => $request->no_telp ? self::normalizePhone($request->no_telp) : null,
+            'pin' => $request->pin,
+            'alamat' => $request->alamat,
             'diskon_persen' => $request->diskon_persen ?? 0,
-            'gudang_id'     => $request->gudang_id ?? ($currentGudang ? $currentGudang->id : null),
-            'created_by'    => $user->id,
+            'gudang_id' => $request->gudang_id ?? ($currentGudang ? $currentGudang->id : null),
+            'created_by' => $user->id,
         ]);
 
         return response()->json(['message' => 'Kontak berhasil dibuat.', 'data' => $kontak], 201);
@@ -96,16 +96,16 @@ class KontakController extends Controller
         $user = auth()->user();
         $kontak = Kontak::findOrFail($id);
 
-        if (!$this->canAccessKontak($user, $kontak)) {
+        if (! $this->canAccessKontak($user, $kontak)) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
         $request->validate([
-            'nama'        => 'required|string|max:255',
-            'no_telp'     => 'nullable|string|max:20',
-            'email'       => 'nullable|email|max:255',
+            'nama' => 'required|string|max:255',
+            'no_telp' => 'nullable|string|max:20',
+            'email' => 'nullable|email|max:255',
             'kode_kontak' => 'nullable|string|max:50',
-            'pin'         => 'nullable|string|size:6',
+            'pin' => 'nullable|string|size:6',
         ]);
 
         $kontak->update($request->only(['nama', 'email', 'no_telp', 'alamat', 'diskon_persen', 'kode_kontak', 'pin']));
@@ -118,7 +118,7 @@ class KontakController extends Controller
         $user = auth()->user();
         $kontak = Kontak::findOrFail($id);
 
-        if (!$this->canAccessKontak($user, $kontak)) {
+        if (! $this->canAccessKontak($user, $kontak)) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
@@ -136,6 +136,7 @@ class KontakController extends Controller
         if ($user->gudang_id) {
             $ids[] = $user->gudang_id;
         }
+
         return array_unique($ids);
     }
 
@@ -149,6 +150,7 @@ class KontakController extends Controller
             if ($kontak->gudang_id === null) {
                 return true;
             }
+
             return in_array($kontak->gudang_id, $this->getAccessibleGudangIds($user));
         }
 
@@ -174,11 +176,12 @@ class KontakController extends Controller
             $phone = substr($phone, 1);
         }
         if (str_starts_with($phone, '08')) {
-            $phone = '62' . substr($phone, 1);
+            $phone = '62'.substr($phone, 1);
         }
         if (str_starts_with($phone, '8') && strlen($phone) >= 9 && strlen($phone) <= 13) {
-            $phone = '62' . $phone;
+            $phone = '62'.$phone;
         }
+
         return $phone;
     }
 }

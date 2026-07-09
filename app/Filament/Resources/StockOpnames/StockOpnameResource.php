@@ -38,6 +38,7 @@ class StockOpnameResource extends Resource
     public static function getNavigationBadge(): ?string
     {
         $count = static::applyRoleScope(StockOpname::query())->where('status', 'Submitted')->count();
+
         return $count > 0 ? (string) $count : null;
     }
 
@@ -64,6 +65,7 @@ class StockOpnameResource extends Resource
     public static function canCreate(): bool
     {
         $role = auth()->user()?->role;
+
         // Excel: Sales ❌, Admin ✅ CREATE, Spectator ❌, SuperAdmin ✅
         return in_array($role, ['super_admin', 'admin']);
     }
@@ -71,11 +73,17 @@ class StockOpnameResource extends Resource
     public static function canEdit($record): bool
     {
         $user = auth()->user();
-        if (!$user) return false;
+        if (! $user) {
+            return false;
+        }
 
         // Excel: Sales ✅ VIEW only (no edit), Admin ✅ EDIT, Spectator ❌, SuperAdmin ✅
-        if ($user->isSuperAdmin()) return true;
-        if ($user->role === 'admin') return !$user->isSpectator();
+        if ($user->isSuperAdmin()) {
+            return true;
+        }
+        if ($user->role === 'admin') {
+            return ! $user->isSpectator();
+        }
 
         return false;
     }
@@ -89,10 +97,10 @@ class StockOpnameResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => ListStockOpnames::route('/'),
+            'index' => ListStockOpnames::route('/'),
             'create' => CreateStockOpname::route('/create'),
-            'view'   => ViewStockOpname::route('/{record}'),
-            'edit'   => EditStockOpname::route('/{record}/edit'),
+            'view' => ViewStockOpname::route('/{record}'),
+            'edit' => EditStockOpname::route('/{record}/edit'),
         ];
     }
 }

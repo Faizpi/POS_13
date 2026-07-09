@@ -2,11 +2,14 @@
 
 namespace App\Filament\Resources\Biayas\Schemas;
 
+use App\Models\Biaya;
 use App\Models\Gudang;
 use App\Models\Kontak;
+use Carbon\Carbon;
 use Filament\Actions\Action;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -14,6 +17,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\ToggleButtons;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 class BiayaForm
 {
@@ -24,13 +28,14 @@ class BiayaForm
                 Section::make('Detail Biaya')
                     ->icon('heroicon-o-wallet')
                     ->schema([
-                        \Filament\Forms\Components\Placeholder::make('preview_nomor')
+                        Placeholder::make('preview_nomor')
                             ->label('No Transaksi (Preview)')
                             ->content(function () {
-                                $countToday = \App\Models\Biaya::where('user_id', auth()->id())
-                                    ->whereDate('created_at', \Carbon\Carbon::today())
+                                $countToday = Biaya::where('user_id', auth()->id())
+                                    ->whereDate('created_at', Carbon::today())
                                     ->count();
-                                return \App\Models\Biaya::generateNomor(auth()->id(), $countToday + 1, \Carbon\Carbon::now()) . ' (Auto)';
+
+                                return Biaya::generateNomor(auth()->id(), $countToday + 1, Carbon::now()).' (Auto)';
                             })
                             ->hiddenOn(['view', 'edit'])
                             ->extraAttributes(['class' => 'text-primary-600 font-bold']),
@@ -134,7 +139,7 @@ class BiayaForm
                                     ->label('')
                                     ->tooltip('Buka di Google Maps')
                                     ->url(fn ($get) => $get('koordinat')
-                                        ? 'https://www.google.com/maps?q=' . urlencode($get('koordinat'))
+                                        ? 'https://www.google.com/maps?q='.urlencode($get('koordinat'))
                                         : '#')
                                     ->openUrlInNewTab(),
                             ]),
@@ -218,16 +223,17 @@ class BiayaForm
                             ->multiple()
                             ->disk('public')
                             ->directory('lampiran_biaya')
-                            ->getUploadedFileNameForStorageUsing(function (\Livewire\Features\SupportFileUploads\TemporaryUploadedFile $file, $record): string {
+                            ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file, $record): string {
                                 $user = auth()->user();
                                 $now = now();
                                 if ($record && $record->exists) {
                                     $nomor = $record->nomor;
                                 } else {
-                                    $countToday = \App\Models\Biaya::where('user_id', $user->id)->whereDate('created_at', $now)->count();
-                                    $nomor = "EXP-{$now->format('Ymd')}-{$user->id}-" . str_pad($countToday + 1, 3, '0', STR_PAD_LEFT);
+                                    $countToday = Biaya::where('user_id', $user->id)->whereDate('created_at', $now)->count();
+                                    $nomor = "EXP-{$now->format('Ymd')}-{$user->id}-".str_pad($countToday + 1, 3, '0', STR_PAD_LEFT);
                                 }
-                                return "{$nomor}-" . time() . ".{$file->extension()}";
+
+                                return "{$nomor}-".time().".{$file->extension()}";
                             })
                             ->acceptedFileTypes(['image/*', 'application/pdf', 'application/zip'])
                             ->maxSize(5120)

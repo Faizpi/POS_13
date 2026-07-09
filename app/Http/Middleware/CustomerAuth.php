@@ -15,14 +15,15 @@ class CustomerAuth
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!session('customer_id') || !session('customer_no_telp')) {
+        if (! session('customer_id') || ! session('customer_no_telp')) {
             return redirect()->route('customer.login')
                 ->with('error', 'Silakan login terlebih dahulu.');
         }
 
         $kontak = Kontak::find(session('customer_id'));
-        if (!$kontak) {
+        if (! $kontak) {
             session()->forget(['customer_id', 'customer_no_telp', 'customer_nama']);
+
             return redirect()->route('customer.login')
                 ->with('error', 'Akun tidak ditemukan.');
         }

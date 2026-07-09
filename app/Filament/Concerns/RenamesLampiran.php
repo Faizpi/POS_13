@@ -19,19 +19,19 @@ trait RenamesLampiran
             return;
         }
 
-        $paths    = $record->lampiran_paths;
-        $nomor    = $record->nomor ?? ('ID-' . $record->id);
-        $dir      = explode('/', $paths[0] ?? '')[0] ?? 'lampiran';
-        $disk     = Storage::disk('local');
+        $paths = $record->lampiran_paths;
+        $nomor = $record->nomor ?? ('ID-'.$record->id);
+        $dir = explode('/', $paths[0] ?? '')[0] ?? 'lampiran';
+        $disk = Storage::disk('local');
         $rootPath = $disk->path('');
 
         $hasChanges = false;
-        $counter    = 1;
+        $counter = 1;
 
         // Cari counter tertinggi dari file yang sudah benar formatnya
         foreach ($paths as $path) {
             $fn = basename($path);
-            if (preg_match('/^' . preg_quote($nomor, '/') . '-(\d+)\./', $fn, $m)) {
+            if (preg_match('/^'.preg_quote($nomor, '/').'-(\d+)\./', $fn, $m)) {
                 $counter = max($counter, (int) $m[1] + 1);
             }
         }
@@ -40,7 +40,7 @@ trait RenamesLampiran
             $fn = basename($path);
 
             // Skip file yang sudah sesuai format: {nomor}-{counter}.{ext}
-            if (preg_match('/^' . preg_quote($nomor, '/') . '-\d+\.\w+$/', $fn)) {
+            if (preg_match('/^'.preg_quote($nomor, '/').'-\d+\.\w+$/', $fn)) {
                 continue;
             }
 
@@ -49,10 +49,10 @@ trait RenamesLampiran
             $newPath = "{$dir}/{$newFn}";
 
             // Use direct filesystem to avoid disk misconfiguration
-            $absOld = $rootPath . $path;
-            $absNew = $rootPath . $newPath;
+            $absOld = $rootPath.$path;
+            $absNew = $rootPath.$newPath;
 
-            if (File::exists($absOld) && !File::exists($absNew)) {
+            if (File::exists($absOld) && ! File::exists($absNew)) {
                 File::move($absOld, $absNew);
                 $paths[$i] = $newPath;
                 $hasChanges = true;

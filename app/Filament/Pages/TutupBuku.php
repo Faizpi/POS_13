@@ -8,12 +8,14 @@ use App\Services\ExportService;
 use App\Services\TutupBukuService;
 use BackedEnum;
 use Filament\Actions\Action;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Contracts\View\View;
 use UnitEnum;
 
 class TutupBuku extends Page implements Tables\Contracts\HasTable
@@ -21,8 +23,11 @@ class TutupBuku extends Page implements Tables\Contracts\HasTable
     use Tables\Concerns\InteractsWithTable;
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-folder';
+
     protected static ?string $title = 'Tutup Buku & Backup';
+
     protected static ?string $slug = 'tutup-buku';
+
     protected static string|UnitEnum|null $navigationGroup = 'Pengaturan';
 
     public static function canAccess(): bool
@@ -62,7 +67,9 @@ class TutupBuku extends Page implements Tables\Contracts\HasTable
                     ->label('Ringkasan')
                     ->state(function (TutupBukuModel $record): string {
                         $meta = $record->metadata;
-                        if (!$meta || !isset($meta['summary'])) return '-';
+                        if (! $meta || ! isset($meta['summary'])) {
+                            return '-';
+                        }
 
                         $parts = [];
                         foreach ($meta['summary'] as $key => $val) {
@@ -77,16 +84,18 @@ class TutupBuku extends Page implements Tables\Contracts\HasTable
                             };
                             $parts[] = "{$label}: {$val['archived']}";
                         }
+
                         return implode(', ', $parts);
                     }),
             ])
             ->actions([
-                \Filament\Actions\ViewAction::make('view_metadata')
+                ViewAction::make('view_metadata')
                     ->label('Detail')
                     ->icon('heroicon-o-eye')
                     ->modalHeading('Detail Tutup Buku')
-                    ->modalContent(function (TutupBukuModel $record): \Illuminate\Contracts\View\View {
+                    ->modalContent(function (TutupBukuModel $record): View {
                         $meta = $record->metadata ?? [];
+
                         return view('filament.pages.tutup-buku-detail', compact('meta', 'record'));
                     })
                     ->modalSubmitAction(false)
@@ -114,7 +123,7 @@ class TutupBuku extends Page implements Tables\Contracts\HasTable
                         }
                     }, $filename, [
                         'Content-Type' => 'application/sql',
-                        'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+                        'Content-Disposition' => 'attachment; filename="'.$filename.'"',
                     ]);
                 }),
 
@@ -147,6 +156,7 @@ class TutupBuku extends Page implements Tables\Contracts\HasTable
                             ->body($e->getMessage())
                             ->danger()
                             ->send();
+
                         return null;
                     }
                 }),
@@ -192,7 +202,7 @@ class TutupBuku extends Page implements Tables\Contracts\HasTable
                     } catch (\Exception $e) {
                         Notification::make()
                             ->title('Proses Gagal')
-                            ->body('Terjadi kesalahan: ' . $e->getMessage())
+                            ->body('Terjadi kesalahan: '.$e->getMessage())
                             ->danger()
                             ->send();
                     }
@@ -207,6 +217,7 @@ class TutupBuku extends Page implements Tables\Contracts\HasTable
         for ($y = $currentYear; $y >= $currentYear - 10; $y--) {
             $years[$y] = (string) $y;
         }
+
         return $years;
     }
 
@@ -217,7 +228,7 @@ class TutupBuku extends Page implements Tables\Contracts\HasTable
 
         foreach ($years as $year => $label) {
             if (in_array($year, $closedYears)) {
-                $years[$year] = $label . ' (Sudah ditutup)';
+                $years[$year] = $label.' (Sudah ditutup)';
             }
         }
 

@@ -2,12 +2,12 @@
 
 namespace App\Filament\Resources\Kontaks\Schemas;
 
+use App\Models\Kontak;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
-use App\Models\Kontak;
 
 class KontakForm
 {
@@ -22,22 +22,22 @@ class KontakForm
                         TextInput::make('kode_kontak')
                             ->label('Kode Kontak')
                             ->maxLength(50)
-                            ->placeholder(fn () => 'Contoh: ' . Kontak::generateKodeKontak())
+                            ->placeholder(fn () => 'Contoh: '.Kontak::generateKodeKontak())
                             ->helperText('Kosongkan untuk auto-generate')
-                            ->disabled(fn() => !in_array(auth()->user()?->role, ['admin', 'super_admin'])),
+                            ->disabled(fn () => ! in_array(auth()->user()?->role, ['admin', 'super_admin'])),
 
                         TextInput::make('nama')
                             ->label('Nama Kontak')
                             ->required()
                             ->maxLength(255)
                             ->columnSpan(2)
-                            ->disabled(fn() => !in_array(auth()->user()?->role, ['admin', 'super_admin'])),
+                            ->disabled(fn () => ! in_array(auth()->user()?->role, ['admin', 'super_admin'])),
 
                         TextInput::make('email')
                             ->label('Email')
                             ->email()
                             ->maxLength(255)
-                            ->disabled(fn() => !in_array(auth()->user()?->role, ['admin', 'super_admin'])),
+                            ->disabled(fn () => ! in_array(auth()->user()?->role, ['admin', 'super_admin'])),
 
                         TextInput::make('no_telp')
                             ->label('No. Telepon')
@@ -53,7 +53,7 @@ class KontakForm
                             ->maxLength(6)
                             ->minLength(6)
                             ->placeholder('Untuk login portal customer')
-                            ->disabled(fn() => !in_array(auth()->user()?->role, ['admin', 'super_admin'])),
+                            ->disabled(fn () => ! in_array(auth()->user()?->role, ['admin', 'super_admin'])),
                     ])
                     ->columns(3),
 
@@ -63,7 +63,7 @@ class KontakForm
                             ->label('Alamat')
                             ->rows(3)
                             ->columnSpanFull()
-                            ->disabled(fn() => !in_array(auth()->user()?->role, ['admin', 'super_admin'])),
+                            ->disabled(fn () => ! in_array(auth()->user()?->role, ['admin', 'super_admin'])),
 
                         TextInput::make('diskon_persen')
                             ->label('Diskon Bawaan (%)')
@@ -73,7 +73,7 @@ class KontakForm
                             ->maxValue(100)
                             ->suffix('%')
                             ->helperText('Diskon otomatis untuk customer ini')
-                            ->disabled(fn() => !in_array(auth()->user()?->role, ['admin', 'super_admin'])),
+                            ->disabled(fn () => ! in_array(auth()->user()?->role, ['admin', 'super_admin'])),
 
                         Select::make('gudang_id')
                             ->label('Gudang')
@@ -81,9 +81,9 @@ class KontakForm
                             ->searchable()
                             ->preload()
                             ->placeholder('Pilih gudang')
-                            ->default(fn() => auth()->user()?->getCurrentGudang()?->id)
-                            ->visible(fn() => auth()->user()?->isSuperAdmin())
-                            ->disabled(fn() => !auth()->user()?->isSuperAdmin()),
+                            ->default(fn () => auth()->user()?->getCurrentGudang()?->id)
+                            ->visible(fn () => auth()->user()?->isSuperAdmin())
+                            ->disabled(fn () => ! auth()->user()?->isSuperAdmin()),
                     ])
                     ->columns(2),
             ]);

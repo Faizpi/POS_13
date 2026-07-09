@@ -18,7 +18,7 @@ class ListPenjualans extends ListRecords
         return [
             CreateAction::make()
                 ->label('Buat Penagihan Baru')
-                ->visible(fn() => !auth()->user()?->isSpectator()),
+                ->visible(fn () => ! auth()->user()?->isSpectator()),
         ];
     }
 
@@ -40,27 +40,27 @@ class ListPenjualans extends ListRecords
             'pending' => Tab::make('Pending')
                 ->badge($baseQuery->clone()->where('status', 'Pending')->count())
                 ->badgeColor('warning')
-                ->modifyQueryUsing(fn(Builder $query) => $query->where('status', 'Pending')),
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('status', 'Pending')),
 
             'approved' => Tab::make('Approved')
                 ->badge($baseQuery->clone()->where('status', 'Approved')->count())
                 ->badgeColor('primary')
-                ->modifyQueryUsing(fn(Builder $query) => $query->where('status', 'Approved')),
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('status', 'Approved')),
 
             'lunas' => Tab::make('Lunas')
                 ->badge($baseQuery->clone()->where('status', 'Lunas')->count())
                 ->badgeColor('success')
-                ->modifyQueryUsing(fn(Builder $query) => $query->where('status', 'Lunas')),
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('status', 'Lunas')),
 
             'rejected' => Tab::make('Rejected')
                 ->badge($baseQuery->clone()->where('status', 'Rejected')->count())
                 ->badgeColor('danger')
-                ->modifyQueryUsing(fn(Builder $query) => $query->where('status', 'Rejected')),
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('status', 'Rejected')),
 
             'canceled' => Tab::make('Canceled')
                 ->badge($baseQuery->clone()->where('status', 'Canceled')->count())
                 ->badgeColor('gray')
-                ->modifyQueryUsing(fn(Builder $query) => $query->where('status', 'Canceled')),
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('status', 'Canceled')),
         ];
     }
 }

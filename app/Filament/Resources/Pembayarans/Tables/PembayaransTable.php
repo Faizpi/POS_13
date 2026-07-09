@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Pembayarans\Tables;
 
+use App\Filament\Concerns\TransactionDeleteGuard;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -46,11 +47,13 @@ class PembayaransTable
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make()->visible(fn () => auth()->user()?->isSuperAdmin()),
-                DeleteAction::make()->visible(fn () => auth()->user()?->isSuperAdmin()),
+                DeleteAction::make()
+                    ->visible(fn ($record): bool => auth()->user()?->isSuperAdmin() && TransactionDeleteGuard::canDeletePembayaran($record)),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make()->visible(fn () => auth()->user()?->isSuperAdmin()),
+                    DeleteBulkAction::make()
+                        ->visible(fn (): bool => false),
                 ]),
             ])
             ->emptyStateHeading('Belum ada pembayaran')

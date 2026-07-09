@@ -16,14 +16,19 @@ class BiayaStatsWidget extends BaseStatsOverviewWidget
 
     protected function getStats(): array
     {
-        $user         = auth()->user();
+        $user = auth()->user();
         $isSuperAdmin = $user?->isSuperAdmin();
-        $isAdmin      = $user?->isAdmin();
-        $gudangId     = ($isAdmin && !$isSuperAdmin) ? $user?->getCurrentGudang()?->id : null;
+        $isAdmin = $user?->isAdmin();
+        $gudangId = ($isAdmin && ! $isSuperAdmin) ? $user?->getCurrentGudang()?->id : null;
 
         $scope = function ($query) use ($isSuperAdmin, $isAdmin, $gudangId, $user) {
-            if ($isSuperAdmin) return $query;
-            if ($isAdmin && $gudangId) return $query->where('gudang_id', $gudangId);
+            if ($isSuperAdmin) {
+                return $query;
+            }
+            if ($isAdmin && $gudangId) {
+                return $query->where('gudang_id', $gudangId);
+            }
+
             return $query->where('user_id', $user->id);
         };
 
@@ -66,7 +71,7 @@ class BiayaStatsWidget extends BaseStatsOverviewWidget
                 ->color('danger'),
 
             Stat::make('Total Bulan Ini', format_rupiah($totalBulanIni))
-                ->description('Semua status · ' . $bulanLabel)
+                ->description('Semua status · '.$bulanLabel)
                 ->descriptionIcon('heroicon-o-calendar')
                 ->color('primary'),
 

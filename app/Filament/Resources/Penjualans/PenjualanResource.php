@@ -38,6 +38,7 @@ class PenjualanResource extends Resource
     public static function getNavigationBadge(): ?string
     {
         $count = static::applyRoleScope(Penjualan::query())->where('status', 'Pending')->count();
+
         return $count > 0 ? (string) $count : null;
     }
 
@@ -63,7 +64,7 @@ class PenjualanResource extends Resource
 
     public static function canCreate(): bool
     {
-        return !auth()->user()?->isSpectator();
+        return ! auth()->user()?->isSpectator();
     }
 
     public static function canEdit($record): bool

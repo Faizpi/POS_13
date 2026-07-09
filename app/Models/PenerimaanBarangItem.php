@@ -17,6 +17,13 @@ class PenerimaanBarangItem extends Model
         return ['expired_date' => 'date'];
     }
 
-    public function penerimaanBarang() { return $this->belongsTo(PenerimaanBarang::class); }
-    public function produk() { return $this->belongsTo(Produk::class); }
+    public function penerimaanBarang()
+    {
+        return $this->belongsTo(PenerimaanBarang::class);
+    }
+
+    public function produk()
+    {
+        return $this->belongsTo(Produk::class);
+    }
 }

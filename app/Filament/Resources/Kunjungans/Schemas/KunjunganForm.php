@@ -4,10 +4,13 @@ namespace App\Filament\Resources\Kunjungans\Schemas;
 
 use App\Models\GudangProduk;
 use App\Models\Kontak;
+use App\Models\Kunjungan;
 use App\Models\Produk;
+use Carbon\Carbon;
 use Filament\Actions\Action;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -15,6 +18,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Set;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 class KunjunganForm
 {
@@ -25,13 +29,14 @@ class KunjunganForm
                 Section::make('Informasi Kunjungan')
                     ->icon('heroicon-o-map-pin')
                     ->schema([
-                        \Filament\Forms\Components\Placeholder::make('preview_nomor')
+                        Placeholder::make('preview_nomor')
                             ->label('No. Kunjungan (Preview)')
                             ->content(function () {
-                                $countToday = \App\Models\Kunjungan::where('user_id', auth()->id())
-                                    ->whereDate('created_at', \Carbon\Carbon::today())
+                                $countToday = Kunjungan::where('user_id', auth()->id())
+                                    ->whereDate('created_at', Carbon::today())
                                     ->count();
-                                return \App\Models\Kunjungan::generateNomor(auth()->id(), $countToday + 1, \Carbon\Carbon::now()) . ' (Auto)';
+
+                                return Kunjungan::generateNomor(auth()->id(), $countToday + 1, Carbon::now()).' (Auto)';
                             })
                             ->hiddenOn(['view', 'edit'])
                             ->extraAttributes(['class' => 'text-primary-600 font-bold'])
@@ -51,6 +56,7 @@ class KunjunganForm
                                         ->orderBy('nama')->pluck('nama', 'id');
                                 }
                                 $gudangId = $user?->getCurrentGudang()?->id;
+
                                 return Kontak::where(function ($q) use ($gudangId) {
                                     $q->whereNull('gudang_id');
                                     if ($gudangId) {
@@ -279,16 +285,17 @@ class KunjunganForm
                             ->multiple()
                             ->disk('public')
                             ->directory('lampiran_kunjungan')
-                            ->getUploadedFileNameForStorageUsing(function (\Livewire\Features\SupportFileUploads\TemporaryUploadedFile $file, $record): string {
+                            ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file, $record): string {
                                 $user = auth()->user();
                                 $now = now();
                                 if ($record && $record->exists) {
                                     $nomor = $record->nomor;
                                 } else {
-                                    $countToday = \App\Models\Kunjungan::where('user_id', $user->id)->whereDate('created_at', $now)->count();
-                                    $nomor = "VST-{$now->format('Ymd')}-{$user->id}-" . str_pad($countToday + 1, 3, '0', STR_PAD_LEFT);
+                                    $countToday = Kunjungan::where('user_id', $user->id)->whereDate('created_at', $now)->count();
+                                    $nomor = "VST-{$now->format('Ymd')}-{$user->id}-".str_pad($countToday + 1, 3, '0', STR_PAD_LEFT);
                                 }
-                                return "{$nomor}-" . time() . ".{$file->extension()}";
+
+                                return "{$nomor}-".time().".{$file->extension()}";
                             })
                             ->columnSpanFull(),
                     ]),

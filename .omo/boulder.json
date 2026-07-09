@@ -1,0 +1,14 @@
+{
+  "schema_version": 2,
+  "active_work_id": "transaction-integrity-fixes",
+  "works": {
+    "transaction-integrity-fixes": {
+      "work_id": "transaction-integrity-fixes",
+      "active_plan": ".omo/plans/transaction-integrity-fixes.md",
+      "plan_name": "transaction-integrity-fixes",
+      "session_ids": ["codex:current-session"],
+      "status": "active",
+      "worktree_path": null
+    }
+  }
+}

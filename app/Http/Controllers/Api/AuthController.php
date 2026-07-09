@@ -20,7 +20,7 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        if (!$user || !Hash::check($request->password, $user->password)) {
+        if (! $user || ! Hash::check($request->password, $user->password)) {
             return response()->json(['message' => 'Email atau password salah.'], 401);
         }
 
@@ -120,7 +120,7 @@ class AuthController extends Controller
 
         $user = auth()->user();
 
-        if (!Hash::check($request->current_password, $user->password)) {
+        if (! Hash::check($request->current_password, $user->password)) {
             return response()->json([
                 'message' => 'Password lama salah.',
             ], 422);
@@ -141,7 +141,7 @@ class AuthController extends Controller
         } elseif ($request->avatar_base64) {
             $request->validate(['avatar_base64' => 'string']);
             $imageData = base64_decode($request->avatar_base64);
-            $filename = 'avatars/' . Str::uuid() . '.jpg';
+            $filename = 'avatars/'.Str::uuid().'.jpg';
             \Storage::disk('public')->put($filename, $imageData);
             $path = $filename;
         } else {

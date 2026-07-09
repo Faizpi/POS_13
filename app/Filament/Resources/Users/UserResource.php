@@ -58,7 +58,10 @@ class UserResource extends Resource
     public static function canDelete($record): bool
     {
         $user = auth()->user();
-        if (!$user?->isSuperAdmin()) return false;
+        if (! $user?->isSuperAdmin()) {
+            return false;
+        }
+
         return $user->id !== $record->id; // can't delete self
     }
 

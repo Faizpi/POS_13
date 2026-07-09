@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Api;
 
+use App\Models\Gudang;
 use App\Models\Produk;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -64,7 +65,7 @@ class ProdukContractTest extends TestCase
     public function test_stok_by_gudang_forbidden_for_unassigned(): void
     {
         $token = $this->login('salesb@hibiscusefsya.com');
-        $gudangA = \App\Models\Gudang::where('nama_gudang', 'Gudang A')->first();
+        $gudangA = Gudang::where('nama_gudang', 'Gudang A')->first();
 
         $response = $this->getJson("/api/v1/produk/stok/{$gudangA->id}", ['Authorization' => "Bearer $token"]);
 
@@ -75,7 +76,7 @@ class ProdukContractTest extends TestCase
     public function test_stok_by_gudang_success(): void
     {
         $token = $this->login('salesa@hibiscusefsya.com');
-        $gudangA = \App\Models\Gudang::where('nama_gudang', 'Gudang A')->first();
+        $gudangA = Gudang::where('nama_gudang', 'Gudang A')->first();
 
         $response = $this->getJson("/api/v1/produk/stok/{$gudangA->id}", ['Authorization' => "Bearer $token"]);
 

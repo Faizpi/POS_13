@@ -3,13 +3,14 @@
 namespace App\Filament\Resources\Pembayarans\Pages;
 
 use App\Filament\Concerns\RenamesLampiran;
+use App\Filament\Concerns\TransactionDeleteGuard;
 use App\Filament\Resources\Pembayarans\PembayaranResource;
 use Filament\Actions\DeleteAction;
 use Filament\Forms\Components\FileUpload;
-use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 class EditPembayaran extends EditRecord
 {
@@ -35,9 +36,10 @@ class EditPembayaran extends EditRecord
                         ->appendFiles()
                         ->disk('public')
                         ->directory('lampiran_pembayaran')
-                        ->getUploadedFileNameForStorageUsing(function (\Livewire\Features\SupportFileUploads\TemporaryUploadedFile $file, $record): string {
-                            $nomor = $record?->nomor ?? ('PAY-' . now()->format('Ymd') . '-' . auth()->id());
-                            return "{$nomor}-" . time() . ".{$file->extension()}";
+                        ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file, $record): string {
+                            $nomor = $record?->nomor ?? ('PAY-'.now()->format('Ymd').'-'.auth()->id());
+
+                            return "{$nomor}-".time().".{$file->extension()}";
                         })
                         ->image()
                         ->imageEditor()
@@ -62,7 +64,7 @@ class EditPembayaran extends EditRecord
     {
         return [
             DeleteAction::make()
-                ->visible(fn() => auth()->user()?->isSuperAdmin()),
+                ->visible(fn (): bool => auth()->user()?->isSuperAdmin() && TransactionDeleteGuard::canDeletePembayaran($this->getRecord())),
         ];
     }
 

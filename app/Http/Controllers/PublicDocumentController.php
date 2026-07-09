@@ -12,7 +12,9 @@ use App\Models\Penjualan;
 use App\Models\Produk;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Response;
 use Illuminate\Support\Str;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class PublicDocumentController extends Controller
 {
@@ -22,14 +24,16 @@ class PublicDocumentController extends Controller
         // Template spesifik butuh $penjualan + $noTelepon; template generic pakai documentData
         if (view()->exists('public.invoice-penjualan')) {
             $noTelepon = '';
-            if (!empty($record->no_telepon)) {
+            if (! empty($record->no_telepon)) {
                 $noTelepon = $record->no_telepon;
-            } elseif (!empty($record->pelanggan)) {
-                $kontak = \App\Models\Kontak::where('nama', $record->pelanggan)->first();
+            } elseif (! empty($record->pelanggan)) {
+                $kontak = Kontak::where('nama', $record->pelanggan)->first();
                 $noTelepon = $kontak?->no_telp ?? '';
             }
+
             return view('public.invoice-penjualan', ['penjualan' => $record, 'noTelepon' => $noTelepon]);
         }
+
         return $this->invoice('penjualan', $record);
     }
 
@@ -39,6 +43,7 @@ class PublicDocumentController extends Controller
         if (view()->exists('public.invoice-pembelian')) {
             return view('public.invoice-pembelian', ['pembelian' => $record]);
         }
+
         return $this->invoice('pembelian', $record);
     }
 
@@ -48,6 +53,7 @@ class PublicDocumentController extends Controller
         if (view()->exists('public.invoice-biaya')) {
             return view('public.invoice-biaya', ['biaya' => $record]);
         }
+
         return $this->invoice('biaya', $record);
     }
 
@@ -57,6 +63,7 @@ class PublicDocumentController extends Controller
         if (view()->exists('public.invoice-kunjungan')) {
             return view('public.invoice-kunjungan', ['kunjungan' => $record]);
         }
+
         return $this->invoice('kunjungan', $record);
     }
 
@@ -66,6 +73,7 @@ class PublicDocumentController extends Controller
         if (view()->exists('public.invoice-pembayaran')) {
             return view('public.invoice-pembayaran', ['pembayaran' => $record]);
         }
+
         return $this->invoice('pembayaran', $record);
     }
 
@@ -75,6 +83,7 @@ class PublicDocumentController extends Controller
         if (view()->exists('public.invoice-penerimaan')) {
             return view('public.invoice-penerimaan', ['penerimaan' => $record]);
         }
+
         return $this->invoice('penerimaan-barang', $record);
     }
 
@@ -169,54 +178,60 @@ class PublicDocumentController extends Controller
     public function downloadPenjualan(string $uuid)
     {
         $record = $this->loadTransaction('penjualan', Penjualan::where('uuid', $uuid)->firstOrFail());
-        $nomor = $record->nomor ?? $record->custom_number ?? ('INV-' . $record->id);
+        $nomor = $record->nomor ?? $record->custom_number ?? ('INV-'.$record->id);
         $view = view()->exists('public.invoice-penjualan-pdf') ? 'public.invoice-penjualan-pdf' : 'public.invoice';
         $data = view()->exists('public.invoice-penjualan-pdf')
             ? ['penjualan' => $record]
             : $this->documentData('penjualan', $record);
+
         return Pdf::loadView($view, $data)->setPaper('a4', 'portrait')
-            ->download('INV-' . \Illuminate\Support\Str::slug($nomor) . '.pdf');
+            ->download('INV-'.Str::slug($nomor).'.pdf');
     }
 
     public function downloadPembelian(string $uuid)
     {
         $record = $this->loadTransaction('pembelian', Pembelian::where('uuid', $uuid)->firstOrFail());
-        $nomor = $record->nomor ?? $record->custom_number ?? ('PR-' . $record->id);
+        $nomor = $record->nomor ?? $record->custom_number ?? ('PR-'.$record->id);
+
         return $this->downloadWithTemplate('pembelian', 'PR', $nomor, $record, ['pembelian' => $record]);
     }
 
     public function downloadBiaya(string $uuid)
     {
         $record = $this->loadTransaction('biaya', Biaya::where('uuid', $uuid)->firstOrFail());
-        $nomor = $record->nomor ?? $record->custom_number ?? ('EXP-' . $record->id);
+        $nomor = $record->nomor ?? $record->custom_number ?? ('EXP-'.$record->id);
+
         return $this->downloadWithTemplate('biaya', 'EXP', $nomor, $record, ['biaya' => $record]);
     }
 
     public function downloadKunjungan(string $uuid)
     {
         $record = $this->loadTransaction('kunjungan', Kunjungan::where('uuid', $uuid)->firstOrFail());
-        $nomor = $record->nomor ?? $record->custom_number ?? ('VST-' . $record->id);
+        $nomor = $record->nomor ?? $record->custom_number ?? ('VST-'.$record->id);
+
         return $this->downloadWithTemplate('kunjungan', 'VST', $nomor, $record, ['kunjungan' => $record]);
     }
 
     public function downloadPembayaran(string $uuid)
     {
         $record = $this->loadTransaction('pembayaran', Pembayaran::where('uuid', $uuid)->firstOrFail());
-        $nomor = $record->nomor ?? $record->custom_number ?? ('PAY-' . $record->id);
+        $nomor = $record->nomor ?? $record->custom_number ?? ('PAY-'.$record->id);
+
         return $this->downloadWithTemplate('pembayaran', 'PAY', $nomor, $record, ['pembayaran' => $record]);
     }
 
     public function downloadPenerimaanBarang(string $uuid)
     {
         $record = $this->loadTransaction('penerimaan-barang', PenerimaanBarang::where('uuid', $uuid)->firstOrFail());
-        $nomor = $record->nomor ?? $record->custom_number ?? ('GRN-' . $record->id);
+        $nomor = $record->nomor ?? $record->custom_number ?? ('GRN-'.$record->id);
+
         return $this->downloadWithTemplate('penerimaan', 'GRN', $nomor, $record, ['penerimaan' => $record]);
     }
 
     /**
      * Helper: download PDF using specific template if it exists, fallback to generic.
      */
-    private function downloadWithTemplate(string $type, string $prefix, string $nomor, Model $record, array $specificData): \Symfony\Component\HttpFoundation\BinaryFileResponse|\Illuminate\Http\Response
+    private function downloadWithTemplate(string $type, string $prefix, string $nomor, Model $record, array $specificData): BinaryFileResponse|Response
     {
         $pdfView = "public.invoice-{$type}-pdf";
         if (view()->exists($pdfView)) {
@@ -224,7 +239,8 @@ class PublicDocumentController extends Controller
         } else {
             $pdf = Pdf::loadView('public.invoice', $this->documentData($type === 'penerimaan' ? 'penerimaan-barang' : $type, $record))->setPaper('a4', 'portrait');
         }
-        return $pdf->download("{$prefix}-" . \Illuminate\Support\Str::slug($nomor) . '.pdf');
+
+        return $pdf->download("{$prefix}-".Str::slug($nomor).'.pdf');
     }
 
     // ========================================================================
@@ -263,20 +279,20 @@ class PublicDocumentController extends Controller
 
     private function deleteLampiran(Model $record, int $index)
     {
-        if (!auth()->user()?->isSuperAdmin()) {
+        if (! auth()->user()?->isSuperAdmin()) {
             abort(403, 'Hanya Super Admin yang dapat menghapus lampiran.');
         }
 
         $paths = $record->lampiran_paths ?? [];
 
-        if (!isset($paths[$index])) {
+        if (! isset($paths[$index])) {
             abort(404, 'Lampiran tidak ditemukan.');
         }
 
         $path = $paths[$index];
 
         // Delete physical file
-        $fullPath = public_path('storage/' . $path);
+        $fullPath = public_path('storage/'.$path);
         if (file_exists($fullPath)) {
             @unlink($fullPath);
         }
@@ -292,6 +308,7 @@ class PublicDocumentController extends Controller
     {
         // Gunakan template spesifik per tipe jika ada, fallback ke generic
         $view = view()->exists("public.invoice-{$type}") ? "public.invoice-{$type}" : 'public.invoice';
+
         return view($view, $this->documentData($type, $record));
     }
 
@@ -351,7 +368,7 @@ class PublicDocumentController extends Controller
 
         $lines = [
             $this->receiptTwoColumn('Nomor', $record->nomor ?? $record->custom_number ?? '-'),
-            $this->receiptTwoColumn('Tanggal', trim(($record->tgl_transaksi?->format('d/m/Y') ?? '-') . ' | ' . ($record->created_at?->format('H:i') ?? ''))),
+            $this->receiptTwoColumn('Tanggal', trim(($record->tgl_transaksi?->format('d/m/Y') ?? '-').' | '.($record->created_at?->format('H:i') ?? ''))),
             $this->receiptTwoColumn('Jatuh Tempo', $record->tgl_jatuh_tempo?->format('d/m/Y') ?? '-'),
             $this->receiptTwoColumn('Pembayaran', $record->syarat_pembayaran ?? '-'),
             $this->receiptTwoColumn('Pelanggan', $this->receiptLimit($record->pelanggan)),
@@ -372,18 +389,18 @@ class PublicDocumentController extends Controller
         foreach ($record->items as $item) {
             $productName = trim((string) ($item->produk?->nama_produk ?? $item->deskripsi ?? '-'));
             if ($item->produk?->item_code) {
-                $productName .= ' (' . $item->produk->item_code . ')';
+                $productName .= ' ('.$item->produk->item_code.')';
             }
 
             $lines[] = $this->receiptWrap($productName);
-            $lines[] = $this->receiptTwoColumn('Batch', ($item->batch_number ?: 'N/A') . ' - ' . ($item->expired_date?->format('d/m/Y') ?? 'N/A'));
-            $lines[] = $this->receiptTwoColumn('Qty', $this->receiptQty($item->kuantitas) . ' ' . ($item->unit ?: $item->produk?->satuan ?: 'Pcs') . ' x ' . $this->receiptMoney($item->harga_satuan));
+            $lines[] = $this->receiptTwoColumn('Batch', ($item->batch_number ?: 'N/A').' - '.($item->expired_date?->format('d/m/Y') ?? 'N/A'));
+            $lines[] = $this->receiptTwoColumn('Qty', $this->receiptQty($item->kuantitas).' '.($item->unit ?: $item->produk?->satuan ?: 'Pcs').' x '.$this->receiptMoney($item->harga_satuan));
 
             if ((float) $item->diskon > 0) {
-                $lines[] = $this->receiptTwoColumn('Diskon', $this->receiptQty($item->diskon) . '%');
+                $lines[] = $this->receiptTwoColumn('Diskon', $this->receiptQty($item->diskon).'%');
             }
             if ((float) ($item->diskon_nominal ?? 0) > 0) {
-                $lines[] = $this->receiptTwoColumn('Disc Rp', '- ' . $this->receiptMoney($item->diskon_nominal));
+                $lines[] = $this->receiptTwoColumn('Disc Rp', '- '.$this->receiptMoney($item->diskon_nominal));
             }
             if ($this->filled($item->deskripsi)) {
                 $lines[] = $this->receiptTwoColumn('Ket', $item->deskripsi);
@@ -397,10 +414,10 @@ class PublicDocumentController extends Controller
         $lines[] = '---HR---';
         $lines[] = $this->receiptTwoColumn('Subtotal', $this->receiptMoney($subtotal));
         if ($diskonAkhir > 0) {
-            $lines[] = $this->receiptTwoColumn('Diskon', '- ' . $this->receiptMoney($diskonAkhir));
+            $lines[] = $this->receiptTwoColumn('Diskon', '- '.$this->receiptMoney($diskonAkhir));
         }
         if ($pajak > 0) {
-            $lines[] = $this->receiptTwoColumn('Pajak (' . $this->receiptQty($taxPercentage) . '%)', $this->receiptMoney($pajak));
+            $lines[] = $this->receiptTwoColumn('Pajak ('.$this->receiptQty($taxPercentage).'%)', $this->receiptMoney($pajak));
         }
         $lines[] = '---HR---';
         $lines[] = $this->receiptTwoColumn('GRAND TOTAL', $this->receiptMoney($record->grand_total ?? 0));
@@ -445,11 +462,11 @@ class PublicDocumentController extends Controller
 
         foreach ($record->items as $item) {
             $lines[] = $this->receiptWrap($item->produk?->nama_produk ?? $item->deskripsi ?? '-');
-            $lines[] = $this->receiptTwoColumn('Batch', ($item->batch_number ?: 'N/A') . ' - ' . ($item->expired_date?->format('d/m/Y') ?? 'N/A'));
-            $lines[] = $this->receiptTwoColumn('Qty', $this->receiptQty($item->kuantitas) . ' ' . ($item->unit ?: $item->produk?->satuan ?: 'Pcs') . ' x ' . $this->receiptMoney($item->harga_satuan));
+            $lines[] = $this->receiptTwoColumn('Batch', ($item->batch_number ?: 'N/A').' - '.($item->expired_date?->format('d/m/Y') ?? 'N/A'));
+            $lines[] = $this->receiptTwoColumn('Qty', $this->receiptQty($item->kuantitas).' '.($item->unit ?: $item->produk?->satuan ?: 'Pcs').' x '.$this->receiptMoney($item->harga_satuan));
 
             if ((float) $item->diskon > 0) {
-                $lines[] = $this->receiptTwoColumn('Diskon', $this->receiptQty($item->diskon) . '%');
+                $lines[] = $this->receiptTwoColumn('Diskon', $this->receiptQty($item->diskon).'%');
             }
             if ($this->filled($item->deskripsi)) {
                 $lines[] = $this->receiptTwoColumn('Ket', $item->deskripsi);
@@ -463,10 +480,10 @@ class PublicDocumentController extends Controller
         $lines[] = '---HR---';
         $lines[] = $this->receiptTwoColumn('Subtotal', $this->receiptMoney($subtotal));
         if ($diskonAkhir > 0) {
-            $lines[] = $this->receiptTwoColumn('Diskon', '- ' . $this->receiptMoney($diskonAkhir));
+            $lines[] = $this->receiptTwoColumn('Diskon', '- '.$this->receiptMoney($diskonAkhir));
         }
         if ($pajak > 0) {
-            $lines[] = $this->receiptTwoColumn('Pajak (' . $this->receiptQty($taxPercentage) . '%)', $this->receiptMoney($pajak));
+            $lines[] = $this->receiptTwoColumn('Pajak ('.$this->receiptQty($taxPercentage).'%)', $this->receiptMoney($pajak));
         }
         $lines[] = '---HR---';
         $lines[] = $this->receiptTwoColumn('GRAND TOTAL', $this->receiptMoney($record->grand_total ?? 0));
@@ -528,7 +545,7 @@ class PublicDocumentController extends Controller
             $lines[] = $this->receiptTwoColumn('Subtotal', $this->receiptMoney($subtotal));
         }
         if ($pajak > 0) {
-            $lines[] = $this->receiptTwoColumn('Pajak (' . $this->receiptQty($taxPercentage) . '%)', $this->receiptMoney($pajak));
+            $lines[] = $this->receiptTwoColumn('Pajak ('.$this->receiptQty($taxPercentage).'%)', $this->receiptMoney($pajak));
         }
         $lines[] = '---HR---';
         $lines[] = $this->receiptTwoColumn('GRAND TOTAL', $this->receiptMoney($record->grand_total ?? 0));
@@ -567,7 +584,7 @@ class PublicDocumentController extends Controller
 
         foreach ($record->items as $item) {
             $lines[] = $this->receiptWrap($item->produk?->nama_produk ?? '-');
-            $lines[] = $this->receiptTwoColumn('Qty', $this->receiptQty($item->jumlah) . ' ' . ($item->produk?->satuan ?: 'Pcs'));
+            $lines[] = $this->receiptTwoColumn('Qty', $this->receiptQty($item->jumlah).' '.($item->produk?->satuan ?: 'Pcs'));
             if ($this->filled($item->tipe_stok)) {
                 $lines[] = $this->receiptTwoColumn('Tipe', $item->tipe_stok);
             }
@@ -622,15 +639,17 @@ class PublicDocumentController extends Controller
         foreach ($lines as $line) {
             if ($line === null) {
                 $output .= "\n";
+
                 continue;
             }
 
             if ($line === '---HR---') {
-                $output .= str_repeat('-', 32) . "\n";
+                $output .= str_repeat('-', 32)."\n";
+
                 continue;
             }
 
-            $output .= (string) $line . "\n";
+            $output .= (string) $line."\n";
         }
 
         return rtrim($output);
@@ -647,7 +666,8 @@ class PublicDocumentController extends Controller
         foreach ($chunks as $index => $chunk) {
             if ($index === 0) {
                 $available = 32 - $this->textLength($leftText) - $this->textLength($chunk);
-                $rows[] = $leftText . str_repeat(' ', max(1, $available)) . $chunk;
+                $rows[] = $leftText.str_repeat(' ', max(1, $available)).$chunk;
+
                 continue;
             }
 
@@ -661,7 +681,7 @@ class PublicDocumentController extends Controller
     {
         $text = $this->stringValue($value);
 
-        return str_repeat(' ', max(0, 32 - $this->textLength($text))) . $text;
+        return str_repeat(' ', max(0, 32 - $this->textLength($text))).$text;
     }
 
     private function receiptWrap(mixed $value, int $width = 32): string
@@ -686,8 +706,8 @@ class PublicDocumentController extends Controller
         foreach ($words as $word) {
             if ($current === '') {
                 $current = $word;
-            } elseif ($this->textLength($current . ' ' . $word) <= $width) {
-                $current .= ' ' . $word;
+            } elseif ($this->textLength($current.' '.$word) <= $width) {
+                $current .= ' '.$word;
             } else {
                 $lines[] = $current;
                 $current = $word;
@@ -716,7 +736,7 @@ class PublicDocumentController extends Controller
             return $this->textSlice($text, 0, $max);
         }
 
-        return $this->textSlice($text, 0, $max - 3) . '...';
+        return $this->textSlice($text, 0, $max - 3).'...';
     }
 
     private function penjualanPhone(Model $record): string
@@ -745,20 +765,20 @@ class PublicDocumentController extends Controller
         }
 
         if (str_starts_with($digits, '620')) {
-            $digits = '62' . substr($digits, 3);
+            $digits = '62'.substr($digits, 3);
         }
 
         if (str_starts_with($digits, '62')) {
-            return '+62 ' . $this->phoneGroups(substr($digits, 2));
+            return '+62 '.$this->phoneGroups(substr($digits, 2));
         }
         if (str_starts_with($digits, '0')) {
-            return '+62 ' . $this->phoneGroups(substr($digits, 1));
+            return '+62 '.$this->phoneGroups(substr($digits, 1));
         }
         if (str_starts_with($digits, '8') && strlen($digits) >= 9) {
-            return '+62 ' . $this->phoneGroups($digits);
+            return '+62 '.$this->phoneGroups($digits);
         }
         if (str_starts_with($raw, '+')) {
-            return '+' . $this->phoneGroups($digits);
+            return '+'.$this->phoneGroups($digits);
         }
 
         return $this->phoneGroups($digits);
@@ -767,7 +787,7 @@ class PublicDocumentController extends Controller
     private function phoneGroups(string $digits): string
     {
         if (strlen($digits) >= 10) {
-            return substr($digits, 0, 3) . '-' . substr($digits, 3, 4) . '-' . substr($digits, 7);
+            return substr($digits, 0, 3).'-'.substr($digits, 3, 4).'-'.substr($digits, 7);
         }
 
         return implode('-', str_split($digits, 4));
@@ -943,7 +963,7 @@ class PublicDocumentController extends Controller
                 'Qty' => $this->qty($item->kuantitas, $item->unit ?: $item->produk?->satuan),
                 'Harga' => $this->money($item->harga_satuan),
                 'Diskon' => $this->discount($item->diskon, $item->diskon_nominal ?? 0),
-                'Batch/Exp' => trim(($item->batch_number ?? '-') . ' / ' . ($item->expired_date?->format('d/m/Y') ?? '-')),
+                'Batch/Exp' => trim(($item->batch_number ?? '-').' / '.($item->expired_date?->format('d/m/Y') ?? '-')),
                 'Total' => $this->money($item->jumlah_baris),
             ])->all(),
             'pembelian' => $record->items->map(fn ($item) => [
@@ -1021,7 +1041,7 @@ class PublicDocumentController extends Controller
 
     private function qty(mixed $value, ?string $unit): string
     {
-        return rtrim(rtrim(number_format((float) $value, 2, ',', '.'), '0'), ',') . ' ' . ($unit ?: 'Pcs');
+        return rtrim(rtrim(number_format((float) $value, 2, ',', '.'), '0'), ',').' '.($unit ?: 'Pcs');
     }
 
     private function money(mixed $value): string
@@ -1031,7 +1051,7 @@ class PublicDocumentController extends Controller
 
     private function percent(mixed $value): string
     {
-        return rtrim(rtrim(number_format((float) $value, 2, ',', '.'), '0'), ',') . '%';
+        return rtrim(rtrim(number_format((float) $value, 2, ',', '.'), '0'), ',').'%';
     }
 
     private function discount(mixed $percent, mixed $nominal): string
@@ -1049,6 +1069,6 @@ class PublicDocumentController extends Controller
 
     private function filename(string $prefix, string|int $identifier): string
     {
-        return Str::slug($prefix . '-' . $identifier) . '.pdf';
+        return Str::slug($prefix.'-'.$identifier).'.pdf';
     }
 }

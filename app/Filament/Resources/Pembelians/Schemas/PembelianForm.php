@@ -4,17 +4,20 @@ namespace App\Filament\Resources\Pembelians\Schemas;
 
 use App\Models\Gudang;
 use App\Models\Kontak;
+use App\Models\Pembelian;
 use App\Models\Produk;
 use Carbon\Carbon;
 use Filament\Actions\Action;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 class PembelianForm
 {
@@ -25,13 +28,14 @@ class PembelianForm
                 Section::make('Detail Pembelian')
                     ->icon('heroicon-o-shopping-bag')
                     ->schema([
-                        \Filament\Forms\Components\Placeholder::make('preview_nomor')
+                        Placeholder::make('preview_nomor')
                             ->label('No Transaksi (Preview)')
                             ->content(function () {
-                                $countToday = \App\Models\Pembelian::where('user_id', auth()->id())
-                                    ->whereDate('created_at', \Carbon\Carbon::today())
+                                $countToday = Pembelian::where('user_id', auth()->id())
+                                    ->whereDate('created_at', Carbon::today())
                                     ->count();
-                                return \App\Models\Pembelian::generateNomor(auth()->id(), $countToday + 1, \Carbon\Carbon::now()) . ' (Auto)';
+
+                                return Pembelian::generateNomor(auth()->id(), $countToday + 1, Carbon::now()).' (Auto)';
                             })
                             ->hiddenOn(['view', 'edit'])
                             ->extraAttributes(['class' => 'text-primary-600 font-bold']),
@@ -92,6 +96,7 @@ class PembelianForm
                         TextInput::make('biaya_pengiriman')
                             ->label('Biaya Pengiriman')
                             ->numeric()
+                            ->minValue(0)
                             ->default(0)
                             ->prefix('Rp')
                             ->live(onBlur: true)
@@ -119,6 +124,7 @@ class PembelianForm
                                         ->orderBy('nama')->pluck('nama', 'id');
                                 }
                                 $gudangId = $get('gudang_id') ?? $user?->getCurrentGudang()?->id;
+
                                 return Kontak::where(function ($q) use ($gudangId) {
                                     $q->whereNull('gudang_id');
                                     if ($gudangId) {
@@ -172,7 +178,7 @@ class PembelianForm
                                     ->label('')
                                     ->tooltip('Buka di Google Maps')
                                     ->url(fn ($get) => $get('koordinat')
-                                        ? 'https://www.google.com/maps?q=' . urlencode($get('koordinat'))
+                                        ? 'https://www.google.com/maps?q='.urlencode($get('koordinat'))
                                         : '#')
                                     ->openUrlInNewTab(),
                             ]),
@@ -195,9 +201,10 @@ class PembelianForm
                                             return Produk::pluck('nama_produk', 'id');
                                         }
                                         $gudangId = $get('../../gudang_id') ?? $user?->getCurrentGudang()?->id;
-                                        if (!$gudangId) {
+                                        if (! $gudangId) {
                                             return [];
                                         }
+
                                         return Produk::whereHas('stokDiGudang', function ($query) use ($gudangId) {
                                             $query->where('gudang_id', $gudangId);
                                         })->pluck('nama_produk', 'id');
@@ -249,6 +256,8 @@ class PembelianForm
                                 TextInput::make('diskon')
                                     ->label('Diskon %')
                                     ->numeric()
+                                    ->minValue(0)
+                                    ->maxValue(100)
                                     ->default(0)
                                     ->suffix('%')
                                     ->live()
@@ -289,6 +298,7 @@ class PembelianForm
                         TextInput::make('diskon_akhir')
                             ->label('Diskon Akhir')
                             ->numeric()
+                            ->minValue(0)
                             ->default(0)
                             ->prefix('Rp')
                             ->live(onBlur: true)
@@ -327,16 +337,17 @@ class PembelianForm
                             ->multiple()
                             ->disk('public')
                             ->directory('lampiran_pembelian')
-                            ->getUploadedFileNameForStorageUsing(function (\Livewire\Features\SupportFileUploads\TemporaryUploadedFile $file, $record): string {
+                            ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file, $record): string {
                                 $user = auth()->user();
                                 $now = now();
                                 if ($record && $record->exists) {
                                     $nomor = $record->nomor;
                                 } else {
-                                    $countToday = \App\Models\Pembelian::where('user_id', $user->id)->whereDate('created_at', $now)->count();
-                                    $nomor = "PR-{$now->format('Ymd')}-{$user->id}-" . str_pad($countToday + 1, 3, '0', STR_PAD_LEFT);
+                                    $countToday = Pembelian::where('user_id', $user->id)->whereDate('created_at', $now)->count();
+                                    $nomor = "PR-{$now->format('Ymd')}-{$user->id}-".str_pad($countToday + 1, 3, '0', STR_PAD_LEFT);
                                 }
-                                return "{$nomor}-" . time() . ".{$file->extension()}";
+
+                                return "{$nomor}-".time().".{$file->extension()}";
                             })
                             ->acceptedFileTypes(['image/*', 'application/pdf', 'application/zip', 'application/msword'])
                             ->maxSize(5120)

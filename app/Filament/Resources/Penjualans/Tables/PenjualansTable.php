@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Penjualans\Tables;
 
+use App\Filament\Concerns\TransactionDeleteGuard;
 use App\Models\User;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
@@ -114,11 +115,13 @@ class PenjualansTable
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make()->visible(fn () => auth()->user()?->isSuperAdmin()),
-                DeleteAction::make()->visible(fn () => auth()->user()?->isSuperAdmin()),
+                DeleteAction::make()
+                    ->visible(fn ($record): bool => auth()->user()?->isSuperAdmin() && TransactionDeleteGuard::canDeletePenjualan($record)),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make()->visible(fn () => auth()->user()?->isSuperAdmin()),
+                    DeleteBulkAction::make()
+                        ->visible(fn (): bool => false),
                 ]),
             ])
             ->emptyStateHeading('Belum ada penjualan')

@@ -2,8 +2,6 @@
 
 namespace App\Filament\Customer\Resources\Penjualans;
 
-use App\Filament\Customer\Resources\Penjualans\Pages\CreatePenjualan;
-use App\Filament\Customer\Resources\Penjualans\Pages\EditPenjualan;
 use App\Filament\Customer\Resources\Penjualans\Pages\ListPenjualans;
 use App\Filament\Customer\Resources\Penjualans\Pages\ViewPenjualan;
 use App\Filament\Customer\Resources\Penjualans\Schemas\PenjualanForm;
@@ -50,6 +48,7 @@ class PenjualanResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         $customerNama = session('customer_nama') ?? auth()->user()?->nama;
+
         return parent::getEloquentQuery()->where('pelanggan', $customerNama);
     }
 

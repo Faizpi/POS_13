@@ -3,10 +3,13 @@
 namespace App\Filament\Customer\Pages\Auth;
 
 use App\Models\Kontak;
+use DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException;
+use Filament\Auth\Http\Responses\Contracts\LoginResponse;
+use Filament\Auth\Pages\Login as BaseAuth;
+use Filament\Facades\Filament;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
-use Filament\Auth\Pages\Login as BaseAuth;
 use Illuminate\Validation\ValidationException;
 
 class CustomerLogin extends BaseAuth
@@ -52,11 +55,11 @@ class CustomerLogin extends BaseAuth
         ];
     }
 
-    public function authenticate(): ?\Filament\Auth\Http\Responses\Contracts\LoginResponse
+    public function authenticate(): ?LoginResponse
     {
         try {
             $this->rateLimit(5);
-        } catch (\DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException $exception) {
+        } catch (TooManyRequestsException $exception) {
             Notification::make()
                 ->title(__('filament-panels::pages/auth/login.notifications.throttled.title', [
                     'seconds' => $exception->secondsUntilAvailable,
@@ -83,18 +86,18 @@ class CustomerLogin extends BaseAuth
                 // simple sanitize
                 $clean = preg_replace('/[\s\-\.\(\)]+/', '', $noTelp);
                 $query->where('no_telp', $clean)
-                      ->orWhere('no_telp', 'like', '%' . ltrim($clean, '0'));
+                    ->orWhere('no_telp', 'like', '%'.ltrim($clean, '0'));
             })->first();
 
-        if (!$kontak) {
+        if (! $kontak) {
             $this->throwFailureValidationException();
         }
 
-        \Filament\Facades\Filament::auth()->login($kontak, $data['remember'] ?? false);
+        Filament::auth()->login($kontak, $data['remember'] ?? false);
 
         session()->regenerate();
 
-        return app(\Filament\Auth\Http\Responses\Contracts\LoginResponse::class);
+        return app(LoginResponse::class);
     }
 
     protected function throwFailureValidationException(): never

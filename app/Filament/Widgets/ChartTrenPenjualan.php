@@ -16,7 +16,7 @@ class ChartTrenPenjualan extends ChartWidget
 
     protected ?string $maxHeight = '230px';
 
-    protected int | string | array $columnSpan = 'full';
+    protected int|string|array $columnSpan = 'full';
 
     protected function getType(): string
     {

@@ -2,11 +2,15 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\GeneratesNomorSafely;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 class Pembelian extends Model
 {
+    use GeneratesNomorSafely;
+
     protected $fillable = [
         'user_id', 'approver_id', 'kontak_id', 'no_urut_harian', 'nomor', 'uuid',
         'gudang_id', 'staf_penyetuju', 'email_penyetuju',
@@ -33,29 +37,64 @@ class Pembelian extends Model
     protected static function boot()
     {
         parent::boot();
-        static::creating(fn($m) => $m->uuid = $m->uuid ?: (string) Str::uuid());
+        static::creating(fn ($m) => $m->uuid = $m->uuid ?: (string) Str::uuid());
     }
 
-    public function user() { return $this->belongsTo(User::class); }
-    public function approver() { return $this->belongsTo(User::class, 'approver_id'); }
-    public function kontak() { return $this->belongsTo(Kontak::class); }
-    public function gudang() { return $this->belongsTo(Gudang::class); }
-    public function items() { return $this->hasMany(PembelianItem::class); }
-    public function penerimaanBarangs() { return $this->hasMany(PenerimaanBarang::class); }
-    public function pembayarans() { return $this->hasMany(Pembayaran::class)->where('type', 'hutang'); }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function approver()
+    {
+        return $this->belongsTo(User::class, 'approver_id');
+    }
+
+    public function kontak()
+    {
+        return $this->belongsTo(Kontak::class);
+    }
+
+    public function gudang()
+    {
+        return $this->belongsTo(Gudang::class);
+    }
+
+    public function items()
+    {
+        return $this->hasMany(PembelianItem::class);
+    }
+
+    public function penerimaanBarangs()
+    {
+        return $this->hasMany(PenerimaanBarang::class);
+    }
+
+    public function pembayarans()
+    {
+        return $this->hasMany(Pembayaran::class)->where('type', 'hutang');
+    }
 
     public function getStatusDisplayAttribute(): string
     {
-        if ($this->status === 'Lunas') return 'Lunas';
-        if ($this->status === 'Approved') return 'Belum Lunas';
+        if ($this->status === 'Lunas') {
+            return 'Lunas';
+        }
+        if ($this->status === 'Approved') {
+            return 'Belum Lunas';
+        }
+
         return $this->status;
     }
 
     public function getCustomNumberAttribute(): string
     {
-        if ($this->nomor) return $this->nomor;
+        if ($this->nomor) {
+            return $this->nomor;
+        }
         $dateCode = $this->created_at->format('Ymd');
         $noUrutPadded = str_pad($this->no_urut_harian, 3, '0', STR_PAD_LEFT);
+
         return "PR-{$dateCode}-{$this->user_id}-{$noUrutPadded}";
     }
 
@@ -63,6 +102,15 @@ class Pembelian extends Model
     {
         $dateCode = $createdAt->format('Ymd');
         $noUrutPadded = str_pad($noUrut, 3, '0', STR_PAD_LEFT);
+
         return "PR-{$dateCode}-{$userId}-{$noUrutPadded}";
+    }
+
+    /**
+     * Generate nomor transaksi dengan retry-on-duplicate strategy (race-safe).
+     */
+    public static function generateNomorSafe(int $userId, Carbon $createdAt): string
+    {
+        return static::generateNomorWithRetry('PR', $userId, $createdAt);
     }
 }

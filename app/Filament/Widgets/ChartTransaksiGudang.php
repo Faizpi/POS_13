@@ -31,7 +31,7 @@ class ChartTransaksiGudang extends ChartWidget
             $gudangs = Gudang::pluck('nama_gudang', 'id');
         } elseif ($user?->isAdmin()) {
             $gudangs = collect($user->gudangs()->pluck('nama_gudang', 'gudangs.id')->toArray());
-            if ($user->gudang_id && !$gudangs->has($user->gudang_id)) {
+            if ($user->gudang_id && ! $gudangs->has($user->gudang_id)) {
                 $mainGudang = Gudang::find($user->gudang_id);
                 if ($mainGudang) {
                     $gudangs->put($mainGudang->id, $mainGudang->nama_gudang);
@@ -56,26 +56,26 @@ class ChartTransaksiGudang extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label'                => 'Penjualan',
-                    'data'                 => $penjualanData,
-                    'backgroundColor'      => 'rgba(6, 214, 160, 0.85)',
+                    'label' => 'Penjualan',
+                    'data' => $penjualanData,
+                    'backgroundColor' => 'rgba(6, 214, 160, 0.85)',
                     'hoverBackgroundColor' => '#06d6a0',
-                    'borderColor'          => '#06d6a0',
-                    'borderWidth'          => 0,
-                    'borderRadius'         => 10,
-                    'borderSkipped'        => false,
-                    'barThickness'         => 22,
+                    'borderColor' => '#06d6a0',
+                    'borderWidth' => 0,
+                    'borderRadius' => 10,
+                    'borderSkipped' => false,
+                    'barThickness' => 22,
                 ],
                 [
-                    'label'                => 'Pembelian',
-                    'data'                 => $pembelianData,
-                    'backgroundColor'      => 'rgba(167, 139, 250, 0.85)',
+                    'label' => 'Pembelian',
+                    'data' => $pembelianData,
+                    'backgroundColor' => 'rgba(167, 139, 250, 0.85)',
                     'hoverBackgroundColor' => '#a78bfa',
-                    'borderColor'          => '#a78bfa',
-                    'borderWidth'          => 0,
-                    'borderRadius'         => 10,
-                    'borderSkipped'        => false,
-                    'barThickness'         => 22,
+                    'borderColor' => '#a78bfa',
+                    'borderWidth' => 0,
+                    'borderRadius' => 10,
+                    'borderSkipped' => false,
+                    'barThickness' => 22,
                 ],
             ],
             'labels' => $labels,

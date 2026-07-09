@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Kunjungans\Tables;
 
+use App\Filament\Concerns\TransactionDeleteGuard;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -63,11 +64,13 @@ class KunjungansTable
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make()->visible(fn () => auth()->user()?->isSuperAdmin()),
-                DeleteAction::make()->visible(fn () => auth()->user()?->isSuperAdmin()),
+                DeleteAction::make()
+                    ->visible(fn ($record): bool => auth()->user()?->isSuperAdmin() && TransactionDeleteGuard::canDeleteKunjungan($record)),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make()->visible(fn () => auth()->user()?->isSuperAdmin()),
+                    DeleteBulkAction::make()
+                        ->visible(fn (): bool => false),
                 ]),
             ])
             ->emptyStateHeading('Belum ada kunjungan')

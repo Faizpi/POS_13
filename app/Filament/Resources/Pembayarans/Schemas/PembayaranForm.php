@@ -5,13 +5,16 @@ namespace App\Filament\Resources\Pembayarans\Schemas;
 use App\Models\Gudang;
 use App\Models\Pembayaran;
 use App\Models\Penjualan;
+use Carbon\Carbon;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 class PembayaranForm
 {
@@ -22,13 +25,14 @@ class PembayaranForm
                 Section::make('Detail Pembayaran')
                     ->icon('heroicon-o-banknotes')
                     ->schema([
-                        \Filament\Forms\Components\Placeholder::make('preview_nomor')
+                        Placeholder::make('preview_nomor')
                             ->label('No Transaksi (Preview)')
                             ->content(function () {
-                                $countToday = \App\Models\Pembayaran::where('user_id', auth()->id())
-                                    ->whereDate('created_at', \Carbon\Carbon::today())
+                                $countToday = Pembayaran::where('user_id', auth()->id())
+                                    ->whereDate('created_at', Carbon::today())
                                     ->count();
-                                return \App\Models\Pembayaran::generateNomor(auth()->id(), $countToday + 1, \Carbon\Carbon::now()) . ' (Auto)';
+
+                                return Pembayaran::generateNomor(auth()->id(), $countToday + 1, Carbon::now()).' (Auto)';
                             })
                             ->hiddenOn(['view', 'edit'])
                             ->extraAttributes(['class' => 'text-primary-600 font-bold']),
@@ -36,9 +40,9 @@ class PembayaranForm
                         // Gudang — autofill untuk non-super_admin, pilih untuk super_admin
                         Select::make('gudang_id')
                             ->label('Gudang')
-                            ->options(fn() => Gudang::pluck('nama_gudang', 'id'))
-                            ->default(fn() => auth()->user()?->getCurrentGudang()?->id)
-                            ->disabled(fn() => !auth()->user()?->isSuperAdmin())
+                            ->options(fn () => Gudang::pluck('nama_gudang', 'id'))
+                            ->default(fn () => auth()->user()?->getCurrentGudang()?->id)
+                            ->disabled(fn () => ! auth()->user()?->isSuperAdmin())
                             ->dehydrated()
                             ->required()
                             ->live()
@@ -62,11 +66,12 @@ class PembayaranForm
                                 return $query->get()->mapWithKeys(function ($p) {
                                     $sudah = (float) Pembayaran::where('penjualan_id', $p->id)
                                         ->where('status', 'Approved')->sum('jumlah_bayar');
-                                    $sisa  = max(0, (float) ($p->grand_total ?? 0) - $sudah);
+                                    $sisa = max(0, (float) ($p->grand_total ?? 0) - $sudah);
                                     if ($sisa <= 0) {
                                         return [];
                                     }
-                                    return [$p->id => $p->nomor . ' — ' . $p->pelanggan . ' (Sisa: ' . format_rupiah($sisa) . ')'];
+
+                                    return [$p->id => $p->nomor.' — '.$p->pelanggan.' (Sisa: '.format_rupiah($sisa).')'];
                                 });
                             })
                             ->preload()
@@ -75,6 +80,7 @@ class PembayaranForm
                                 if (empty($state)) {
                                     $set('sisa_hutang_preview', null);
                                     $set('jumlah_bayar', null);
+
                                     return;
                                 }
 
@@ -82,7 +88,9 @@ class PembayaranForm
                                 $totalSisa = 0;
                                 foreach ((array) $state as $penjualanId) {
                                     $penjualan = Penjualan::find($penjualanId);
-                                    if (!$penjualan) continue;
+                                    if (! $penjualan) {
+                                        continue;
+                                    }
                                     $totalBayar = (float) Pembayaran::where('penjualan_id', $penjualanId)
                                         ->where('status', 'Approved')->sum('jumlah_bayar');
                                     $totalSisa += max(0, (float) $penjualan->grand_total - $totalBayar);
@@ -110,11 +118,11 @@ class PembayaranForm
                             ->label('Metode Pembayaran')
                             ->required()
                             ->options([
-                                'Cash'     => 'Cash',
+                                'Cash' => 'Cash',
                                 'Transfer' => 'Transfer Bank',
-                                'Cheque'   => 'Cheque',
-                                'QRIS'     => 'QRIS',
-                                'Debit'    => 'Debit',
+                                'Cheque' => 'Cheque',
+                                'QRIS' => 'QRIS',
+                                'Debit' => 'Debit',
                             ])
                             ->native(false),
 
@@ -142,16 +150,17 @@ class PembayaranForm
                             ->multiple()
                             ->disk('public')
                             ->directory('lampiran_pembayaran')
-                            ->getUploadedFileNameForStorageUsing(function (\Livewire\Features\SupportFileUploads\TemporaryUploadedFile $file, $record): string {
+                            ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file, $record): string {
                                 $user = auth()->user();
                                 $now = now();
                                 if ($record && $record->exists) {
                                     $nomor = $record->nomor;
                                 } else {
-                                    $countToday = \App\Models\Pembayaran::where('user_id', $user->id)->whereDate('created_at', $now)->count();
-                                    $nomor = "PAY-{$now->format('Ymd')}-{$user->id}-" . str_pad($countToday + 1, 3, '0', STR_PAD_LEFT);
+                                    $countToday = Pembayaran::where('user_id', $user->id)->whereDate('created_at', $now)->count();
+                                    $nomor = "PAY-{$now->format('Ymd')}-{$user->id}-".str_pad($countToday + 1, 3, '0', STR_PAD_LEFT);
                                 }
-                                return "{$nomor}-" . time() . ".{$file->extension()}";
+
+                                return "{$nomor}-".time().".{$file->extension()}";
                             })
                             ->image()
                             ->imageEditor()

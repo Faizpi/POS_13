@@ -59,9 +59,10 @@ class StockOpnameForm
                                             return Produk::orderBy('nama_produk')->pluck('nama_produk', 'id');
                                         }
                                         $gudangId = $get('../../gudang_id') ?? $user?->getCurrentGudang()?->id;
-                                        if (!$gudangId) {
+                                        if (! $gudangId) {
                                             return [];
                                         }
+
                                         return Produk::whereHas('stokDiGudang', function ($query) use ($gudangId) {
                                             $query->where('gudang_id', $gudangId);
                                         })->orderBy('nama_produk')->pluck('nama_produk', 'id');
@@ -74,13 +75,13 @@ class StockOpnameForm
                                             $stok = GudangProduk::where('gudang_id', $gudangId)
                                                 ->where('produk_id', $state)
                                                 ->first();
-                                            
+
                                             if ($stok) {
                                                 $qtySystem = ($stok->stok_penjualan ?? 0) + ($stok->stok_gratis ?? 0) + ($stok->stok_sample ?? 0);
                                             } else {
                                                 $qtySystem = 0;
                                             }
-                                            
+
                                             $set('qty_system', $qtySystem);
                                             $set('qty_aktual', 0);
                                             $set('selisih', 0 - $qtySystem);
@@ -129,7 +130,7 @@ class StockOpnameForm
                             ->collapsible()
                             ->reorderableWithButtons()
                             ->itemLabel(fn (array $state): ?string => isset($state['produk_id']) && $state['produk_id']
-                                ? Produk::find($state['produk_id'])?->nama_produk . ' (Selisih: ' . ($state['selisih'] ?? 0) . ')'
+                                ? Produk::find($state['produk_id'])?->nama_produk.' (Selisih: '.($state['selisih'] ?? 0).')'
                                 : null)
                             ->addActionLabel('Tambah Item')
                             ->required()

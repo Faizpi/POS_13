@@ -16,7 +16,7 @@ class NeracaController extends Controller
     {
         $user = auth()->user();
 
-        if (!in_array($user->role, ['super_admin', 'spectator'])) {
+        if (! in_array($user->role, ['super_admin', 'spectator'])) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
@@ -24,7 +24,7 @@ class NeracaController extends Controller
         $to = $request->filled('to') ? $request->to : null;
         $gudangId = $request->filled('gudang_id') ? $request->integer('gudang_id') : null;
 
-        $service = new NeracaService();
+        $service = new NeracaService;
         $data = $service->getRingkasan($from, $to, $gudangId);
 
         return response()->json($data);
@@ -34,7 +34,7 @@ class NeracaController extends Controller
     {
         $user = auth()->user();
 
-        if (!in_array($user->role, ['super_admin', 'spectator'])) {
+        if (! in_array($user->role, ['super_admin', 'spectator'])) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
@@ -48,7 +48,7 @@ class NeracaController extends Controller
             $gudangName = $gudang?->nama_gudang ?? 'Semua Gudang';
         }
 
-        $service = new NeracaService();
+        $service = new NeracaService;
         $data = $service->getRingkasan($from, $to, $gudangId);
 
         $fileName = 'Neraca_'.($from ?? 'semua').'_sd_'.($to ?? 'semua').'.pdf';
@@ -67,7 +67,7 @@ class NeracaController extends Controller
     {
         $user = auth()->user();
 
-        if (!in_array($user->role, ['super_admin', 'spectator'])) {
+        if (! in_array($user->role, ['super_admin', 'spectator'])) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
@@ -81,7 +81,7 @@ class NeracaController extends Controller
             $gudangName = $gudang?->nama_gudang ?? 'Semua Gudang';
         }
 
-        $service = new NeracaService();
+        $service = new NeracaService;
         $data = $service->getRingkasan($from, $to, $gudangId);
 
         $fileName = 'Neraca_'.($from ?? 'semua').'_sd_'.($to ?? 'semua').'.xlsx';

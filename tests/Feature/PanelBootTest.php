@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Filament\Pages\Auth\Login;
 use App\Filament\Resources\Biayas\Pages\ListBiayas;
 use App\Filament\Resources\Kunjungans\Pages\ListKunjungans;
 use App\Filament\Resources\Pembayarans\Pages\ListPembayarans;
@@ -37,7 +38,7 @@ class PanelBootTest extends TestCase
 
     public function test_login_form_authenticates_super_admin(): void
     {
-        Livewire::test(\App\Filament\Pages\Auth\Login::class)
+        Livewire::test(Login::class)
             ->fillForm([
                 'email' => 'superadmin@hibiscusefsya.com',
                 'password' => 'password123',

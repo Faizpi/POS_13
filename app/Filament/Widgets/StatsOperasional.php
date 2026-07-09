@@ -33,15 +33,22 @@ class StatsOperasional extends BaseStatsOverviewWidget
         $userId = $isUser ? $user->id : null;
 
         $scope = function ($query, ?string $gudangColumn = 'gudang_id', ?string $userColumn = 'user_id') use ($isSuperAdmin, $isAdmin, $gudangId, $userId) {
-            if ($isSuperAdmin) return $query;
-            if ($isAdmin && $gudangId && $gudangColumn) return $query->where($gudangColumn, $gudangId);
-            if ($userId && $userColumn) return $query->where($userColumn, $userId);
+            if ($isSuperAdmin) {
+                return $query;
+            }
+            if ($isAdmin && $gudangId && $gudangColumn) {
+                return $query->where($gudangColumn, $gudangId);
+            }
+            if ($userId && $userColumn) {
+                return $query->where($userColumn, $userId);
+            }
+
             return $query->whereRaw('1=0');
         };
 
         $now = Carbon::now();
         $bulanLabel = $now->translatedFormat('F Y');
-        $bulanQuery = fn($q) => $q->whereYear('tgl_transaksi', $now->year)->whereMonth('tgl_transaksi', $now->month);
+        $bulanQuery = fn ($q) => $q->whereYear('tgl_transaksi', $now->year)->whereMonth('tgl_transaksi', $now->month);
 
         // 1. Menunggu Approval (Pending)
         $pendingBreakdown = $isUser ? [
@@ -102,13 +109,13 @@ class StatsOperasional extends BaseStatsOverviewWidget
                 ->chart($pendingBreakdown),
 
             Stat::make('Transaksi Batal', number_format($canceled))
-                ->description('Semua modul · ' . $bulanLabel)
+                ->description('Semua modul · '.$bulanLabel)
                 ->descriptionIcon('heroicon-o-x-circle')
                 ->color($canceled > 0 ? 'danger' : 'gray')
                 ->chart($canceledMonthlyChart),
 
-            Stat::make('Kunjungan Sales', number_format($kunjungan->count()) . ' kali')
-                ->description('Bulan ' . $bulanLabel)
+            Stat::make('Kunjungan Sales', number_format($kunjungan->count()).' kali')
+                ->description('Bulan '.$bulanLabel)
                 ->descriptionIcon('heroicon-o-map-pin')
                 ->color('gray')
                 ->chart($monthlyCount(Kunjungan::class, 'tgl_kunjungan')),

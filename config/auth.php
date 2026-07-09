@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Kontak;
 use App\Models\User;
 
 return [
@@ -73,7 +74,7 @@ return [
 
         'customers' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Kontak::class,
+            'model' => Kontak::class,
         ],
 
         // 'users' => [

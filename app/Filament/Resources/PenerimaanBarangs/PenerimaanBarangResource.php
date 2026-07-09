@@ -36,6 +36,7 @@ class PenerimaanBarangResource extends Resource
     public static function getNavigationBadge(): ?string
     {
         $count = static::applyRoleScope(PenerimaanBarang::query())->where('status', 'Pending')->count();
+
         return $count > 0 ? (string) $count : null;
     }
 
@@ -62,8 +63,10 @@ class PenerimaanBarangResource extends Resource
     public static function canCreate(): bool
     {
         $user = auth()->user();
-        if (!$user) return false;
-        
+        if (! $user) {
+            return false;
+        }
+
         // Excel: Sales ✅ ADD, Admin ✅ ADD, Spectator ❌, SuperAdmin ✅
         return ! $user->isSpectator();
     }
@@ -71,13 +74,19 @@ class PenerimaanBarangResource extends Resource
     public static function canEdit($record): bool
     {
         $user = auth()->user();
-        if (!$user) return false;
+        if (! $user) {
+            return false;
+        }
 
         // Excel: Sales ❌ (VIEW only), Admin ✅ EDIT+APRV, Spectator ❌, SuperAdmin ✅
-        if ($user->isSuperAdmin()) return true;
-        
+        if ($user->isSuperAdmin()) {
+            return true;
+        }
+
         // Sales dan Spectator tidak bisa edit
-        if ($user->isSpectator() || $user->role === 'user') return false;
+        if ($user->isSpectator() || $user->role === 'user') {
+            return false;
+        }
 
         return false;
     }
@@ -85,8 +94,10 @@ class PenerimaanBarangResource extends Resource
     public static function canDelete($record): bool
     {
         $user = auth()->user();
-        if (!$user) return false;
-        
+        if (! $user) {
+            return false;
+        }
+
         // Excel: Sales ❌, Admin ❌, Spectator ❌, SuperAdmin ✅
         return $user->isSuperAdmin() ?? false;
     }

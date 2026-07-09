@@ -2,14 +2,16 @@
 
 namespace App\Filament\Resources\Penjualans\Schemas;
 
-use App\Models\GudangProduk;
 use App\Models\Gudang;
+use App\Models\GudangProduk;
 use App\Models\Kontak;
+use App\Models\Penjualan;
 use App\Models\Produk;
 use Carbon\Carbon;
 use Filament\Actions\Action;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -17,6 +19,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\ToggleButtons;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 class PenjualanForm
 {
@@ -42,6 +45,7 @@ class PenjualanForm
                                         ->orderBy('nama')->pluck('nama', 'nama');
                                 }
                                 $gudangId = $get('gudang_id') ?? $user?->getCurrentGudang()?->id;
+
                                 return Kontak::where(function ($q) use ($gudangId) {
                                     $q->whereNull('gudang_id');
                                     if ($gudangId) {
@@ -66,9 +70,9 @@ class PenjualanForm
                             ])
                             ->createOptionUsing(function (array $data) {
                                 $kontak = Kontak::create([
-                                    'nama'      => $data['nama'],
-                                    'no_telp'   => $data['no_telp'] ?? null,
-                                    'alamat'    => $data['alamat'] ?? null,
+                                    'nama' => $data['nama'],
+                                    'no_telp' => $data['no_telp'] ?? null,
+                                    'alamat' => $data['alamat'] ?? null,
                                     'created_by' => auth()->id(),
                                     'gudang_id' => auth()->user()?->getCurrentGudang()?->id,
                                 ]);
@@ -100,13 +104,14 @@ class PenjualanForm
                 Section::make('Detail Transaksi')
                     ->icon('heroicon-o-document-text')
                     ->schema([
-                        \Filament\Forms\Components\Placeholder::make('preview_nomor')
+                        Placeholder::make('preview_nomor')
                             ->label('No Transaksi (Preview)')
                             ->content(function () {
-                                $countToday = \App\Models\Penjualan::where('user_id', auth()->id())
-                                    ->whereDate('created_at', \Carbon\Carbon::today())
+                                $countToday = Penjualan::where('user_id', auth()->id())
+                                    ->whereDate('created_at', Carbon::today())
                                     ->count();
-                                return \App\Models\Penjualan::generateNomor(auth()->id(), $countToday + 1, \Carbon\Carbon::now()) . ' (Auto)';
+
+                                return Penjualan::generateNomor(auth()->id(), $countToday + 1, Carbon::now()).' (Auto)';
                             })
                             ->hiddenOn(['view', 'edit'])
                             ->extraAttributes(['class' => 'text-primary-600 font-bold']),
@@ -122,8 +127,8 @@ class PenjualanForm
                             ->label('Syarat Pembayaran')
                             ->required()
                             ->options([
-                                'Cash'   => 'Cash',
-                                'Net 7'  => 'Net 7 Days',
+                                'Cash' => 'Cash',
+                                'Net 7' => 'Net 7 Days',
                                 'Net 14' => 'Net 14 Days',
                                 'Net 30' => 'Net 30 Days',
                                 'Net 60' => 'Net 60 Days',
@@ -209,7 +214,7 @@ class PenjualanForm
                                     ->label('')
                                     ->tooltip('Buka di Google Maps')
                                     ->url(fn ($get) => $get('koordinat')
-                                        ? 'https://www.google.com/maps?q=' . urlencode($get('koordinat'))
+                                        ? 'https://www.google.com/maps?q='.urlencode($get('koordinat'))
                                         : '#')
                                     ->openUrlInNewTab(),
                             ]),
@@ -228,7 +233,7 @@ class PenjualanForm
                                     ->required()
                                     // Gap 1 fix: hanya tampilkan produk yang ada stok di gudang terpilih
                                     ->options(function (callable $get) {
-                                        $gudangId  = $get('../../gudang_id')
+                                        $gudangId = $get('../../gudang_id')
                                             ?? auth()->user()?->getCurrentGudang()?->id
                                             ?? auth()->user()?->gudang_id;
 
@@ -242,7 +247,7 @@ class PenjualanForm
                                             ->with('produk')
                                             ->get()
                                             ->mapWithKeys(fn ($gp) => [
-                                                $gp->produk_id => $gp->produk?->nama_produk . ' (Stok: ' . $gp->stok_penjualan . ')',
+                                                $gp->produk_id => $gp->produk?->nama_produk.' (Stok: '.$gp->stok_penjualan.')',
                                             ]);
                                     })
                                     ->searchable()
@@ -309,6 +314,7 @@ class PenjualanForm
                                 TextInput::make('diskon_nominal')
                                     ->label('Disc Rp')
                                     ->numeric()
+                                    ->minValue(0)
                                     ->default(0)
                                     ->prefix('Rp')
                                     ->live()
@@ -350,30 +356,31 @@ class PenjualanForm
                     ->icon('heroicon-o-calculator')
                     ->schema([
                         TextInput::make('diskon_akhir')
-                                    ->label('Diskon Akhir')
-                                    ->numeric()
-                                    ->default(0)
-                                    ->prefix('Rp')
-                                    ->live(onBlur: true)
-                                    ->afterStateUpdated(fn ($set, $get) => self::recalcGrandTotal($set, $get)),
+                            ->label('Diskon Akhir')
+                            ->numeric()
+                            ->minValue(0)
+                            ->default(0)
+                            ->prefix('Rp')
+                            ->live(onBlur: true)
+                            ->afterStateUpdated(fn ($set, $get) => self::recalcGrandTotal($set, $get)),
 
                         TextInput::make('tax_percentage')
-                                    ->label('Pajak')
-                                    ->required()
-                                    ->numeric()
-                                    ->default(0)
-                                    ->minValue(0)
-                                    ->maxValue(100)
-                                    ->suffix('%')
-                                    ->live(onBlur: true)
-                                    ->afterStateUpdated(fn ($set, $get) => self::recalcGrandTotal($set, $get)),
+                            ->label('Pajak')
+                            ->required()
+                            ->numeric()
+                            ->default(0)
+                            ->minValue(0)
+                            ->maxValue(100)
+                            ->suffix('%')
+                            ->live(onBlur: true)
+                            ->afterStateUpdated(fn ($set, $get) => self::recalcGrandTotal($set, $get)),
 
                         TextInput::make('grand_total')
-                                    ->label('Grand Total')
-                                    ->disabled()
-                                    ->dehydrated()
-                                    ->prefix('Rp')
-                                    ->extraInputAttributes(['class' => 'text-2xl font-bold text-primary-600']),
+                            ->label('Grand Total')
+                            ->disabled()
+                            ->dehydrated()
+                            ->prefix('Rp')
+                            ->extraInputAttributes(['class' => 'text-2xl font-bold text-primary-600']),
                     ])
                     ->columns(3),
 
@@ -382,42 +389,42 @@ class PenjualanForm
                     ->collapsible()
                     ->schema([
                         TextInput::make('tag')
-                                    ->label('Tag (Sales)')
-                                    ->default(fn () => auth()->user()?->name)
-                                    ->disabled()
-                                    ->dehydrated(),
+                            ->label('Tag (Sales)')
+                            ->default(fn () => auth()->user()?->name)
+                            ->disabled()
+                            ->dehydrated(),
 
                         Textarea::make('memo')
-                                    ->label('Memo')
-                                    ->rows(3)
-                                    ->columnSpanFull(),
+                            ->label('Memo')
+                            ->rows(3)
+                            ->columnSpanFull(),
 
                         FileUpload::make('lampiran_paths')
-                                    ->label('Lampiran')
-                                    ->multiple()
-                                    ->disk('public')
-                                    ->directory('lampiran_penjualan')
-                                    ->getUploadedFileNameForStorageUsing(function (\Livewire\Features\SupportFileUploads\TemporaryUploadedFile $file, $get, $record): string {
-                                        $user = auth()->user();
-                                        $now = now();
+                            ->label('Lampiran')
+                            ->multiple()
+                            ->disk('public')
+                            ->directory('lampiran_penjualan')
+                            ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file, $get, $record): string {
+                                $user = auth()->user();
+                                $now = now();
 
-                                        if ($record && $record->exists) {
-                                            // Mode Edit — nomor sudah ada
-                                            $nomor = $record->nomor;
-                                        } else {
-                                            // Mode Create — prediksi nomor berdasarkan counter harian
-                                            $countToday = \App\Models\Penjualan::where('user_id', $user->id)
-                                                ->whereDate('created_at', $now)
-                                                ->count();
-                                            $noUrut = str_pad($countToday + 1, 3, '0', STR_PAD_LEFT);
-                                            $nomor = "INV-{$now->format('Ymd')}-{$user->id}-{$noUrut}";
-                                        }
+                                if ($record && $record->exists) {
+                                    // Mode Edit — nomor sudah ada
+                                    $nomor = $record->nomor;
+                                } else {
+                                    // Mode Create — prediksi nomor berdasarkan counter harian
+                                    $countToday = Penjualan::where('user_id', $user->id)
+                                        ->whereDate('created_at', $now)
+                                        ->count();
+                                    $noUrut = str_pad($countToday + 1, 3, '0', STR_PAD_LEFT);
+                                    $nomor = "INV-{$now->format('Ymd')}-{$user->id}-{$noUrut}";
+                                }
 
-                                        return "{$nomor}-" . time() . ".{$file->extension()}";
-                                    })
-                                    ->acceptedFileTypes(['image/*', 'application/pdf', 'application/zip', 'application/msword'])
-                                    ->maxSize(5120)
-                                    ->columnSpanFull(),
+                                return "{$nomor}-".time().".{$file->extension()}";
+                            })
+                            ->acceptedFileTypes(['image/*', 'application/pdf', 'application/zip', 'application/msword'])
+                            ->maxSize(5120)
+                            ->columnSpanFull(),
                     ])
                     ->columns(2),
             ]);

@@ -12,9 +12,6 @@ trait ResolvesApprover
 {
     /**
      * Tentukan approver_id berdasarkan role user yang sedang login dan gudang yang dipilih.
-     *
-     * @param  int|null  $gudangId
-     * @return int|null
      */
     protected function resolveApproverId(?int $gudangId): ?int
     {
@@ -27,17 +24,21 @@ trait ResolvesApprover
                     ->where(function ($q) use ($gudangId) {
                         $q->where('gudang_id', $gudangId)
                             ->orWhere('current_gudang_id', $gudangId)
-                            ->orWhereHas('gudangs', fn($sub) => $sub->where('gudangs.id', $gudangId));
+                            ->orWhereHas('gudangs', fn ($sub) => $sub->where('gudangs.id', $gudangId));
                     })
                     ->first();
-                if ($adminGudang) return $adminGudang->id;
+                if ($adminGudang) {
+                    return $adminGudang->id;
+                }
             }
+
             return $user->id;
         }
 
         if ($user->role === 'admin') {
             // Admin: approver adalah super_admin
             $superAdmin = User::where('role', 'super_admin')->first();
+
             return $superAdmin?->id;
         }
 
@@ -47,13 +48,16 @@ trait ResolvesApprover
                 $adminGudang = User::where('role', 'admin')
                     ->where(function ($q) use ($gudangId) {
                         $q->where('gudang_id', $gudangId)
-                            ->orWhereHas('gudangs', fn($sub) => $sub->where('gudangs.id', $gudangId));
+                            ->orWhereHas('gudangs', fn ($sub) => $sub->where('gudangs.id', $gudangId));
                     })
                     ->first();
-                if ($adminGudang) return $adminGudang->id;
+                if ($adminGudang) {
+                    return $adminGudang->id;
+                }
             }
             // Fallback ke super_admin
             $superAdmin = User::where('role', 'super_admin')->first();
+
             return $superAdmin?->id;
         }
 
@@ -66,7 +70,10 @@ trait ResolvesApprover
     protected function resolveStafPenyetuju(?int $gudangId): ?string
     {
         $approverId = $this->resolveApproverId($gudangId);
-        if (!$approverId) return null;
+        if (! $approverId) {
+            return null;
+        }
+
         return User::find($approverId)?->name;
     }
 }

@@ -11,7 +11,9 @@ use Maatwebsite\Excel\Concerns\WithValidation;
 class StockOpnameItemImport implements ToCollection, WithHeadingRow, WithValidation
 {
     protected int $gudangId;
+
     protected array $errors = [];
+
     protected Collection $rows;
 
     public function __construct(int $gudangId)
@@ -26,8 +28,9 @@ class StockOpnameItemImport implements ToCollection, WithHeadingRow, WithValidat
             $namaProduk = trim($row['nama_produk'] ?? '');
             $produk = Produk::where('nama_produk', $namaProduk)->first();
 
-            if (!$produk && $namaProduk) {
+            if (! $produk && $namaProduk) {
                 $this->errors[] = "Produk '{$namaProduk}' tidak ditemukan.";
+
                 return null;
             }
 

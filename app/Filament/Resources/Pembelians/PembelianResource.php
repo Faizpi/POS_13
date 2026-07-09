@@ -2,12 +2,12 @@
 
 namespace App\Filament\Resources\Pembelians;
 
-use App\Filament\Resources\Pembelians\RelationManagers\PembayaransRelationManager;
 use App\Filament\Concerns\ScopeByRole;
 use App\Filament\Resources\Pembelians\Pages\CreatePembelian;
 use App\Filament\Resources\Pembelians\Pages\EditPembelian;
 use App\Filament\Resources\Pembelians\Pages\ListPembelians;
 use App\Filament\Resources\Pembelians\Pages\ViewPembelian;
+use App\Filament\Resources\Pembelians\RelationManagers\PembayaransRelationManager;
 use App\Filament\Resources\Pembelians\Schemas\PembelianForm;
 use App\Filament\Resources\Pembelians\Tables\PembeliansTable;
 use App\Models\Pembelian;
@@ -39,6 +39,7 @@ class PembelianResource extends Resource
     public static function getNavigationBadge(): ?string
     {
         $count = static::applyRoleScope(Pembelian::query())->where('status', 'Pending')->count();
+
         return $count > 0 ? (string) $count : null;
     }
 
@@ -64,7 +65,7 @@ class PembelianResource extends Resource
 
     public static function canCreate(): bool
     {
-        return !auth()->user()?->isSpectator();
+        return ! auth()->user()?->isSpectator();
     }
 
     public static function canEdit($record): bool

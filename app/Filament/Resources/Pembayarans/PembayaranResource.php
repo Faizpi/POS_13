@@ -36,6 +36,7 @@ class PembayaranResource extends Resource
     public static function getNavigationBadge(): ?string
     {
         $count = static::applyRoleScope(Pembayaran::query())->where('status', 'Pending')->count();
+
         return $count > 0 ? (string) $count : null;
     }
 
@@ -63,8 +64,10 @@ class PembayaranResource extends Resource
     public static function canCreate(): bool
     {
         $user = auth()->user();
-        if (!$user) return false;
-        
+        if (! $user) {
+            return false;
+        }
+
         // Excel: Sales ❌, Admin ❌, Spectator ❌, SuperAdmin ✅
         return $user->isSuperAdmin();
     }
@@ -72,13 +75,19 @@ class PembayaranResource extends Resource
     public static function canEdit($record): bool
     {
         $user = auth()->user();
-        if (!$user) return false;
+        if (! $user) {
+            return false;
+        }
 
         // Excel: Sales ❌, Admin ❌, Spectator ✅ VIEW (read-only), SuperAdmin ✅ ALL
-        if ($user->isSuperAdmin()) return true;
-        
+        if ($user->isSuperAdmin()) {
+            return true;
+        }
+
         // Spectator hanya bisa view, tidak bisa edit
-        if ($user->isSpectator()) return false;
+        if ($user->isSpectator()) {
+            return false;
+        }
 
         return false;
     }
@@ -91,8 +100,10 @@ class PembayaranResource extends Resource
     public static function canView($record): bool
     {
         $user = auth()->user();
-        if (!$user) return false;
-        
+        if (! $user) {
+            return false;
+        }
+
         // Excel: Sales ❌, Admin ❌, Spectator ✅ VIEW, SuperAdmin ✅ ALL
         return $user->isSpectator() || $user->isSuperAdmin();
     }

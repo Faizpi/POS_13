@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Users\Tables;
 
+use App\Models\Gudang;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -13,7 +14,6 @@ use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
-use App\Models\Gudang;
 use Illuminate\Support\Facades\Schema;
 
 class UsersTable
@@ -131,14 +131,16 @@ class UsersTable
                             ->preload(),
                     ])
                     ->query(function ($query, array $data) {
-                        if (empty($data['gudang_id'])) return $query;
+                        if (empty($data['gudang_id'])) {
+                            return $query;
+                        }
 
                         $gudangId = $data['gudang_id'];
 
                         return $query->where(function ($q) use ($gudangId) {
                             $q->where(function ($q1) use ($gudangId) {
-                                    $q1->where('role', 'user')->where('gudang_id', $gudangId);
-                                })
+                                $q1->where('role', 'user')->where('gudang_id', $gudangId);
+                            })
                                 ->orWhere(function ($q2) use ($gudangId) {
                                     $q2->where('role', 'admin')
                                         ->whereIn('id', function ($sub) use ($gudangId) {
@@ -160,9 +162,9 @@ class UsersTable
             ])
             ->modifyQueryUsing(fn ($query) => $query
                 ->orderByRaw("CASE users.role WHEN 'super_admin' THEN 1 WHEN 'spectator' THEN 2 WHEN 'admin' THEN 3 WHEN 'user' THEN 4 ELSE 5 END")
-                ->orderByRaw("(SELECT MIN(g.nama_gudang) FROM admin_gudang ag JOIN gudangs g ON g.id = ag.gudang_id WHERE ag.user_id = users.id)")
-                ->orderByRaw("(SELECT MIN(g.nama_gudang) FROM spectator_gudang sg JOIN gudangs g ON g.id = sg.gudang_id WHERE sg.user_id = users.id)")
-                ->orderByRaw("(SELECT g.nama_gudang FROM gudangs g WHERE g.id = users.gudang_id)")
+                ->orderByRaw('(SELECT MIN(g.nama_gudang) FROM admin_gudang ag JOIN gudangs g ON g.id = ag.gudang_id WHERE ag.user_id = users.id)')
+                ->orderByRaw('(SELECT MIN(g.nama_gudang) FROM spectator_gudang sg JOIN gudangs g ON g.id = sg.gudang_id WHERE sg.user_id = users.id)')
+                ->orderByRaw('(SELECT g.nama_gudang FROM gudangs g WHERE g.id = users.gudang_id)')
                 ->orderBy('users.name')
             )
             ->recordActions([

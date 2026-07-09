@@ -5,13 +5,16 @@ namespace App\Filament\Resources\PembayaranHutangs\Schemas;
 use App\Models\Gudang;
 use App\Models\Pembayaran;
 use App\Models\Pembelian;
+use Carbon\Carbon;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 class PembayaranHutangForm
 {
@@ -22,22 +25,23 @@ class PembayaranHutangForm
                 Section::make('Detail Pembayaran Hutang')
                     ->icon('heroicon-o-credit-card')
                     ->schema([
-                        \Filament\Forms\Components\Placeholder::make('preview_nomor')
+                        Placeholder::make('preview_nomor')
                             ->label('No Transaksi (Preview)')
                             ->content(function () {
                                 $countToday = Pembayaran::where('type', 'hutang')
-                                    ->whereDate('created_at', \Carbon\Carbon::today())
+                                    ->whereDate('created_at', Carbon::today())
                                     ->count();
-                                return \App\Models\Pembayaran::generateNomor(auth()->id(), $countToday + 1, \Carbon\Carbon::now()) . ' (Auto)';
+
+                                return Pembayaran::generateNomor(auth()->id(), $countToday + 1, Carbon::now()).' (Auto)';
                             })
                             ->hiddenOn(['view', 'edit'])
                             ->extraAttributes(['class' => 'text-primary-600 font-bold']),
 
                         Select::make('gudang_id')
                             ->label('Gudang')
-                            ->options(fn() => Gudang::pluck('nama_gudang', 'id'))
-                            ->default(fn() => auth()->user()?->getCurrentGudang()?->id)
-                            ->disabled(fn() => !auth()->user()?->isSuperAdmin())
+                            ->options(fn () => Gudang::pluck('nama_gudang', 'id'))
+                            ->default(fn () => auth()->user()?->getCurrentGudang()?->id)
+                            ->disabled(fn () => ! auth()->user()?->isSuperAdmin())
                             ->dehydrated()
                             ->required()
                             ->live()
@@ -64,7 +68,8 @@ class PembayaranHutangForm
                                     if ($sisa <= 0) {
                                         return [];
                                     }
-                                    return [$p->id => $p->nomor . ' — ' . ($p->kontak?->nama ?? '—') . ' (Sisa: ' . format_rupiah($sisa) . ')'];
+
+                                    return [$p->id => $p->nomor.' — '.($p->kontak?->nama ?? '—').' (Sisa: '.format_rupiah($sisa).')'];
                                 });
                             })
                             ->preload()
@@ -73,12 +78,15 @@ class PembayaranHutangForm
                                 if (empty($state)) {
                                     $set('sisa_hutang_preview', null);
                                     $set('jumlah_bayar', null);
+
                                     return;
                                 }
                                 $totalSisa = 0;
                                 foreach ((array) $state as $pembelianId) {
                                     $pembelian = Pembelian::find($pembelianId);
-                                    if (!$pembelian) continue;
+                                    if (! $pembelian) {
+                                        continue;
+                                    }
                                     $totalBayar = (float) Pembayaran::where('pembelian_id', $pembelianId)
                                         ->where('status', 'Approved')->sum('jumlah_bayar');
                                     $totalSisa += max(0, (float) $pembelian->grand_total - $totalBayar);
@@ -104,11 +112,11 @@ class PembayaranHutangForm
                             ->label('Metode Pembayaran')
                             ->required()
                             ->options([
-                                'Cash'     => 'Cash',
+                                'Cash' => 'Cash',
                                 'Transfer' => 'Transfer Bank',
-                                'Cheque'   => 'Cheque',
-                                'QRIS'     => 'QRIS',
-                                'Debit'    => 'Debit',
+                                'Cheque' => 'Cheque',
+                                'QRIS' => 'QRIS',
+                                'Debit' => 'Debit',
                             ])
                             ->native(false),
 
@@ -136,7 +144,7 @@ class PembayaranHutangForm
                             ->multiple()
                             ->disk('public')
                             ->directory('lampiran_pembayaran_hutang')
-                            ->getUploadedFileNameForStorageUsing(function (\Livewire\Features\SupportFileUploads\TemporaryUploadedFile $file, $record): string {
+                            ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file, $record): string {
                                 $user = auth()->user();
                                 $now = now();
                                 if ($record && $record->exists) {
@@ -144,9 +152,10 @@ class PembayaranHutangForm
                                 } else {
                                     $countToday = Pembayaran::where('type', 'hutang')
                                         ->whereDate('created_at', $now)->count();
-                                    $nomor = "PAYH-{$now->format('Ymd')}-{$user->id}-" . str_pad($countToday + 1, 3, '0', STR_PAD_LEFT);
+                                    $nomor = "PAYH-{$now->format('Ymd')}-{$user->id}-".str_pad($countToday + 1, 3, '0', STR_PAD_LEFT);
                                 }
-                                return "{$nomor}-" . time() . ".{$file->extension()}";
+
+                                return "{$nomor}-".time().".{$file->extension()}";
                             })
                             ->image()
                             ->acceptedFileTypes(['image/*', 'application/pdf'])

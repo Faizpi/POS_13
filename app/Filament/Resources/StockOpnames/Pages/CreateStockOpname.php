@@ -15,11 +15,11 @@ class CreateStockOpname extends CreateRecord
     protected function mutateFormDataBeforeCreate(array $data): array
     {
         $user = auth()->user();
-        
+
         $countToday = StockOpname::where('user_id', auth()->id())
             ->whereDate('created_at', Carbon::today())
             ->count();
-            
+
         $noUrut = $countToday + 1;
         $now = Carbon::now();
 

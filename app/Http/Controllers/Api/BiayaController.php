@@ -9,7 +9,6 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
 
 class BiayaController extends Controller
 {
@@ -20,14 +19,21 @@ class BiayaController extends Controller
 
         if (in_array($user->role, ['admin', 'spectator'])) {
             $cg = $user->getCurrentGudang();
-            if ($cg) { $query->where('gudang_id', $cg->id); }
-            else { return response()->json(['data' => [], 'meta' => ['total' => 0]]); }
+            if ($cg) {
+                $query->where('gudang_id', $cg->id);
+            } else {
+                return response()->json(['data' => [], 'meta' => ['total' => 0]]);
+            }
         } elseif ($user->role !== 'super_admin') {
             $query->where('user_id', $user->id);
         }
 
-        if ($request->filled('status')) $query->where('status', $request->status);
-        if ($request->filled('jenis')) $query->where('jenis_biaya', $request->jenis);
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+        if ($request->filled('jenis')) {
+            $query->where('jenis_biaya', $request->jenis);
+        }
 
         return response()->json($query->latest()->paginate($request->per_page ?? 20));
     }
@@ -39,7 +45,7 @@ class BiayaController extends Controller
 
         if (in_array($user->role, ['admin', 'spectator'])) {
             $cg = $user->getCurrentGudang();
-            if (!$cg || (int) $biaya->gudang_id !== (int) $cg->id) {
+            if (! $cg || (int) $biaya->gudang_id !== (int) $cg->id) {
                 return response()->json(['message' => 'Unauthorized'], 403);
             }
         } elseif ($user->role !== 'super_admin' && $biaya->user_id != $user->id && $biaya->approver_id != $user->id) {
@@ -81,7 +87,7 @@ class BiayaController extends Controller
 
         $countToday = Biaya::where('user_id', $user->id)->whereDate('created_at', Carbon::today())->count();
         $noUrut = $countToday + 1;
-        $nomor = "EXP-" . Carbon::now()->format('Ymd') . "-{$user->id}-" . str_pad($noUrut, 3, '0', STR_PAD_LEFT);
+        $nomor = 'EXP-'.Carbon::now()->format('Ymd')."-{$user->id}-".str_pad($noUrut, 3, '0', STR_PAD_LEFT);
 
         $gudangId = optional($user->getCurrentGudang())->id;
 
@@ -112,50 +118,70 @@ class BiayaController extends Controller
 
             DB::commit();
             $msg = $initialStatus == 'Approved' ? 'Biaya berhasil disimpan dan langsung approved.' : 'Biaya berhasil dibuat.';
+
             return response()->json(['message' => $msg, 'data' => $biaya->load('items')], 201);
         } catch (\Exception $e) {
             DB::rollBack();
+
             return response()->json(['message' => 'Gagal membuat biaya.'], 500);
         }
     }
 
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
         $user = auth()->user();
         $biaya = Biaya::findOrFail($id);
         if ($user->role !== 'super_admin') {
             return response()->json(['message' => 'Hanya Super Admin yang dapat mengubah data biaya.'], 403);
         }
+
         return response()->json(['message' => 'Biaya berhasil diperbarui.', 'data' => $biaya->load('items')]);
     }
 
     public function approve($id)
     {
         $user = auth()->user();
-        if (!in_array($user->role, ['admin', 'super_admin'])) return response()->json(['message' => 'Unauthorized'], 403);
+        if (! in_array($user->role, ['admin', 'super_admin'])) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
 
         $biaya = Biaya::findOrFail($id);
-        if ($biaya->status === 'Canceled') return response()->json(['message' => 'Transaksi sudah dibatalkan, tidak bisa di-approve.'], 422);
-        if ($biaya->status === 'Approved' && $user->role === 'admin') return response()->json(['message' => 'Transaksi sudah disetujui.'], 422);
+        if ($biaya->status === 'Canceled') {
+            return response()->json(['message' => 'Transaksi sudah dibatalkan, tidak bisa di-approve.'], 422);
+        }
+        if ($biaya->status === 'Approved' && $user->role === 'admin') {
+            return response()->json(['message' => 'Transaksi sudah disetujui.'], 422);
+        }
 
         if ($user->role === 'admin') {
             $cg = $user->getCurrentGudang();
-            if (!$cg || (int) $biaya->gudang_id !== (int) $cg->id) return response()->json(['message' => 'Hanya bisa approve transaksi di gudang aktif.'], 403);
+            if (! $cg || (int) $biaya->gudang_id !== (int) $cg->id) {
+                return response()->json(['message' => 'Hanya bisa approve transaksi di gudang aktif.'], 403);
+            }
         }
 
         $biaya->update(['status' => 'Approved', 'approver_id' => $user->id]);
+
         return response()->json(['message' => 'Biaya berhasil di-approve.', 'data' => $biaya]);
     }
 
     public function cancel($id)
     {
         $user = auth()->user();
-        if (!in_array($user->role, ['admin', 'super_admin'])) return response()->json(['message' => 'Unauthorized'], 403);
+        if (! in_array($user->role, ['admin', 'super_admin'])) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
 
         $biaya = Biaya::findOrFail($id);
-        if ($biaya->status === 'Canceled') return response()->json(['message' => 'Transaksi sudah dibatalkan.'], 422);
-        if ($biaya->status === 'Approved' && $user->role !== 'super_admin') return response()->json(['message' => 'Hanya Super Admin yang dapat membatalkan transaksi yang sudah disetujui.'], 403);
+        if ($biaya->status === 'Canceled') {
+            return response()->json(['message' => 'Transaksi sudah dibatalkan.'], 422);
+        }
+        if ($biaya->status === 'Approved' && $user->role !== 'super_admin') {
+            return response()->json(['message' => 'Hanya Super Admin yang dapat membatalkan transaksi yang sudah disetujui.'], 403);
+        }
 
         $biaya->update(['status' => 'Canceled']);
+
         return response()->json(['message' => 'Biaya berhasil dibatalkan.']);
     }
 
@@ -163,10 +189,15 @@ class BiayaController extends Controller
     {
         $biaya = Biaya::findOrFail($id);
         $user = auth()->user();
-        if ($user->role !== 'super_admin') return response()->json(['message' => 'Hanya Super Admin yang dapat membatalkan pembatalan.'], 403);
-        if ($biaya->status !== 'Canceled') return response()->json(['message' => 'Transaksi ini tidak dalam status Canceled.'], 422);
+        if ($user->role !== 'super_admin') {
+            return response()->json(['message' => 'Hanya Super Admin yang dapat membatalkan pembatalan.'], 403);
+        }
+        if ($biaya->status !== 'Canceled') {
+            return response()->json(['message' => 'Transaksi ini tidak dalam status Canceled.'], 422);
+        }
 
         $biaya->update(['status' => 'Pending', 'approver_id' => $user->id]);
+
         return response()->json(['message' => 'Biaya berhasil di-uncancel. Status kembali ke Pending.', 'data' => $biaya]);
     }
 
@@ -175,10 +206,12 @@ class BiayaController extends Controller
         $gudang = $user->getCurrentGudang();
         if ($user->role == 'user' && $gudang) {
             $admin = User::where('role', 'admin')->where(function ($q) use ($gudang) {
-                $q->where('gudang_id', $gudang->id)->orWhereHas('gudangs', fn($s) => $s->where('gudangs.id', $gudang->id));
+                $q->where('gudang_id', $gudang->id)->orWhereHas('gudangs', fn ($s) => $s->where('gudangs.id', $gudang->id));
             })->first();
+
             return $admin ? $admin->id : optional(User::where('role', 'super_admin')->first())->id;
         }
+
         return optional(User::where('role', 'super_admin')->first())->id;
     }
 }

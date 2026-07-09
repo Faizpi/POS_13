@@ -7,7 +7,6 @@ use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Schema;
 
 class User extends Authenticatable implements FilamentUser
 {
@@ -60,10 +59,11 @@ class User extends Authenticatable implements FilamentUser
 
     public function getAvatarUrlAttribute(): ?string
     {
-        if (!$this->avatar) {
+        if (! $this->avatar) {
             return null;
         }
-        return asset('storage/' . $this->avatar);
+
+        return asset('storage/'.$this->avatar);
     }
 
     // ===== Relationships =====
@@ -157,15 +157,25 @@ class User extends Authenticatable implements FilamentUser
 
     public function canExportPdf(): bool
     {
-        if ($this->role === 'super_admin') return true;
-        if ($this->role === 'admin') return (bool) $this->can_export_pdf;
+        if ($this->role === 'super_admin') {
+            return true;
+        }
+        if ($this->role === 'admin') {
+            return (bool) $this->can_export_pdf;
+        }
+
         return false;
     }
 
     public function canExportExcel(): bool
     {
-        if ($this->role === 'super_admin') return true;
-        if ($this->role === 'admin') return (bool) $this->can_export_excel;
+        if ($this->role === 'super_admin') {
+            return true;
+        }
+        if ($this->role === 'admin') {
+            return (bool) $this->can_export_excel;
+        }
+
         return false;
     }
 
@@ -184,6 +194,7 @@ class User extends Authenticatable implements FilamentUser
                 'super_admin' => 'Super Admin',
             ];
         }
+
         return [
             'user' => 'User (Sales)',
             'admin' => 'Admin',

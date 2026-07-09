@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources\Biayas\Pages;
 
-use App\Filament\Concerns\ResolvesApprover;
 use App\Filament\Concerns\RenamesLampiran;
+use App\Filament\Concerns\ResolvesApprover;
 use App\Filament\Resources\Biayas\BiayaResource;
 use App\Models\Biaya;
 use App\Services\InvoiceEmailService;
@@ -12,7 +12,7 @@ use Filament\Resources\Pages\CreateRecord;
 
 class CreateBiaya extends CreateRecord
 {
-    use ResolvesApprover, RenamesLampiran;
+    use RenamesLampiran, ResolvesApprover;
 
     protected static string $resource = BiayaResource::class;
 
@@ -25,13 +25,13 @@ class CreateBiaya extends CreateRecord
             ->whereDate('created_at', Carbon::today())
             ->count();
         $noUrut = $countToday + 1;
-        $now    = Carbon::now();
+        $now = Carbon::now();
 
-        $data['user_id']        = auth()->id();
+        $data['user_id'] = auth()->id();
         // Super admin: langsung Approved, lainnya: Pending
-        $data['status']         = $user->isSuperAdmin() ? 'Approved' : 'Pending';
+        $data['status'] = $user->isSuperAdmin() ? 'Approved' : 'Pending';
         $data['no_urut_harian'] = $noUrut;
-        $data['nomor']          = Biaya::generateNomor(auth()->id(), $noUrut, $now);
+        $data['nomor'] = Biaya::generateNomor(auth()->id(), $noUrut, $now);
 
         // Set tag (nama user)
         if (empty($data['tag'])) {
@@ -44,7 +44,7 @@ class CreateBiaya extends CreateRecord
         }
 
         // Set approver_id
-        $gudangId            = (int) ($data['gudang_id'] ?? 0);
+        $gudangId = (int) ($data['gudang_id'] ?? 0);
         $data['approver_id'] = $this->resolveApproverId($gudangId ?: null);
 
         return $data;
@@ -57,7 +57,7 @@ class CreateBiaya extends CreateRecord
         try {
             InvoiceEmailService::sendCreatedNotification($this->getRecord(), 'biaya');
         } catch (\Throwable $e) {
-            \Log::warning('Email notifikasi biaya gagal: ' . $e->getMessage());
+            \Log::warning('Email notifikasi biaya gagal: '.$e->getMessage());
         }
     }
 

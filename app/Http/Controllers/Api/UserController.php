@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Kunjungan;
+use App\Models\Pembelian;
+use App\Models\Penjualan;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Validation\Rule;
 
 class UserController extends Controller
@@ -151,12 +153,12 @@ class UserController extends Controller
 
         if ($request->role === 'admin' && $request->gudangs) {
             $targetUser->gudangs()->sync($request->gudangs);
-            if (!$targetUser->current_gudang_id || !in_array($targetUser->current_gudang_id, $request->gudangs)) {
+            if (! $targetUser->current_gudang_id || ! in_array($targetUser->current_gudang_id, $request->gudangs)) {
                 $targetUser->update(['current_gudang_id' => $request->gudangs[0]]);
             }
         } elseif ($request->role === 'spectator' && $request->gudangs) {
             $targetUser->spectatorGudangs()->sync($request->gudangs);
-            if (!$targetUser->current_gudang_id || !in_array($targetUser->current_gudang_id, $request->gudangs)) {
+            if (! $targetUser->current_gudang_id || ! in_array($targetUser->current_gudang_id, $request->gudangs)) {
                 $targetUser->update(['current_gudang_id' => $request->gudangs[0]]);
             }
         } elseif ($request->role === 'user') {
@@ -181,9 +183,9 @@ class UserController extends Controller
 
         $targetUser = User::findOrFail($id);
 
-        $penjualanCount = \App\Models\Penjualan::where('user_id', $id)->count();
-        $pembelianCount = \App\Models\Pembelian::where('user_id', $id)->count();
-        $kunjunganCount = \App\Models\Kunjungan::where('user_id', $id)->count();
+        $penjualanCount = Penjualan::where('user_id', $id)->count();
+        $pembelianCount = Pembelian::where('user_id', $id)->count();
+        $kunjunganCount = Kunjungan::where('user_id', $id)->count();
 
         if ($penjualanCount > 0 || $pembelianCount > 0 || $kunjunganCount > 0) {
             return response()->json([
@@ -193,6 +195,7 @@ class UserController extends Controller
         }
 
         $targetUser->delete();
+
         return response()->json(['message' => 'User berhasil dihapus.']);
     }
 }

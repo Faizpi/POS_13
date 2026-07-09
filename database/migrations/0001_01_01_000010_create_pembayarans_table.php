@@ -14,7 +14,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained();
             $table->unsignedBigInteger('approver_id')->nullable();
             $table->unsignedBigInteger('gudang_id')->index();
-            $table->unsignedBigInteger('penjualan_id')->index();
+            $table->unsignedBigInteger('penjualan_id')->nullable()->index();
             $table->integer('no_urut_harian')->nullable();
             $table->string('nomor')->nullable();
             $table->date('tgl_pembayaran')->nullable()->index();
@@ -27,7 +27,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('gudang_id', 'pembayarans_gudang_fk')->references('id')->on('gudangs');
-            $table->foreign('penjualan_id', 'pembayarans_penjualan_fk')->references('id')->on('penjualans');
+            $table->foreign('penjualan_id', 'pembayarans_penjualan_fk')->references('id')->on('penjualans')->nullOnDelete();
         });
     }
 

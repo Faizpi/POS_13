@@ -17,7 +17,7 @@ class CustomerSubdomainRedirect
         $host = $request->getHost();
 
         // Cek apakah request dari subdomain customer
-        if (str_contains($host, 'customer') && !$request->is('customer*')) {
+        if (str_contains($host, 'customer') && ! $request->is('customer*')) {
             $path = $request->getPathInfo();
 
             // Root atau admin login → redirect ke customer portal

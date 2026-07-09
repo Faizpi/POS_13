@@ -3,33 +3,47 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Gudang;
 use App\Models\GudangProduk;
 use App\Models\Kunjungan;
 use App\Models\KunjunganItem;
 use App\Models\Produk;
 use App\Models\User;
+use App\Services\InventoryMutationService;
 use Carbon\Carbon;
+use DomainException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use InvalidArgumentException;
+use Throwable;
 
 class KunjunganController extends Controller
 {
+    public function __construct(
+        private readonly InventoryMutationService $inventoryMutationService,
+    ) {}
+
     public function index(Request $request)
     {
         $user = auth()->user();
         $query = Kunjungan::with(['user:id,name', 'gudang:id,nama_gudang', 'kontak:id,nama']);
 
-        if ($user->role == 'super_admin') { /* all */ }
-        elseif (in_array($user->role, ['admin', 'spectator'])) {
+        if ($user->role == 'super_admin') { /* all */
+        } elseif (in_array($user->role, ['admin', 'spectator'])) {
             $cg = $user->getCurrentGudang();
-            if ($cg) { $query->where('gudang_id', $cg->id); }
-            else { return response()->json(['data' => []]); }
+            if ($cg) {
+                $query->where('gudang_id', $cg->id);
+            } else {
+                return response()->json(['data' => []]);
+            }
         } else {
             $query->where('user_id', $user->id);
         }
 
-        if ($request->filled('status')) $query->where('status', $request->status);
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
 
         return response()->json($query->latest()->paginate($request->per_page ?? 20));
     }
@@ -39,14 +53,18 @@ class KunjunganController extends Controller
         $user = auth()->user();
         $kunjungan = Kunjungan::with(['user:id,name', 'gudang:id,nama_gudang', 'kontak', 'approver:id,name', 'items.produk:id,nama_produk,item_code,satuan'])->findOrFail($id);
 
-        if ($user->role == 'user' && $kunjungan->user_id != $user->id) return response()->json(['message' => 'Unauthorized'], 403);
+        if ($user->role == 'user' && $kunjungan->user_id != $user->id) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
         if (in_array($user->role, ['admin', 'spectator'])) {
             $cg = $user->getCurrentGudang();
-            if (!$cg || (int) $kunjungan->gudang_id !== (int) $cg->id) return response()->json(['message' => 'Unauthorized'], 403);
+            if (! $cg || (int) $kunjungan->gudang_id !== (int) $cg->id) {
+                return response()->json(['message' => 'Unauthorized'], 403);
+            }
         }
 
         // Transform items: add kuantitas and tipe_stok
-        $derivedTipeStok = match($kunjungan->tujuan) {
+        $derivedTipeStok = match ($kunjungan->tujuan) {
             'Promo Gratis' => 'gratis',
             'Promo Sample' => 'sample',
             'Pemeriksaan Stock' => 'penjualan',
@@ -55,7 +73,10 @@ class KunjunganController extends Controller
 
         $kunjungan->items->transform(function ($item) use ($derivedTipeStok) {
             $item->setAttribute('kuantitas', (int) ($item->jumlah ?? 0));
-            if ($derivedTipeStok) $item->setAttribute('tipe_stok', $derivedTipeStok);
+            if ($derivedTipeStok) {
+                $item->setAttribute('tipe_stok', $derivedTipeStok);
+            }
+
             return $item;
         });
 
@@ -65,7 +86,9 @@ class KunjunganController extends Controller
     public function store(Request $request)
     {
         $user = auth()->user();
-        if ($user->isSpectator()) return response()->json(['message' => 'Spectator tidak bisa membuat transaksi.'], 403);
+        if ($user->isSpectator()) {
+            return response()->json(['message' => 'Spectator tidak bisa membuat transaksi.'], 403);
+        }
 
         $rules = [
             'kontak_id' => 'required|exists:kontaks,id',
@@ -107,6 +130,7 @@ class KunjunganController extends Controller
                         ->where('produk_id', $item['produk_id'])->value($stokField) ?? 0;
                     if ($qty > $available) {
                         $nama = Produk::find($item['produk_id'])->nama_produk ?? 'Produk';
+
                         return response()->json(['message' => "Qty {$nama} ({$qty}) melebihi {$stokLabel} yang tersedia ({$available})."], 422);
                     }
                 }
@@ -133,7 +157,7 @@ class KunjunganController extends Controller
 
         $countToday = Kunjungan::where('user_id', $user->id)->whereDate('created_at', Carbon::today())->count();
         $noUrut = $countToday + 1;
-        $nomor = "VST-" . Carbon::now()->format('Ymd') . "-{$user->id}-" . str_pad($noUrut, 3, '0', STR_PAD_LEFT);
+        $nomor = 'VST-'.Carbon::now()->format('Ymd')."-{$user->id}-".str_pad($noUrut, 3, '0', STR_PAD_LEFT);
 
         DB::beginTransaction();
         try {
@@ -165,15 +189,27 @@ class KunjunganController extends Controller
                 }
             }
 
+            $kunjungan->load('items');
+            if ($initialStatus === 'Approved' && $this->isPromoKunjungan($kunjungan)) {
+                $this->decrementPromoStock($kunjungan);
+            }
+
             DB::commit();
+
             return response()->json(['message' => 'Kunjungan berhasil dibuat.', 'data' => $kunjungan->load('items')], 201);
-        } catch (\Exception $e) {
+        } catch (DomainException|InvalidArgumentException $e) {
             DB::rollBack();
+
+            return response()->json(['message' => $e->getMessage()], 422);
+        } catch (Throwable $e) {
+            DB::rollBack();
+
             return response()->json(['message' => 'Gagal membuat kunjungan.'], 500);
         }
     }
 
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
         $user = auth()->user();
         $kunjungan = Kunjungan::findOrFail($id);
 
@@ -181,32 +217,33 @@ class KunjunganController extends Controller
         // Deteksi: ada file lampiran DAN tidak ada field data transaksi utama
         $coreFields = ['kontak_id', 'tgl_kunjungan', 'tujuan', 'items', 'sales_nama'];
         $hasLampiran = $request->hasFile('lampiran');
-        $hasCoreFields = !empty(array_intersect(array_keys($request->all()), $coreFields));
-        $isOnlyLampiran = $hasLampiran && !$hasCoreFields;
+        $hasCoreFields = ! empty(array_intersect(array_keys($request->all()), $coreFields));
+        $isOnlyLampiran = $hasLampiran && ! $hasCoreFields;
 
         if ($isOnlyLampiran) {
             if ($user->role == 'user' && $kunjungan->user_id != $user->id) {
                 return response()->json(['message' => 'Anda hanya dapat menambah lampiran pada transaksi milik Anda sendiri.'], 403);
             }
 
-            if (!$hasLampiran) {
+            if (! $hasLampiran) {
                 return response()->json(['message' => 'File lampiran tidak valid atau ukurannya terlalu besar (Maksimal 2MB).'], 422);
             }
 
             $lampiranPaths = $kunjungan->lampiran_paths ?? [];
             $publicFolder = public_path('storage/lampiran_kunjungan');
-            if (!File::exists($publicFolder)) {
+            if (! File::exists($publicFolder)) {
                 File::makeDirectory($publicFolder, 0755, true);
             }
             $counter = count($lampiranPaths) + 1;
             foreach ($request->file('lampiran') as $file) {
                 $extension = $file->getClientOriginalExtension();
-                $filename = $kunjungan->nomor . '-' . $counter . '.' . $extension;
+                $filename = $kunjungan->nomor.'-'.$counter.'.'.$extension;
                 $file->move($publicFolder, $filename);
-                $lampiranPaths[] = 'lampiran_kunjungan/' . $filename;
+                $lampiranPaths[] = 'lampiran_kunjungan/'.$filename;
                 $counter++;
             }
             $kunjungan->update(['lampiran_paths' => $lampiranPaths]);
+
             return response()->json(['message' => 'Lampiran berhasil ditambahkan.', 'data' => $kunjungan->load('items')]);
         }
 
@@ -244,21 +281,21 @@ class KunjunganController extends Controller
         $lampiranPaths = $kunjungan->lampiran_paths ?? [];
         if ($request->hasFile('lampiran')) {
             $publicFolder = public_path('storage/lampiran_kunjungan');
-            if (!File::exists($publicFolder)) {
+            if (! File::exists($publicFolder)) {
                 File::makeDirectory($publicFolder, 0755, true);
             }
             $counter = count($lampiranPaths) + 1;
             foreach ($request->file('lampiran') as $file) {
                 $extension = $file->getClientOriginalExtension();
-                $filename = $kunjungan->nomor . '-' . $counter . '.' . $extension;
+                $filename = $kunjungan->nomor.'-'.$counter.'.'.$extension;
                 $file->move($publicFolder, $filename);
-                $lampiranPaths[] = 'lampiran_kunjungan/' . $filename;
+                $lampiranPaths[] = 'lampiran_kunjungan/'.$filename;
                 $counter++;
             }
         }
 
         // Validasi stok untuk Promo Gratis dan Promo Sample
-        $gudangForValidation = $kunjungan->gudang_id ? \App\Models\Gudang::find($kunjungan->gudang_id) : $user->getCurrentGudang();
+        $gudangForValidation = $kunjungan->gudang_id ? Gudang::find($kunjungan->gudang_id) : $user->getCurrentGudang();
         if ($gudangForValidation && in_array($request->tujuan, ['Promo Gratis', 'Promo Sample']) && $request->filled('items')) {
             $stokField = $request->tujuan === 'Promo Gratis' ? 'stok_gratis' : 'stok_sample';
             $stokLabel = $request->tujuan === 'Promo Gratis' ? 'stok gratis' : 'stok sample';
@@ -270,8 +307,9 @@ class KunjunganController extends Controller
                         ->value($stokField) ?? 0;
                     if ($qty > $stokAvailable) {
                         $namaProduk = Produk::find($item['produk_id'])->nama_produk ?? 'Produk';
+
                         return response()->json([
-                            'message' => "Qty {$namaProduk} ({$qty}) melebihi {$stokLabel} yang tersedia ({$stokAvailable})."
+                            'message' => "Qty {$namaProduk} ({$qty}) melebihi {$stokLabel} yang tersedia ({$stokAvailable}).",
                         ], 422);
                     }
                 }
@@ -312,10 +350,14 @@ class KunjunganController extends Controller
     public function approve($id)
     {
         $user = auth()->user();
-        if (!in_array($user->role, ['admin', 'super_admin'])) return response()->json(['message' => 'Unauthorized'], 403);
+        if (! in_array($user->role, ['admin', 'super_admin'])) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
 
         $kunjungan = Kunjungan::findOrFail($id);
-        if ($kunjungan->status !== 'Pending') return response()->json(['message' => 'Hanya transaksi Pending yang bisa di-approve.'], 422);
+        if ($kunjungan->status !== 'Pending') {
+            return response()->json(['message' => 'Hanya transaksi Pending yang bisa di-approve.'], 422);
+        }
 
         // Check authorization: super_admin always can, admin if gudang matches or is approver
         $canApprove = false;
@@ -328,18 +370,36 @@ class KunjunganController extends Controller
             // 2. Atau user punya akses ke gudang kunjungan (current_gudang_id atau gudang_id match)
             if ($kunjungan->approver_id == $user->id) {
                 $canApprove = true;
-            } elseif ($currentGudang && 
-                     ((int)$kunjungan->gudang_id === (int)$currentGudang->id ||
+            } elseif ($currentGudang &&
+                     ((int) $kunjungan->gudang_id === (int) $currentGudang->id ||
                       $user->gudangs()->where('gudangs.id', $kunjungan->gudang_id)->exists())) {
                 $canApprove = true;
             }
         }
 
-        if (!$canApprove) {
+        if (! $canApprove) {
             return response()->json(['message' => 'Anda tidak memiliki akses untuk menyetujui kunjungan ini.'], 403);
         }
 
-        $kunjungan->update(['status' => 'Approved', 'approver_id' => $user->id]);
+        try {
+            $kunjungan = DB::transaction(function () use ($kunjungan, $user): Kunjungan {
+                $kunjungan->load('items');
+
+                if ($this->isPromoKunjungan($kunjungan)) {
+                    $this->decrementPromoStock($kunjungan);
+                }
+
+                $kunjungan->update(['status' => 'Approved', 'approver_id' => $user->id]);
+
+                return $kunjungan->refresh()->load('items');
+            });
+        } catch (DomainException|InvalidArgumentException $e) {
+            return response()->json([
+                'message' => $e->getMessage(),
+                'data' => $kunjungan->refresh(),
+            ], 422);
+        }
+
         return response()->json(['message' => 'Kunjungan berhasil di-approve.', 'data' => $kunjungan]);
     }
 
@@ -348,24 +408,39 @@ class KunjunganController extends Controller
         $user = auth()->user();
         $kunjungan = Kunjungan::findOrFail($id);
 
-        if ($kunjungan->status === 'Canceled') return response()->json(['message' => 'Transaksi sudah dibatalkan.'], 422);
+        if ($kunjungan->status === 'Canceled') {
+            return response()->json(['message' => 'Transaksi sudah dibatalkan.'], 422);
+        }
 
         // Super admin bisa cancel kapan saja
         if ($user->isSuperAdmin()) {
-            $kunjungan->update(['status' => 'Canceled']);
+            try {
+                DB::transaction(function () use ($kunjungan): void {
+                    $kunjungan->load('items');
+                    if ($kunjungan->status === 'Approved' && $this->isPromoKunjungan($kunjungan)) {
+                        $this->incrementPromoStock($kunjungan);
+                    }
+
+                    $kunjungan->update(['status' => 'Canceled']);
+                });
+            } catch (DomainException|InvalidArgumentException $e) {
+                return response()->json(['message' => $e->getMessage()], 422);
+            }
+
             return response()->json(['message' => 'Kunjungan berhasil dibatalkan.']);
         }
 
         // Admin hanya bisa cancel jika status Pending
         if ($user->role === 'admin') {
             $cg = $user->getCurrentGudang();
-            if (!$cg || (int)$kunjungan->gudang_id !== (int)$cg->id) {
+            if (! $cg || (int) $kunjungan->gudang_id !== (int) $cg->id) {
                 return response()->json(['message' => 'Hanya bisa cancel transaksi di gudang aktif.'], 403);
             }
             if ($kunjungan->status !== 'Pending') {
                 return response()->json(['message' => 'Hanya bisa cancel transaksi Pending.'], 403);
             }
             $kunjungan->update(['status' => 'Canceled']);
+
             return response()->json(['message' => 'Kunjungan berhasil dibatalkan.']);
         }
 
@@ -376,8 +451,12 @@ class KunjunganController extends Controller
     {
         $kunjungan = Kunjungan::findOrFail($id);
         $user = auth()->user();
-        if (!$user->isSuperAdmin()) return response()->json(['message' => 'Hanya Super Admin yang dapat membatalkan pembatalan.'], 403);
-        if ($kunjungan->status !== 'Canceled') return response()->json(['message' => 'Transaksi ini tidak dalam status Canceled.'], 422);
+        if (! $user->isSuperAdmin()) {
+            return response()->json(['message' => 'Hanya Super Admin yang dapat membatalkan pembatalan.'], 403);
+        }
+        if ($kunjungan->status !== 'Canceled') {
+            return response()->json(['message' => 'Transaksi ini tidak dalam status Canceled.'], 422);
+        }
 
         // Tentukan approver berdasarkan gudang transaksi (seperti web controller)
         $gudangId = $kunjungan->gudang_id;
@@ -401,6 +480,56 @@ class KunjunganController extends Controller
         }
 
         $kunjungan->update(['status' => 'Pending', 'approver_id' => $approverId]);
+
         return response()->json(['message' => 'Kunjungan berhasil di-uncancel. Status kembali ke Pending.', 'data' => $kunjungan]);
+    }
+
+    private function isPromoKunjungan(Kunjungan $kunjungan): bool
+    {
+        return in_array($kunjungan->tujuan, ['Promo Gratis', 'Promo Sample'], true);
+    }
+
+    private function promoStockType(Kunjungan $kunjungan): string
+    {
+        return match ($kunjungan->tujuan) {
+            'Promo Gratis' => 'gratis',
+            'Promo Sample' => 'sample',
+            default => throw new InvalidArgumentException('Tujuan kunjungan tidak menggunakan stok promo.'),
+        };
+    }
+
+    private function decrementPromoStock(Kunjungan $kunjungan): void
+    {
+        $this->mutatePromoStock($kunjungan, true);
+    }
+
+    private function incrementPromoStock(Kunjungan $kunjungan): void
+    {
+        $this->mutatePromoStock($kunjungan, false);
+    }
+
+    private function mutatePromoStock(Kunjungan $kunjungan, bool $decrement): void
+    {
+        if (! $kunjungan->gudang_id) {
+            throw new DomainException('Kunjungan tidak terhubung ke gudang.');
+        }
+
+        $stockType = $this->promoStockType($kunjungan);
+        $items = $kunjungan->relationLoaded('items') ? $kunjungan->items : $kunjungan->items()->get();
+
+        foreach ($items as $item) {
+            $quantity = (int) $item->jumlah;
+            $context = [
+                'transaction_type' => $decrement ? 'Kunjungan Promo Approve' : 'Kunjungan Promo Cancel',
+                'transaction_id' => $kunjungan->id,
+                'transaction_nomor' => $kunjungan->nomor,
+            ];
+
+            if ($decrement) {
+                $this->inventoryMutationService->decrement((int) $kunjungan->gudang_id, (int) $item->produk_id, $quantity, $stockType, $context);
+            } else {
+                $this->inventoryMutationService->increment((int) $kunjungan->gudang_id, (int) $item->produk_id, $quantity, $stockType, $context);
+            }
+        }
     }
 }

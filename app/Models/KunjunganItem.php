@@ -16,6 +16,13 @@ class KunjunganItem extends Model
         return ['expired_date' => 'date'];
     }
 
-    public function kunjungan() { return $this->belongsTo(Kunjungan::class); }
-    public function produk() { return $this->belongsTo(Produk::class); }
+    public function kunjungan()
+    {
+        return $this->belongsTo(Kunjungan::class);
+    }
+
+    public function produk()
+    {
+        return $this->belongsTo(Produk::class);
+    }
 }

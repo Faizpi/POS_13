@@ -15,16 +15,18 @@ class MigrateMarkRan extends Command
     public function handle()
     {
         $migrationPath = database_path('migrations');
-        
-        if (!File::isDirectory($migrationPath)) {
+
+        if (! File::isDirectory($migrationPath)) {
             $this->error('Migrations directory not found.');
+
             return 1;
         }
 
         $files = File::files($migrationPath);
-        
+
         if (empty($files)) {
             $this->info('No migration files found.');
+
             return 0;
         }
 
@@ -43,11 +45,12 @@ class MigrateMarkRan extends Command
 
         if (empty($unregistered)) {
             $this->info('All migrations are already registered.');
-            $this->info('Total: ' . count($allMigrations) . ' migrations');
+            $this->info('Total: '.count($allMigrations).' migrations');
+
             return 0;
         }
 
-        $this->info("Found " . count($unregistered) . " unregistered migration(s) out of " . count($allMigrations) . " total.");
+        $this->info('Found '.count($unregistered).' unregistered migration(s) out of '.count($allMigrations).' total.');
         $this->newLine();
 
         // Get the next batch number

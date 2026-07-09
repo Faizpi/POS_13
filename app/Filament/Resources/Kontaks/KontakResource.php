@@ -50,7 +50,9 @@ class KontakResource extends Resource
     {
         $query = parent::getEloquentQuery();
         $user = auth()->user();
-        if (!$user) return $query->whereRaw('1=0');
+        if (! $user) {
+            return $query->whereRaw('1=0');
+        }
 
         if (in_array($user->role, ['super_admin', 'spectator'])) {
             return $query;
@@ -58,10 +60,15 @@ class KontakResource extends Resource
 
         if ($user->role === 'admin') {
             $gudangIds = $user->gudangs->pluck('id')->toArray();
-            if ($user->current_gudang_id) $gudangIds[] = $user->current_gudang_id;
-            if ($user->gudang_id) $gudangIds[] = $user->gudang_id;
+            if ($user->current_gudang_id) {
+                $gudangIds[] = $user->current_gudang_id;
+            }
+            if ($user->gudang_id) {
+                $gudangIds[] = $user->gudang_id;
+            }
             $gudangIds = array_unique($gudangIds);
-            return $query->where(fn($q) => $q->whereIn('gudang_id', $gudangIds)->orWhereNull('gudang_id'));
+
+            return $query->where(fn ($q) => $q->whereIn('gudang_id', $gudangIds)->orWhereNull('gudang_id'));
         }
 
         // user/sales
@@ -79,22 +86,32 @@ class KontakResource extends Resource
     public static function canCreate(): bool
     {
         $user = auth()->user();
-        if (!$user) return false;
-        
+        if (! $user) {
+            return false;
+        }
+
         // Excel: Sales ✅ ADD, Admin ✅ ADD, Spectator ❌, SuperAdmin ✅
-        return !$user->isSpectator();
+        return ! $user->isSpectator();
     }
 
     public static function canEdit($record): bool
     {
         $user = auth()->user();
-        if (!$user) return false;
-        
+        if (! $user) {
+            return false;
+        }
+
         // Excel: Sales ❌, Admin ✅ EDIT, Spectator ❌, SuperAdmin ✅
-        if ($user->isSuperAdmin()) return true;
-        if ($user->isSpectator()) return false;
-        if ($user->isAdmin()) return true;
-        
+        if ($user->isSuperAdmin()) {
+            return true;
+        }
+        if ($user->isSpectator()) {
+            return false;
+        }
+        if ($user->isAdmin()) {
+            return true;
+        }
+
         // Sales: tidak bisa edit kontak (sesuai Excel) — edit no_telp adalah PEMBAHARUAN terpisah
         return false;
     }
@@ -102,12 +119,18 @@ class KontakResource extends Resource
     public static function canDelete($record): bool
     {
         $user = auth()->user();
-        if (!$user) return false;
-        
+        if (! $user) {
+            return false;
+        }
+
         // Excel: Sales ❌, Admin ✅ DEL, Spectator ❌, SuperAdmin ✅
-        if ($user->isSuperAdmin()) return true;
-        if ($user->role === 'admin') return true;
-        
+        if ($user->isSuperAdmin()) {
+            return true;
+        }
+        if ($user->role === 'admin') {
+            return true;
+        }
+
         return false;
     }
 

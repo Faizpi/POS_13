@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Models\Gudang;
 use App\Models\Pembelian;
 use App\Models\Penjualan;
-use App\Models\User;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
@@ -23,7 +22,7 @@ class NeracaService
         return $this->applyDateFilter($query, 'tgl_transaksi', $from, $to, $gudangId)
             ->with('gudang')
             ->get()
-            ->map(fn($item) => [
+            ->map(fn ($item) => [
                 'gudang' => $item->gudang?->nama_gudang ?? 'Tanpa Gudang',
                 'total' => (float) ($item->total ?? 0),
             ]);
@@ -41,7 +40,7 @@ class NeracaService
         return $this->applyDateFilter($query, 'tgl_transaksi', $from, $to, $gudangId)
             ->with('gudang')
             ->get()
-            ->map(fn($item) => [
+            ->map(fn ($item) => [
                 'gudang' => $item->gudang?->nama_gudang ?? 'Tanpa Gudang',
                 'total' => (float) ($item->total ?? 0),
             ]);
@@ -94,7 +93,7 @@ class NeracaService
 
         return $query->with('gudang')
             ->get()
-            ->map(fn($item) => [
+            ->map(fn ($item) => [
                 'gudang' => $item->gudang?->nama_gudang ?? 'Tanpa Gudang',
                 'total' => (float) ($item->total ?? 0),
             ]);
@@ -141,7 +140,7 @@ class NeracaService
         return $this->applyDateFilter($query, 'tgl_transaksi', $from, $to, $gudangId)
             ->with('gudang')
             ->get()
-            ->map(fn($item) => [
+            ->map(fn ($item) => [
                 'gudang' => $item->gudang?->nama_gudang ?? 'Tanpa Gudang',
                 'total' => (float) ($item->total ?? 0),
             ]);
@@ -174,6 +173,7 @@ class NeracaService
         if ($gudangId) {
             $query->where('gudang_id', $gudangId);
         }
+
         return $query;
     }
 }

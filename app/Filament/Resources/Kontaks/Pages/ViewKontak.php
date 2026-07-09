@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Kontaks\Pages;
 
 use App\Filament\Resources\Kontaks\KontakResource as Resource;
+use App\Models\Penjualan;
 use Filament\Actions\Action;
 use Filament\Actions\EditAction;
 use Filament\Infolists\Components\TextEntry;
@@ -11,8 +12,6 @@ use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\View;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Penjualan;
-use App\Models\Pembelian;
 
 class ViewKontak extends ViewRecord
 {
@@ -22,18 +21,18 @@ class ViewKontak extends ViewRecord
     {
         return [
             EditAction::make()
-                ->visible(fn() => Auth::user() && !Auth::user()->isSpectator()),
+                ->visible(fn () => Auth::user() && ! Auth::user()->isSpectator()),
             Action::make('downloadPdf')
                 ->label('Download PDF')
                 ->icon('heroicon-o-arrow-down-tray')
                 ->color('primary')
-                ->url(fn($record) => route('kontak.download', $record->id))
+                ->url(fn ($record) => route('kontak.download', $record->id))
                 ->openUrlInNewTab(),
             Action::make('print')
                 ->label('Print')
                 ->icon('heroicon-o-printer')
                 ->color('gray')
-                ->url(fn($record) => route('kontak.print', $record->id))
+                ->url(fn ($record) => route('kontak.print', $record->id))
                 ->openUrlInNewTab(),
         ];
     }
@@ -60,10 +59,10 @@ class ViewKontak extends ViewRecord
                         TextEntry::make('no_telp')
                             ->label('No. Telepon')
                             ->placeholder('—')
-                            ->formatStateUsing(fn($state) => receipt_format_phone($state)),
+                            ->formatStateUsing(fn ($state) => receipt_format_phone($state)),
                         TextEntry::make('pin')
                             ->label('PIN')
-                            ->formatStateUsing(fn($state) => $state ? '******' : 'Belum diatur')
+                            ->formatStateUsing(fn ($state) => $state ? '******' : 'Belum diatur')
                             ->placeholder('Belum diatur'),
                         TextEntry::make('alamat')
                             ->label('Alamat')
@@ -97,7 +96,7 @@ class ViewKontak extends ViewRecord
                 Section::make('Catatan Hutang')
                     ->icon('heroicon-o-banknotes')
                     ->collapsible()
-                    ->visible(fn($record) => in_array(auth()->user()?->role, ['user', 'admin', 'super_admin']))
+                    ->visible(fn ($record) => in_array(auth()->user()?->role, ['user', 'admin', 'super_admin']))
                     ->schema([
                         View::make('filament.infolist.catatan-hutang'),
                     ]),
@@ -122,20 +121,20 @@ class ViewKontak extends ViewRecord
 
                                 $rows = '';
                                 foreach ($penjualans as $trx) {
-                                    $statusClass = match($trx->status) {
-                                        'Approved'  => 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300',
-                                        'Lunas'     => 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300',
-                                        'Pending'   => 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300',
-                                        'Canceled'  => 'bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-400',
-                                        default     => 'bg-gray-100 text-gray-500',
+                                    $statusClass = match ($trx->status) {
+                                        'Approved' => 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300',
+                                        'Lunas' => 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300',
+                                        'Pending' => 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300',
+                                        'Canceled' => 'bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-400',
+                                        default => 'bg-gray-100 text-gray-500',
                                     };
-                                    $tgl    = e($trx->tgl_transaksi?->format('d/m/Y') ?? '-');
-                                    $nomor  = e($trx->nomor ?? '-');
+                                    $tgl = e($trx->tgl_transaksi?->format('d/m/Y') ?? '-');
+                                    $nomor = e($trx->nomor ?? '-');
                                     $gudang = e($trx->gudang->nama_gudang ?? '-');
-                                    $sales  = e($trx->user->name ?? '-');
-                                    $total  = format_rupiah($trx->grand_total ?? 0);
+                                    $sales = e($trx->user->name ?? '-');
+                                    $total = format_rupiah($trx->grand_total ?? 0);
                                     $status = e($trx->status);
-                                    $url    = url('/app/penjualans/' . $trx->id);
+                                    $url = url('/app/penjualans/'.$trx->id);
 
                                     $rows .= <<<ROW
                                     <tr class="border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800/40 transition-colors">

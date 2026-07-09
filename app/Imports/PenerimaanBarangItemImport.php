@@ -3,10 +3,12 @@
 namespace App\Imports;
 
 use App\Models\Produk;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
 
 class PenerimaanBarangItemImport implements ToCollection, WithHeadingRow, WithValidation
 {
@@ -21,7 +23,7 @@ class PenerimaanBarangItemImport implements ToCollection, WithHeadingRow, WithVa
     {
         foreach ($rows as $row) {
             $namaOrKode = $row['nama_produk'] ?? $row['kode_produk'] ?? null;
-            if (!$namaOrKode) {
+            if (! $namaOrKode) {
                 continue;
             }
 
@@ -30,25 +32,25 @@ class PenerimaanBarangItemImport implements ToCollection, WithHeadingRow, WithVa
                 ->orWhere('item_code', 'like', $namaOrKode)
                 ->first();
 
-            if (!$produk) {
+            if (! $produk) {
                 continue;
             }
 
             $qtyDiterima = $row['qty_diterima'] ?? 0;
-            $batchNumber = !empty($row['no_batch']) ? $row['no_batch'] : null;
-            
+            $batchNumber = ! empty($row['no_batch']) ? $row['no_batch'] : null;
+
             $expiredDate = null;
-            if (!empty($row['tanggal_expired'])) {
+            if (! empty($row['tanggal_expired'])) {
                 $rawExp = $row['tanggal_expired'];
                 if (is_numeric($rawExp)) {
                     try {
-                        $expiredDate = \Carbon\Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($rawExp))->format('Y-m-d');
+                        $expiredDate = Carbon::instance(Date::excelToDateTimeObject($rawExp))->format('Y-m-d');
                     } catch (\Exception $e) {
                         $expiredDate = null;
                     }
                 } else {
                     try {
-                        $expiredDate = \Carbon\Carbon::parse($rawExp)->format('Y-m-d');
+                        $expiredDate = Carbon::parse($rawExp)->format('Y-m-d');
                     } catch (\Exception $e) {
                         $expiredDate = null;
                     }
@@ -74,11 +76,11 @@ class PenerimaanBarangItemImport implements ToCollection, WithHeadingRow, WithVa
                         $exists = Produk::where('nama_produk', 'like', $value)
                             ->orWhere('item_code', 'like', $value)
                             ->exists();
-                        if (!$exists) {
+                        if (! $exists) {
                             $fail("Produk dengan nama '{$value}' tidak ditemukan.");
                         }
                     }
-                }
+                },
             ],
             'kode_produk' => [
                 'nullable',
@@ -87,11 +89,11 @@ class PenerimaanBarangItemImport implements ToCollection, WithHeadingRow, WithVa
                         $exists = Produk::where('nama_produk', 'like', $value)
                             ->orWhere('item_code', 'like', $value)
                             ->exists();
-                        if (!$exists) {
+                        if (! $exists) {
                             $fail("Produk dengan kode '{$value}' tidak ditemukan.");
                         }
                     }
-                }
+                },
             ],
             'qty_diterima' => ['required', 'numeric', 'min:1'],
         ];

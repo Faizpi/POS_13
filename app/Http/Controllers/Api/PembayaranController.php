@@ -7,8 +7,10 @@ use App\Models\Pembayaran;
 use App\Models\Pembelian;
 use App\Models\Penjualan;
 use App\Models\User;
+use App\Services\PaymentSettlementService;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Carbon\Carbon;
+use DomainException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -101,7 +103,9 @@ class PembayaranController extends Controller
         }
 
         $request->validate([
+            'type' => 'nullable|in:piutang',
             'penjualan_id' => 'required|exists:penjualans,id',
+            'pembelian_id' => 'prohibited',
             'tgl_pembayaran' => 'required|date',
             'metode_pembayaran' => 'required|string',
             'jumlah_bayar' => 'required|numeric|min:1',
@@ -118,6 +122,12 @@ class PembayaranController extends Controller
             return response()->json(['message' => 'Tidak memiliki akses ke gudang ini.'], 403);
         }
 
+        try {
+            app(PaymentSettlementService::class)->assertPiutangPaymentCanBeCreated($penjualan, $request->jumlah_bayar);
+        } catch (DomainException $e) {
+            return response()->json(['message' => $e->getMessage()], 422);
+        }
+
         $countToday = Pembayaran::where('user_id', $user->id)->whereDate('created_at', Carbon::today())->count();
         $noUrut = $countToday + 1;
         $nomor = 'PAY-'.Carbon::now()->format('Ymd')."-{$user->id}-".str_pad($noUrut, 3, '0', STR_PAD_LEFT);
@@ -125,6 +135,7 @@ class PembayaranController extends Controller
         $pembayaran = Pembayaran::create([
             'user_id' => $user->id, 'penjualan_id' => $penjualan->id,
             'gudang_id' => $penjualan->gudang_id, 'nomor' => $nomor,
+            'type' => 'piutang',
             'tgl_pembayaran' => $request->tgl_pembayaran,
             'metode_pembayaran' => $request->metode_pembayaran,
             'jumlah_bayar' => $request->jumlah_bayar,
@@ -143,31 +154,21 @@ class PembayaranController extends Controller
         }
 
         $pembayaran = Pembayaran::findOrFail($id);
-        if ($pembayaran->status === 'Canceled') {
-            return response()->json(['message' => 'Transaksi sudah dibatalkan, tidak bisa di-approve.'], 422);
-        }
-        if ($pembayaran->status === 'Approved') {
-            return response()->json(['message' => 'Transaksi sudah disetujui.'], 422);
-        }
 
-        DB::beginTransaction();
-        try {
-            $pembayaran->update(['status' => 'Approved', 'approver_id' => $user->id]);
-
-            $totalBayar = Pembayaran::where('penjualan_id', $pembayaran->penjualan_id)
-                ->where('status', 'Approved')->sum('jumlah_bayar');
-
-            $penjualan = $pembayaran->penjualan;
-            if ($totalBayar >= $penjualan->grand_total) {
-                $penjualan->update(['status' => 'Lunas']);
+        if ($user->role === 'admin') {
+            $currentGudang = $user->getCurrentGudang();
+            if (! $currentGudang || (int) $pembayaran->gudang_id !== (int) $currentGudang->id) {
+                return response()->json(['message' => 'Hanya bisa approve transaksi di gudang aktif.'], 403);
             }
+        }
 
-            DB::commit();
+        try {
+            $pembayaran = app(PaymentSettlementService::class)->approvePayment($pembayaran, $user->id);
 
             return response()->json(['message' => 'Pembayaran berhasil di-approve.', 'data' => $pembayaran]);
+        } catch (DomainException $e) {
+            return response()->json(['message' => $e->getMessage()], 422);
         } catch (\Exception $e) {
-            DB::rollBack();
-
             return response()->json(['message' => 'Gagal approve pembayaran.'], 500);
         }
     }
@@ -180,28 +181,24 @@ class PembayaranController extends Controller
         }
 
         $pembayaran = Pembayaran::findOrFail($id);
-        if ($pembayaran->status === 'Canceled') {
-            return response()->json(['message' => 'Transaksi sudah dibatalkan.'], 422);
-        }
         if ($pembayaran->status === 'Approved' && $user->role !== 'super_admin') {
             return response()->json(['message' => 'Hanya Super Admin yang dapat membatalkan transaksi yang sudah disetujui.'], 403);
         }
 
-        DB::beginTransaction();
-        try {
-            if ($pembayaran->status === 'Approved') {
-                $penjualan = $pembayaran->penjualan;
-                if ($penjualan && $penjualan->status === 'Lunas') {
-                    $penjualan->update(['status' => 'Approved']);
-                }
+        if ($user->role === 'admin') {
+            $currentGudang = $user->getCurrentGudang();
+            if (! $currentGudang || (int) $pembayaran->gudang_id !== (int) $currentGudang->id) {
+                return response()->json(['message' => 'Hanya bisa cancel transaksi di gudang aktif.'], 403);
             }
-            $pembayaran->update(['status' => 'Canceled']);
-            DB::commit();
+        }
+
+        try {
+            app(PaymentSettlementService::class)->cancelPayment($pembayaran);
 
             return response()->json(['message' => 'Pembayaran berhasil dibatalkan.']);
+        } catch (DomainException $e) {
+            return response()->json(['message' => $e->getMessage()], 422);
         } catch (\Exception $e) {
-            DB::rollBack();
-
             return response()->json(['message' => 'Gagal membatalkan pembayaran.'], 500);
         }
     }
@@ -213,13 +210,16 @@ class PembayaranController extends Controller
         if ($user->role !== 'super_admin') {
             return response()->json(['message' => 'Hanya Super Admin yang dapat membatalkan pembatalan.'], 403);
         }
-        if ($pembayaran->status !== 'Canceled') {
-            return response()->json(['message' => 'Transaksi ini tidak dalam status Canceled.'], 422);
+
+        try {
+            $pembayaran = app(PaymentSettlementService::class)->uncancelPayment($pembayaran);
+
+            return response()->json(['message' => 'Pembayaran berhasil di-uncancel. Status kembali ke Pending.', 'data' => $pembayaran]);
+        } catch (DomainException $e) {
+            return response()->json(['message' => $e->getMessage()], 422);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Gagal membatalkan pembatalan pembayaran.'], 500);
         }
-
-        $pembayaran->update(['status' => 'Pending']);
-
-        return response()->json(['message' => 'Pembayaran berhasil di-uncancel. Status kembali ke Pending.', 'data' => $pembayaran]);
     }
 
     public function indexHutang(Request $request)
@@ -249,7 +249,9 @@ class PembayaranController extends Controller
         }
 
         $request->validate([
+            'type' => 'nullable|in:hutang',
             'pembelian_id' => 'required|exists:pembelians,id',
+            'penjualan_id' => 'prohibited',
             'tgl_pembayaran' => 'required|date',
             'metode_pembayaran' => 'required|string',
             'jumlah_bayar' => 'required|numeric|min:1',
@@ -264,6 +266,12 @@ class PembayaranController extends Controller
             }
         } elseif ($user->role !== 'super_admin' && ! $user->canAccessGudang($pembelian->gudang_id)) {
             return response()->json(['message' => 'Tidak memiliki akses ke gudang ini.'], 403);
+        }
+
+        try {
+            app(PaymentSettlementService::class)->assertHutangPaymentCanBeCreated($pembelian, $request->jumlah_bayar);
+        } catch (DomainException $e) {
+            return response()->json(['message' => $e->getMessage()], 422);
         }
 
         DB::beginTransaction();

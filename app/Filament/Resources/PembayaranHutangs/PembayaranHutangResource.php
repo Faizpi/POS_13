@@ -62,8 +62,10 @@ class PembayaranHutangResource extends Resource
     public static function canCreate(): bool
     {
         $user = auth()->user();
-        if (!$user) return false;
-        
+        if (! $user) {
+            return false;
+        }
+
         // Excel: Sales ✅ ADD, Admin ✅ ADD, Spectator ❌, SuperAdmin ✅
         return ! $user->isSpectator();
     }
@@ -71,16 +73,24 @@ class PembayaranHutangResource extends Resource
     public static function canEdit($record): bool
     {
         $user = auth()->user();
-        if (!$user) return false;
+        if (! $user) {
+            return false;
+        }
 
         // Excel: Sales ✅ VIEW only (no edit), Admin ✅ APRV+EDIT+DEL, Spectator ❌, SuperAdmin ✅ ALL
-        if ($user->isSuperAdmin()) return true;
-        
+        if ($user->isSuperAdmin()) {
+            return true;
+        }
+
         // Sales dan Spectator tidak bisa edit
-        if ($user->isSpectator() || $user->role === 'user') return false;
-        
+        if ($user->isSpectator() || $user->role === 'user') {
+            return false;
+        }
+
         // Admin bisa edit
-        if ($user->role === 'admin') return true;
+        if ($user->role === 'admin') {
+            return true;
+        }
 
         return false;
     }
@@ -88,12 +98,18 @@ class PembayaranHutangResource extends Resource
     public static function canDelete($record): bool
     {
         $user = auth()->user();
-        if (!$user) return false;
+        if (! $user) {
+            return false;
+        }
 
         // Excel: Sales ❌, Admin ✅ DEL, Spectator ❌, SuperAdmin ✅
-        if ($user->isSuperAdmin()) return true;
-        if ($user->role === 'admin') return true;
-        
+        if ($user->isSuperAdmin()) {
+            return true;
+        }
+        if ($user->role === 'admin') {
+            return true;
+        }
+
         return false;
     }
 }

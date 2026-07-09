@@ -10,10 +10,12 @@ use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class StokExport implements FromView, WithTitle, ShouldAutoSize, WithStyles
+class StokExport implements FromView, ShouldAutoSize, WithStyles, WithTitle
 {
     protected Gudang $gudang;
+
     protected $stokData;
+
     protected ?string $generatedBy;
 
     public function __construct(Gudang $gudang, $stokData, ?string $generatedBy = null)
@@ -35,7 +37,7 @@ class StokExport implements FromView, WithTitle, ShouldAutoSize, WithStyles
 
     public function title(): string
     {
-        return 'Stok ' . $this->gudang->nama_gudang;
+        return 'Stok '.$this->gudang->nama_gudang;
     }
 
     public function styles(Worksheet $sheet): array

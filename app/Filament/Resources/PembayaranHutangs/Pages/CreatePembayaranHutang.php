@@ -4,6 +4,8 @@ namespace App\Filament\Resources\PembayaranHutangs\Pages;
 
 use App\Filament\Resources\PembayaranHutangs\PembayaranHutangResource;
 use App\Models\Pembayaran;
+use App\Models\Pembelian;
+use App\Services\PaymentSettlementService;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Str;
 
@@ -25,14 +27,19 @@ class CreatePembayaranHutang extends CreateRecord
         $countToday = Pembayaran::where('type', 'hutang')
             ->whereDate('created_at', now())
             ->count();
-        $data['nomor'] = 'PAYH-' . now()->format('Ymd') . '-' . $user->id . '-' . str_pad($countToday + 1, 3, '0', STR_PAD_LEFT);
+        $data['nomor'] = 'PAYH-'.now()->format('Ymd').'-'.$user->id.'-'.str_pad($countToday + 1, 3, '0', STR_PAD_LEFT);
 
         // Set pembelian_id dari pembelian_ids[0] untuk memenuhi kolom NOT NULL.
         // Pembayaran didistribusikan penuh ke 1 invoice; untuk distribusi multi-invoice,
         // gunakan RelationManager di ViewPembelian.
-        if (!empty($data['pembelian_ids'])) {
+        if (! empty($data['pembelian_ids'])) {
             $first = (array) $data['pembelian_ids'];
             $data['pembelian_id'] = reset($first);
+        }
+
+        if (! empty($data['pembelian_id'])) {
+            $pembelian = Pembelian::findOrFail($data['pembelian_id']);
+            app(PaymentSettlementService::class)->assertHutangPaymentCanBeCreated($pembelian, $data['jumlah_bayar']);
         }
 
         // Hapus field sementara

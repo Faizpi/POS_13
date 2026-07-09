@@ -164,7 +164,7 @@ class ViewStockOpname extends ViewRecord
                                 'stok_sebelum' => $stokSebelum,
                                 'stok_sesudah' => $stokSesudah,
                                 'selisih' => $selisih,
-                                'keterangan' => 'Stock Opname: ' . $record->nomor,
+                                'keterangan' => 'Stock Opname: '.$record->nomor,
                             ]);
                         }
 

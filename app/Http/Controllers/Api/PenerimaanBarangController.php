@@ -3,15 +3,17 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\GudangProduk;
 use App\Models\Pembelian;
 use App\Models\PenerimaanBarang;
 use App\Models\PenerimaanBarangItem;
 use App\Models\User;
+use App\Services\InventoryMutationService;
 use Carbon\Carbon;
+use DomainException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
+use Illuminate\Validation\ValidationException;
+use InvalidArgumentException;
 
 class PenerimaanBarangController extends Controller
 {
@@ -33,7 +35,9 @@ class PenerimaanBarangController extends Controller
             $query->where('user_id', $user->id);
         }
 
-        if ($request->filled('status')) $query->where('status', $request->status);
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
 
         return response()->json($query->latest()->paginate($request->per_page ?? 20));
     }
@@ -48,7 +52,7 @@ class PenerimaanBarangController extends Controller
         }
         if (in_array($user->role, ['admin', 'spectator'])) {
             $cg = $user->getCurrentGudang();
-            if (!$cg || (int) $penerimaan->gudang_id !== (int) $cg->id) {
+            if (! $cg || (int) $penerimaan->gudang_id !== (int) $cg->id) {
                 return response()->json(['message' => 'Tidak memiliki akses ke gudang aktif untuk data ini.'], 403);
             }
         }
@@ -81,10 +85,10 @@ class PenerimaanBarangController extends Controller
         $gudangId = $request->gudang_id;
         if (in_array($user->role, ['admin', 'spectator'])) {
             $cg = $user->getCurrentGudang();
-            if (!$cg || (int) $gudangId !== (int) $cg->id) {
+            if (! $cg || (int) $gudangId !== (int) $cg->id) {
                 return response()->json(['message' => 'Gudang transaksi harus sesuai gudang aktif.'], 403);
             }
-        } elseif ($user->role !== 'super_admin' && !$user->canAccessGudang($gudangId)) {
+        } elseif ($user->role !== 'super_admin' && ! $user->canAccessGudang($gudangId)) {
             return response()->json(['message' => 'Tidak memiliki akses ke gudang ini.'], 403);
         }
 
@@ -108,6 +112,9 @@ class PenerimaanBarangController extends Controller
 
         DB::beginTransaction();
         try {
+            $pembelian = $this->lockPembelianWithItems((int) $request->pembelian_id);
+            $this->validateItemsDoNotExceedRemaining($pembelian, $request->items);
+
             $penerimaan = PenerimaanBarang::create([
                 'user_id' => $user->id,
                 'approver_id' => $approverId,
@@ -125,7 +132,9 @@ class PenerimaanBarangController extends Controller
             foreach ($request->items as $item) {
                 $qtyDiterima = $item['qty_diterima'] ?? 0;
                 $qtyReject = $item['qty_reject'] ?? 0;
-                if ($qtyDiterima <= 0 && $qtyReject <= 0) continue;
+                if ($qtyDiterima <= 0 && $qtyReject <= 0) {
+                    continue;
+                }
 
                 $tipeStok = $item['tipe_stok'] ?? 'penjualan';
 
@@ -141,14 +150,24 @@ class PenerimaanBarangController extends Controller
                 ]);
 
                 if ($initialStatus === 'Approved' && $qtyDiterima > 0) {
-                    $this->tambahStok($gudangId, $item['produk_id'], $qtyDiterima, $tipeStok);
+                    $this->tambahStok($gudangId, $item['produk_id'], $qtyDiterima, $tipeStok, $penerimaan);
                 }
             }
 
             DB::commit();
+
             return response()->json(['message' => 'Penerimaan barang berhasil dibuat.', 'data' => $penerimaan->load('items')], 201);
+        } catch (ValidationException $e) {
+            DB::rollBack();
+
+            throw $e;
+        } catch (DomainException|InvalidArgumentException $e) {
+            DB::rollBack();
+
+            return response()->json(['message' => $e->getMessage()], 422);
         } catch (\Exception $e) {
             DB::rollBack();
+
             return response()->json(['message' => 'Gagal membuat penerimaan barang.'], 500);
         }
     }
@@ -156,7 +175,7 @@ class PenerimaanBarangController extends Controller
     public function approve($id)
     {
         $user = auth()->user();
-        if (!in_array($user->role, ['admin', 'super_admin'])) {
+        if (! in_array($user->role, ['admin', 'super_admin'])) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
@@ -166,23 +185,47 @@ class PenerimaanBarangController extends Controller
         }
         if ($user->role === 'admin') {
             $cg = $user->getCurrentGudang();
-            if (!$cg || (int) $penerimaan->gudang_id !== (int) $cg->id) {
+            if (! $cg || (int) $penerimaan->gudang_id !== (int) $cg->id) {
                 return response()->json(['message' => 'Hanya bisa approve transaksi di gudang aktif.'], 403);
             }
         }
 
         DB::beginTransaction();
         try {
+            $penerimaan = PenerimaanBarang::with('items')
+                ->whereKey($id)
+                ->lockForUpdate()
+                ->firstOrFail();
+
+            if ($penerimaan->status !== 'Pending') {
+                DB::rollBack();
+
+                return response()->json(['message' => 'Hanya transaksi Pending yang bisa di-approve.'], 422);
+            }
+
+            $pembelian = $this->lockPembelianWithItems((int) $penerimaan->pembelian_id);
+            $this->validateItemsDoNotExceedRemaining($pembelian, $penerimaan->items->all());
+
             $penerimaan->update(['status' => 'Approved', 'approver_id' => $user->id]);
             foreach ($penerimaan->items as $item) {
                 if ($item->qty_diterima > 0) {
-                    $this->tambahStok($penerimaan->gudang_id, $item->produk_id, $item->qty_diterima, $item->tipe_stok ?? 'penjualan');
+                    $this->tambahStok($penerimaan->gudang_id, $item->produk_id, $item->qty_diterima, $item->tipe_stok ?? 'penjualan', $penerimaan, 'Penerimaan Approve');
                 }
             }
             DB::commit();
-            return response()->json(['message' => 'Penerimaan barang berhasil di-approve dan stok ditambahkan.', 'data' => $penerimaan]);
+
+            return response()->json(['message' => 'Penerimaan barang berhasil di-approve dan stok ditambahkan.', 'data' => $penerimaan->refresh()]);
+        } catch (ValidationException $e) {
+            DB::rollBack();
+
+            throw $e;
+        } catch (DomainException|InvalidArgumentException $e) {
+            DB::rollBack();
+
+            return response()->json(['message' => $e->getMessage()], 422);
         } catch (\Exception $e) {
             DB::rollBack();
+
             return response()->json(['message' => 'Gagal approve penerimaan barang.'], 500);
         }
     }
@@ -190,7 +233,7 @@ class PenerimaanBarangController extends Controller
     public function cancel($id)
     {
         $user = auth()->user();
-        if (!in_array($user->role, ['admin', 'super_admin'])) {
+        if (! in_array($user->role, ['admin', 'super_admin'])) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
@@ -204,15 +247,33 @@ class PenerimaanBarangController extends Controller
 
         DB::beginTransaction();
         try {
+            $penerimaan = PenerimaanBarang::with('items')
+                ->whereKey($id)
+                ->lockForUpdate()
+                ->firstOrFail();
+
+            if ($penerimaan->status === 'Canceled') {
+                DB::rollBack();
+
+                return response()->json(['message' => 'Transaksi sudah dibatalkan.'], 422);
+            }
+
             if ($penerimaan->status === 'Approved') {
                 foreach ($penerimaan->items as $item) {
-                    $this->kurangiStok($penerimaan->gudang_id, $item->produk_id, $item->qty_diterima, $item->tipe_stok ?? 'penjualan');
+                    if ((int) $item->qty_diterima > 0) {
+                        $this->kurangiStok($penerimaan->gudang_id, $item->produk_id, $item->qty_diterima, $item->tipe_stok ?? 'penjualan', $penerimaan, 'Penerimaan Cancel');
+                    }
                 }
             }
             $penerimaan->update(['status' => 'Canceled']);
             DB::commit();
+        } catch (DomainException|InvalidArgumentException $e) {
+            DB::rollBack();
+
+            return response()->json(['message' => $e->getMessage()], 422);
         } catch (\Exception $e) {
             DB::rollBack();
+
             return response()->json(['message' => 'Gagal membatalkan penerimaan barang.'], 500);
         }
 
@@ -240,10 +301,10 @@ class PenerimaanBarangController extends Controller
         $user = auth()->user();
         if (in_array($user->role, ['admin', 'spectator'])) {
             $cg = $user->getCurrentGudang();
-            if (!$cg || (int) $gudangId !== (int) $cg->id) {
+            if (! $cg || (int) $gudangId !== (int) $cg->id) {
                 return response()->json(['message' => 'Tidak memiliki akses ke gudang aktif ini.'], 403);
             }
-        } elseif ($user->role !== 'super_admin' && !$user->canAccessGudang($gudangId)) {
+        } elseif ($user->role !== 'super_admin' && ! $user->canAccessGudang($gudangId)) {
             return response()->json(['message' => 'Tidak memiliki akses ke gudang ini.'], 403);
         }
 
@@ -256,13 +317,16 @@ class PenerimaanBarangController extends Controller
                     $qtyDiterima = PenerimaanBarangItem::whereHas('penerimaanBarang', function ($q) use ($pembelian) {
                         $q->where('pembelian_id', $pembelian->id)->where('status', 'Approved');
                     })->where('produk_id', $item->produk_id)->sum('qty_diterima');
-                    if (($item->kuantitas ?? 0) - $qtyDiterima > 0) return true;
+                    if (($item->kuantitas ?? 0) - $qtyDiterima > 0) {
+                        return true;
+                    }
                 }
+
                 return false;
             })
-            ->map(fn($p) => [
+            ->map(fn ($p) => [
                 'id' => $p->id,
-                'nomor' => $p->nomor ?? 'PO-' . $p->id,
+                'nomor' => $p->nomor ?? 'PO-'.$p->id,
                 'tgl_transaksi' => $p->tgl_transaksi?->format('Y-m-d'),
                 'status' => $p->status,
                 'total_items' => $p->items->count(),
@@ -291,6 +355,7 @@ class PenerimaanBarangController extends Controller
         $items = $pembelian->items->map(function ($item) use ($qtyDiterima) {
             $sudah = $qtyDiterima[$item->produk_id] ?? 0;
             $qty = $item->kuantitas ?? 0;
+
             return [
                 'produk_id' => $item->produk_id,
                 'nama_produk' => $item->produk?->nama_produk,
@@ -310,48 +375,148 @@ class PenerimaanBarangController extends Controller
         ]);
     }
 
-    private function tambahStok($gudangId, $produkId, $qty, $tipeStok = 'penjualan'): void
+    private function lockPembelianWithItems(int $pembelianId): Pembelian
     {
-        $gp = GudangProduk::firstOrCreate(
-            ['gudang_id' => $gudangId, 'produk_id' => $produkId],
-            ['stok' => 0, 'stok_penjualan' => 0, 'stok_gratis' => 0, 'stok_sample' => 0]
-        );
-        $gp->stok += $qty;
-        $kolom = 'stok_' . $tipeStok;
-        if (in_array($kolom, ['stok_penjualan', 'stok_gratis', 'stok_sample'])) {
-            $gp->$kolom += $qty;
-        } else {
-            $gp->stok_penjualan += $qty;
-        }
-        $gp->save();
+        $pembelian = Pembelian::query()
+            ->whereKey($pembelianId)
+            ->lockForUpdate()
+            ->firstOrFail();
+
+        $items = $pembelian->items()
+            ->with('produk:id,nama_produk')
+            ->lockForUpdate()
+            ->get();
+
+        $pembelian->setRelation('items', $items);
+
+        return $pembelian;
     }
 
-    private function kurangiStok($gudangId, $produkId, $qty, $tipeStok = 'penjualan'): void
+    /**
+     * @param  iterable<int, array<string, mixed>|object>  $items
+     */
+    private function validateItemsDoNotExceedRemaining(Pembelian $pembelian, iterable $items): void
     {
-        $gp = GudangProduk::where('gudang_id', $gudangId)->where('produk_id', $produkId)->first();
-        if ($gp) {
-            $gp->stok = max(0, $gp->stok - $qty);
-            $kolom = 'stok_' . $tipeStok;
-            if (in_array($kolom, ['stok_penjualan', 'stok_gratis', 'stok_sample'])) {
-                $gp->$kolom = max(0, $gp->$kolom - $qty);
-            } else {
-                $gp->stok_penjualan = max(0, $gp->stok_penjualan - $qty);
-            }
-            $gp->save();
+        $orderedQuantities = [];
+        $productNames = [];
+
+        foreach ($pembelian->items as $purchaseItem) {
+            $produkId = (int) $purchaseItem->produk_id;
+            $orderedQuantities[$produkId] = ($orderedQuantities[$produkId] ?? 0) + (int) ($purchaseItem->kuantitas ?? $purchaseItem->jumlah ?? 0);
+            $productNames[$produkId] = $purchaseItem->produk?->nama_produk ?? "ID {$produkId}";
         }
+
+        $approvedQuantities = $this->approvedReceivedQuantities((int) $pembelian->id);
+        $requestedQuantities = [];
+        $firstIndexes = [];
+
+        foreach ($items as $index => $item) {
+            $qtyDiterima = (int) $this->itemValue($item, 'qty_diterima', 0);
+            if ($qtyDiterima <= 0) {
+                continue;
+            }
+
+            $produkId = (int) $this->itemValue($item, 'produk_id', 0);
+            $requestedQuantities[$produkId] = ($requestedQuantities[$produkId] ?? 0) + $qtyDiterima;
+            $firstIndexes[$produkId] ??= is_int($index) ? $index : 0;
+        }
+
+        foreach ($requestedQuantities as $produkId => $requestedQuantity) {
+            $orderedQuantity = $orderedQuantities[$produkId] ?? 0;
+            $approvedQuantity = $approvedQuantities[$produkId] ?? 0;
+            $remainingQuantity = max(0, $orderedQuantity - $approvedQuantity);
+
+            if ($requestedQuantity > $remainingQuantity) {
+                $productName = $productNames[$produkId] ?? "ID {$produkId}";
+                $index = $firstIndexes[$produkId] ?? 0;
+
+                throw ValidationException::withMessages([
+                    "items.{$index}.qty_diterima" => "Qty diterima melebihi sisa PO. Produk {$productName}: sisa {$remainingQuantity}, diminta {$requestedQuantity}.",
+                ]);
+            }
+        }
+    }
+
+    /**
+     * @return array<int, int>
+     */
+    private function approvedReceivedQuantities(int $pembelianId): array
+    {
+        $approvedReceiptIds = PenerimaanBarang::query()
+            ->where('pembelian_id', $pembelianId)
+            ->where('status', 'Approved')
+            ->lockForUpdate()
+            ->pluck('id');
+
+        if ($approvedReceiptIds->isEmpty()) {
+            return [];
+        }
+
+        return PenerimaanBarangItem::query()
+            ->select('produk_id', DB::raw('SUM(qty_diterima) as total_qty_diterima'))
+            ->whereIn('penerimaan_barang_id', $approvedReceiptIds)
+            ->groupBy('produk_id')
+            ->lockForUpdate()
+            ->pluck('total_qty_diterima', 'produk_id')
+            ->map(fn ($quantity): int => (int) $quantity)
+            ->all();
+    }
+
+    /**
+     * @param  array<string, mixed>|object  $item
+     */
+    private function itemValue(array|object $item, string $key, mixed $default = null): mixed
+    {
+        if (is_array($item)) {
+            return $item[$key] ?? $default;
+        }
+
+        return $item->{$key} ?? $default;
+    }
+
+    private function tambahStok($gudangId, $produkId, $qty, $tipeStok = 'penjualan', ?PenerimaanBarang $penerimaan = null, string $transactionType = 'Penerimaan Approve'): void
+    {
+        app(InventoryMutationService::class)->increment(
+            (int) $gudangId,
+            (int) $produkId,
+            (int) $qty,
+            (string) $tipeStok,
+            $penerimaan ? [
+                'transaction_type' => $transactionType,
+                'transaction_id' => $penerimaan->id,
+                'transaction_nomor' => $penerimaan->nomor,
+            ] : null,
+        );
+    }
+
+    private function kurangiStok($gudangId, $produkId, $qty, $tipeStok = 'penjualan', ?PenerimaanBarang $penerimaan = null, string $transactionType = 'Penerimaan Cancel'): void
+    {
+        app(InventoryMutationService::class)->decrement(
+            (int) $gudangId,
+            (int) $produkId,
+            (int) $qty,
+            (string) $tipeStok,
+            $penerimaan ? [
+                'transaction_type' => $transactionType,
+                'transaction_id' => $penerimaan->id,
+                'transaction_nomor' => $penerimaan->nomor,
+            ] : null,
+        );
     }
 
     private function findApprover($user, $gudangId): ?int
     {
         if ($user->role == 'user') {
             $admin = User::where('role', 'admin')->where(function ($q) use ($gudangId) {
-                $q->where('gudang_id', $gudangId)->orWhereHas('gudangs', fn($s) => $s->where('gudangs.id', $gudangId));
+                $q->where('gudang_id', $gudangId)->orWhereHas('gudangs', fn ($s) => $s->where('gudangs.id', $gudangId));
             })->first();
+
             return $admin ? $admin->id : optional(User::where('role', 'super_admin')->first())->id;
         }
         if ($user->role == 'admin') {
             return optional(User::where('role', 'super_admin')->first())->id;
         }
+
         return $user->id;
     }
 }

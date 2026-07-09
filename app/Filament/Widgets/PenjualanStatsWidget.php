@@ -16,14 +16,19 @@ class PenjualanStatsWidget extends BaseStatsOverviewWidget
 
     protected function getStats(): array
     {
-        $user         = auth()->user();
+        $user = auth()->user();
         $isSuperAdmin = $user?->isSuperAdmin();
-        $isAdmin      = $user?->isAdmin();
-        $gudangId     = ($isAdmin && !$isSuperAdmin) ? $user?->getCurrentGudang()?->id : null;
+        $isAdmin = $user?->isAdmin();
+        $gudangId = ($isAdmin && ! $isSuperAdmin) ? $user?->getCurrentGudang()?->id : null;
 
         $scope = function ($query) use ($isSuperAdmin, $isAdmin, $gudangId, $user) {
-            if ($isSuperAdmin) return $query;
-            if ($isAdmin && $gudangId) return $query->where('gudang_id', $gudangId);
+            if ($isSuperAdmin) {
+                return $query;
+            }
+            if ($isAdmin && $gudangId) {
+                return $query->where('gudang_id', $gudangId);
+            }
+
             return $query->where('user_id', $user->id);
         };
 
@@ -64,7 +69,7 @@ class PenjualanStatsWidget extends BaseStatsOverviewWidget
                 ->descriptionIcon('heroicon-o-banknotes')
                 ->color('warning'),
 
-            Stat::make('Telat Bayar', number_format($totalTelatBayar) . ' invoice')
+            Stat::make('Telat Bayar', number_format($totalTelatBayar).' invoice')
                 ->description(format_rupiah($nominalTelatBayar))
                 ->descriptionIcon('heroicon-o-exclamation-triangle')
                 ->color($totalTelatBayar > 0 ? 'danger' : 'success'),
@@ -74,7 +79,7 @@ class PenjualanStatsWidget extends BaseStatsOverviewWidget
                 ->descriptionIcon('heroicon-o-check-badge')
                 ->color('success'),
 
-            Stat::make('Total Canceled', number_format($totalCanceled) . ' transaksi')
+            Stat::make('Total Canceled', number_format($totalCanceled).' transaksi')
                 ->description('Semua periode')
                 ->descriptionIcon('heroicon-o-x-circle')
                 ->color($totalCanceled > 0 ? 'gray' : 'success'),

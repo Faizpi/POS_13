@@ -2,18 +2,20 @@
 
 namespace App\Filament\Resources\Kunjungans\Pages;
 
-use App\Filament\Concerns\ResolvesApprover;
 use App\Filament\Concerns\RenamesLampiran;
+use App\Filament\Concerns\ResolvesApprover;
 use App\Filament\Resources\Kunjungans\KunjunganResource;
-use App\Models\Kunjungan;
+use App\Models\GudangProduk;
 use App\Models\Kontak;
+use App\Models\Kunjungan;
 use App\Models\Produk;
 use Carbon\Carbon;
+use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateKunjungan extends CreateRecord
 {
-    use ResolvesApprover, RenamesLampiran;
+    use RenamesLampiran, ResolvesApprover;
 
     protected static string $resource = KunjunganResource::class;
 
@@ -21,10 +23,10 @@ class CreateKunjungan extends CreateRecord
     {
         $data = $this->form->getState();
         $tujuan = $data['tujuan'] ?? '';
-        
+
         if (in_array($tujuan, ['Pemeriksaan Stock', 'Promo Gratis', 'Promo Sample'])) {
             if (empty($data['items']) || count($data['items']) === 0) {
-                \Filament\Notifications\Notification::make()
+                Notification::make()
                     ->danger()
                     ->title('Produk wajib diisi untuk kunjungan tipe ini.')
                     ->send();
@@ -32,24 +34,24 @@ class CreateKunjungan extends CreateRecord
             }
         }
 
-        if (in_array($tujuan, ['Promo Gratis', 'Promo Sample']) && !empty($data['items'])) {
+        if (in_array($tujuan, ['Promo Gratis', 'Promo Sample']) && ! empty($data['items'])) {
             $gudangId = $data['gudang_id'] ?? auth()->user()?->getCurrentGudang()?->id;
-            
+
             if ($gudangId) {
                 $stokField = $tujuan === 'Promo Gratis' ? 'stok_gratis' : 'stok_sample';
                 $stokLabel = $tujuan === 'Promo Gratis' ? 'stok gratis' : 'stok sample';
-                
+
                 foreach ($data['items'] as $item) {
                     $produkId = $item['produk_id'] ?? null;
                     if ($produkId) {
                         $qty = $item['jumlah'] ?? 1;
-                        $stokAvailable = \App\Models\GudangProduk::where('gudang_id', $gudangId)
+                        $stokAvailable = GudangProduk::where('gudang_id', $gudangId)
                             ->where('produk_id', $produkId)
                             ->value($stokField) ?? 0;
-                            
+
                         if ($qty > $stokAvailable) {
-                            $namaProduk = \App\Models\Produk::find($produkId)->nama_produk ?? 'Produk';
-                            \Filament\Notifications\Notification::make()
+                            $namaProduk = Produk::find($produkId)->nama_produk ?? 'Produk';
+                            Notification::make()
                                 ->danger()
                                 ->title("Qty {$namaProduk} ({$qty}) melebihi {$stokLabel} yang tersedia ({$stokAvailable}).")
                                 ->send();
@@ -70,12 +72,12 @@ class CreateKunjungan extends CreateRecord
             ->whereDate('created_at', Carbon::today())
             ->count();
         $noUrut = $countToday + 1;
-        $now    = Carbon::now();
+        $now = Carbon::now();
 
-        $data['user_id']        = auth()->id();
-        $data['status']         = $user->isSuperAdmin() ? 'Approved' : 'Pending';
+        $data['user_id'] = auth()->id();
+        $data['status'] = $user->isSuperAdmin() ? 'Approved' : 'Pending';
         $data['no_urut_harian'] = $noUrut;
-        $data['nomor']          = Kunjungan::generateNomor(auth()->id(), $noUrut, $now);
+        $data['nomor'] = Kunjungan::generateNomor(auth()->id(), $noUrut, $now);
 
         // Autofill data sales dari user login
         if (empty($data['sales_nama'])) {
@@ -94,7 +96,7 @@ class CreateKunjungan extends CreateRecord
         }
 
         // Set approver_id
-        $gudangId            = (int) ($data['gudang_id'] ?? 0);
+        $gudangId = (int) ($data['gudang_id'] ?? 0);
         $data['approver_id'] = $this->resolveApproverId($gudangId ?: null);
 
         return $data;
@@ -142,10 +144,10 @@ class CreateKunjungan extends CreateRecord
     protected function getViewData(): array
     {
         $kontaks = Kontak::select('id', 'nama', 'kode_kontak')->get()
-            ->map(fn($k) => ['id' => $k->id, 'kode' => $k->kode_kontak ?? '', 'nama' => $k->nama]);
+            ->map(fn ($k) => ['id' => $k->id, 'kode' => $k->kode_kontak ?? '', 'nama' => $k->nama]);
 
         $produks = Produk::select('id', 'nama_produk', 'item_code')->get()
-            ->map(fn($p) => ['id' => $p->id, 'kode' => $p->item_code ?? '', 'nama' => $p->nama_produk ?? '']);
+            ->map(fn ($p) => ['id' => $p->id, 'kode' => $p->item_code ?? '', 'nama' => $p->nama_produk ?? '']);
 
         return [
             'scannerKontaks' => $kontaks,

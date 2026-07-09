@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
-use App\Models\Kontak;
 use App\Models\Biaya;
 use App\Models\BiayaItem;
+use App\Models\Kontak;
 use App\Models\Pembelian;
 use App\Models\PembelianItem;
 use App\Models\Penjualan;

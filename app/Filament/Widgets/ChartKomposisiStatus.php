@@ -62,7 +62,7 @@ class ChartKomposisiStatus extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'data'            => array_values($statuses),
+                    'data' => array_values($statuses),
                     'backgroundColor' => [
                         '#f59e0b',   // Pending  – amber
                         '#6366f1',   // Approved – indigo-violet
@@ -73,9 +73,9 @@ class ChartKomposisiStatus extends ChartWidget
                         '#818cf8',
                         '#fb7185',
                     ],
-                    'borderWidth'  => 0,
-                    'hoverOffset'  => 12,
-                    'spacing'      => 3,
+                    'borderWidth' => 0,
+                    'hoverOffset' => 12,
+                    'spacing' => 3,
                     'borderRadius' => 6,
                 ],
             ],

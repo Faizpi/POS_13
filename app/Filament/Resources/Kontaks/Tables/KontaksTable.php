@@ -39,7 +39,7 @@ class KontaksTable
                     ->copyable()
                     ->placeholder('—')
                     ->icon('heroicon-o-phone')
-                    ->formatStateUsing(fn($state) => \receipt_format_phone($state)),
+                    ->formatStateUsing(fn ($state) => \receipt_format_phone($state)),
 
                 TextColumn::make('email')
                     ->label('Email')

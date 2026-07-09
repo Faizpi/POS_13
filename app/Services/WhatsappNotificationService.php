@@ -3,7 +3,9 @@
 namespace App\Services;
 
 use App\Models\Kontak;
+use App\Models\Penjualan;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 
 class WhatsappNotificationService
@@ -19,71 +21,73 @@ class WhatsappNotificationService
 
         // Eksekusi langsung tanpa queue database agar instan di shared hosting/tanpa worker
         try {
-            $penjualan = \App\Models\Penjualan::with(["items.produk", "user", "gudang"])
+            $penjualan = Penjualan::with(['items.produk', 'user', 'gudang'])
                 ->find($id);
 
-            if (!$penjualan) return;
+            if (! $penjualan) {
+                return;
+            }
 
-            $fonnte  = new FonnteService();
-            $nomor   = $penjualan->nomor ?? $id;
-            $uuid    = $penjualan->uuid ?? null;
-            $tgl     = $penjualan->tgl_transaksi
-                ? \Carbon\Carbon::parse($penjualan->tgl_transaksi)->format("d/m/Y")
-                : "-";
-            $sales   = $penjualan->user->name ?? "-";
-            $gudang  = $penjualan->gudang->nama_gudang ?? "-";
-            $total   = "Rp " . number_format($penjualan->grand_total ?? 0, 0, ",", ".");
+            $fonnte = new FonnteService;
+            $nomor = $penjualan->nomor ?? $id;
+            $uuid = $penjualan->uuid ?? null;
+            $tgl = $penjualan->tgl_transaksi
+                ? Carbon::parse($penjualan->tgl_transaksi)->format('d/m/Y')
+                : '-';
+            $sales = $penjualan->user->name ?? '-';
+            $gudang = $penjualan->gudang->nama_gudang ?? '-';
+            $total = 'Rp '.number_format($penjualan->grand_total ?? 0, 0, ',', '.');
 
             // URL public invoice
-            $invoiceUrl  = $uuid
+            $invoiceUrl = $uuid
                 ? url("/invoice/penjualan/{$uuid}")
                 : null;
 
             // URL customer portal
-            $portalUrl = url("/customer");
+            $portalUrl = url('/customer');
 
             // Rincian item
-            $itemLines = "";
+            $itemLines = '';
             foreach (($penjualan->items ?? []) as $item) {
-                $qty    = $item->kuantitas;
-                $nama   = $item->nama_produk ?? $item->produk->nama_produk ?? "-";
-                $satuan = $item->unit ?? $item->satuan ?? "pcs";
-                $harga  = "Rp " . number_format($item->harga_satuan ?? 0, 0, ",", ".");
+                $qty = $item->kuantitas;
+                $nama = $item->nama_produk ?? $item->produk->nama_produk ?? '-';
+                $satuan = $item->unit ?? $item->satuan ?? 'pcs';
+                $harga = 'Rp '.number_format($item->harga_satuan ?? 0, 0, ',', '.');
                 // Bug fix: field total di database adalah jumlah_baris
-                $sub    = "Rp " . number_format($item->jumlah_baris ?? 0, 0, ",", ".");
+                $sub = 'Rp '.number_format($item->jumlah_baris ?? 0, 0, ',', '.');
                 $itemLines .= "\n  - {$nama} {$qty} {$satuan} x {$harga} = {$sub}";
             }
 
             // Pesan untuk Customer
             $msgCustomer = "Halo *{$penjualan->pelanggan}*!\n\n"
-                . "Terima kasih telah berbelanja di *Hibiscus Efsya*.\n"
-                . "Berikut ringkasan pesanan Anda:\n\n"
-                . "No. Invoice : {$nomor}\n"
-                . "Tanggal     : {$tgl}\n"
-                . "Gudang      : {$gudang}\n"
-                . "Sales       : {$sales}\n"
-                . "Pembayaran  : {$penjualan->syarat_pembayaran}\n"
-                . "\n*Detail Pesanan:*{$itemLines}\n"
-                . "\n*Total: {$total}*\n";
+                ."Terima kasih telah berbelanja di *Hibiscus Efsya*.\n"
+                ."Berikut ringkasan pesanan Anda:\n\n"
+                ."No. Invoice : {$nomor}\n"
+                ."Tanggal     : {$tgl}\n"
+                ."Gudang      : {$gudang}\n"
+                ."Sales       : {$sales}\n"
+                ."Pembayaran  : {$penjualan->syarat_pembayaran}\n"
+                ."\n*Detail Pesanan:*{$itemLines}\n"
+                ."\n*Total: {$total}*\n";
 
             if ($invoiceUrl) {
                 $msgCustomer .= "\n*Invoice Anda:*\n{$invoiceUrl}\n";
             }
 
             $msgCustomer .= "\n*Cek riwayat transaksi Anda di portal:*\n{$portalUrl}\n"
-                . "\nTerima kasih atas kepercayaan Anda!";
+                ."\nTerima kasih atas kepercayaan Anda!";
 
             // Pesan untuk Admin
             $msgAdmin = "*Penjualan Baru Masuk!*\n\n"
-                . "No. Invoice : {$nomor}\n"
-                . "Tanggal     : {$tgl}\n"
-                . "Pelanggan   : {$penjualan->pelanggan}\n"
-                . "Gudang      : {$gudang}\n"
-                . "Sales       : {$sales}\n"
-                . "Pembayaran  : {$penjualan->syarat_pembayaran}\n"
-                . "\n*Detail:*{$itemLines}\n"
-                . "\n*Grand Total: {$total}*\n"
-                . "\nStatus: *Pending* - menunggu approval.";
+                ."No. Invoice : {$nomor}\n"
+                ."Tanggal     : {$tgl}\n"
+                ."Pelanggan   : {$penjualan->pelanggan}\n"
+                ."Gudang      : {$gudang}\n"
+                ."Sales       : {$sales}\n"
+                ."Pembayaran  : {$penjualan->syarat_pembayaran}\n"
+                ."\n*Detail:*{$itemLines}\n"
+                ."\n*Grand Total: {$total}*\n"
+                ."\nStatus: *Pending* - menunggu approval.";
 
             if ($invoiceUrl) {
                 $msgAdmin .= "\n\n*Lihat Invoice:*\n{$invoiceUrl}";
@@ -106,7 +110,7 @@ class WhatsappNotificationService
             }
 
         } catch (\Throwable $e) {
-            Log::error("WhatsappNotificationService::sendPenjualanCreated [#{$id}]: " . $e->getMessage());
+            Log::error("WhatsappNotificationService::sendPenjualanCreated [#{$id}]: ".$e->getMessage());
         }
     }
 
@@ -115,13 +119,13 @@ class WhatsappNotificationService
      */
     private static function resolveCustomerPhone($penjualan): ?string
     {
-        if (!empty($penjualan->no_telepon)) {
+        if (! empty($penjualan->no_telepon)) {
             return $penjualan->no_telepon;
         }
 
-        if (!empty($penjualan->pelanggan)) {
-            $kontak = Kontak::where("nama", $penjualan->pelanggan)->first();
-            if ($kontak && !empty($kontak->no_telp)) {
+        if (! empty($penjualan->pelanggan)) {
+            $kontak = Kontak::where('nama', $penjualan->pelanggan)->first();
+            if ($kontak && ! empty($kontak->no_telp)) {
                 return $kontak->no_telp;
             }
         }
@@ -136,23 +140,23 @@ class WhatsappNotificationService
      */
     private static function getAdminPhones(?int $gudangId = null): array
     {
-        $phones = User::where("role", "super_admin")
-            ->where("receives_transaction_whatsapp", true)
-            ->whereNotNull("no_telp")
-            ->where("no_telp", "!=", "")
-            ->pluck("no_telp")
+        $phones = User::where('role', 'super_admin')
+            ->where('receives_transaction_whatsapp', true)
+            ->whereNotNull('no_telp')
+            ->where('no_telp', '!=', '')
+            ->pluck('no_telp')
             ->toArray();
 
         if ($gudangId) {
-            $adminPhones = User::where("role", "admin")
-                ->where("receives_transaction_whatsapp", true)
-                ->whereNotNull("no_telp")
-                ->where("no_telp", "!=", "")
+            $adminPhones = User::where('role', 'admin')
+                ->where('receives_transaction_whatsapp', true)
+                ->whereNotNull('no_telp')
+                ->where('no_telp', '!=', '')
                 ->where(function ($q) use ($gudangId) {
-                    $q->where("gudang_id", $gudangId)
-                      ->orWhereHas("gudangs", fn($s) => $s->where("gudangs.id", $gudangId));
+                    $q->where('gudang_id', $gudangId)
+                        ->orWhereHas('gudangs', fn ($s) => $s->where('gudangs.id', $gudangId));
                 })
-                ->pluck("no_telp")
+                ->pluck('no_telp')
                 ->toArray();
 
             $phones = array_merge($phones, $adminPhones);

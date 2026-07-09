@@ -3,12 +3,12 @@
 namespace App\Filament\Customer\Resources\Penjualans\Pages;
 
 use App\Filament\Customer\Resources\Penjualans\PenjualanResource;
-use Filament\Resources\Pages\ViewRecord;
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Section;
-use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Actions\Action;
+use Filament\Infolists\Components\RepeatableEntry;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Resources\Pages\ViewRecord;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
 
 class ViewPenjualan extends ViewRecord
 {
@@ -25,7 +25,7 @@ class ViewPenjualan extends ViewRecord
                         TextEntry::make('status')
                             ->label('Status')
                             ->badge()
-                            ->color(fn(string $state): string => match($state) {
+                            ->color(fn (string $state): string => match ($state) {
                                 'Pending' => 'warning',
                                 'Approved' => 'primary',
                                 'Lunas' => 'success',
@@ -46,7 +46,7 @@ class ViewPenjualan extends ViewRecord
                             ->label('')
                             ->schema([
                                 TextEntry::make('produk.nama_produk')->label('Produk')->weight('bold'),
-                                TextEntry::make('kuantitas')->label('Qty')->suffix(fn($record) => ' ' . $record->unit),
+                                TextEntry::make('kuantitas')->label('Qty')->suffix(fn ($record) => ' '.$record->unit),
                                 TextEntry::make('harga_satuan')->label('Harga')->money('IDR'),
                                 TextEntry::make('diskon')->label('Disc')->suffix('%'),
                                 TextEntry::make('jumlah_baris')->label('Total')->money('IDR')->weight('bold'),
@@ -59,7 +59,7 @@ class ViewPenjualan extends ViewRecord
                     ->schema([
                         TextEntry::make('subtotal')
                             ->label('Subtotal')
-                            ->state(fn($record) => $record->items->sum('jumlah_baris'))
+                            ->state(fn ($record) => $record->items->sum('jumlah_baris'))
                             ->money('IDR'),
                         TextEntry::make('diskon_akhir')->label('Diskon Akhir')->money('IDR'),
                         TextEntry::make('tax_percentage')->label('Pajak')->suffix('%'),
@@ -81,7 +81,7 @@ class ViewPenjualan extends ViewRecord
                 ->label('Print Invoice')
                 ->icon('heroicon-o-printer')
                 ->color('info')
-                ->url(fn() => route('penjualan.print', $this->getRecord()))
+                ->url(fn () => route('penjualan.print', $this->getRecord()))
                 ->openUrlInNewTab(),
         ];
     }

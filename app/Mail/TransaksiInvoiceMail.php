@@ -11,14 +11,16 @@ class TransaksiInvoiceMail extends Mailable
     use Queueable, SerializesModels;
 
     public $transaksi;
+
     public string $type;    // penjualan, pembelian, biaya, kunjungan
+
     public string $pdfContent;
 
     public function __construct($transaksi, string $type, string $pdfContent)
     {
-        $this->transaksi   = $transaksi;
-        $this->type        = $type;
-        $this->pdfContent  = $pdfContent;
+        $this->transaksi = $transaksi;
+        $this->type = $type;
+        $this->pdfContent = $pdfContent;
     }
 
     public function build(): static
@@ -26,7 +28,7 @@ class TransaksiInvoiceMail extends Mailable
         $typeLabels = [
             'penjualan' => 'Penjualan',
             'pembelian' => 'Pembelian',
-            'biaya'     => 'Biaya',
+            'biaya' => 'Biaya',
             'kunjungan' => 'Kunjungan',
         ];
 
@@ -39,7 +41,7 @@ class TransaksiInvoiceMail extends Mailable
             ->view('emails.transaksi-invoice')
             ->with([
                 'transaksi' => $this->transaksi,
-                'type'      => $this->type,
+                'type' => $this->type,
             ])
             ->attachData($this->pdfContent, "invoice-{$this->type}-{$nomor}.pdf", [
                 'mime' => 'application/pdf',

@@ -9,11 +9,14 @@ use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class NeracaExport implements FromView, WithTitle, ShouldAutoSize, WithStyles
+class NeracaExport implements FromView, ShouldAutoSize, WithStyles, WithTitle
 {
     protected array $data;
+
     protected ?string $from;
+
     protected ?string $to;
+
     protected ?string $gudang;
 
     public function __construct(array $data, ?string $from = null, ?string $to = null, ?string $gudang = null)

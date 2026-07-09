@@ -9,7 +9,7 @@ use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class StockOpnameTemplateExport implements FromView, WithTitle, ShouldAutoSize, WithStyles
+class StockOpnameTemplateExport implements FromView, ShouldAutoSize, WithStyles, WithTitle
 {
     public function view(): View
     {

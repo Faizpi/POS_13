@@ -17,5 +17,8 @@ class BiayaItem extends Model
         return ['jumlah' => 'decimal:2'];
     }
 
-    public function biaya() { return $this->belongsTo(Biaya::class); }
+    public function biaya()
+    {
+        return $this->belongsTo(Biaya::class);
+    }
 }

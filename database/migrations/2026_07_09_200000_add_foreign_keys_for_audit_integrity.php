@@ -23,6 +23,14 @@ return new class extends Migration
 
         // Add FK for stok_logs.gudang_produk_id
         if (!$foreignKeyExists('stok_logs', 'gudang_produk_id')) {
+            // First, clean up orphaned records (set gudang_produk_id to NULL if it doesn't exist in gudang_produk)
+            DB::statement('
+                UPDATE stok_logs 
+                SET gudang_produk_id = NULL 
+                WHERE gudang_produk_id IS NOT NULL 
+                AND gudang_produk_id NOT IN (SELECT id FROM gudang_produk)
+            ');
+
             Schema::table('stok_logs', function (Blueprint $table) {
                 $table->foreign('gudang_produk_id')
                     ->references('id')

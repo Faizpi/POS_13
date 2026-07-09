@@ -16,7 +16,7 @@ class ChartKomposisiStatus extends ChartWidget
 
     protected ?string $description = 'Distribusi status dari seluruh modul transaksi.';
 
-    protected ?string $maxHeight = '220px';
+    protected ?string $maxHeight = '200px';
 
     protected function getType(): string
     {

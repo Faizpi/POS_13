@@ -16,7 +16,7 @@ class ChartTransaksiGudang extends ChartWidget
 
     protected ?string $description = 'Jumlah penjualan dan pembelian per gudang.';
 
-    protected ?string $maxHeight = '230px';
+    protected ?string $maxHeight = '200px';
 
     protected function getType(): string
     {
@@ -64,7 +64,7 @@ class ChartTransaksiGudang extends ChartWidget
                     'borderWidth' => 0,
                     'borderRadius' => 10,
                     'borderSkipped' => false,
-                    'barThickness' => 22,
+                    'barThickness' => 16,
                 ],
                 [
                     'label' => 'Pembelian',
@@ -75,7 +75,7 @@ class ChartTransaksiGudang extends ChartWidget
                     'borderWidth' => 0,
                     'borderRadius' => 10,
                     'borderSkipped' => false,
-                    'barThickness' => 22,
+                    'barThickness' => 16,
                 ],
             ],
             'labels' => $labels,

@@ -14,11 +14,11 @@ class ChartPenjualanSales extends ChartWidget
 
     protected static ?int $sort = 4;
 
-    protected ?string $description = 'Top 10 sales berdasarkan nilai penjualan periode terpilih.';
+    protected ?string $description = 'Top 5 sales berdasarkan nilai penjualan periode terpilih.';
 
-    protected ?string $maxHeight = '230px';
+    protected ?string $maxHeight = '200px';
 
-    protected int|string|array $columnSpan = 'full';
+    protected int|string|array $columnSpan = 1;
 
     public ?string $filter = 'month';
 
@@ -82,7 +82,7 @@ class ChartPenjualanSales extends ChartWidget
             ->groupBy('users.id', 'users.name')
             ->orderByDesc('total')
             ->orderBy('users.name')
-            ->limit(10)
+            ->limit(5)
             ->get();
 
         if ($data->isEmpty()) {
@@ -93,7 +93,7 @@ class ChartPenjualanSales extends ChartWidget
                 ->when($gudangId, fn ($query) => $query->where('gudang_id', $gudangId))
                 ->groupBy('user_id')
                 ->orderByDesc('total')
-                ->limit(10)
+                ->limit(5)
                 ->get()
                 ->map(fn (Penjualan $item): object => (object) [
                     'name' => $item->user?->name ?? 'Tanpa Sales',
@@ -124,7 +124,7 @@ class ChartPenjualanSales extends ChartWidget
                     'hoverBackgroundColor' => '#818cf8',
                     'borderRadius' => 10,
                     'borderSkipped' => false,
-                    'barThickness' => 18,
+                    'barThickness' => 14,
                 ],
             ],
             'labels' => $labels,
@@ -193,7 +193,7 @@ class ChartPenjualanSales extends ChartWidget
                     'backgroundColor' => '#6366f1',
                     'borderRadius' => 10,
                     'borderSkipped' => false,
-                    'barThickness' => 18,
+                    'barThickness' => 14,
                 ],
             ],
             'labels' => [],

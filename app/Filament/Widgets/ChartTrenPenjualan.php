@@ -14,9 +14,9 @@ class ChartTrenPenjualan extends ChartWidget
 
     protected ?string $description = 'Nilai penjualan, pembelian, dan biaya per bulan.';
 
-    protected ?string $maxHeight = '230px';
+    protected ?string $maxHeight = '200px';
 
-    protected int|string|array $columnSpan = 'full';
+    protected int|string|array $columnSpan = 1;
 
     protected function getType(): string
     {

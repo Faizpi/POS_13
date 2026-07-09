@@ -65,26 +65,22 @@ class StatsBulanIni extends BaseStatsOverviewWidget
             Stat::make('Penjualan', format_rupiah($penjualan->sum('grand_total')))
                 ->description(number_format($penjualan->count()).' transaksi · '.$bulanLabel)
                 ->descriptionIcon('heroicon-o-arrow-trending-up')
-                ->color('primary')
-                ->chart($monthlySum(new Penjualan)),
+                ->color('primary'),
 
             Stat::make('Pembelian', format_rupiah($pembelian->sum('grand_total')))
                 ->description(number_format($pembelian->count()).' transaksi · '.$bulanLabel)
                 ->descriptionIcon('heroicon-o-arrow-trending-down')
-                ->color('warning')
-                ->chart($monthlySum(new Pembelian)),
+                ->color('warning'),
 
             Stat::make('Biaya Masuk', format_rupiah($biayaMasuk->sum('grand_total')))
                 ->description(number_format($biayaMasuk->count()).' transaksi · '.$bulanLabel)
                 ->descriptionIcon('heroicon-o-arrow-down-circle')
-                ->color('success')
-                ->chart($monthlySum(Biaya::where('jenis_biaya', 'masuk')->where('status', 'Approved'))),
+                ->color('success'),
 
             Stat::make('Biaya Keluar', format_rupiah($biayaKeluar->sum('grand_total')))
                 ->description(number_format($biayaKeluar->count()).' transaksi · '.$bulanLabel)
                 ->descriptionIcon('heroicon-o-arrow-up-circle')
-                ->color('danger')
-                ->chart($monthlySum(Biaya::where('jenis_biaya', 'keluar')->where('status', 'Approved'))),
+                ->color('danger'),
         ];
     }
 }

@@ -29,9 +29,9 @@ class PenerimaanBarangResource extends Resource
 
     protected static ?int $navigationSort = 3;
 
-    protected static ?string $modelLabel = 'Buat Penerimaan Barang';
+    protected static ?string $modelLabel = 'Penerimaan Barang';
 
-    protected static ?string $pluralModelLabel = 'Buat Penerimaan Barang';
+    protected static ?string $pluralModelLabel = 'Penerimaan Barang';
 
     public static function getNavigationBadge(): ?string
     {

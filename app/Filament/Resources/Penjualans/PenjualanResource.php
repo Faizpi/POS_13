@@ -23,15 +23,15 @@ class PenjualanResource extends Resource
 
     protected static ?string $model = Penjualan::class;
 
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-document-currency-dollar';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-shopping-cart';
 
     protected static string|UnitEnum|null $navigationGroup = 'Piutang';
 
     protected static ?int $navigationSort = 2;
 
-    protected static ?string $modelLabel = 'Buat Penjualan';
+    protected static ?string $modelLabel = 'Penjualan';
 
-    protected static ?string $pluralModelLabel = 'Buat Penjualan';
+    protected static ?string $pluralModelLabel = 'Penjualan';
 
     protected static ?string $recordTitleAttribute = 'nomor';
 

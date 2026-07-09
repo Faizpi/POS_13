@@ -191,26 +191,26 @@
         border-top: none !important;
     }
 
-    /* Spacing between groups (Dasbor, Neraca, Kunjungan, etc.) */
+    /* Spacing between groups */
     .fi-sidebar-nav-groups {
-        gap: 0.65rem !important; /* Bring groups closer together (default was too sparse) */
+        gap: 0.4rem !important;
     }
 
-    /* Group header label */
+    /* Group header label — lebih kecil, muted, clean */
     .fi-sidebar-group > .fi-sidebar-group-label,
     .fi-sidebar-group-label {
-        font-size: 0.82rem !important;
+        font-size: 0.7rem !important;
         font-weight: 700 !important;
         text-transform: uppercase !important;
-        letter-spacing: 0.06em !important;
-        padding: 0.45rem 0 0.25rem 0 !important;
+        letter-spacing: 0.08em !important;
+        padding: 0.6rem 0.5rem 0.2rem 0.5rem !important;
         margin: 0 !important;
         line-height: 1.1 !important;
-        color: rgb(100, 116, 139) !important;
+        color: rgb(148, 163, 184) !important;
     }
     .dark .fi-sidebar-group > .fi-sidebar-group-label,
     .dark .fi-sidebar-group-label {
-        color: rgb(148, 163, 184) !important;
+        color: rgb(100, 116, 139) !important;
     }
 
     /* Remove excessive top margins on sibling groups */
@@ -222,69 +222,86 @@
         border-top: none !important;
     }
 
-    /* Sub-menu items container: add comfort gap */
+    /* Sub-menu items container */
     .fi-sidebar-group-items {
-        margin-top: 0.15rem !important;
+        margin-top: 0.1rem !important;
         padding: 0 !important;
-        gap: 0.15rem !important; /* Spacing between items in the same group */
+        gap: 0.1rem !important;
     }
     .fi-sidebar-group-items > li,
     .fi-sidebar-group-items .fi-sidebar-item {
         margin: 0 !important;
     }
 
-    /* Item link / button inside sidebar: more breathing room */
+    /* Item link / button inside sidebar */
     .fi-sidebar-item a,
     .fi-sidebar-item-btn,
     .fi-sidebar-group-items a {
-        padding-top: 0.65rem !important;
-        padding-bottom: 0.65rem !important;
+        padding: 0.5rem 0.65rem !important;
         min-height: 0 !important;
         gap: 0.55rem !important;
+        border-radius: 0.5rem !important;
     }
 
     /* Item label */
     .fi-sidebar-item-label,
     .fi-sidebar-item-label > span {
-        font-size: 0.88rem !important;
+        font-size: 0.86rem !important;
+        font-weight: 500 !important;
         line-height: 1.25 !important;
+        color: rgb(51, 65, 85) !important;
+    }
+    .dark .fi-sidebar-item-label,
+    .dark .fi-sidebar-item-label > span {
+        color: rgb(203, 213, 225) !important;
     }
 
     /* Icon size */
     .fi-sidebar-item-icon {
-        width: 1.2rem !important;
-        height: 1.2rem !important;
+        width: 1.15rem !important;
+        height: 1.15rem !important;
+        opacity: 0.75;
     }
 
     /* Badge in sidebar */
     .fi-sidebar-item-badge {
-        font-size: 0.72rem !important;
-        padding: 0.15rem 0.45rem !important;
+        font-size: 0.7rem !important;
+        padding: 0.12rem 0.42rem !important;
     }
 
     /* Hover */
     .fi-sidebar-group-items .fi-sidebar-item.fi-sidebar-item-has-url a:hover,
     .fi-sidebar-group-items .fi-sidebar-item.fi-sidebar-item-has-url .fi-sidebar-item-btn:hover {
-        background: rgba(59, 130, 246, 0.07);
-        border-radius: 0.375rem;
+        background: rgba(59, 130, 246, 0.07) !important;
     }
     .dark .fi-sidebar-group-items .fi-sidebar-item.fi-sidebar-item-has-url a:hover,
     .dark .fi-sidebar-group-items .fi-sidebar-item.fi-sidebar-item-has-url .fi-sidebar-item-btn:hover {
-        background: rgba(59, 130, 246, 0.12);
+        background: rgba(59, 130, 246, 0.12) !important;
     }
 
-    /* Active */
+    /* Active — lebih tegas dengan left indicator */
     .fi-sidebar-group-items .fi-sidebar-item.fi-active a,
     .fi-sidebar-group-items .fi-sidebar-item.fi-active .fi-sidebar-item-btn {
-        background: rgba(59, 130, 246, 0.09);
-        border-radius: 0.375rem;
+        background: rgba(59, 130, 246, 0.1) !important;
+        border-radius: 0.5rem !important;
+        box-shadow: inset 3px 0 0 rgba(59, 130, 246, 0.7) !important;
     }
     .dark .fi-sidebar-group-items .fi-sidebar-item.fi-active a,
     .dark .fi-sidebar-group-items .fi-sidebar-item.fi-active .fi-sidebar-item-btn {
-        background: rgba(59, 130, 246, 0.15);
+        background: rgba(59, 130, 246, 0.16) !important;
+        box-shadow: inset 3px 0 0 rgba(99, 160, 255, 0.75) !important;
     }
-    .fi-sidebar-group-items .fi-sidebar-item.fi-active .fi-sidebar-item-label {
-        font-weight: 600;
+    .fi-sidebar-group-items .fi-sidebar-item.fi-active .fi-sidebar-item-label,
+    .fi-sidebar-group-items .fi-sidebar-item.fi-active .fi-sidebar-item-label > span {
+        font-weight: 650 !important;
+        color: rgb(37, 99, 235) !important;
+    }
+    .dark .fi-sidebar-group-items .fi-sidebar-item.fi-active .fi-sidebar-item-label,
+    .dark .fi-sidebar-group-items .fi-sidebar-item.fi-active .fi-sidebar-item-label > span {
+        color: rgb(147, 197, 253) !important;
+    }
+    .fi-sidebar-group-items .fi-sidebar-item.fi-active .fi-sidebar-item-icon {
+        opacity: 1 !important;
     }
 
     /* Collapsible group toggle button */

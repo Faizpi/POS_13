@@ -29,9 +29,9 @@ class BiayaResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
-    protected static ?string $modelLabel = 'Buat Biaya';
+    protected static ?string $modelLabel = 'Biaya';
 
-    protected static ?string $pluralModelLabel = 'Buat Biaya';
+    protected static ?string $pluralModelLabel = 'Biaya';
 
     protected static ?string $recordTitleAttribute = 'nomor';
 

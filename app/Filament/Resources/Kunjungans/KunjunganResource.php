@@ -29,9 +29,9 @@ class KunjunganResource extends Resource
 
     protected static ?int $navigationSort = 2;
 
-    protected static ?string $modelLabel = 'Buat Kunjungan';
+    protected static ?string $modelLabel = 'Kunjungan';
 
-    protected static ?string $pluralModelLabel = 'Buat Kunjungan';
+    protected static ?string $pluralModelLabel = 'Kunjungan';
 
     protected static ?string $recordTitleAttribute = 'nomor';
 

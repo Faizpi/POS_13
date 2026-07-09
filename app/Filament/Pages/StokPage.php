@@ -28,7 +28,7 @@ class StokPage extends Page
 
     protected static ?int $navigationSort = 1;
 
-    protected static ?string $navigationLabel = 'Dashboard';
+    protected static ?string $navigationLabel = 'Stok';
 
     protected static ?string $title = 'Manajemen Stok';
 

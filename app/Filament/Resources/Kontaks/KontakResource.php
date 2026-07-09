@@ -24,15 +24,15 @@ class KontakResource extends Resource
 
     protected static ?string $model = Kontak::class;
 
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-identification';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-users';
 
     protected static string|UnitEnum|null $navigationGroup = 'Kontak';
 
     protected static ?int $navigationSort = 1;
 
-    protected static ?string $modelLabel = 'Buat Kontak';
+    protected static ?string $modelLabel = 'Kontak';
 
-    protected static ?string $pluralModelLabel = 'Buat Kontak';
+    protected static ?string $pluralModelLabel = 'Kontak';
 
     protected static ?string $recordTitleAttribute = 'nama';
 

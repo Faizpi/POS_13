@@ -30,9 +30,9 @@ class PembelianResource extends Resource
 
     protected static ?int $navigationSort = 2;
 
-    protected static ?string $modelLabel = 'Buat Pembelian';
+    protected static ?string $modelLabel = 'Pembelian';
 
-    protected static ?string $pluralModelLabel = 'Buat Pembelian';
+    protected static ?string $pluralModelLabel = 'Pembelian';
 
     protected static ?string $recordTitleAttribute = 'nomor';
 

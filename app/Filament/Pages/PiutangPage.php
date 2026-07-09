@@ -14,10 +14,12 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Livewire\WithPagination;
 use UnitEnum;
 
 class PiutangPage extends Page
 {
+    use WithPagination;
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-inbox';
 
     protected static string|UnitEnum|null $navigationGroup = 'Piutang';
@@ -36,9 +38,12 @@ class PiutangPage extends Page
 
     public ?int $filter_gudang_id = null;
 
-    public int $page = 1;
+    public int $perPage = 10;
 
-    public int $perPage = 25;
+    public function updatedPerPage(): void
+    {
+        $this->resetPage();
+    }
 
     public function mount(): void
     {
@@ -98,7 +103,7 @@ class PiutangPage extends Page
         $user = Auth::user();
 
         if (! in_array($user->role, ['spectator', 'super_admin'])) {
-            return new LengthAwarePaginator([], 0, $this->perPage, $this->page);
+            return new LengthAwarePaginator([], 0, $this->perPage, $this->getPage());
         }
 
         $query = Penjualan::with(['gudang'])
@@ -116,7 +121,7 @@ class PiutangPage extends Page
         }
 
         $paginator = $query->orderBy('tgl_jatuh_tempo')
-            ->paginate($this->perPage, ['*'], 'page', request()->integer('page', $this->page));
+            ->paginate($this->perPage, ['*'], 'page', $this->getPage());
 
         $paginator->setCollection($paginator->getCollection()->map(function ($p) {
             $totalBayar = $p->pembayarans()->where('status', 'Approved')->sum('jumlah_bayar');
@@ -200,6 +205,7 @@ class PiutangPage extends Page
                     $this->filter_from = $data['from'];
                     $this->filter_to = $data['to'];
                     $this->filter_gudang_id = $data['gudang_id'] ?? null;
+                    $this->resetPage();
                 })
                 ->modalSubmitActionLabel('Terapkan')
                 ->modalCancelActionLabel('Batal'),

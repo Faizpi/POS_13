@@ -128,7 +128,11 @@
 
         @if($listToko->hasPages())
             <div class="mt-4 border-t border-gray-100 pt-4 dark:border-gray-800">
-                <x-filament::pagination :paginator="$listToko" />
+                <x-filament::pagination
+                    :paginator="$listToko"
+                    :page-options="[10, 25, 50, 100]"
+                    current-page-option-property="perPage"
+                />
             </div>
         @endif
     </x-filament::section>

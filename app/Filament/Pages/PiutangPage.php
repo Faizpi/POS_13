@@ -121,7 +121,8 @@ class PiutangPage extends Page
         }
 
         $paginator = $query->orderBy('tgl_jatuh_tempo')
-            ->paginate($this->perPage, ['*'], 'page', $this->getPage());
+            ->paginate($this->perPage, ['*'], 'page', $this->getPage())
+            ->onEachSide(0);
 
         $paginator->setCollection($paginator->getCollection()->map(function ($p) {
             $totalBayar = $p->pembayarans()->where('status', 'Approved')->sum('jumlah_bayar');

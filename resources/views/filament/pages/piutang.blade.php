@@ -1,9 +1,10 @@
 <x-filament-panels::page>
     @php
         $chartData = $this->getChartData();
+        $summaryToko = $this->getListTokoAll();
         $listToko = $this->getListToko();
-        $totalPiutang = $listToko->where('status', 'Approved')->sum('sisa');
-        $totalLunas = $listToko->where('status', 'Lunas')->sum('grand_total');
+        $totalPiutang = $summaryToko->where('status', 'Approved')->sum('sisa');
+        $totalLunas = $summaryToko->where('status', 'Lunas')->sum('grand_total');
     @endphp
 
     {{-- Info bar --}}
@@ -29,7 +30,7 @@
         </x-filament::section>
         <x-filament::section>
             <p class="text-sm text-gray-500">Total Transaksi Tempo</p>
-            <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ count($listToko) }} transaksi</p>
+            <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ $listToko->total() }} transaksi</p>
         </x-filament::section>
     </div>
 
@@ -124,6 +125,12 @@
                 </tbody>
             </table>
         </div>
+
+        @if($listToko->hasPages())
+            <div class="mt-4 border-t border-gray-100 pt-4 dark:border-gray-800">
+                {{ $listToko->links() }}
+            </div>
+        @endif
     </x-filament::section>
     @endif
 

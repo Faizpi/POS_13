@@ -13,6 +13,7 @@ use Filament\Pages\Page;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Pagination\LengthAwarePaginator;
 use UnitEnum;
 
 class PiutangPage extends Page
@@ -34,6 +35,10 @@ class PiutangPage extends Page
     public ?string $filter_to = null;
 
     public ?int $filter_gudang_id = null;
+
+    public int $page = 1;
+
+    public int $perPage = 25;
 
     public function mount(): void
     {
@@ -88,7 +93,52 @@ class PiutangPage extends Page
         ];
     }
 
-    public function getListToko(): Collection
+    public function getListToko(): LengthAwarePaginator
+    {
+        $user = Auth::user();
+
+        if (! in_array($user->role, ['spectator', 'super_admin'])) {
+            return new LengthAwarePaginator([], 0, $this->perPage, $this->page);
+        }
+
+        $query = Penjualan::with(['gudang'])
+            ->whereIn('status', ['Approved', 'Lunas'])
+            ->whereNotNull('tgl_jatuh_tempo');
+
+        if ($this->filter_gudang_id) {
+            $query->where('gudang_id', $this->filter_gudang_id);
+        }
+        if ($this->filter_from) {
+            $query->where('tgl_jatuh_tempo', '>=', $this->filter_from);
+        }
+        if ($this->filter_to) {
+            $query->where('tgl_jatuh_tempo', '<=', $this->filter_to);
+        }
+
+        $paginator = $query->orderBy('tgl_jatuh_tempo')
+            ->paginate($this->perPage, ['*'], 'page', request()->integer('page', $this->page));
+
+        $paginator->setCollection($paginator->getCollection()->map(function ($p) {
+            $totalBayar = $p->pembayarans()->where('status', 'Approved')->sum('jumlah_bayar');
+            $sisa = max(0, $p->grand_total - $totalBayar);
+
+            return [
+                'nomor' => $p->custom_number,
+                'pelanggan' => $p->pelanggan,
+                'gudang' => $p->gudang?->nama_gudang,
+                'tgl_jatuh_tempo' => $p->tgl_jatuh_tempo?->format('d/m/Y'),
+                'jatuh_tempo_lewat' => $p->tgl_jatuh_tempo?->isPast() && $p->status === 'Approved',
+                'grand_total' => $p->grand_total,
+                'sudah_bayar' => $totalBayar,
+                'sisa' => $sisa,
+                'status' => $p->status,
+            ];
+        }));
+
+        return $paginator;
+    }
+
+    public function getListTokoAll(): Collection
     {
         $user = Auth::user();
 
@@ -162,7 +212,7 @@ class PiutangPage extends Page
                 ->action(function () use ($user) {
                     $pdf = app('dompdf.wrapper');
                     $pdf->loadView('reports.piutang-pdf', [
-                        'list' => $this->getListToko(),
+                        'list' => $this->getListTokoAll(),
                         'from' => $this->filter_from,
                         'to' => $this->filter_to,
                         'generatedBy' => $user->name,

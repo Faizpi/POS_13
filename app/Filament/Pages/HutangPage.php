@@ -13,6 +13,7 @@ use Filament\Pages\Page;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Pagination\LengthAwarePaginator;
 use UnitEnum;
 
 class HutangPage extends Page
@@ -34,6 +35,10 @@ class HutangPage extends Page
     public ?string $filter_to = null;
 
     public ?int $filter_gudang_id = null;
+
+    public int $page = 1;
+
+    public int $perPage = 25;
 
     public function mount(): void
     {
@@ -77,7 +82,46 @@ class HutangPage extends Page
         ];
     }
 
-    public function getListTempo(): Collection
+    public function getListTempo(): LengthAwarePaginator
+    {
+        $query = Pembelian::with(['gudang', 'kontak'])
+            ->whereIn('status', ['Approved', 'Lunas'])
+            ->whereNotNull('tgl_jatuh_tempo');
+
+        if ($this->filter_gudang_id) {
+            $query->where('gudang_id', $this->filter_gudang_id);
+        }
+        if ($this->filter_from) {
+            $query->where('tgl_jatuh_tempo', '>=', $this->filter_from);
+        }
+        if ($this->filter_to) {
+            $query->where('tgl_jatuh_tempo', '<=', $this->filter_to);
+        }
+
+        $paginator = $query->orderBy('tgl_jatuh_tempo')
+            ->paginate($this->perPage, ['*'], 'page', request()->integer('page', $this->page));
+
+        $paginator->setCollection($paginator->getCollection()->map(function ($p) {
+            $totalBayar = $p->pembayarans()->where('status', 'Approved')->sum('jumlah_bayar');
+            $sisa = max(0, $p->grand_total - $totalBayar);
+
+            return [
+                'nomor' => $p->custom_number,
+                'supplier' => $p->kontak?->nama ?? '—',
+                'gudang' => $p->gudang?->nama_gudang,
+                'tgl_jatuh_tempo' => $p->tgl_jatuh_tempo?->format('d/m/Y'),
+                'jatuh_tempo_lewat' => $p->tgl_jatuh_tempo?->isPast() && $p->status === 'Approved',
+                'grand_total' => $p->grand_total,
+                'sudah_bayar' => $totalBayar,
+                'sisa' => $sisa,
+                'status' => $p->status,
+            ];
+        }));
+
+        return $paginator;
+    }
+
+    public function getListTempoAll(): Collection
     {
         $query = Pembelian::with(['gudang', 'kontak'])
             ->whereIn('status', ['Approved', 'Lunas'])
@@ -145,7 +189,7 @@ class HutangPage extends Page
                 ->action(function () use ($user) {
                     $pdf = app('dompdf.wrapper');
                     $pdf->loadView('reports.hutang-pdf', [
-                        'list' => $this->getListTempo(),
+                        'list' => $this->getListTempoAll(),
                         'from' => $this->filter_from,
                         'to' => $this->filter_to,
                         'generatedBy' => $user->name,

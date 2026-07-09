@@ -3,105 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <title>API Docs - Hibiscus Efsya POS</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    {{-- Stoplight Elements --}}
+    <script src="https://unpkg.com/@stoplight/elements/web-components.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@stoplight/elements/styles.min.css">
+
     <style>
-        :root{--brand:#9f1239;--brand-2:#be123c;--ink:#111827;--muted:#64748b;--line:#e5e7eb;--surface:#fff}
-        body{font-family:'Segoe UI',Arial,sans-serif;margin:0;padding:32px;background:#fff7f8;color:var(--ink)}
-        h1{color:var(--brand);margin:0;font-size:28px}h2{color:#1f2937;margin:32px 0 12px}
-        .shell{max-width:1120px;margin:0 auto}
-        .hero{background:var(--surface);border:1px solid #f3d6dc;border-radius:16px;padding:28px;box-shadow:0 16px 45px rgba(136,19,55,.10)}
-        .eyebrow{display:inline-block;margin-bottom:10px;padding:6px 10px;border-radius:999px;background:#fff1f4;color:var(--brand);font-size:12px;font-weight:800;letter-spacing:.08em}
-        .meta{color:var(--muted);line-height:1.65}
-        .card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;margin:12px 0;box-shadow:0 8px 24px rgba(15,23,42,.04)}
-        code{background:#f8fafc;border:1px solid #e2e8f0;padding:2px 6px;border-radius:5px;font-size:.875em}
-        .badge{display:inline-block;padding:4px 9px;border-radius:999px;font-size:.75em;font-weight:800;margin-right:6px}
-        .get{background:#dbeafe;color:#1d4ed8}.post{background:#dcfce7;color:#166534}
-        .put{background:#fef9c3;color:#854d0e}.delete{background:#fee2e2;color:#991b1b}
-        table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)}
-        th{background:#f8fafc;font-weight:700;color:#334155}
-        .download-btns{display:flex;gap:12px;flex-wrap:wrap;margin:18px 0 4px}
-        .btn{padding:10px 16px;border-radius:999px;text-decoration:none;font-weight:700;font-size:.875rem}
-        .btn-primary{background:var(--brand-2);color:#fff}.btn-secondary{background:#fff;border:1px solid #cbd5e1;color:#334155}
-        @media (max-width:700px){body{padding:18px}.hero,.card{padding:18px}table{display:block;overflow-x:auto}}
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background-color: var(--color-canvas, #fff);
+        }
+
+        /* Download bar above docs */
+        .docs-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 10px 20px;
+            background: #1e293b;
+            color: #f8fafc;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: 14px;
+            border-bottom: 1px solid #334155;
+        }
+        .docs-topbar-title {
+            font-weight: 700;
+            font-size: 15px;
+            letter-spacing: -0.01em;
+        }
+        .docs-topbar-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .docs-topbar-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 13px;
+            transition: background .15s, color .15s;
+        }
+        .docs-topbar-btn--primary {
+            background: #3b82f6;
+            color: #fff;
+        }
+        .docs-topbar-btn--primary:hover {
+            background: #2563eb;
+        }
+        .docs-topbar-btn--secondary {
+            background: #334155;
+            color: #e2e8f0;
+        }
+        .docs-topbar-btn--secondary:hover {
+            background: #475569;
+        }
+        .docs-topbar-btn svg {
+            width: 14px;
+            height: 14px;
+            flex-shrink: 0;
+        }
+
+        /* Stoplight Elements fills remaining height */
+        elements-api {
+            display: block;
+            height: calc(100vh - 49px);
+        }
+
+        @media (max-width: 640px) {
+            .docs-topbar {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+                padding: 12px 16px;
+            }
+            elements-api {
+                height: calc(100vh - 90px);
+            }
+        }
     </style>
 </head>
 <body>
-<main class="shell">
-<section class="hero">
-<span class="eyebrow">HE POS API</span>
-<h1>Hibiscus Efsya POS API Documentation</h1>
-<p class="meta">Base URL: <code>{{ $apiUrl }}</code></p>
-<p class="meta">Auth: Bearer Token (SHA-256 hashed, 30 hari, header: <code>Authorization: Bearer {token}</code>)</p>
 
-<div class="download-btns">
-    <a href="{{ route('api.docs.download') }}" class="btn btn-primary">Download OpenAPI JSON</a>
-    <a href="{{ route('api.docs.download.postman') }}" class="btn btn-secondary">Download Postman</a>
-</div>
-</section>
-
-<h2>Authentication</h2>
-<div class="card">
-    <span class="badge post">POST</span> <code>/api/v1/login</code> - Login, dapatkan token<br>
-    <span class="badge post">POST</span> <code>/api/v1/logout</code> - Logout, revoke token<br>
-    <span class="badge get">GET</span> <code>/api/v1/profile</code> - Profile user<br>
-    <span class="badge put">PUT</span> <code>/api/v1/profile</code> - Update profile<br>
-    <span class="badge post">POST</span> <code>/api/v1/change-password</code> - Ganti password
+{{-- Top bar with branding & download buttons --}}
+<div class="docs-topbar">
+    <span class="docs-topbar-title">Hibiscus Efsya POS — API Documentation</span>
+    <div class="docs-topbar-actions">
+        <a href="{{ route('api.docs.download') }}" class="docs-topbar-btn docs-topbar-btn--primary">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M10.75 2.75a.75.75 0 00-1.5 0v8.614L6.295 8.235a.75.75 0 10-1.09 1.03l4.25 4.5a.75.75 0 001.09 0l4.25-4.5a.75.75 0 00-1.09-1.03l-2.955 3.129V2.75z"/><path d="M3.5 12.75a.75.75 0 00-1.5 0v2.5A2.75 2.75 0 004.75 18h10.5A2.75 2.75 0 0018 15.25v-2.5a.75.75 0 00-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5z"/></svg>
+            OpenAPI JSON
+        </a>
+        <a href="{{ route('api.docs.download.postman') }}" class="docs-topbar-btn docs-topbar-btn--secondary">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M10.75 2.75a.75.75 0 00-1.5 0v8.614L6.295 8.235a.75.75 0 10-1.09 1.03l4.25 4.5a.75.75 0 001.09 0l4.25-4.5a.75.75 0 00-1.09-1.03l-2.955 3.129V2.75z"/><path d="M3.5 12.75a.75.75 0 00-1.5 0v2.5A2.75 2.75 0 004.75 18h10.5A2.75 2.75 0 0018 15.25v-2.5a.75.75 0 00-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5z"/></svg>
+            Postman Collection
+        </a>
+    </div>
 </div>
 
-<h2>Transaksi</h2>
-<div class="card">
-    <table>
-        <thead><tr><th>Method</th><th>Endpoint</th><th>Deskripsi</th></tr></thead>
-        <tbody>
-            @foreach([
-                ['GET','penjualan','List penjualan'],['POST','penjualan','Buat penjualan'],
-                ['GET','penjualan/{id}','Detail penjualan'],['PUT','penjualan/{id}','Update (super_admin)'],
-                ['POST','penjualan/{id}/approve','Approve'],['POST','penjualan/{id}/cancel','Cancel'],
-                ['POST','penjualan/{id}/mark-paid','Tandai Lunas'],['POST','penjualan/{id}/unmark-paid','Buka Lunas (super_admin)'],
-                ['GET','pembelian','List pembelian'],['POST','pembelian','Buat pembelian'],
-                ['GET','biaya','List biaya'],['POST','biaya','Buat biaya'],
-                ['GET','kunjungan','List kunjungan'],['POST','kunjungan','Buat kunjungan'],
-                ['GET','pembayaran','List pembayaran'],['POST','pembayaran','Buat pembayaran'],
-                ['GET','penerimaan-barang','List penerimaan'],['POST','penerimaan-barang','Buat penerimaan'],
-            ] as [$method, $path, $desc])
-            <tr>
-                <td><span class="badge {{ strtolower($method) }}">{{ $method }}</span></td>
-                <td><code>/api/v1/{{ $path }}</code></td>
-                <td>{{ $desc }}</td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
-</div>
+{{-- Stoplight Elements API Docs --}}
+<elements-api
+    apiDescriptionUrl="{{ route('api.docs.json') }}"
+    router="hash"
+    layout="sidebar"
+    hideInternal="true"
+/>
 
-<h2>Master Data</h2>
-<div class="card">
-    <span class="badge get">GET</span> <code>/api/v1/gudang</code> - List gudang (role-scoped)<br>
-    <span class="badge post">POST</span> <code>/api/v1/gudang/switch</code> - Switch gudang aktif<br>
-    <span class="badge get">GET</span> <code>/api/v1/produk</code> - List produk<br>
-    <span class="badge get">GET</span> <code>/api/v1/kontak</code> - List kontak<br>
-    <span class="badge get">GET</span> <code>/api/v1/stok</code> - Stok per gudang<br>
-    <span class="badge get">GET</span> <code>/api/v1/stok/log</code> - Riwayat stok (admin/super_admin)
-</div>
-
-<h2>Print & QR</h2>
-<div class="card">
-    <span class="badge get">GET</span> <code>/api/v1/print/{type}/{id}/qr</code> - QR data (type: penjualan/pembelian/biaya/kunjungan/pembayaran/penerimaan-barang)<br>
-    <span class="badge get">GET</span> <code>/api/v1/print/{type}/{id}/bluetooth</code> - Bluetooth JSON (type: penjualan/pembelian/biaya/kunjungan)
-</div>
-
-<h2>Status Responses</h2>
-<div class="card">
-    <table>
-        <tr><th>Code</th><th>Arti</th></tr>
-        <tr><td><code>200</code></td><td>Berhasil</td></tr>
-        <tr><td><code>201</code></td><td>Created (store)</td></tr>
-        <tr><td><code>401</code></td><td>Unauthenticated (token missing/invalid/expired)</td></tr>
-        <tr><td><code>403</code></td><td>Forbidden (role tidak punya akses)</td></tr>
-        <tr><td><code>422</code></td><td>Validation error / business rule violation</td></tr>
-        <tr><td><code>500</code></td><td>Server error (transaksi gagal)</td></tr>
-    </table>
-</div>
-</main>
 </body>
 </html>

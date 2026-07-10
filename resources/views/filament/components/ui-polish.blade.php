@@ -374,11 +374,10 @@
         }
 
         .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) > nav {
-            padding-inline: 0 !important;
+            padding-inline: 8px !important;
         }
 
         .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-nav-groups {
-            width: 100% !important;
             align-items: center !important;
         }
 
@@ -389,12 +388,10 @@
         }
 
         .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-item {
-            position: relative !important;
-            display: block !important;
+            display: flex !important;
             width: 100% !important;
-            min-width: 100% !important;
-            height: 36px !important;
-            min-height: 36px !important;
+            align-items: center !important;
+            justify-content: center !important;
         }
 
         .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-item a,
@@ -403,14 +400,10 @@
             width: 36px !important;
             min-width: 36px !important;
             max-width: 36px !important;
-            position: absolute !important;
-            inset-inline-start: 50% !important;
-            top: 0 !important;
             height: 36px !important;
             min-height: 36px !important;
-            margin: 0 !important;
+            margin-inline: auto !important;
             padding: 0 !important;
-            transform: translateX(-50%) !important;
             align-items: center !important;
             justify-content: center !important;
             gap: 0 !important;

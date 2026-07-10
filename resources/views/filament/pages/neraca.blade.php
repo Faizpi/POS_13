@@ -2,7 +2,7 @@
     @php $data = $this->getData(); @endphp
 
     {{-- Filter info bar --}}
-    <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-2 bg-white dark:bg-gray-900 p-3 rounded-xl shadow-sm border border-gray-200 dark:border-white/10">
+    <div class="he-finance-filter flex items-center gap-2 p-3 mb-2 text-sm text-gray-500 dark:text-gray-400">
         <x-filament::icon icon="heroicon-o-funnel" class="w-5 h-5 text-primary-500" />
         <span>
             Periode:

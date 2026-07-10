@@ -8,7 +8,7 @@
     @endphp
 
     {{-- Info bar --}}
-    <div class="flex flex-wrap items-center gap-4 text-sm text-gray-500 dark:text-gray-400 mb-2">
+    <div class="he-finance-filter flex flex-wrap items-center gap-4 p-3 mb-2 text-sm text-gray-500 dark:text-gray-400">
         <span>
             Periode:
             <strong class="text-gray-700 dark:text-gray-200">
@@ -20,22 +20,22 @@
 
     {{-- Summary cards --}}
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-        <x-filament::section>
+        <x-filament::section class="he-finance-section">
             <p class="text-sm text-gray-500">Total Piutang Belum Lunas</p>
             <p class="text-2xl font-bold text-danger-600">Rp {{ number_format($totalPiutang, 0, ',', '.') }}</p>
         </x-filament::section>
-        <x-filament::section>
+        <x-filament::section class="he-finance-section">
             <p class="text-sm text-gray-500">Total Piutang Lunas</p>
             <p class="text-2xl font-bold text-success-600">Rp {{ number_format($totalLunas, 0, ',', '.') }}</p>
         </x-filament::section>
-        <x-filament::section>
+        <x-filament::section class="he-finance-section">
             <p class="text-sm text-gray-500">Total Transaksi Tempo</p>
             <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ $listToko->total() }} transaksi</p>
         </x-filament::section>
     </div>
 
     {{-- Chart Graph --}}
-    <x-filament::section heading="Graph Total Tempo Monthly">
+    <x-filament::section heading="Graph Total Tempo Monthly" class="he-finance-section">
         <div class="h-64">
             @if(count($chartData['labels']) > 0)
                 <canvas id="piutangChart" x-data="{}" x-init="
@@ -80,9 +80,9 @@
 
     {{-- List Toko Tempo --}}
     @if(in_array(auth()->user()?->role, ['spectator', 'super_admin']))
-    <x-filament::section heading="List Toko — Tempo Belum & Sudah Terbayar" class="mt-4">
+    <x-filament::section heading="List Toko — Tempo Belum & Sudah Terbayar" class="he-finance-section mt-4">
         <div class="overflow-x-auto">
-            <table class="w-full text-sm">
+            <table class="he-finance-table w-full text-sm">
                 <thead>
                     <tr class="border-b border-gray-200 dark:border-gray-700">
                         <th class="text-left py-2 px-3 font-medium">Pelanggan</th>
@@ -119,7 +119,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="8" class="py-8 text-center text-gray-500">Belum ada data piutang.</td>
+                        <td colspan="8" class="he-finance-empty py-8 text-center">Belum ada data piutang.</td>
                     </tr>
                     @endforelse
                 </tbody>
@@ -127,7 +127,7 @@
         </div>
 
         @if($listToko->hasPages())
-            <div class="mt-4 border-t border-gray-100 pt-4 dark:border-gray-800">
+            <div class="he-finance-pagination mt-4 pt-4">
                 <x-filament::pagination
                     :paginator="$listToko"
                     :page-options="[10, 25, 50, 100]"

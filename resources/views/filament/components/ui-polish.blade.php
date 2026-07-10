@@ -1,27 +1,46 @@
 @vite(['resources/css/app.css'])
 
 <style>
+    :root {
+        --admin-surface-card: #ffffff;
+        --admin-surface-card-muted: #f8fafc;
+        --admin-border-subtle: rgba(148, 163, 184, 0.22);
+        --admin-border-strong: rgba(148, 163, 184, 0.32);
+        --admin-text-muted: rgb(100, 116, 139);
+        --admin-table-hover: rgb(248, 250, 252);
+        --admin-shadow-card: 0 10px 28px rgba(15, 23, 42, 0.06);
+    }
+
+    .dark {
+        --admin-surface-card: #18181b;
+        --admin-surface-card-muted: #27272a;
+        --admin-border-subtle: rgba(255, 255, 255, 0.10);
+        --admin-border-strong: rgba(255, 255, 255, 0.16);
+        --admin-text-muted: rgb(148, 163, 184);
+        --admin-table-hover: rgba(255, 255, 255, 0.05);
+        --admin-shadow-card: 0 12px 30px rgba(0, 0, 0, 0.24);
+    }
+
     /* ===== Global Scale (Zoom Out) ===== */
     html {
         font-size: 85% !important;
     }
 
+    /* ===== Shared Admin Card Surface ===== */
+    .fi-wi-stats-overview-stat,
+    .fi-dashboard-page .fi-wi-chart .fi-section,
+    .he-finance-section.fi-section,
+    .he-finance-filter {
+        overflow: hidden;
+        border: 1px solid var(--admin-border-subtle);
+        border-radius: 0.875rem;
+        background: var(--admin-surface-card);
+        box-shadow: var(--admin-shadow-card);
+    }
+
     /* ===== Dashboard Stats Cards ===== */
     .fi-wi-stats-overview-stat {
         min-height: 8.5rem;
-        overflow: hidden;
-        border-radius: 0.875rem;
-        border: 1px solid rgba(148, 163, 184, 0.22);
-        background:
-            linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.72)),
-            var(--fi-color-white, #ffffff);
-        box-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);
-    }
-
-    .dark .fi-wi-stats-overview-stat {
-        border-color: rgba(255, 255, 255, 0.08);
-        background: rgb(9, 9, 11);
-        box-shadow: 0 14px 34px rgba(0, 0, 0, 0.5);
     }
 
     .fi-wi-stats-overview-stat-content {
@@ -64,40 +83,16 @@
 
     /* ===== Dashboard Charts ===== */
     .fi-dashboard-page .fi-wi-chart .fi-section {
-        overflow: hidden;
-        border-radius: 1rem;
-        border: 1px solid rgba(148, 163, 184, 0.18);
-        background: linear-gradient(160deg, rgba(255,255,255,0.98) 0%, rgba(248,250,252,0.92) 100%);
-        box-shadow:
-            0 1px 0 0 rgba(255,255,255,0.9) inset,
-            0 12px 32px rgba(15, 23, 42, 0.07),
-            0 2px 8px rgba(15, 23, 42, 0.04);
         transition: box-shadow 0.25s ease, transform 0.25s ease;
     }
 
     .fi-dashboard-page .fi-wi-chart .fi-section:hover {
-        box-shadow:
-            0 1px 0 0 rgba(255,255,255,0.9) inset,
-            0 16px 40px rgba(15, 23, 42, 0.1),
-            0 4px 12px rgba(15, 23, 42, 0.06);
+        box-shadow: 0 16px 40px rgba(15, 23, 42, 0.10);
         transform: translateY(-1px);
-    }
-
-    .dark .fi-dashboard-page .fi-wi-chart .fi-section {
-        border-color: rgba(148, 163, 184, 0.14);
-        background: linear-gradient(160deg, rgba(30, 41, 59, 0.88) 0%, rgba(15, 23, 42, 0.96) 100%);
-        box-shadow:
-            0 1px 0 0 rgba(255,255,255,0.04) inset,
-            0 14px 36px rgba(0, 0, 0, 0.3),
-            0 2px 8px rgba(0, 0, 0, 0.18);
     }
 
     .dark .fi-dashboard-page .fi-wi-chart .fi-section:hover {
-        box-shadow:
-            0 1px 0 0 rgba(255,255,255,0.04) inset,
-            0 20px 48px rgba(0, 0, 0, 0.38),
-            0 4px 12px rgba(0, 0, 0, 0.24);
-        transform: translateY(-1px);
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.32);
     }
 
     .fi-dashboard-page .fi-wi-chart .fi-section-header {
@@ -163,9 +158,27 @@
     }
 
     /* ===== General table / resource page polish ===== */
-    .fi-ta-table {
+    .fi-ta-table,
+    .he-finance-table {
         border-radius: 0.75rem;
         overflow: hidden;
+    }
+
+    .he-finance-table thead th {
+        background: var(--admin-surface-card-muted);
+        color: var(--admin-text-muted);
+    }
+
+    .he-finance-table tbody tr:hover {
+        background: var(--admin-table-hover);
+    }
+
+    .he-finance-table .he-finance-empty {
+        color: var(--admin-text-muted);
+    }
+
+    .he-finance-pagination {
+        border-top: 1px solid var(--admin-border-subtle);
     }
 
     .fi-section {

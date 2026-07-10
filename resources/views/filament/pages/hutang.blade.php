@@ -7,28 +7,28 @@
         $totalLunas = $summaryTempo->where('status', 'Lunas')->sum('grand_total');
     @endphp
 
-    <div class="flex items-center gap-2 text-sm text-gray-500 mb-2">
+    <div class="he-finance-filter flex items-center gap-2 p-3 mb-2 text-sm text-gray-500">
         Periode: <strong>{{ $this->filter_from ? \Carbon\Carbon::parse($this->filter_from)->format('d/m/Y') : 'Semua' }} — {{ $this->filter_to ? \Carbon\Carbon::parse($this->filter_to)->format('d/m/Y') : 'Semua' }}</strong>
     </div>
 
     {{-- Summary --}}
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-        <x-filament::section>
+        <x-filament::section class="he-finance-section">
             <p class="text-sm text-gray-500">Total Hutang Belum Lunas</p>
             <p class="text-2xl font-bold text-danger-600">Rp {{ number_format($totalHutang, 0, ',', '.') }}</p>
         </x-filament::section>
-        <x-filament::section>
+        <x-filament::section class="he-finance-section">
             <p class="text-sm text-gray-500">Total Hutang Lunas</p>
             <p class="text-2xl font-bold text-success-600">Rp {{ number_format($totalLunas, 0, ',', '.') }}</p>
         </x-filament::section>
-        <x-filament::section>
+        <x-filament::section class="he-finance-section">
             <p class="text-sm text-gray-500">Total Transaksi Tempo</p>
             <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ $listTempo->total() }} transaksi</p>
         </x-filament::section>
     </div>
 
     {{-- Chart --}}
-    <x-filament::section heading="Graph Total Pembelian Monthly">
+    <x-filament::section heading="Graph Total Pembelian Monthly" class="he-finance-section">
         <div class="h-64">
             @if(count($chartData['labels']) > 0)
                 <canvas id="hutangChart" x-data="{}" x-init="
@@ -72,9 +72,9 @@
     </x-filament::section>
 
     {{-- List Tempo --}}
-    <x-filament::section heading="List Tempo Hutang — Belum & Sudah Terbayar" class="mt-4">
+    <x-filament::section heading="List Tempo Hutang — Belum & Sudah Terbayar" class="he-finance-section mt-4">
         <div class="overflow-x-auto">
-            <table class="w-full text-sm">
+            <table class="he-finance-table w-full text-sm">
                 <thead>
                     <tr class="border-b border-gray-200 dark:border-gray-700">
                         <th class="text-left py-2 px-3 font-medium">Supplier</th>
@@ -107,7 +107,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="8" class="py-8 text-center text-gray-500">Belum ada data hutang.</td>
+                        <td colspan="8" class="he-finance-empty py-8 text-center">Belum ada data hutang.</td>
                     </tr>
                     @endforelse
                 </tbody>
@@ -115,7 +115,7 @@
         </div>
 
         @if($listTempo->hasPages())
-            <div class="mt-4 border-t border-gray-100 pt-4 dark:border-gray-800">
+            <div class="he-finance-pagination mt-4 pt-4">
                 <x-filament::pagination
                     :paginator="$listTempo"
                     :page-options="[10, 25, 50, 100]"

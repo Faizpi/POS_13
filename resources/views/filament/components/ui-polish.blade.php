@@ -9,6 +9,16 @@
         --admin-text-muted: rgb(100, 116, 139);
         --admin-table-hover: rgb(248, 250, 252);
         --admin-shadow-card: 0 10px 28px rgba(15, 23, 42, 0.06);
+        --sidebar-surface: #ffffff;
+        --sidebar-surface-hover: #f4f4f5;
+        --sidebar-surface-active: #eff6ff;
+        --sidebar-border: #e4e4e7;
+        --sidebar-text: #3f3f46;
+        --sidebar-text-muted: #71717a;
+        --sidebar-text-active: #1d4ed8;
+        --sidebar-icon: #71717a;
+        --sidebar-icon-active: #2563eb;
+        --sidebar-focus: rgba(37, 99, 235, 0.72);
     }
 
     .dark {
@@ -19,6 +29,16 @@
         --admin-text-muted: rgb(148, 163, 184);
         --admin-table-hover: rgba(255, 255, 255, 0.05);
         --admin-shadow-card: 0 12px 30px rgba(0, 0, 0, 0.24);
+        --sidebar-surface: #18181b;
+        --sidebar-surface-hover: #27272a;
+        --sidebar-surface-active: rgba(37, 99, 235, 0.20);
+        --sidebar-border: rgba(255, 255, 255, 0.10);
+        --sidebar-text: #e4e4e7;
+        --sidebar-text-muted: #a1a1aa;
+        --sidebar-text-active: #bfdbfe;
+        --sidebar-icon: #a1a1aa;
+        --sidebar-icon-active: #93c5fd;
+        --sidebar-focus: rgba(96, 165, 250, 0.78);
     }
 
     /* ===== Global Scale (Zoom Out) ===== */
@@ -185,27 +205,28 @@
         border-radius: 0.875rem;
     }
 
-    /* ===== Sidebar: Quiet Structured Navigation ===== */
+    /* ===== Sidebar: Restrained SaaS Navigation ===== */
     .fi-sidebar {
-        background: #ffffff;
-        border-inline-end: 1px solid var(--admin-border-subtle);
-        padding: 0.75rem 0;
+        background: var(--sidebar-surface);
+        border-inline-end: 1px solid var(--sidebar-border);
+        padding-block: 10px;
     }
 
-    .dark .fi-sidebar {
-        background: #111113;
+    .fi-sidebar-header,
+    .fi-sidebar-footer {
+        background: var(--sidebar-surface);
+        border-color: var(--sidebar-border);
     }
 
     .fi-sidebar > nav {
-        padding: 0.5rem 0.75rem 1rem !important;
+        padding: 6px 10px 12px !important;
     }
 
     .fi-sidebar .fi-sidebar-item,
     .fi-sidebar .fi-sidebar-item-btn,
     .fi-sidebar .fi-sidebar-group-label,
     .fi-sidebar > nav > ul > li {
-        border-bottom: none !important;
-        border-top: none !important;
+        border: 0 !important;
     }
 
     .fi-sidebar-nav-groups {
@@ -215,30 +236,45 @@
     .fi-sidebar-group + .fi-sidebar-group,
     .fi-sidebar-group + li:not(.fi-sidebar-group),
     li:not(.fi-sidebar-group) + .fi-sidebar-group {
-        margin-top: 0.9rem !important;
+        margin-top: 12px !important;
     }
 
     .fi-sidebar-group > .fi-sidebar-group-label,
     .fi-sidebar-group-label {
-        font-size: 0.7rem !important;
-        font-weight: 750 !important;
-        text-transform: uppercase !important;
-        letter-spacing: 0.09em !important;
-        padding: 0.4rem 0.65rem 0.3rem !important;
+        min-height: 28px;
         margin: 0 !important;
+        padding: 7px 10px 5px !important;
+        color: var(--sidebar-text-muted) !important;
+        font-size: 10px !important;
+        font-weight: 650 !important;
+        letter-spacing: 0.055em !important;
         line-height: 1.2 !important;
-        color: rgb(100, 116, 139) !important;
+        text-transform: uppercase !important;
     }
 
-    .dark .fi-sidebar-group > .fi-sidebar-group-label,
-    .dark .fi-sidebar-group-label {
-        color: rgb(148, 163, 184) !important;
+    .fi-sidebar-group-label > button,
+    .fi-sidebar-group > button:first-child {
+        min-height: 28px;
+        padding: 4px 0 !important;
+        border-radius: 6px;
+        color: var(--sidebar-text-muted) !important;
+    }
+
+    .fi-sidebar-group-label > button:hover,
+    .fi-sidebar-group > button:first-child:hover {
+        color: var(--sidebar-text) !important;
+    }
+
+    .fi-sidebar-group-label > button:focus-visible,
+    .fi-sidebar-group > button:first-child:focus-visible {
+        outline: 2px solid var(--sidebar-focus) !important;
+        outline-offset: 2px;
     }
 
     .fi-sidebar-group-items {
-        margin-top: 0.1rem !important;
+        gap: 2px !important;
+        margin-top: 2px !important;
         padding: 0 !important;
-        gap: 0.125rem !important;
     }
 
     .fi-sidebar-group-items > li,
@@ -247,138 +283,168 @@
     }
 
     .fi-sidebar-item a,
-    .fi-sidebar-item-btn,
-    .fi-sidebar-group-items a {
-        min-height: 2.4rem !important;
-        padding: 0.55rem 0.7rem !important;
-        gap: 0.65rem !important;
-        border-radius: 0.5rem !important;
-        transition: background-color 180ms ease, color 180ms ease, box-shadow 180ms ease !important;
+    .fi-sidebar-item-btn {
+        min-height: 36px !important;
+        padding: 8px 10px !important;
+        gap: 9px !important;
+        border-radius: 7px !important;
+        color: var(--sidebar-text) !important;
+        transition: background-color 140ms ease, color 140ms ease, box-shadow 140ms ease !important;
     }
 
     .fi-sidebar-item-label,
     .fi-sidebar-item-label > span {
-        font-size: 0.86rem !important;
-        font-weight: 550 !important;
-        line-height: 1.25 !important;
-        color: rgb(51, 65, 85) !important;
+        color: var(--sidebar-text) !important;
+        font-size: 12px !important;
+        font-weight: 500 !important;
+        line-height: 1.3 !important;
     }
 
-    .dark .fi-sidebar-item-label,
-    .dark .fi-sidebar-item-label > span {
-        color: rgb(203, 213, 225) !important;
-    }
-
+    .fi-sidebar-item .fi-icon,
     .fi-sidebar-item-icon {
-        width: 1.1rem !important;
-        height: 1.1rem !important;
-        opacity: 0.84;
-        transition: color 180ms ease, opacity 180ms ease !important;
+        width: 17px !important;
+        height: 17px !important;
+        flex: 0 0 17px !important;
+        margin: 0 !important;
+        color: var(--sidebar-icon) !important;
+        opacity: 1 !important;
+        transition: color 140ms ease !important;
     }
 
     .fi-sidebar-item-badge {
-        font-size: 0.7rem !important;
-        padding: 0.12rem 0.42rem !important;
+        padding: 2px 6px !important;
+        border-radius: 999px !important;
+        font-size: 10px !important;
+        line-height: 1.2 !important;
     }
 
     .fi-sidebar-item.fi-sidebar-item-has-url a:hover,
-    .fi-sidebar-item.fi-sidebar-item-has-url .fi-sidebar-item-btn:hover {
-        background: rgba(15, 23, 42, 0.045) !important;
-    }
-
-    .dark .fi-sidebar-item.fi-sidebar-item-has-url a:hover,
-    .dark .fi-sidebar-item.fi-sidebar-item-has-url .fi-sidebar-item-btn:hover {
-        background: rgba(255, 255, 255, 0.06) !important;
+    .fi-sidebar-item.fi-sidebar-item-has-url .fi-sidebar-item-btn:hover,
+    .fi-sidebar-item a:hover,
+    .fi-sidebar-item-btn:hover {
+        background: var(--sidebar-surface-hover) !important;
+        color: var(--sidebar-text) !important;
     }
 
     .fi-sidebar-item a:focus-visible,
     .fi-sidebar-item-btn:focus-visible {
-        outline: 2px solid rgba(59, 130, 246, 0.72) !important;
+        outline: 2px solid var(--sidebar-focus) !important;
         outline-offset: 2px;
     }
 
-    /* Active route uses one restrained rail, not competing blue treatments. */
     .fi-sidebar-item.fi-active a,
     .fi-sidebar-item.fi-active .fi-sidebar-item-btn {
-        background: rgba(59, 130, 246, 0.07) !important;
-        box-shadow: inset 3px 0 0 rgb(37, 99, 235) !important;
-    }
-
-    .dark .fi-sidebar-item.fi-active a,
-    .dark .fi-sidebar-item.fi-active .fi-sidebar-item-btn {
-        background: rgba(96, 165, 250, 0.10) !important;
-        box-shadow: inset 3px 0 0 rgb(96, 165, 250) !important;
+        background: var(--sidebar-surface-active) !important;
+        box-shadow: inset 2px 0 0 var(--sidebar-icon-active) !important;
+        color: var(--sidebar-text-active) !important;
     }
 
     .fi-sidebar-item.fi-active .fi-sidebar-item-label,
     .fi-sidebar-item.fi-active .fi-sidebar-item-label > span {
-        font-weight: 700 !important;
-        color: rgb(30, 64, 175) !important;
+        color: var(--sidebar-text-active) !important;
+        font-weight: 650 !important;
     }
 
-    .dark .fi-sidebar-item.fi-active .fi-sidebar-item-label,
-    .dark .fi-sidebar-item.fi-active .fi-sidebar-item-label > span {
-        color: rgb(191, 219, 254) !important;
-    }
-
+    .fi-sidebar-item.fi-active .fi-icon,
     .fi-sidebar-item.fi-active .fi-sidebar-item-icon {
-        color: rgb(37, 99, 235) !important;
-        opacity: 1 !important;
+        color: var(--sidebar-icon-active) !important;
     }
 
-    .dark .fi-sidebar-item.fi-active .fi-sidebar-item-icon {
-        color: rgb(96, 165, 250) !important;
+    @media (max-width: 1023px) {
+        .fi-sidebar > nav {
+            padding-inline: 12px !important;
+        }
+
+        .fi-sidebar-item a,
+        .fi-sidebar-item-btn {
+            min-height: 44px !important;
+            padding-block: 11px !important;
+        }
+
+        .fi-sidebar-group-label > button,
+        .fi-sidebar-group > button:first-child {
+            min-height: 40px;
+        }
     }
 
-    .fi-sidebar-group-label > button,
-    .fi-sidebar-group > button:first-child {
-        padding: 0.35rem 0 !important;
-    }
-
-    /* Keep Filament's desktop icon rail compact when the sidebar is minimized. */
+    /* Pixel geometry is intentional because the global 85% root scale shrinks rem units. */
     @media (min-width: 1024px) {
         .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) {
             padding-inline: 0 !important;
         }
 
         .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) > nav {
-            padding-inline: 0.5rem !important;
+            padding-inline: 8px !important;
         }
 
         .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-nav-groups {
-            align-items: center;
+            align-items: center !important;
         }
 
         .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-group,
         .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-group-items,
         .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-item {
-            width: 100%;
+            width: 100% !important;
         }
 
         .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-item a,
         .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-item-btn {
-            width: 2.5rem !important;
-            min-height: 2.5rem !important;
+            display: flex !important;
+            width: 36px !important;
+            min-width: 36px !important;
+            max-width: 36px !important;
+            height: 36px !important;
+            min-height: 36px !important;
             margin-inline: auto !important;
-            padding: 0.625rem !important;
+            padding: 0 !important;
+            align-items: center !important;
             justify-content: center !important;
             gap: 0 !important;
+            overflow: hidden !important;
+            border: 0 !important;
         }
 
         .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-item-grouped-border,
         .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-item-label,
-        .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-item-badge-ctn {
+        .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-item-badge,
+        .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-item-badge-ctn,
+        .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-group-label,
+        .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-group-label-content,
+        .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-group-collapse-button,
+        .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-item > :not(a):not(.fi-sidebar-item-btn) {
             display: none !important;
         }
 
-        .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-item-btn > .fi-icon {
-            flex: none !important;
+        .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-item a .fi-icon,
+        .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-item-btn .fi-icon,
+        .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-item a .fi-sidebar-item-icon,
+        .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-item-btn .fi-sidebar-item-icon {
+            position: static !important;
+            display: block !important;
+            width: 18px !important;
+            min-width: 18px !important;
+            max-width: 18px !important;
+            height: 18px !important;
+            min-height: 18px !important;
+            max-height: 18px !important;
+            flex: 0 0 18px !important;
             margin: 0 !important;
+            padding: 0 !important;
+            transform: none !important;
         }
 
         .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-item.fi-active a,
         .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-item.fi-active .fi-sidebar-item-btn {
-            box-shadow: none !important;
+            box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--sidebar-icon-active) 24%, transparent) !important;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .fi-sidebar-item a,
+        .fi-sidebar-item-btn,
+        .fi-sidebar-item .fi-icon,
+        .fi-sidebar-item-icon {
+            transition-duration: 0.01ms !important;
         }
     }
 

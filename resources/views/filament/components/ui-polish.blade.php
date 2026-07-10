@@ -335,6 +335,42 @@
         padding: 0.35rem 0 !important;
     }
 
+    /* Keep Filament's desktop icon rail compact when the sidebar is minimized. */
+    @media (min-width: 1024px) {
+        .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) {
+            padding-inline: 0 !important;
+        }
+
+        .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) > nav {
+            padding-inline: 0.5rem !important;
+        }
+
+        .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-nav-groups {
+            align-items: center;
+        }
+
+        .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-group,
+        .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-group-items,
+        .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-item {
+            width: 100%;
+        }
+
+        .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-item a,
+        .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-item-btn {
+            width: 2.5rem !important;
+            min-height: 2.5rem !important;
+            margin-inline: auto !important;
+            padding: 0.625rem !important;
+            justify-content: center !important;
+            gap: 0 !important;
+        }
+
+        .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-item.fi-active a,
+        .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-item.fi-active .fi-sidebar-item-btn {
+            box-shadow: none !important;
+        }
+    }
+
     /* ===== Badge fixes ===== */
     .fi-badge {
         font-weight: 600;

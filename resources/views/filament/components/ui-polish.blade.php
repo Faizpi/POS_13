@@ -406,6 +406,7 @@
             padding: 0 !important;
             align-items: center !important;
             justify-content: center !important;
+            transform: translateX(7px) !important;
             gap: 0 !important;
             overflow: hidden !important;
             border: 0 !important;

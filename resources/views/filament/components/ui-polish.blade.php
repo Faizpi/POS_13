@@ -185,17 +185,21 @@
         border-radius: 0.875rem;
     }
 
-    /* ===== Sidebar polish ===== */
-
-    /* Overall sidebar padding */
+    /* ===== Sidebar: Quiet Structured Navigation ===== */
     .fi-sidebar {
-        padding: 0.5rem 0 !important;
+        background: #ffffff;
+        border-inline-end: 1px solid var(--admin-border-subtle);
+        padding: 0.75rem 0;
     }
+
+    .dark .fi-sidebar {
+        background: #111113;
+    }
+
     .fi-sidebar > nav {
-        padding: 0.5rem 0.75rem !important;
-        gap: 0 !important;
+        padding: 0.5rem 0.75rem 1rem !important;
     }
-    /* Remove any default Filament borders on sidebar items */
+
     .fi-sidebar .fi-sidebar-item,
     .fi-sidebar .fi-sidebar-item-btn,
     .fi-sidebar .fi-sidebar-group-label,
@@ -204,120 +208,128 @@
         border-top: none !important;
     }
 
-    /* Spacing between groups */
     .fi-sidebar-nav-groups {
-        gap: 0.4rem !important;
+        gap: 0 !important;
     }
 
-    /* Group header label — lebih kecil, muted, clean */
-    .fi-sidebar-group > .fi-sidebar-group-label,
-    .fi-sidebar-group-label {
-        font-size: 0.7rem !important;
-        font-weight: 700 !important;
-        text-transform: uppercase !important;
-        letter-spacing: 0.08em !important;
-        padding: 0.6rem 0.5rem 0.2rem 0.5rem !important;
-        margin: 0 !important;
-        line-height: 1.1 !important;
-        color: rgb(148, 163, 184) !important;
-    }
-    .dark .fi-sidebar-group > .fi-sidebar-group-label,
-    .dark .fi-sidebar-group-label {
-        color: rgb(100, 116, 139) !important;
-    }
-
-    /* Remove excessive top margins on sibling groups */
     .fi-sidebar-group + .fi-sidebar-group,
     .fi-sidebar-group + li:not(.fi-sidebar-group),
     li:not(.fi-sidebar-group) + .fi-sidebar-group {
-        margin-top: 0 !important;
-        padding-top: 0 !important;
-        border-top: none !important;
+        margin-top: 0.9rem !important;
     }
 
-    /* Sub-menu items container */
+    .fi-sidebar-group > .fi-sidebar-group-label,
+    .fi-sidebar-group-label {
+        font-size: 0.7rem !important;
+        font-weight: 750 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.09em !important;
+        padding: 0.4rem 0.65rem 0.3rem !important;
+        margin: 0 !important;
+        line-height: 1.2 !important;
+        color: rgb(100, 116, 139) !important;
+    }
+
+    .dark .fi-sidebar-group > .fi-sidebar-group-label,
+    .dark .fi-sidebar-group-label {
+        color: rgb(148, 163, 184) !important;
+    }
+
     .fi-sidebar-group-items {
         margin-top: 0.1rem !important;
         padding: 0 !important;
-        gap: 0.1rem !important;
+        gap: 0.125rem !important;
     }
+
     .fi-sidebar-group-items > li,
     .fi-sidebar-group-items .fi-sidebar-item {
         margin: 0 !important;
     }
 
-    /* Item link / button inside sidebar */
     .fi-sidebar-item a,
     .fi-sidebar-item-btn,
     .fi-sidebar-group-items a {
-        padding: 0.5rem 0.65rem !important;
-        min-height: 0 !important;
-        gap: 0.55rem !important;
+        min-height: 2.4rem !important;
+        padding: 0.55rem 0.7rem !important;
+        gap: 0.65rem !important;
         border-radius: 0.5rem !important;
+        transition: background-color 180ms ease, color 180ms ease, box-shadow 180ms ease !important;
     }
 
-    /* Item label */
     .fi-sidebar-item-label,
     .fi-sidebar-item-label > span {
         font-size: 0.86rem !important;
-        font-weight: 500 !important;
+        font-weight: 550 !important;
         line-height: 1.25 !important;
         color: rgb(51, 65, 85) !important;
     }
+
     .dark .fi-sidebar-item-label,
     .dark .fi-sidebar-item-label > span {
         color: rgb(203, 213, 225) !important;
     }
 
-    /* Icon size */
     .fi-sidebar-item-icon {
-        width: 1.15rem !important;
-        height: 1.15rem !important;
-        opacity: 0.75;
+        width: 1.1rem !important;
+        height: 1.1rem !important;
+        opacity: 0.84;
+        transition: color 180ms ease, opacity 180ms ease !important;
     }
 
-    /* Badge in sidebar */
     .fi-sidebar-item-badge {
         font-size: 0.7rem !important;
         padding: 0.12rem 0.42rem !important;
     }
 
-    /* Hover */
-    .fi-sidebar-group-items .fi-sidebar-item.fi-sidebar-item-has-url a:hover,
-    .fi-sidebar-group-items .fi-sidebar-item.fi-sidebar-item-has-url .fi-sidebar-item-btn:hover {
-        background: rgba(59, 130, 246, 0.07) !important;
-    }
-    .dark .fi-sidebar-group-items .fi-sidebar-item.fi-sidebar-item-has-url a:hover,
-    .dark .fi-sidebar-group-items .fi-sidebar-item.fi-sidebar-item-has-url .fi-sidebar-item-btn:hover {
-        background: rgba(59, 130, 246, 0.12) !important;
+    .fi-sidebar-item.fi-sidebar-item-has-url a:hover,
+    .fi-sidebar-item.fi-sidebar-item-has-url .fi-sidebar-item-btn:hover {
+        background: rgba(15, 23, 42, 0.045) !important;
     }
 
-    /* Active — lebih tegas dengan left indicator */
-    .fi-sidebar-group-items .fi-sidebar-item.fi-active a,
-    .fi-sidebar-group-items .fi-sidebar-item.fi-active .fi-sidebar-item-btn {
-        background: rgba(59, 130, 246, 0.1) !important;
-        border-radius: 0.5rem !important;
-        box-shadow: inset 3px 0 0 rgba(59, 130, 246, 0.7) !important;
+    .dark .fi-sidebar-item.fi-sidebar-item-has-url a:hover,
+    .dark .fi-sidebar-item.fi-sidebar-item-has-url .fi-sidebar-item-btn:hover {
+        background: rgba(255, 255, 255, 0.06) !important;
     }
-    .dark .fi-sidebar-group-items .fi-sidebar-item.fi-active a,
-    .dark .fi-sidebar-group-items .fi-sidebar-item.fi-active .fi-sidebar-item-btn {
-        background: rgba(59, 130, 246, 0.16) !important;
-        box-shadow: inset 3px 0 0 rgba(99, 160, 255, 0.75) !important;
+
+    .fi-sidebar-item a:focus-visible,
+    .fi-sidebar-item-btn:focus-visible {
+        outline: 2px solid rgba(59, 130, 246, 0.72) !important;
+        outline-offset: 2px;
     }
-    .fi-sidebar-group-items .fi-sidebar-item.fi-active .fi-sidebar-item-label,
-    .fi-sidebar-group-items .fi-sidebar-item.fi-active .fi-sidebar-item-label > span {
-        font-weight: 650 !important;
+
+    /* Active route uses one restrained rail, not competing blue treatments. */
+    .fi-sidebar-item.fi-active a,
+    .fi-sidebar-item.fi-active .fi-sidebar-item-btn {
+        background: rgba(59, 130, 246, 0.07) !important;
+        box-shadow: inset 3px 0 0 rgb(37, 99, 235) !important;
+    }
+
+    .dark .fi-sidebar-item.fi-active a,
+    .dark .fi-sidebar-item.fi-active .fi-sidebar-item-btn {
+        background: rgba(96, 165, 250, 0.10) !important;
+        box-shadow: inset 3px 0 0 rgb(96, 165, 250) !important;
+    }
+
+    .fi-sidebar-item.fi-active .fi-sidebar-item-label,
+    .fi-sidebar-item.fi-active .fi-sidebar-item-label > span {
+        font-weight: 700 !important;
+        color: rgb(30, 64, 175) !important;
+    }
+
+    .dark .fi-sidebar-item.fi-active .fi-sidebar-item-label,
+    .dark .fi-sidebar-item.fi-active .fi-sidebar-item-label > span {
+        color: rgb(191, 219, 254) !important;
+    }
+
+    .fi-sidebar-item.fi-active .fi-sidebar-item-icon {
         color: rgb(37, 99, 235) !important;
-    }
-    .dark .fi-sidebar-group-items .fi-sidebar-item.fi-active .fi-sidebar-item-label,
-    .dark .fi-sidebar-group-items .fi-sidebar-item.fi-active .fi-sidebar-item-label > span {
-        color: rgb(147, 197, 253) !important;
-    }
-    .fi-sidebar-group-items .fi-sidebar-item.fi-active .fi-sidebar-item-icon {
         opacity: 1 !important;
     }
 
-    /* Collapsible group toggle button */
+    .dark .fi-sidebar-item.fi-active .fi-sidebar-item-icon {
+        color: rgb(96, 165, 250) !important;
+    }
+
     .fi-sidebar-group-label > button,
     .fi-sidebar-group > button:first-child {
         padding: 0.35rem 0 !important;

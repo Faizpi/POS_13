@@ -104,16 +104,8 @@ class ChartPenjualanSales extends ChartWidget
         $labels = $data->map(fn ($item) => $item->name ?? 'Tanpa Sales')->toArray();
         $values = $data->map(fn ($item) => (float) $item->total)->toArray();
 
-        // Build gradient-like color array from indigo→violet based on rank
-        $count = count($values);
-        $colors = [];
-        for ($i = 0; $i < $count; $i++) {
-            $ratio = $count > 1 ? $i / ($count - 1) : 0;
-            $opacity = round(0.95 - $ratio * 0.25, 2);
-            $colors[] = $i % 2 === 0
-                ? "rgba(99, 102, 241, {$opacity})"
-                : "rgba(139, 92, 246, {$opacity})";
-        }
+        $colors = array_map(fn (string $name): string => $this->salesColor($name), $labels);
+        $hoverColors = array_map(fn (string $name): string => $this->salesColor($name, true), $labels);
 
         return [
             'datasets' => [
@@ -121,7 +113,8 @@ class ChartPenjualanSales extends ChartWidget
                     'label' => 'Total Penjualan',
                     'data' => $values,
                     'backgroundColor' => $colors ?: '#6366f1',
-                    'hoverBackgroundColor' => '#818cf8',
+                    'hoverBackgroundColor' => $hoverColors ?: '#818cf8',
+                    'borderWidth' => 0,
                     'borderRadius' => 10,
                     'borderSkipped' => false,
                     'barThickness' => 14,
@@ -181,6 +174,15 @@ class ChartPenjualanSales extends ChartWidget
             },
         }
         JS);
+    }
+
+    private function salesColor(string $name, bool $hover = false): string
+    {
+        $hue = hexdec(substr(hash('sha256', $name), 0, 8)) % 360;
+        $saturation = $hover ? 72 : 64;
+        $lightness = $hover ? 46 : 52;
+
+        return "hsl({$hue}, {$saturation}%, {$lightness}%)";
     }
 
     private function emptyDataset(): array

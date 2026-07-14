@@ -3,6 +3,19 @@
         if (blank($value)) return '-';
         try { return \Carbon\Carbon::parse($value)->format($format); } catch (\Throwable $e) { return '-'; }
     };
+    $visitRows = collect($transactions ?? []);
+    $itemRows = $visitRows->flatMap(function ($visit) {
+        return method_exists($visit, 'relationLoaded') && $visit->relationLoaded('items')
+            ? collect($visit->items)->filter()
+            : collect();
+    });
+    $totalItemQuantity = $itemRows->sum(fn ($item) => (float) ($item->jumlah ?? 0));
+    $salesCount = $visitRows->map(fn ($visit) => $visit->sales_nama ?? optional($visit->user)->name)
+        ->filter(fn ($name) => filled($name))->unique()->count();
+    $contactCount = $visitRows->map(fn ($visit) => optional($visit->kontak)->nama ?? $visit->display_contact_name)
+        ->filter(fn ($name) => filled($name))->unique()->count();
+    $statusSummary = $visitRows->groupBy(fn ($visit) => filled($visit->status ?? null) ? $visit->status : '-');
+    $tujuanSummary = $visitRows->groupBy(fn ($visit) => filled($visit->tujuan ?? null) ? $visit->tujuan : '-');
 @endphp
 <table>
     <thead><tr><th>No</th><th>Nomor</th><th>Tanggal</th><th>Tujuan</th><th>Sales</th><th style="mso-number-format:'\@'">No Telepon Sales</th><th>Kontak</th><th style="mso-number-format:'\@'">No Telepon Kontak</th><th>Gudang</th><th>Approver</th><th>Memo</th><th>Produk</th><th>Kode Item</th><th>Jumlah</th><th>Batch</th><th>Expired</th><th>Tipe Stok</th><th>Keterangan Item</th><th>Status</th><th>Dibuat</th></tr></thead>
@@ -15,5 +28,28 @@
             @endforeach
         @endforeach
     </tbody>
-    <tfoot><tr><td colspan="20" style="text-align:right; font-size:11px; color:gray;">Total Kunjungan: {{ $transactions->count() }} | Dibuat oleh: {{ $generatedBy ?? 'System' }} | {{ $generatedAt ?? now()->format('d/m/Y H:i') }}</td></tr></tfoot>
+    <tfoot><tr><td colspan="20" style="text-align:right; font-size:11px; color:gray;">Total Kunjungan: {{ $visitRows->count() }} | Dibuat oleh: {{ $generatedBy ?? 'System' }} | {{ $generatedAt ?? now()->format('d/m/Y H:i') }}</td></tr></tfoot>
+</table>
+<table>
+    <thead><tr><th colspan="4">RINGKASAN KUNJUNGAN</th></tr></thead>
+    <tbody>
+        <tr><td>Total Kunjungan</td><td>{{ $visitRows->count() }}</td><td>Total Baris Item</td><td>{{ $itemRows->count() }}</td></tr>
+        <tr><td>Total Jumlah Item</td><td>{{ $totalItemQuantity }}</td><td>Sales Unik</td><td>{{ $salesCount }}</td></tr>
+        <tr><td>Kontak Unik</td><td>{{ $contactCount }}</td><td></td><td></td></tr>
+    </tbody>
+</table>
+<table>
+    <thead><tr><th>Status</th><th>Jumlah Kunjungan</th><th>Tujuan</th><th>Jumlah Kunjungan</th></tr></thead>
+    <tbody>
+        @for($summaryIndex = 0; $summaryIndex < max($statusSummary->count(), $tujuanSummary->count()); $summaryIndex++)
+            @php
+                $statusName = $statusSummary->keys()->values()->get($summaryIndex);
+                $tujuanName = $tujuanSummary->keys()->values()->get($summaryIndex);
+            @endphp
+            <tr><td>{{ $statusName ?? '' }}</td><td>{{ $statusName !== null ? $statusSummary->get($statusName)->count() : '' }}</td><td>{{ $tujuanName ?? '' }}</td><td>{{ $tujuanName !== null ? $tujuanSummary->get($tujuanName)->count() : '' }}</td></tr>
+        @endfor
+        @if($statusSummary->isEmpty() && $tujuanSummary->isEmpty())
+            <tr><td>-</td><td>0</td><td>-</td><td>0</td></tr>
+        @endif
+    </tbody>
 </table>

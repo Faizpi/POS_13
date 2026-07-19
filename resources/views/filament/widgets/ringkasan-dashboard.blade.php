@@ -19,10 +19,10 @@
 @endphp
 
 <x-filament-widgets::widget>
-    <div class="grid gap-4 md:grid-cols-2">
+    <div class="grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-6">
         @foreach ($panels as $panel)
-            <section class="h-full rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-gray-900">
-                <div class="mb-4 flex items-center justify-between gap-3">
+            <section class="h-full rounded-xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-gray-900 sm:p-6">
+                <div class="mb-5 flex items-start justify-between gap-4">
                     <div class="flex min-w-0 items-center gap-2 text-sm font-medium text-gray-950 dark:text-white">
                         <x-filament::icon :icon="$panel['icon']" class="size-5 shrink-0 text-gray-400 dark:text-gray-500" />
                         <div class="min-w-0">
@@ -39,7 +39,7 @@
                     @endif
                 </div>
 
-                <dl class="grid gap-x-5 gap-y-4 sm:grid-cols-2">
+                <dl class="grid gap-x-6 gap-y-6 sm:grid-cols-2">
                     @foreach ([
                         ['label' => 'Penjualan', 'icon' => 'heroicon-o-shopping-cart', 'color' => 'text-primary-600 dark:text-primary-400', 'data' => $panel['metrics']['penjualan']],
                         ['label' => 'Biaya', 'icon' => 'heroicon-o-receipt-percent', 'color' => 'text-amber-600 dark:text-amber-400', 'data' => $panel['metrics']['biaya']],

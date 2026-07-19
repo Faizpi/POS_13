@@ -39,7 +39,7 @@
                     @endif
                 </div>
 
-                <dl class="grid grid-cols-2 gap-x-8 gap-y-8">
+                <dl class="grid grid-cols-1 gap-6">
                     @foreach ([
                         ['label' => 'Penjualan', 'icon' => 'heroicon-o-shopping-cart', 'color' => 'text-primary-600 dark:text-primary-400', 'data' => $panel['metrics']['penjualan']],
                         ['label' => 'Biaya', 'icon' => 'heroicon-o-receipt-percent', 'color' => 'text-amber-600 dark:text-amber-400', 'data' => $panel['metrics']['biaya']],

@@ -61,18 +61,18 @@
                 <x-slot name="heading">Informasi Akun</x-slot>
                 <x-slot name="description">Data utama dan kontak akun yang sedang login.</x-slot>
 
-                <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-5">
-                    <div>
+                <div class="grid grid-cols-2 gap-x-6 gap-y-5">
+                    <div class="min-w-0">
                         <dt class="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">No. Telepon</dt>
-                        <dd class="text-sm font-medium text-gray-900 dark:text-white mt-1">{{ $user->no_telp ?: '—' }}</dd>
+                        <dd class="text-sm font-medium text-gray-900 dark:text-white mt-1 break-words">{{ $user->no_telp ?: '—' }}</dd>
                     </div>
 
-                    <div>
+                    <div class="min-w-0">
                         <dt class="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">Gudang Default</dt>
-                        <dd class="text-sm font-medium text-gray-900 dark:text-white mt-1">{{ $user->gudang?->nama_gudang ?: '—' }}</dd>
+                        <dd class="text-sm font-medium text-gray-900 dark:text-white mt-1 break-words">{{ $user->gudang?->nama_gudang ?: '—' }}</dd>
                     </div>
 
-                    <div>
+                    <div class="min-w-0">
                         <dt class="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">Status Akun</dt>
                         <dd class="text-sm font-medium text-gray-900 dark:text-white mt-1 flex items-center gap-1.5">
                             <span class="inline-block h-2 w-2 rounded-full bg-success-500"></span>
@@ -80,12 +80,12 @@
                         </dd>
                     </div>
 
-                    <div>
+                    <div class="min-w-0">
                         <dt class="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">Role</dt>
                         <dd class="text-sm font-medium text-gray-900 dark:text-white mt-1">{{ $roleLabel }}</dd>
                     </div>
 
-                    <div class="sm:col-span-2">
+                    <div class="col-span-2">
                         <dt class="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">Alamat</dt>
                         <dd class="text-sm font-medium text-gray-900 dark:text-white mt-1 whitespace-pre-line leading-6">{{ $user->alamat ?: '—' }}</dd>
                     </div>

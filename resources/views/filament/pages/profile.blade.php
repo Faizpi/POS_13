@@ -53,15 +53,15 @@
     </div>
 
     {{-- MAIN CONTENT --}}
-    <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+    <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
 
         {{-- LEFT: Account info (2 cols) --}}
-        <div class="md:col-span-2">
+        <div class="lg:col-span-2">
             <x-filament::section>
                 <x-slot name="heading">Informasi Akun</x-slot>
                 <x-slot name="description">Data utama dan kontak akun yang sedang login.</x-slot>
 
-                <div class="grid grid-cols-2 gap-x-6 gap-y-5">
+                <div class="grid grid-cols-1 gap-y-5 sm:grid-cols-2 sm:gap-x-6">
                     <div>
                         <dt class="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">No. Telepon</dt>
                         <dd class="text-sm font-medium text-gray-900 dark:text-white mt-1">{{ $user->no_telp ?: '—' }}</dd>
@@ -85,7 +85,7 @@
                         <dd class="text-sm font-medium text-gray-900 dark:text-white mt-1">{{ $roleLabel }}</dd>
                     </div>
 
-                    <div class="col-span-2">
+                    <div class="sm:col-span-2">
                         <dt class="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">Alamat</dt>
                         <dd class="text-sm font-medium text-gray-900 dark:text-white mt-1 whitespace-pre-line leading-6">{{ $user->alamat ?: '—' }}</dd>
                     </div>

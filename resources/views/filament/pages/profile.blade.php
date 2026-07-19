@@ -18,8 +18,8 @@
 @endphp
 
     {{-- PROFILE HEADER CARD --}}
-    <div class="fi-wi-stats-overview-stat relative flex flex-col p-6 overflow-hidden mb-6">
-        <div class="flex flex-col sm:flex-row sm:items-center gap-5">
+    <div class="fi-wi-stats-overview-stat relative mb-4 flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-gray-900">
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
             {{-- Avatar --}}
             <div class="shrink-0">
                 @if ($user->avatar)
@@ -53,10 +53,10 @@
     </div>
 
     {{-- MAIN CONTENT --}}
-    <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
 
         {{-- LEFT: Account info (2 cols) --}}
-        <div class="xl:col-span-2">
+        <div class="lg:col-span-2">
             <x-filament::section>
                 <x-slot name="heading">Informasi Akun</x-slot>
                 <x-slot name="description">Data utama dan kontak akun yang sedang login.</x-slot>
@@ -94,7 +94,7 @@
         </div>
 
         {{-- RIGHT: Permissions & help (1 col) --}}
-        <div class="grid gap-6 content-start">
+        <div class="grid content-start gap-4">
             <x-filament::section>
                 <x-slot name="heading">Hak Akses</x-slot>
                 <x-slot name="description">Ringkasan izin yang aktif untuk akun ini.</x-slot>

@@ -9,6 +9,7 @@ use App\Filament\Widgets\ChartPenjualanSales;
 use App\Filament\Widgets\ChartTransaksiGudang;
 use App\Filament\Widgets\ChartTrenPenjualan;
 use App\Filament\Widgets\RingkasanDashboard;
+use App\Filament\Widgets\StatsOperasional;
 use App\Models\Gudang;
 use App\Models\User;
 use App\Services\ReportExportService;
@@ -30,6 +31,7 @@ class Dashboard extends BaseDashboard
 
         $widgets = [
             RingkasanDashboard::class,
+            StatsOperasional::class,
         ];
 
         if ($user?->isAdmin()) {

@@ -19,7 +19,7 @@
 @endphp
 
 <x-filament-widgets::widget>
-    <div class="grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-6">
+    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6">
         @foreach ($panels as $panel)
             <section class="h-full rounded-xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-gray-900 sm:p-6">
                 <div class="mb-5 flex items-start justify-between gap-4">

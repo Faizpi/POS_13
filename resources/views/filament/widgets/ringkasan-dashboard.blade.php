@@ -39,7 +39,7 @@
                     @endif
                 </div>
 
-                <dl class="grid gap-x-6 gap-y-6 sm:grid-cols-2">
+                <dl class="grid gap-x-8 gap-y-8 sm:grid-cols-2">
                     @foreach ([
                         ['label' => 'Penjualan', 'icon' => 'heroicon-o-shopping-cart', 'color' => 'text-primary-600 dark:text-primary-400', 'data' => $panel['metrics']['penjualan']],
                         ['label' => 'Biaya', 'icon' => 'heroicon-o-receipt-percent', 'color' => 'text-amber-600 dark:text-amber-400', 'data' => $panel['metrics']['biaya']],
@@ -50,8 +50,8 @@
                                 <x-filament::icon :icon="$metric['icon']" class="size-4 {{ $metric['color'] }}" />
                                 <dt>{{ $metric['label'] }}</dt>
                             </div>
-                            <dd class="mt-2 text-2xl font-semibold tracking-tight text-gray-950 dark:text-white">{{ format_rupiah($metric['data']['total']) }}</dd>
-                            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ number_format($metric['data']['count']) }} transaksi</p>
+                            <dd class="mt-2.5 text-2xl font-semibold tracking-tight text-gray-950 dark:text-white">{{ format_rupiah($metric['data']['total']) }}</dd>
+                            <p class="mt-1.5 text-sm text-gray-500 dark:text-gray-400">{{ number_format($metric['data']['count']) }} transaksi</p>
                         </div>
                     @endforeach
 
@@ -60,8 +60,8 @@
                             <x-filament::icon icon="heroicon-o-clock" class="size-4 text-gray-400 dark:text-gray-500" />
                             <dt>Total Jatuh Tempo</dt>
                         </div>
-                        <dd class="mt-2 text-2xl font-semibold tracking-tight text-gray-950 dark:text-white">{{ format_rupiah($panel['metrics']['jatuhTempo']) }}</dd>
-                        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Sisa tagihan penjualan pada periode ini.</p>
+                            <dd class="mt-2.5 text-2xl font-semibold tracking-tight text-gray-950 dark:text-white">{{ format_rupiah($panel['metrics']['jatuhTempo']) }}</dd>
+                            <p class="mt-1.5 text-sm text-gray-500 dark:text-gray-400">Sisa tagihan penjualan pada periode ini.</p>
                     </div>
                 </dl>
             </section>

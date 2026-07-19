@@ -53,39 +53,39 @@
     </div>
 
     {{-- MAIN CONTENT --}}
-    <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
 
-        {{-- LEFT: Account info (2 cols) --}}
-        <div class="md:col-span-2">
+        {{-- LEFT: Account info --}}
+        <div>
             <x-filament::section>
                 <x-slot name="heading">Informasi Akun</x-slot>
                 <x-slot name="description">Data utama dan kontak akun yang sedang login.</x-slot>
 
-                <div class="grid grid-cols-2 gap-x-6 gap-y-5">
-                    <div class="min-w-0">
-                        <dt class="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">No. Telepon</dt>
-                        <dd class="text-sm font-medium text-gray-900 dark:text-white mt-1 break-words">{{ $user->no_telp ?: '—' }}</dd>
+                <div class="space-y-4">
+                    <div class="flex items-baseline justify-between gap-4">
+                        <dt class="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 shrink-0">No. Telepon</dt>
+                        <dd class="text-sm font-medium text-gray-900 dark:text-white text-right">{{ $user->no_telp ?: '—' }}</dd>
                     </div>
 
-                    <div class="min-w-0">
-                        <dt class="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">Gudang Default</dt>
-                        <dd class="text-sm font-medium text-gray-900 dark:text-white mt-1 break-words">{{ $user->gudang?->nama_gudang ?: '—' }}</dd>
+                    <div class="flex items-baseline justify-between gap-4">
+                        <dt class="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 shrink-0">Gudang Default</dt>
+                        <dd class="text-sm font-medium text-gray-900 dark:text-white text-right">{{ $user->gudang?->nama_gudang ?: '—' }}</dd>
                     </div>
 
-                    <div class="min-w-0">
-                        <dt class="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">Status Akun</dt>
-                        <dd class="text-sm font-medium text-gray-900 dark:text-white mt-1 flex items-center gap-1.5">
+                    <div class="flex items-baseline justify-between gap-4">
+                        <dt class="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 shrink-0">Status Akun</dt>
+                        <dd class="text-sm font-medium text-gray-900 dark:text-white flex items-center gap-1.5">
                             <span class="inline-block h-2 w-2 rounded-full bg-success-500"></span>
                             Aktif
                         </dd>
                     </div>
 
-                    <div class="min-w-0">
-                        <dt class="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">Role</dt>
-                        <dd class="text-sm font-medium text-gray-900 dark:text-white mt-1">{{ $roleLabel }}</dd>
+                    <div class="flex items-baseline justify-between gap-4">
+                        <dt class="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 shrink-0">Role</dt>
+                        <dd class="text-sm font-medium text-gray-900 dark:text-white">{{ $roleLabel }}</dd>
                     </div>
 
-                    <div class="col-span-2">
+                    <div>
                         <dt class="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">Alamat</dt>
                         <dd class="text-sm font-medium text-gray-900 dark:text-white mt-1 whitespace-pre-line leading-6">{{ $user->alamat ?: '—' }}</dd>
                     </div>

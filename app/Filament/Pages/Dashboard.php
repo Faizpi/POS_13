@@ -8,10 +8,7 @@ use App\Filament\Widgets\ChartKomposisiStatus;
 use App\Filament\Widgets\ChartPenjualanSales;
 use App\Filament\Widgets\ChartTransaksiGudang;
 use App\Filament\Widgets\ChartTrenPenjualan;
-use App\Filament\Widgets\MenungguApproval;
-use App\Filament\Widgets\StatsBulanIni;
-use App\Filament\Widgets\StatsHariIni;
-use App\Filament\Widgets\StatsOperasional;
+use App\Filament\Widgets\RingkasanDashboard;
 use App\Models\Gudang;
 use App\Models\User;
 use App\Services\ReportExportService;
@@ -32,9 +29,7 @@ class Dashboard extends BaseDashboard
         $user = auth()->user();
 
         $widgets = [
-            StatsHariIni::class,
-            StatsBulanIni::class,
-            StatsOperasional::class,
+            RingkasanDashboard::class,
         ];
 
         if ($user?->isAdmin()) {
@@ -49,10 +44,6 @@ class Dashboard extends BaseDashboard
             $widgets[] = ChartTransaksiGudang::class;
             $widgets[] = ChartPenjualanSales::class;
             $widgets[] = AktivitasTerbaru::class;
-        }
-
-        if ($user?->isAdmin()) {
-            $widgets[] = MenungguApproval::class;
         }
 
         return $widgets;

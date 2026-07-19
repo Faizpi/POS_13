@@ -18,7 +18,7 @@
 @endphp
 
     {{-- PROFILE HEADER CARD --}}
-    <div class="fi-wi-stats-overview-stat relative mb-4 flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-gray-900">
+    <div class="fi-wi-stats-overview-stat relative mb-4 flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-white/10 dark:bg-gray-900">
         <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
             {{-- Avatar --}}
             <div class="shrink-0">
@@ -61,7 +61,7 @@
                 <x-slot name="heading">Informasi Akun</x-slot>
                 <x-slot name="description">Data utama dan kontak akun yang sedang login.</x-slot>
 
-                <div class="grid grid-cols-2 gap-x-6 gap-y-4">
+                <div class="grid grid-cols-2 gap-x-6 gap-y-5">
                     <div>
                         <dt class="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">No. Telepon</dt>
                         <dd class="text-sm font-medium text-gray-900 dark:text-white mt-1">{{ $user->no_telp ?: '—' }}</dd>
@@ -70,11 +70,6 @@
                     <div>
                         <dt class="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">Gudang Default</dt>
                         <dd class="text-sm font-medium text-gray-900 dark:text-white mt-1">{{ $user->gudang?->nama_gudang ?: '—' }}</dd>
-                    </div>
-
-                    <div class="sm:col-span-2">
-                        <dt class="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">Alamat</dt>
-                        <dd class="text-sm font-medium text-gray-900 dark:text-white mt-1 whitespace-pre-line leading-6">{{ $user->alamat ?: '—' }}</dd>
                     </div>
 
                     <div>
@@ -88,6 +83,11 @@
                     <div>
                         <dt class="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">Role</dt>
                         <dd class="text-sm font-medium text-gray-900 dark:text-white mt-1">{{ $roleLabel }}</dd>
+                    </div>
+
+                    <div class="col-span-2">
+                        <dt class="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">Alamat</dt>
+                        <dd class="text-sm font-medium text-gray-900 dark:text-white mt-1 whitespace-pre-line leading-6">{{ $user->alamat ?: '—' }}</dd>
                     </div>
                 </div>
             </x-filament::section>

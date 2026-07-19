@@ -335,7 +335,6 @@
     .fi-sidebar-item.fi-active a,
     .fi-sidebar-item.fi-active .fi-sidebar-item-btn {
         background: var(--sidebar-surface-active) !important;
-        box-shadow: inset 2px 0 0 var(--sidebar-icon-active) !important;
         color: var(--sidebar-text-active) !important;
     }
 
@@ -441,10 +440,6 @@
             transform: none !important;
         }
 
-        .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-item.fi-active a,
-        .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-item.fi-active .fi-sidebar-item-btn {
-            box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--sidebar-icon-active) 24%, transparent) !important;
-        }
     }
 
     @media (prefers-reduced-motion: reduce) {

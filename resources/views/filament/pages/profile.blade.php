@@ -48,6 +48,40 @@
                 top: 1.5rem;
             }
         }
+
+        .he-profile-avatar {
+            width: 6rem;
+            height: 6rem;
+            border-radius: 9999px;
+            overflow: hidden;
+            border: 2px solid #0F9F8F;
+            flex-shrink: 0;
+        }
+
+        img.he-profile-avatar {
+            object-fit: cover;
+            display: block;
+        }
+
+        .he-profile-avatar-fallback {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f0fdfa;
+            color: #0F9F8F;
+            font-size: 1.875rem;
+            font-weight: 600;
+            line-height: 1;
+        }
+
+        .dark .he-profile-avatar {
+            border-color: #5EEAD4;
+        }
+
+        .dark .he-profile-avatar-fallback {
+            background-color: #042f2e;
+            color: #5EEAD4;
+        }
     </style>
 
     {{-- Desktop: profile card left, three account sections right. Mobile: single column. --}}
@@ -59,10 +93,10 @@
                         <img
                             src="{{ asset('storage/' . $user->avatar) }}"
                             alt="Foto profil {{ $user->name }}"
-                            class="size-24 rounded-full object-cover shadow-sm ring-2 ring-[#0F9F8F]/35 dark:ring-[#5EEAD4]/45"
+                            class="he-profile-avatar"
                         >
                     @else
-                        <div class="flex size-24 items-center justify-center rounded-full bg-primary-50 text-3xl font-semibold text-primary-600 ring-2 ring-[#0F9F8F]/35 dark:bg-primary-950 dark:text-primary-400 dark:ring-[#5EEAD4]/45" aria-hidden="true">
+                        <div class="he-profile-avatar he-profile-avatar-fallback" aria-hidden="true">
                             {{ $initials }}
                         </div>
                     @endif

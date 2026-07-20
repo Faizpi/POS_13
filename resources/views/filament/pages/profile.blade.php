@@ -59,10 +59,10 @@
                         <img
                             src="{{ asset('storage/' . $user->avatar) }}"
                             alt="Foto profil {{ $user->name }}"
-                            class="size-24 rounded-xl object-cover shadow-sm ring-1 ring-gray-950/10 dark:ring-white/10"
+                            class="size-24 rounded-full object-cover shadow-sm ring-2 ring-[#0F9F8F]/35 dark:ring-[#5EEAD4]/45"
                         >
                     @else
-                        <div class="flex size-24 items-center justify-center rounded-xl bg-primary-50 text-3xl font-semibold text-primary-600 ring-1 ring-primary-600/10 dark:bg-primary-950 dark:text-primary-400 dark:ring-primary-400/20" aria-hidden="true">
+                        <div class="flex size-24 items-center justify-center rounded-full bg-primary-50 text-3xl font-semibold text-primary-600 ring-2 ring-[#0F9F8F]/35 dark:bg-primary-950 dark:text-primary-400 dark:ring-[#5EEAD4]/45" aria-hidden="true">
                             {{ $initials }}
                         </div>
                     @endif

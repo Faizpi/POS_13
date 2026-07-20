@@ -58,6 +58,12 @@
         box-shadow: var(--admin-shadow-card);
     }
 
+    /* ===== Harian / Bulanan summary cards ===== */
+    .he-dashboard-summary-card {
+        border: 1px solid var(--admin-border-subtle);
+        background: var(--admin-surface-card);
+    }
+
     /* ===== Dashboard Stats Cards ===== */
     .fi-wi-stats-overview-stat {
         min-height: 8.5rem;

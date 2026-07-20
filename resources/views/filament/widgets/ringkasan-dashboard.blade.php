@@ -21,7 +21,7 @@
 <x-filament-widgets::widget>
     <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6">
         @foreach ($panels as $panel)
-            <section class="h-full rounded-xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-gray-900 sm:p-6">
+            <section class="he-dashboard-summary-card h-full rounded-xl p-5 shadow-sm sm:p-6">
                 <div class="mb-6 flex items-start justify-between gap-4">
                     <div class="flex min-w-0 items-center gap-3 text-gray-950 dark:text-white">
                         <div class="flex size-9 shrink-0 items-center justify-center rounded-lg bg-gray-100 text-gray-500 dark:bg-white/5 dark:text-gray-400">

@@ -291,11 +291,18 @@
     .fi-sidebar-item a,
     .fi-sidebar-item-btn {
         min-height: 38px !important;
-        padding: 8px 10px !important;
+        padding-block: 8px !important;
+        padding-inline: 10px !important;
         gap: 9px !important;
         border-radius: 7px !important;
         color: var(--sidebar-text) !important;
         transition: background-color 140ms ease, color 140ms ease, box-shadow 140ms ease !important;
+    }
+
+    .fi-sidebar-group-items .fi-sidebar-item a,
+    .fi-sidebar-group-items .fi-sidebar-item-btn {
+        padding-inline-start: 18px !important;
+        padding-inline-end: 10px !important;
     }
 
     .fi-sidebar-item-label,

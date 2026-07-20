@@ -41,7 +41,8 @@ class StockOpnameForm
                             ->rows(3)
                             ->columnSpanFull(),
                     ])
-                    ->columns(2),
+                    ->columns(2)
+                    ->columnSpanFull(),
 
                 Section::make('Item Opname')
                     ->icon('heroicon-o-list-bullet')
@@ -135,7 +136,8 @@ class StockOpnameForm
                             ->addActionLabel('Tambah Item')
                             ->required()
                             ->minItems(1),
-                    ]),
+                    ])
+                    ->columnSpanFull(),
             ]);
     }
 }

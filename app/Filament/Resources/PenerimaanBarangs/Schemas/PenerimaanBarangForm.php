@@ -147,7 +147,8 @@ class PenerimaanBarangForm
                             ->label('No. Surat Jalan')
                             ->maxLength(100),
                     ])
-                    ->columns(2),
+                    ->columns(2)
+                    ->columnSpanFull(),
 
                 Section::make('Item Penerimaan')
                     ->icon('heroicon-o-list-bullet')
@@ -285,7 +286,8 @@ class PenerimaanBarangForm
                             })
                             ->required()
                             ->minItems(1),
-                    ]),
+                    ])
+                    ->columnSpanFull(),
 
                 Section::make('Catatan & Lampiran')
                     ->icon('heroicon-o-paper-clip')
@@ -309,7 +311,8 @@ class PenerimaanBarangForm
                                 return "{$nomor}-".time().".{$file->extension()}";
                             })
                             ->columnSpanFull(),
-                    ]),
+                    ])
+                    ->columnSpanFull(),
             ]);
     }
 }

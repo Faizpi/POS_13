@@ -149,7 +149,8 @@ class BiayaForm
                             ->rows(2)
                             ->columnSpanFull(),
                     ])
-                    ->columns(2),
+                    ->columns(2)
+                    ->columnSpanFull(),
 
                 Section::make('Item Biaya')
                     ->icon('heroicon-o-list-bullet')
@@ -186,7 +187,8 @@ class BiayaForm
                             ->afterStateUpdated(fn ($state, $set, $get) => self::recalcGrandTotal($set, $get))
                             ->required()
                             ->minItems(1),
-                    ]),
+                    ])
+                    ->columnSpanFull(),
 
                 Section::make('Total & Pajak')
                     ->icon('heroicon-o-calculator')
@@ -208,7 +210,8 @@ class BiayaForm
                             ->prefix('Rp')
                             ->extraInputAttributes(['class' => 'text-2xl font-bold text-primary-600']),
                     ])
-                    ->columns(2),
+                    ->columns(2)
+                    ->columnSpanFull(),
 
                 Section::make('Catatan & Lampiran')
                     ->icon('heroicon-o-paper-clip')
@@ -238,7 +241,8 @@ class BiayaForm
                             ->acceptedFileTypes(['image/*', 'application/pdf', 'application/zip'])
                             ->maxSize(5120)
                             ->columnSpanFull(),
-                    ]),
+                    ])
+                    ->columnSpanFull(),
             ]);
     }
 

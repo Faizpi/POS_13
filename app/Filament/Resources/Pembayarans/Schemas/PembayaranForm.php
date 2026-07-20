@@ -139,7 +139,8 @@ class PembayaranForm
                             ->rows(2)
                             ->columnSpanFull(),
                     ])
-                    ->columns(2),
+                    ->columns(2)
+                    ->columnSpanFull(),
 
                 Section::make('Bukti Pembayaran')
                     ->icon('heroicon-o-paper-clip')
@@ -167,7 +168,8 @@ class PembayaranForm
                             ->acceptedFileTypes(['image/*', 'application/pdf'])
                             ->maxSize(5120)
                             ->columnSpanFull(),
-                    ]),
+                    ])
+                    ->columnSpanFull(),
             ]);
     }
 }

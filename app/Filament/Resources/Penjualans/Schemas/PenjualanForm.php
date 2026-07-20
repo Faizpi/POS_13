@@ -99,7 +99,8 @@ class PenjualanForm
                             ->rows(2)
                             ->columnSpanFull(),
                     ])
-                    ->columns(2),
+                    ->columns(2)
+                    ->columnSpanFull(),
 
                 Section::make('Detail Transaksi')
                     ->icon('heroicon-o-document-text')
@@ -219,7 +220,8 @@ class PenjualanForm
                                     ->openUrlInNewTab(),
                             ]),
                     ])
-                    ->columns(2),
+                    ->columns(2)
+                    ->columnSpanFull(),
 
                 Section::make('Item Penjualan')
                     ->icon('heroicon-o-shopping-cart')
@@ -350,7 +352,8 @@ class PenjualanForm
                             ->afterStateUpdated(fn ($state, $set, $get) => self::recalcGrandTotal($set, $get))
                             ->required()
                             ->minItems(1),
-                    ]),
+                    ])
+                    ->columnSpanFull(),
 
                 Section::make('Total & Pajak')
                     ->icon('heroicon-o-calculator')
@@ -382,7 +385,8 @@ class PenjualanForm
                             ->prefix('Rp')
                             ->extraInputAttributes(['class' => 'text-2xl font-bold text-primary-600']),
                     ])
-                    ->columns(3),
+                    ->columns(3)
+                    ->columnSpanFull(),
 
                 Section::make('Catatan & Lampiran')
                     ->icon('heroicon-o-paper-clip')
@@ -426,7 +430,8 @@ class PenjualanForm
                             ->maxSize(5120)
                             ->columnSpanFull(),
                     ])
-                    ->columns(2),
+                    ->columns(2)
+                    ->columnSpanFull(),
             ]);
     }
 

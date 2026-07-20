@@ -183,7 +183,8 @@ class PembelianForm
                                     ->openUrlInNewTab(),
                             ]),
                     ])
-                    ->columns(2),
+                    ->columns(2)
+                    ->columnSpanFull(),
 
                 Section::make('Item Pembelian')
                     ->icon('heroicon-o-list-bullet')
@@ -290,7 +291,8 @@ class PembelianForm
                             ->afterStateUpdated(fn ($state, $set, $get) => self::recalcGrandTotal($set, $get))
                             ->required()
                             ->minItems(1),
-                    ]),
+                    ])
+                    ->columnSpanFull(),
 
                 Section::make('Total & Pajak')
                     ->icon('heroicon-o-calculator')
@@ -321,7 +323,8 @@ class PembelianForm
                             ->prefix('Rp')
                             ->extraInputAttributes(['class' => 'text-2xl font-bold text-primary-600']),
                     ])
-                    ->columns(3),
+                    ->columns(3)
+                    ->columnSpanFull(),
 
                 Section::make('Catatan & Lampiran')
                     ->icon('heroicon-o-paper-clip')
@@ -352,7 +355,8 @@ class PembelianForm
                             ->acceptedFileTypes(['image/*', 'application/pdf', 'application/zip', 'application/msword'])
                             ->maxSize(5120)
                             ->columnSpanFull(),
-                    ]),
+                    ])
+                    ->columnSpanFull(),
             ]);
     }
 

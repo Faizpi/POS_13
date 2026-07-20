@@ -163,7 +163,8 @@ class KunjunganForm
                                     ->openUrlInNewTab(),
                             ]),
                     ])
-                    ->columns(2),
+                    ->columns(2)
+                    ->columnSpanFull(),
 
                 Section::make('Item Kunjungan')
                     ->icon('heroicon-o-list-bullet')
@@ -274,7 +275,8 @@ class KunjunganForm
                             ])
                             ->columns(3)
                             ->defaultItems(1),
-                    ]),
+                    ])
+                    ->columnSpanFull(),
 
                 Section::make('Catatan & Lampiran')
                     ->icon('heroicon-o-paper-clip')
@@ -298,7 +300,8 @@ class KunjunganForm
                                 return "{$nomor}-".time().".{$file->extension()}";
                             })
                             ->columnSpanFull(),
-                    ]),
+                    ])
+                    ->columnSpanFull(),
             ]);
     }
 }

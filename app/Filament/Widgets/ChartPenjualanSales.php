@@ -104,16 +104,13 @@ class ChartPenjualanSales extends ChartWidget
         $labels = $data->map(fn ($item) => $item->name ?? 'Tanpa Sales')->toArray();
         $values = $data->map(fn ($item) => (float) $item->total)->toArray();
 
-        $colors = array_map(fn (string $name): string => $this->salesColor($name), $labels);
-        $hoverColors = array_map(fn (string $name): string => $this->salesColor($name, true), $labels);
-
         return [
             'datasets' => [
                 [
                     'label' => 'Total Penjualan',
                     'data' => $values,
-                    'backgroundColor' => $colors ?: '#6366f1',
-                    'hoverBackgroundColor' => $hoverColors ?: '#818cf8',
+                    'backgroundColor' => '#0F9F8F',
+                    'hoverBackgroundColor' => '#0D8A7C',
                     'borderWidth' => 0,
                     'borderRadius' => 10,
                     'borderSkipped' => false,
@@ -176,15 +173,6 @@ class ChartPenjualanSales extends ChartWidget
         JS);
     }
 
-    private function salesColor(string $name, bool $hover = false): string
-    {
-        $hue = hexdec(substr(hash('sha256', $name), 0, 8)) % 360;
-        $saturation = $hover ? 72 : 64;
-        $lightness = $hover ? 46 : 52;
-
-        return "hsl({$hue}, {$saturation}%, {$lightness}%)";
-    }
-
     private function emptyDataset(): array
     {
         return [
@@ -192,7 +180,7 @@ class ChartPenjualanSales extends ChartWidget
                 [
                     'label' => 'Total Penjualan',
                     'data' => [],
-                    'backgroundColor' => '#6366f1',
+                    'backgroundColor' => '#0F9F8F',
                     'borderRadius' => 10,
                     'borderSkipped' => false,
                     'barThickness' => 14,

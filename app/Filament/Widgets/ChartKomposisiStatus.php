@@ -64,14 +64,14 @@ class ChartKomposisiStatus extends ChartWidget
                 [
                     'data' => array_values($statuses),
                     'backgroundColor' => [
-                        '#f59e0b',   // Pending  – amber
-                        '#6366f1',   // Approved – indigo-violet
-                        '#f43f5e',   // Canceled – rose
+                        '#E59A16',   // Pending  – amber
+                        '#1F9D68',   // Approved – green
+                        '#DC4C64',   // Canceled – rose
                     ],
                     'hoverBackgroundColor' => [
-                        '#fbbf24',
-                        '#818cf8',
-                        '#fb7185',
+                        '#F0A81F',
+                        '#25B076',
+                        '#E85D74',
                     ],
                     'borderWidth' => 0,
                     'hoverOffset' => 12,

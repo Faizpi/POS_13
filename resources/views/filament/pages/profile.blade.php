@@ -31,6 +31,12 @@
             min-width: 0;
         }
 
+        .he-profile-info {
+            display: grid;
+            column-gap: 2.5rem;
+            row-gap: 1.75rem;
+        }
+
         @media (min-width: 1024px) {
             .he-profile-layout {
                 grid-template-columns: minmax(17rem, 0.75fr) minmax(0, 2fr);
@@ -94,7 +100,7 @@
                 <x-slot name="heading">Informasi akun</x-slot>
                 <x-slot name="description">Data utama dan kontak akun yang sedang digunakan.</x-slot>
 
-                <dl class="grid grid-cols-1 gap-x-10 gap-y-6 sm:grid-cols-2">
+                <dl class="he-profile-info grid-cols-1 sm:grid-cols-2">
                     <div class="min-w-0">
                         <dt class="text-sm leading-5 text-gray-500 dark:text-gray-400">Nomor telepon</dt>
                         <dd class="mt-2 text-sm font-medium leading-5 text-gray-950 dark:text-white">{{ $user->no_telp ?: '—' }}</dd>

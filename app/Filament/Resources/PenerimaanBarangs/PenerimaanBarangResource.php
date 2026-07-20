@@ -33,18 +33,6 @@ class PenerimaanBarangResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Penerimaan Barang';
 
-    public static function getNavigationBadge(): ?string
-    {
-        $count = static::applyRoleScope(PenerimaanBarang::query())->where('status', 'Pending')->count();
-
-        return $count > 0 ? (string) $count : null;
-    }
-
-    public static function getNavigationBadgeColor(): ?string
-    {
-        return 'warning';
-    }
-
     public static function form(Schema $schema): Schema
     {
         return PenerimaanBarangForm::configure($schema);

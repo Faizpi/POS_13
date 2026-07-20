@@ -11,14 +11,14 @@
         --admin-shadow-card: 0 10px 28px rgba(15, 23, 42, 0.06);
         --sidebar-surface: #ffffff;
         --sidebar-surface-hover: #f4f4f5;
-        --sidebar-surface-active: #eff6ff;
+        --sidebar-surface-active: #f0fdfa;
         --sidebar-border: #e4e4e7;
         --sidebar-text: #3f3f46;
         --sidebar-text-muted: #71717a;
-        --sidebar-text-active: #1d4ed8;
+        --sidebar-text-active: #0d7a6e;
         --sidebar-icon: #71717a;
-        --sidebar-icon-active: #2563eb;
-        --sidebar-focus: rgba(37, 99, 235, 0.72);
+        --sidebar-icon-active: #0F9F8F;
+        --sidebar-focus: rgba(15, 159, 143, 0.72);
     }
 
     .dark {
@@ -31,14 +31,14 @@
         --admin-shadow-card: 0 12px 30px rgba(0, 0, 0, 0.24);
         --sidebar-surface: #18181b;
         --sidebar-surface-hover: #27272a;
-        --sidebar-surface-active: rgba(37, 99, 235, 0.20);
+        --sidebar-surface-active: rgba(15, 159, 143, 0.18);
         --sidebar-border: rgba(255, 255, 255, 0.10);
         --sidebar-text: #e4e4e7;
         --sidebar-text-muted: #a1a1aa;
-        --sidebar-text-active: #bfdbfe;
+        --sidebar-text-active: #5eead4;
         --sidebar-icon: #a1a1aa;
-        --sidebar-icon-active: #93c5fd;
-        --sidebar-focus: rgba(96, 165, 250, 0.78);
+        --sidebar-icon-active: #2dd4bf;
+        --sidebar-focus: rgba(45, 212, 191, 0.78);
     }
 
     /* ===== Global Scale (Zoom Out) ===== */
@@ -236,25 +236,25 @@
     .fi-sidebar-group + .fi-sidebar-group,
     .fi-sidebar-group + li:not(.fi-sidebar-group),
     li:not(.fi-sidebar-group) + .fi-sidebar-group {
-        margin-top: 12px !important;
+        margin-top: 15px !important;
     }
 
     .fi-sidebar-group > .fi-sidebar-group-label,
     .fi-sidebar-group-label {
-        min-height: 28px;
+        min-height: 30px;
         margin: 0 !important;
-        padding: 7px 10px 5px !important;
+        padding: 8px 10px 6px !important;
         color: var(--sidebar-text-muted) !important;
-        font-size: 10px !important;
-        font-weight: 650 !important;
-        letter-spacing: 0.055em !important;
-        line-height: 1.2 !important;
+        font-size: 11px !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.04em !important;
+        line-height: 1.3 !important;
         text-transform: uppercase !important;
     }
 
     .fi-sidebar-group-label > button,
     .fi-sidebar-group > button:first-child {
-        min-height: 28px;
+        min-height: 30px;
         padding: 4px 0 !important;
         border-radius: 6px;
         color: var(--sidebar-text-muted) !important;
@@ -284,7 +284,7 @@
 
     .fi-sidebar-item a,
     .fi-sidebar-item-btn {
-        min-height: 36px !important;
+        min-height: 38px !important;
         padding: 8px 10px !important;
         gap: 9px !important;
         border-radius: 7px !important;
@@ -295,27 +295,20 @@
     .fi-sidebar-item-label,
     .fi-sidebar-item-label > span {
         color: var(--sidebar-text) !important;
-        font-size: 12px !important;
+        font-size: 12.5px !important;
         font-weight: 500 !important;
         line-height: 1.3 !important;
     }
 
     .fi-sidebar-item .fi-icon,
     .fi-sidebar-item-icon {
-        width: 17px !important;
-        height: 17px !important;
-        flex: 0 0 17px !important;
+        width: 18px !important;
+        height: 18px !important;
+        flex: 0 0 18px !important;
         margin: 0 !important;
         color: var(--sidebar-icon) !important;
         opacity: 1 !important;
         transition: color 140ms ease !important;
-    }
-
-    .fi-sidebar-item-badge {
-        padding: 2px 6px !important;
-        border-radius: 999px !important;
-        font-size: 10px !important;
-        line-height: 1.2 !important;
     }
 
     .fi-sidebar-item.fi-sidebar-item-has-url a:hover,
@@ -413,8 +406,6 @@
 
         .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-item-grouped-border,
         .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-item-label,
-        .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-item-badge,
-        .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-item-badge-ctn,
         .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-group-label,
         .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-group-label-content,
         .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-group-collapse-button,

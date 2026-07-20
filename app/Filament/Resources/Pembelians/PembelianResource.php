@@ -36,18 +36,6 @@ class PembelianResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'nomor';
 
-    public static function getNavigationBadge(): ?string
-    {
-        $count = static::applyRoleScope(Pembelian::query())->where('status', 'Pending')->count();
-
-        return $count > 0 ? (string) $count : null;
-    }
-
-    public static function getNavigationBadgeColor(): ?string
-    {
-        return 'warning';
-    }
-
     public static function form(Schema $schema): Schema
     {
         return PembelianForm::configure($schema);

@@ -277,6 +277,10 @@
         color: var(--sidebar-text) !important;
     }
 
+    .fi-sidebar-group-collapse-button {
+        margin-inline-end: 6px !important;
+    }
+
     .fi-sidebar-group-label > button:focus-visible,
     .fi-sidebar-group > button:first-child:focus-visible {
         outline: 2px solid var(--sidebar-focus) !important;

@@ -136,6 +136,33 @@ class NeracaService
     }
 
     /**
+     * Nilai persediaan grosir per gudang: SUM(produks.harga_grosir * gudang_produk.stok_penjualan)
+     * Ini adalah valuasi current stock, tidak terpengaruh filter tanggal.
+     */
+    public function getNilaiPersediaanGrosir(?int $gudangId = null, ?array $allowedWarehouseIds = null): Collection
+    {
+        $query = GudangProduk::join('produks', 'gudang_produk.produk_id', '=', 'produks.id')
+            ->join('gudangs', 'gudang_produk.gudang_id', '=', 'gudangs.id')
+            ->select(
+                'gudang_produk.gudang_id',
+                'gudangs.nama_gudang',
+                DB::raw('SUM(produks.harga_grosir * gudang_produk.stok_penjualan) as total_nilai')
+            )
+            ->where('gudang_produk.stok_penjualan', '>', 0)
+            ->groupBy('gudang_produk.gudang_id', 'gudangs.nama_gudang');
+
+        $this->applyWarehouseScope($query, $gudangId, $allowedWarehouseIds, 'gudang_produk.gudang_id');
+
+        return $query->orderBy('gudang_produk.gudang_id')
+            ->get()
+            ->map(fn ($item) => [
+                'gudang_id' => $item->gudang_id,
+                'gudang' => $item->nama_gudang ?? 'Tanpa Gudang',
+                'total' => (float) ($item->total_nilai ?? 0),
+            ]);
+    }
+
+    /**
      * Ringkasan Neraca lengkap (semua metrik) untuk dashboard.
      */
     public function getRingkasan(?string $from = null, ?string $to = null, ?int $gudangId = null, ?array $allowedWarehouseIds = null): array
@@ -153,6 +180,7 @@ class NeracaService
         $qtyGrosir = $this->getJumlahProdukTerjualGrosir($from, $to, $gudangId, $allowedWarehouseIds);
         $belumLunas = $this->getPembayaranBelumLunas($gudangId, $allowedWarehouseIds);
         $persediaanRetail = $this->getNilaiPersediaanRetail($gudangId, $allowedWarehouseIds);
+        $persediaanGrosir = $this->getNilaiPersediaanGrosir($gudangId, $allowedWarehouseIds);
 
         return [
             'omset' => $omset,
@@ -170,6 +198,10 @@ class NeracaService
             'persediaan_retail' => [
                 'gudang' => $persediaanRetail,
                 'total' => $persediaanRetail->sum('total'),
+            ],
+            'persediaan_grosir' => [
+                'gudang' => $persediaanGrosir,
+                'total' => $persediaanGrosir->sum('total'),
             ],
         ];
     }
@@ -193,6 +225,10 @@ class NeracaService
             'belum_lunas' => collect(),
             'total_belum_lunas' => 0.0,
             'persediaan_retail' => [
+                'gudang' => collect(),
+                'total' => 0.0,
+            ],
+            'persediaan_grosir' => [
                 'gudang' => collect(),
                 'total' => 0.0,
             ],

@@ -712,6 +712,430 @@ class NeracaInventoryValuationTest extends TestCase
         $this->assertEquals($gudangB->id, $data['persediaan_retail']['gudang'][1]['gudang_id']);
     }
 
+    /**
+     * Test: Valuasi persediaan grosir dihitung dengan formula SUM(produks.harga_grosir * gudang_produk.stok_penjualan)
+     */
+    public function test_inventory_valuation_uses_grosir_price_times_stok_penjualan(): void
+    {
+        $gudang = Gudang::where('nama_gudang', 'Gudang A')->firstOrFail();
+
+        // Clear existing stock for isolation
+        GudangProduk::query()->delete();
+
+        // Produk 1: harga_grosir 22000, stok_penjualan 100
+        $produk1 = Produk::where('item_code', 'SBN-001')->firstOrFail();
+        GudangProduk::create([
+            'gudang_id' => $gudang->id,
+            'produk_id' => $produk1->id,
+            'stok_penjualan' => 100,
+            'stok_gratis' => 20,
+            'stok_sample' => 10,
+            'stok' => 130,
+        ]);
+
+        // Produk 2: harga_grosir 30000, stok_penjualan 50
+        $produk2 = Produk::where('item_code', 'BDL-001')->firstOrFail();
+        GudangProduk::create([
+            'gudang_id' => $gudang->id,
+            'produk_id' => $produk2->id,
+            'stok_penjualan' => 50,
+            'stok_gratis' => 15,
+            'stok_sample' => 5,
+            'stok' => 70,
+        ]);
+
+        $token = $this->login('superadmin@hibiscusefsya.com');
+
+        $response = $this->withHeader('Authorization', "Bearer $token")
+            ->get('/api/v1/neraca');
+
+        $response->assertOk();
+
+        $data = $response->json();
+
+        // Expected grosir: (22000 * 100) + (30000 * 50) = 2,200,000 + 1,500,000 = 3,700,000
+        $expectedGrosir = (22000 * 100) + (30000 * 50);
+
+        $this->assertArrayHasKey('persediaan_grosir', $data);
+        $this->assertArrayHasKey('gudang', $data['persediaan_grosir']);
+        $this->assertArrayHasKey('total', $data['persediaan_grosir']);
+
+        // Find Gudang A in the list
+        $gudangAValuation = collect($data['persediaan_grosir']['gudang'])
+            ->firstWhere('gudang', 'Gudang A');
+
+        $this->assertNotNull($gudangAValuation);
+        $this->assertEquals($expectedGrosir, $gudangAValuation['total']);
+        $this->assertEquals($expectedGrosir, $data['persediaan_grosir']['total']);
+    }
+
+    /**
+     * Test: Retail dan grosir menggunakan field harga yang berbeda tetapi stok_penjualan yang sama
+     */
+    public function test_retail_and_grosir_use_different_prices_but_same_stock(): void
+    {
+        $gudang = Gudang::where('nama_gudang', 'Gudang A')->firstOrFail();
+
+        // Clear existing stock for isolation
+        GudangProduk::query()->delete();
+
+        // Produk: harga 25000, harga_grosir 22000, stok_penjualan 100
+        $produk = Produk::where('item_code', 'SBN-001')->firstOrFail();
+        GudangProduk::create([
+            'gudang_id' => $gudang->id,
+            'produk_id' => $produk->id,
+            'stok_penjualan' => 100,
+            'stok_gratis' => 0,
+            'stok_sample' => 0,
+            'stok' => 100,
+        ]);
+
+        $token = $this->login('superadmin@hibiscusefsya.com');
+
+        $response = $this->withHeader('Authorization', "Bearer $token")
+            ->get('/api/v1/neraca');
+
+        $response->assertOk();
+
+        $data = $response->json();
+
+        // Retail: 25000 * 100 = 2,500,000
+        // Grosir: 22000 * 100 = 2,200,000
+        $expectedRetail = 25000 * 100;
+        $expectedGrosir = 22000 * 100;
+
+        $this->assertEquals($expectedRetail, $data['persediaan_retail']['total']);
+        $this->assertEquals($expectedGrosir, $data['persediaan_grosir']['total']);
+        $this->assertNotEquals($data['persediaan_retail']['total'], $data['persediaan_grosir']['total']);
+    }
+
+    /**
+     * Test: Valuasi grosir dikelompokkan per gudang
+     */
+    public function test_inventory_valuation_grosir_grouped_by_warehouse(): void
+    {
+        $gudangA = Gudang::where('nama_gudang', 'Gudang A')->firstOrFail();
+        $gudangB = Gudang::where('nama_gudang', 'Gudang B')->firstOrFail();
+
+        // Clear existing stock for isolation
+        GudangProduk::query()->delete();
+
+        $produk = Produk::where('item_code', 'SBN-001')->firstOrFail();
+
+        // Gudang A: 100 units @ 22000 = 2,200,000
+        GudangProduk::create([
+            'gudang_id' => $gudangA->id,
+            'produk_id' => $produk->id,
+            'stok_penjualan' => 100,
+            'stok_gratis' => 0,
+            'stok_sample' => 0,
+            'stok' => 100,
+        ]);
+
+        // Gudang B: 50 units @ 22000 = 1,100,000
+        GudangProduk::create([
+            'gudang_id' => $gudangB->id,
+            'produk_id' => $produk->id,
+            'stok_penjualan' => 50,
+            'stok_gratis' => 0,
+            'stok_sample' => 0,
+            'stok' => 50,
+        ]);
+
+        $token = $this->login('superadmin@hibiscusefsya.com');
+
+        $response = $this->withHeader('Authorization', "Bearer $token")
+            ->get('/api/v1/neraca');
+
+        $response->assertOk();
+
+        $data = $response->json();
+
+        $this->assertCount(2, $data['persediaan_grosir']['gudang']);
+
+        $gudangAValuation = collect($data['persediaan_grosir']['gudang'])
+            ->firstWhere('gudang', 'Gudang A');
+        $gudangBValuation = collect($data['persediaan_grosir']['gudang'])
+            ->firstWhere('gudang', 'Gudang B');
+
+        $this->assertNotNull($gudangAValuation);
+        $this->assertNotNull($gudangBValuation);
+        $this->assertEquals(2200000, $gudangAValuation['total']);
+        $this->assertEquals(1100000, $gudangBValuation['total']);
+        $this->assertEquals(3300000, $data['persediaan_grosir']['total']);
+    }
+
+    /**
+     * Test: Valuasi grosir mengabaikan stok_gratis dan stok_sample
+     */
+    public function test_inventory_valuation_grosir_excludes_free_and_sample_stock(): void
+    {
+        $gudang = Gudang::where('nama_gudang', 'Gudang A')->firstOrFail();
+
+        // Clear existing stock for isolation
+        GudangProduk::query()->delete();
+
+        $produk = Produk::where('item_code', 'SBN-001')->firstOrFail();
+
+        // Create stock with stok_penjualan 100, but also stok_gratis 50 and stok_sample 30
+        GudangProduk::create([
+            'gudang_id' => $gudang->id,
+            'produk_id' => $produk->id,
+            'stok_penjualan' => 100,
+            'stok_gratis' => 50,
+            'stok_sample' => 30,
+            'stok' => 180,
+        ]);
+
+        $token = $this->login('superadmin@hibiscusefsya.com');
+
+        $response = $this->withHeader('Authorization', "Bearer $token")
+            ->get('/api/v1/neraca');
+
+        $response->assertOk();
+
+        $data = $response->json();
+
+        // Should only use stok_penjualan (100), not stok_gratis (50) or stok_sample (30)
+        // Expected: 22000 * 100 = 2,200,000
+        $expected = 22000 * 100;
+
+        $this->assertEquals($expected, $data['persediaan_grosir']['total']);
+    }
+
+    /**
+     * Test: Valuasi grosir dengan filter gudang spesifik
+     */
+    public function test_inventory_valuation_grosir_with_specific_warehouse_filter(): void
+    {
+        $gudangA = Gudang::where('nama_gudang', 'Gudang A')->firstOrFail();
+        $gudangB = Gudang::where('nama_gudang', 'Gudang B')->firstOrFail();
+
+        // Clear existing stock for isolation
+        GudangProduk::query()->delete();
+
+        $produk = Produk::where('item_code', 'SBN-001')->firstOrFail();
+
+        GudangProduk::create([
+            'gudang_id' => $gudangA->id,
+            'produk_id' => $produk->id,
+            'stok_penjualan' => 100,
+            'stok_gratis' => 0,
+            'stok_sample' => 0,
+            'stok' => 100,
+        ]);
+
+        GudangProduk::create([
+            'gudang_id' => $gudangB->id,
+            'produk_id' => $produk->id,
+            'stok_penjualan' => 50,
+            'stok_gratis' => 0,
+            'stok_sample' => 0,
+            'stok' => 50,
+        ]);
+
+        $token = $this->login('superadmin@hibiscusefsya.com');
+
+        // Filter to Gudang A only
+        $response = $this->withHeader('Authorization', "Bearer $token")
+            ->get('/api/v1/neraca?gudang_id='.$gudangA->id);
+
+        $response->assertOk();
+
+        $data = $response->json();
+
+        // Should only show Gudang A
+        $this->assertCount(1, $data['persediaan_grosir']['gudang']);
+        $this->assertEquals('Gudang A', $data['persediaan_grosir']['gudang'][0]['gudang']);
+        $this->assertEquals(2200000, $data['persediaan_grosir']['total']);
+    }
+
+    /**
+     * Test: Valuasi grosir dengan spectator scope
+     */
+    public function test_inventory_valuation_grosir_with_spectator_scope(): void
+    {
+        $gudangA = Gudang::where('nama_gudang', 'Gudang A')->firstOrFail();
+        $gudangB = Gudang::where('nama_gudang', 'Gudang B')->firstOrFail();
+
+        // Clear existing stock for isolation
+        GudangProduk::query()->delete();
+
+        $produk = Produk::where('item_code', 'SBN-001')->firstOrFail();
+
+        GudangProduk::create([
+            'gudang_id' => $gudangA->id,
+            'produk_id' => $produk->id,
+            'stok_penjualan' => 100,
+            'stok_gratis' => 0,
+            'stok_sample' => 0,
+            'stok' => 100,
+        ]);
+
+        GudangProduk::create([
+            'gudang_id' => $gudangB->id,
+            'produk_id' => $produk->id,
+            'stok_penjualan' => 50,
+            'stok_gratis' => 0,
+            'stok_sample' => 0,
+            'stok' => 50,
+        ]);
+
+        // Login as spectator who only has access to Gudang A
+        $token = $this->login('spectator@hibiscusefsya.com');
+
+        $response = $this->withHeader('Authorization', "Bearer $token")
+            ->get('/api/v1/neraca');
+
+        $response->assertOk();
+
+        $data = $response->json();
+
+        // Should only show Gudang A (spectator's authorized warehouse)
+        $this->assertCount(1, $data['persediaan_grosir']['gudang']);
+        $this->assertEquals('Gudang A', $data['persediaan_grosir']['gudang'][0]['gudang']);
+        $this->assertEquals(2200000, $data['persediaan_grosir']['total']);
+    }
+
+    /**
+     * Test: Valuasi grosir dengan gudang_id ordering deterministik
+     */
+    public function test_inventory_valuation_grosir_deterministic_ordering(): void
+    {
+        $gudangA = Gudang::where('nama_gudang', 'Gudang A')->firstOrFail();
+        $gudangB = Gudang::where('nama_gudang', 'Gudang B')->firstOrFail();
+
+        // Clear existing stock for isolation
+        GudangProduk::query()->delete();
+
+        $produk = Produk::where('item_code', 'SBN-001')->firstOrFail();
+
+        // Create in reverse order
+        GudangProduk::create([
+            'gudang_id' => $gudangB->id,
+            'produk_id' => $produk->id,
+            'stok_penjualan' => 50,
+            'stok_gratis' => 0,
+            'stok_sample' => 0,
+            'stok' => 50,
+        ]);
+
+        GudangProduk::create([
+            'gudang_id' => $gudangA->id,
+            'produk_id' => $produk->id,
+            'stok_penjualan' => 100,
+            'stok_gratis' => 0,
+            'stok_sample' => 0,
+            'stok' => 100,
+        ]);
+
+        $token = $this->login('superadmin@hibiscusefsya.com');
+
+        $response = $this->withHeader('Authorization', "Bearer $token")
+            ->get('/api/v1/neraca');
+
+        $response->assertOk();
+
+        $data = $response->json();
+
+        // Output harus sorted by gudang_id
+        $this->assertCount(2, $data['persediaan_grosir']['gudang']);
+        $this->assertEquals($gudangA->id, $data['persediaan_grosir']['gudang'][0]['gudang_id']);
+        $this->assertEquals($gudangB->id, $data['persediaan_grosir']['gudang'][1]['gudang_id']);
+    }
+
+    /**
+     * Test: Valuasi grosir dengan empty scope (spectator tanpa akses gudang)
+     */
+    public function test_inventory_valuation_grosir_empty_scope(): void
+    {
+        $gudang = Gudang::where('nama_gudang', 'Gudang A')->firstOrFail();
+
+        // Clear existing stock for isolation
+        GudangProduk::query()->delete();
+
+        $produk = Produk::where('item_code', 'SBN-001')->firstOrFail();
+
+        GudangProduk::create([
+            'gudang_id' => $gudang->id,
+            'produk_id' => $produk->id,
+            'stok_penjualan' => 100,
+            'stok_gratis' => 0,
+            'stok_sample' => 0,
+            'stok' => 100,
+        ]);
+
+        // Create spectator with no warehouse access
+        $user = User::create([
+            'name' => 'Spectator No Access Grosir',
+            'email' => 'spectator_noaccess_grosir@test.com',
+            'password' => bcrypt('password'),
+            'role' => 'spectator',
+        ]);
+
+        $token = $this->postJson('/api/v1/login', [
+            'email' => 'spectator_noaccess_grosir@test.com',
+            'password' => 'password',
+        ])->json('token');
+
+        $response = $this->withHeader('Authorization', "Bearer $token")
+            ->get('/api/v1/neraca');
+
+        $response->assertOk();
+
+        $data = $response->json();
+
+        // Should return empty data
+        $this->assertEmpty($data['persediaan_grosir']['gudang']);
+        $this->assertEquals(0, $data['persediaan_grosir']['total']);
+    }
+
+    /**
+     * Test: Retail dan grosir adalah metrik terpisah tanpa total gabungan
+     */
+    public function test_retail_and_grosir_are_independent_without_combined_total(): void
+    {
+        $gudang = Gudang::where('nama_gudang', 'Gudang A')->firstOrFail();
+
+        // Clear existing stock for isolation
+        GudangProduk::query()->delete();
+
+        $produk = Produk::where('item_code', 'SBN-001')->firstOrFail();
+
+        GudangProduk::create([
+            'gudang_id' => $gudang->id,
+            'produk_id' => $produk->id,
+            'stok_penjualan' => 100,
+            'stok_gratis' => 0,
+            'stok_sample' => 0,
+            'stok' => 100,
+        ]);
+
+        $token = $this->login('superadmin@hibiscusefsya.com');
+
+        $response = $this->withHeader('Authorization', "Bearer $token")
+            ->get('/api/v1/neraca');
+
+        $response->assertOk();
+
+        $data = $response->json();
+
+        // Both should exist independently
+        $this->assertArrayHasKey('persediaan_retail', $data);
+        $this->assertArrayHasKey('persediaan_grosir', $data);
+
+        // Should NOT have a combined total field
+        $this->assertArrayNotHasKey('persediaan_total', $data);
+        $this->assertArrayNotHasKey('total_persediaan', $data);
+        $this->assertArrayNotHasKey('persediaan_combined', $data);
+
+        // Each should have their own structure
+        $this->assertArrayHasKey('gudang', $data['persediaan_retail']);
+        $this->assertArrayHasKey('total', $data['persediaan_retail']);
+        $this->assertArrayHasKey('gudang', $data['persediaan_grosir']);
+        $this->assertArrayHasKey('total', $data['persediaan_grosir']);
+    }
+
     private function login(string $email): string
     {
         return $this->postJson('/api/v1/login', [

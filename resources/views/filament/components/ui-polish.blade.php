@@ -278,7 +278,7 @@
     }
 
     .fi-sidebar-group-collapse-btn {
-        margin-inline-end: 7px !important;
+        margin-inline-end: 6px !important;
     }
 
     .fi-sidebar-group-label>button:focus-visible,

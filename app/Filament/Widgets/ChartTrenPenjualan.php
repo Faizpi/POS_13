@@ -85,9 +85,24 @@ class ChartTrenPenjualan extends ChartWidget
 
                     // Teal – Penjualan
                     'borderColor' => '#0F9F8F',
-                    'backgroundColor' => 'rgba(15, 159, 143, 0.14)',
+                    'backgroundColor' => RawJs::make(<<<'JS'
+                    (context) => {
+                        const chart = context.chart;
+                        const { ctx, chartArea } = chart;
 
-                    'fill' => false,
+                        if (! chartArea) {
+                            return 'rgba(15, 159, 143, 0.20)';
+                        }
+
+                        const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+                        gradient.addColorStop(0, 'rgba(15, 159, 143, 0.28)');
+                        gradient.addColorStop(1, 'rgba(15, 159, 143, 0.015)');
+
+                        return gradient;
+                    }
+                    JS),
+
+                    'fill' => 'origin',
                     'tension' => 0.4,
                     'borderWidth' => 2.5,
                     'pointRadius' => 2.5,
@@ -105,9 +120,24 @@ class ChartTrenPenjualan extends ChartWidget
 
                     // Amber – Pembelian
                     'borderColor' => '#D98B16',
-                    'backgroundColor' => 'rgba(217, 139, 22, 0.13)',
+                    'backgroundColor' => RawJs::make(<<<'JS'
+                    (context) => {
+                        const chart = context.chart;
+                        const { ctx, chartArea } = chart;
 
-                    'fill' => false,
+                        if (! chartArea) {
+                            return 'rgba(217, 139, 22, 0.14)';
+                        }
+
+                        const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+                        gradient.addColorStop(0, 'rgba(217, 139, 22, 0.18)');
+                        gradient.addColorStop(1, 'rgba(217, 139, 22, 0.01)');
+
+                        return gradient;
+                    }
+                    JS),
+
+                    'fill' => 'origin',
                     'tension' => 0.45,
                     'borderWidth' => 2,
                     'pointRadius' => 2.5,
@@ -125,9 +155,24 @@ class ChartTrenPenjualan extends ChartWidget
 
                     // Rose – Biaya
                     'borderColor' => '#E54865',
-                    'backgroundColor' => 'rgba(229, 72, 101, 0.12)',
+                    'backgroundColor' => RawJs::make(<<<'JS'
+                    (context) => {
+                        const chart = context.chart;
+                        const { ctx, chartArea } = chart;
 
-                    'fill' => false,
+                        if (! chartArea) {
+                            return 'rgba(229, 72, 101, 0.12)';
+                        }
+
+                        const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+                        gradient.addColorStop(0, 'rgba(229, 72, 101, 0.15)');
+                        gradient.addColorStop(1, 'rgba(229, 72, 101, 0.008)');
+
+                        return gradient;
+                    }
+                    JS),
+
+                    'fill' => 'origin',
                     'tension' => 0.45,
                     'borderWidth' => 2,
                     'pointRadius' => 2.5,

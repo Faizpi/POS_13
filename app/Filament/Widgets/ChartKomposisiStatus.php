@@ -16,7 +16,7 @@ class ChartKomposisiStatus extends ChartWidget
 
     protected ?string $description = 'Distribusi status dari seluruh modul transaksi.';
 
-    protected ?string $maxHeight = '200px';
+    protected ?string $maxHeight = '275px';
 
     protected function getType(): string
     {
@@ -88,8 +88,8 @@ class ChartKomposisiStatus extends ChartWidget
         return RawJs::make(<<<'JS'
         {
             animation: { duration: 700, easing: 'easeInOutQuart' },
-            cutout: '70%',
-            layout: { padding: 12 },
+            cutout: '68%',
+            layout: { padding: { top: 4, right: 8, bottom: 0, left: 8 } },
             plugins: {
                 legend: {
                     position: 'bottom',
@@ -98,8 +98,8 @@ class ChartKomposisiStatus extends ChartWidget
                         boxHeight: 10,
                         usePointStyle: true,
                         pointStyle: 'circle',
-                        padding: 20,
-                        font: { size: 12, weight: '600' },
+                        padding: 16,
+                        font: { size: 11, weight: '600' },
                         color: '#64748b',
                     },
                 },

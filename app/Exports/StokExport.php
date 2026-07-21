@@ -2,18 +2,22 @@
 
 namespace App\Exports;
 
+use App\Exports\Concerns\ForcesItemCodeAsString;
 use App\Models\Gudang;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
+use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class StokExport implements FromView, ShouldAutoSize, WithColumnFormatting, WithStyles, WithTitle
+class StokExport implements FromView, ShouldAutoSize, WithColumnFormatting, WithEvents, WithStyles, WithTitle
 {
+    use ForcesItemCodeAsString;
+
     protected Gudang $gudang;
 
     protected $stokData;
@@ -53,5 +57,10 @@ class StokExport implements FromView, ShouldAutoSize, WithColumnFormatting, With
     {
         // Item Code column (B) - set as TEXT to prevent scientific notation.
         return ['B' => NumberFormat::FORMAT_TEXT];
+    }
+
+    protected function itemCodeColumns(): array
+    {
+        return ['B'];
     }
 }

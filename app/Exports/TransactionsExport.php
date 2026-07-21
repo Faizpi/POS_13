@@ -2,17 +2,21 @@
 
 namespace App\Exports;
 
+use App\Exports\Concerns\ForcesItemCodeAsString;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
+use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class TransactionsExport implements FromView, ShouldAutoSize, WithColumnFormatting, WithStyles, WithTitle
+class TransactionsExport implements FromView, ShouldAutoSize, WithColumnFormatting, WithEvents, WithStyles, WithTitle
 {
+    use ForcesItemCodeAsString;
+
     protected $transactions;
 
     protected string $exportType;
@@ -93,5 +97,16 @@ class TransactionsExport implements FromView, ShouldAutoSize, WithColumnFormatti
         $formats = array_merge($formats, array_fill_keys($itemCodeColumns, NumberFormat::FORMAT_TEXT));
 
         return $formats;
+    }
+
+    protected function itemCodeColumns(): array
+    {
+        return match ($this->exportType) {
+            'penjualan' => ['O'],
+            'pembelian' => ['P'],
+            'kunjungan' => ['M'],
+            'all' => ['N'],
+            default => [],
+        };
     }
 }

@@ -86,7 +86,7 @@ class ChartTrenPenjualan extends ChartWidget
                     // Teal – Penjualan
                     'borderColor' => '#0F9F8F',
 
-                    'fill' => 'origin',
+                    'fill' => false,
                     'tension' => 0.4,
                     'borderWidth' => 2.5,
                     'pointRadius' => 2.5,
@@ -152,31 +152,6 @@ class ChartTrenPenjualan extends ChartWidget
             interaction: {
                 intersect: false,
                 mode: 'index'
-            },
-            datasets: {
-                line: {
-                    backgroundColor: (context) => {
-                        const { chart, datasetIndex } = context;
-                        const { ctx, chartArea } = chart;
-
-                        // Only the primary series (Penjualan, index 0) gets a gradient fill.
-                        // Pembelian and Biaya are line-only (fill=false), so return transparent.
-                        if (datasetIndex !== 0) {
-                            return 'transparent';
-                        }
-
-                        if (! chartArea) {
-                            return 'rgba(15, 159, 143, 0.22)';
-                        }
-
-                        const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
-                        gradient.addColorStop(0, 'rgba(15, 159, 143, 0.22)');
-                        gradient.addColorStop(0.45, 'rgba(15, 159, 143, 0.08)');
-                        gradient.addColorStop(1, 'rgba(15, 159, 143, 0)');
-
-                        return gradient;
-                    }
-                }
             },
             layout: {
                 padding: {

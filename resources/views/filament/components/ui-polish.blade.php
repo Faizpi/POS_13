@@ -257,7 +257,7 @@
         margin: 0 !important;
         padding: 8px 10px 6px !important;
         color: var(--sidebar-text-muted) !important;
-        font-size: 11px !important;
+        font-size: 10px !important;
         font-weight: 600 !important;
         letter-spacing: 0.04em !important;
         line-height: 1.3 !important;
@@ -417,7 +417,7 @@
             padding: 0 !important;
             align-items: center !important;
             justify-content: center !important;
-            transform: translateX(7px) !important;
+            transform: none !important;
             gap: 0 !important;
             overflow: hidden !important;
             border: 0 !important;

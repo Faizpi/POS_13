@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Filament\Pages;
+namespace App\Filament\Pages\Reports;
 
 use App\Exports\NeracaExport;
+use App\Filament\Concerns\ReportAccess;
 use App\Models\Gudang;
 use App\Services\NeracaService;
 use BackedEnum;
@@ -15,19 +16,23 @@ use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use UnitEnum;
 
-class NeracaPage extends Page
+class RingkasanBisnisPage extends Page
 {
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-scale';
+    use ReportAccess;
 
-    protected static string|UnitEnum|null $navigationGroup = 'Neraca';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-chart-pie';
+
+    protected static string|UnitEnum|null $navigationGroup = 'Laporan';
 
     protected static ?int $navigationSort = 1;
 
-    protected static ?string $navigationLabel = 'Neraca';
+    protected static ?string $navigationLabel = 'Ringkasan Bisnis';
 
-    protected static ?string $title = 'Neraca Keuangan';
+    protected static ?string $title = 'Ringkasan Bisnis';
 
-    protected string $view = 'filament.pages.neraca';
+    protected static ?string $slug = 'ringkasan-bisnis';
+
+    protected string $view = 'filament.pages.reports.ringkasan-bisnis';
 
     // Filter state
     public ?string $filter_from = null;
@@ -40,11 +45,6 @@ class NeracaPage extends Page
     {
         $this->filter_from = now()->startOfMonth()->format('Y-m-d');
         $this->filter_to = now()->format('Y-m-d');
-    }
-
-    public static function canAccess(): bool
-    {
-        return in_array(Auth::user()?->role, ['spectator', 'super_admin']);
     }
 
     public function getData(): array
@@ -202,7 +202,7 @@ class NeracaPage extends Page
                     $gudangName = $this->filter_gudang_id
                         ? Gudang::find($this->filter_gudang_id)?->nama_gudang ?? 'Semua Gudang'
                         : 'Semua Gudang';
-                    $filename = 'Neraca_'.($this->filter_from ?? 'all').'_'.($this->filter_to ?? 'all').'.xlsx';
+                    $filename = 'Ringkasan_Bisnis_'.($this->filter_from ?? 'all').'_'.($this->filter_to ?? 'all').'.xlsx';
 
                     return response()->streamDownload(function () use ($data, $gudangName) {
                         echo Excel::raw(new NeracaExport($data, null, null, $gudangName), \Maatwebsite\Excel\Excel::XLSX);
@@ -234,7 +234,7 @@ class NeracaPage extends Page
                         'generatedBy' => Auth::user()?->name ?? 'System',
                         'generatedAt' => now()->format('d/m/Y H:i:s'),
                     ]);
-                    $filename = 'Neraca_'.($this->filter_from ?? 'all').'_'.($this->filter_to ?? 'all').'.pdf';
+                    $filename = 'Ringkasan_Bisnis_'.($this->filter_from ?? 'all').'_'.($this->filter_to ?? 'all').'.pdf';
 
                     return response()->streamDownload(fn () => print ($pdf->output()), $filename);
                 }),

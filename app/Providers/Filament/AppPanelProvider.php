@@ -52,7 +52,7 @@ class AppPanelProvider extends PanelProvider
             ->sidebarWidth('17rem')
             ->maxContentWidth(Width::Full)
             ->navigationGroups([
-                NavigationGroup::make('Neraca'),
+                NavigationGroup::make('Laporan'),
                 NavigationGroup::make('Kunjungan'),
                 NavigationGroup::make('Biaya'),
                 NavigationGroup::make('Piutang'),

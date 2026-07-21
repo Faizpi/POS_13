@@ -43,7 +43,7 @@ class NeracaExport implements FromView, WithEvents, WithStyles, WithTitle
 
     public function title(): string
     {
-        return 'Neraca Keuangan';
+        return 'Ringkasan Bisnis';
     }
 
     public function styles(Worksheet $sheet): array

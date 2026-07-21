@@ -2,7 +2,7 @@
     <thead>
         {{-- TITLE BLOCK --}}
         <tr>
-            <th colspan="2" style="font-size: 14pt; font-weight: bold; text-align: left;">Neraca Keuangan</th>
+            <th colspan="2" style="font-size: 14pt; font-weight: bold; text-align: left;">Ringkasan Bisnis</th>
         </tr>
         <tr>
             <th colspan="2" style="font-size: 10pt; text-align: left;">Gudang: {{ $gudang }}</th>

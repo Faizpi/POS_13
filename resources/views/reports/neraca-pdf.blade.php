@@ -118,7 +118,7 @@
 <body>
     {{-- HEADER --}}
     <div class="report-header">
-        <h1>Neraca Keuangan</h1>
+        <h1>Ringkasan Bisnis</h1>
         <div class="meta">
             <table style="width: 100%; border: none; margin: 0;">
                 <tr style="background: none;">

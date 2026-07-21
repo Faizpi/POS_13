@@ -2,10 +2,10 @@
 
 namespace App\Filament\Pages\Reports;
 
-use App\Exports\NeracaExport;
+use App\Exports\RingkasanBisnisExport;
 use App\Filament\Concerns\ReportAccess;
 use App\Models\Gudang;
-use App\Services\NeracaService;
+use App\Services\RingkasanBisnisService;
 use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Forms\Components\DatePicker;
@@ -51,7 +51,7 @@ class RingkasanBisnisPage extends Page
     {
         $this->validateAndResetUnauthorizedFilter();
 
-        $service = app(NeracaService::class);
+        $service = app(RingkasanBisnisService::class);
         $allowedWarehouseIds = $this->getAllowedWarehouseIds();
 
         return $service->getRingkasan(
@@ -191,7 +191,7 @@ class RingkasanBisnisPage extends Page
                 ->color('success')
                 ->visible(fn () => $user?->canExportExcel())
                 ->action(function () {
-                    $service = app(NeracaService::class);
+                    $service = app(RingkasanBisnisService::class);
                     $allowedWarehouseIds = $this->getAllowedWarehouseIds();
                     $data = $service->getRingkasan(
                         $this->filter_from,
@@ -205,7 +205,7 @@ class RingkasanBisnisPage extends Page
                     $filename = 'Ringkasan_Bisnis_'.($this->filter_from ?? 'all').'_'.($this->filter_to ?? 'all').'.xlsx';
 
                     return response()->streamDownload(function () use ($data, $gudangName) {
-                        echo Excel::raw(new NeracaExport($data, null, null, $gudangName), \Maatwebsite\Excel\Excel::XLSX);
+                        echo Excel::raw(new RingkasanBisnisExport($data, null, null, $gudangName), \Maatwebsite\Excel\Excel::XLSX);
                     }, $filename);
                 }),
 
@@ -215,7 +215,7 @@ class RingkasanBisnisPage extends Page
                 ->color('danger')
                 ->visible(fn () => $user?->canExportPdf())
                 ->action(function () {
-                    $service = app(NeracaService::class);
+                    $service = app(RingkasanBisnisService::class);
                     $allowedWarehouseIds = $this->getAllowedWarehouseIds();
                     $data = $service->getRingkasan(
                         $this->filter_from,
@@ -224,7 +224,7 @@ class RingkasanBisnisPage extends Page
                         $allowedWarehouseIds
                     );
                     $pdf = app('dompdf.wrapper');
-                    $pdf->loadView('reports.neraca-pdf', [
+                    $pdf->loadView('reports.ringkasan-bisnis-pdf', [
                         'data' => $data,
                         'from' => $this->filter_from,
                         'to' => $this->filter_to,

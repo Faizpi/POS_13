@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Exports\NeracaExport;
+use App\Exports\RingkasanBisnisExport;
 use App\Http\Controllers\Controller;
 use App\Models\Gudang;
-use App\Services\NeracaService;
+use App\Services\RingkasanBisnisService;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
-class NeracaController extends Controller
+class RingkasanBisnisController extends Controller
 {
     public function index(Request $request): JsonResponse
     {
@@ -22,7 +22,7 @@ class NeracaController extends Controller
 
         [$user, $from, $to, $gudangId, $allowedWarehouseIds] = $authResult;
 
-        $service = new NeracaService;
+        $service = new RingkasanBisnisService;
         $data = $service->getRingkasan($from, $to, $gudangId, $allowedWarehouseIds);
 
         return response()->json($data);
@@ -38,12 +38,12 @@ class NeracaController extends Controller
         [$user, $from, $to, $gudangId, $allowedWarehouseIds] = $authResult;
         $gudangName = $this->getGudangName($gudangId);
 
-        $service = new NeracaService;
+        $service = new RingkasanBisnisService;
         $data = $service->getRingkasan($from, $to, $gudangId, $allowedWarehouseIds);
 
-        $fileName = 'Neraca_'.($from ?? 'semua').'_sd_'.($to ?? 'semua').'.pdf';
+        $fileName = 'Ringkasan_Bisnis_'.($from ?? 'semua').'_sd_'.($to ?? 'semua').'.pdf';
 
-        return Pdf::loadView('reports.neraca-pdf', [
+        return Pdf::loadView('reports.ringkasan-bisnis-pdf', [
             'data' => $data,
             'from' => $from,
             'to' => $to,
@@ -63,12 +63,12 @@ class NeracaController extends Controller
         [$user, $from, $to, $gudangId, $allowedWarehouseIds] = $authResult;
         $gudangName = $this->getGudangName($gudangId);
 
-        $service = new NeracaService;
+        $service = new RingkasanBisnisService;
         $data = $service->getRingkasan($from, $to, $gudangId, $allowedWarehouseIds);
 
-        $fileName = 'Neraca_'.($from ?? 'semua').'_sd_'.($to ?? 'semua').'.xlsx';
+        $fileName = 'Ringkasan_Bisnis_'.($from ?? 'semua').'_sd_'.($to ?? 'semua').'.xlsx';
 
-        return Excel::download(new NeracaExport($data, $from, $to, $gudangName), $fileName);
+        return Excel::download(new RingkasanBisnisExport($data, $from, $to, $gudangName), $fileName);
     }
 
     /**

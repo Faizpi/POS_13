@@ -9,7 +9,7 @@ use App\Models\Penjualan;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
-class NeracaService
+class RingkasanBisnisService
 {
     /**
      * Omset pergudang: total grand_total penjualan per gudang.
@@ -163,7 +163,7 @@ class NeracaService
     }
 
     /**
-     * Ringkasan Neraca lengkap (semua metrik) untuk dashboard.
+     * Ringkasan Bisnis lengkap (semua metrik) untuk dashboard.
      */
     public function getRingkasan(?string $from = null, ?string $to = null, ?int $gudangId = null, ?array $allowedWarehouseIds = null): array
     {

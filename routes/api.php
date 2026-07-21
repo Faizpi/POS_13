@@ -139,10 +139,10 @@ Route::prefix('v1')->middleware('api.token')->group(function () {
     Route::post('stock-opname/{id}/submit', [Api\StockOpnameController::class, 'submit']);
     Route::post('stock-opname/{id}/apply', [Api\StockOpnameController::class, 'apply']);
 
-    // Neraca
-    Route::get('neraca', [Api\NeracaController::class, 'index']);
-    Route::get('neraca/export-pdf', [Api\NeracaController::class, 'exportPdf']);
-    Route::get('neraca/export-excel', [Api\NeracaController::class, 'exportExcel']);
+    // Ringkasan Bisnis
+    Route::get('ringkasan-bisnis', [Api\RingkasanBisnisController::class, 'index']);
+    Route::get('ringkasan-bisnis/export-pdf', [Api\RingkasanBisnisController::class, 'exportPdf']);
+    Route::get('ringkasan-bisnis/export-excel', [Api\RingkasanBisnisController::class, 'exportExcel']);
 
     // Piutang Dashboard
     Route::get('piutang', [Api\PiutangController::class, 'index']);

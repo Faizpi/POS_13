@@ -11,7 +11,7 @@ use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class NeracaExport implements FromView, WithEvents, WithStyles, WithTitle
+class RingkasanBisnisExport implements FromView, WithEvents, WithStyles, WithTitle
 {
     protected array $data;
 
@@ -31,7 +31,7 @@ class NeracaExport implements FromView, WithEvents, WithStyles, WithTitle
 
     public function view(): View
     {
-        return view('reports.neraca-excel', [
+        return view('reports.ringkasan-bisnis-excel', [
             'data' => $this->data,
             'from' => $this->from,
             'to' => $this->to,

@@ -9,7 +9,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class NeracaInventoryValuationTest extends TestCase
+class RingkasanBisnisInventoryValuationTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -50,7 +50,7 @@ class NeracaInventoryValuationTest extends TestCase
         $token = $this->login('superadmin@hibiscusefsya.com');
 
         $response = $this->withHeader('Authorization', "Bearer $token")
-            ->get('/api/v1/neraca');
+            ->get('/api/v1/ringkasan-bisnis');
 
         $response->assertOk();
 
@@ -108,7 +108,7 @@ class NeracaInventoryValuationTest extends TestCase
         $token = $this->login('superadmin@hibiscusefsya.com');
 
         $response = $this->withHeader('Authorization', "Bearer $token")
-            ->get('/api/v1/neraca');
+            ->get('/api/v1/ringkasan-bisnis');
 
         $response->assertOk();
 
@@ -164,7 +164,7 @@ class NeracaInventoryValuationTest extends TestCase
         $token = $this->login('spectator@hibiscusefsya.com');
 
         $response = $this->withHeader('Authorization', "Bearer $token")
-            ->get('/api/v1/neraca');
+            ->get('/api/v1/ringkasan-bisnis');
 
         $response->assertOk();
 
@@ -201,7 +201,7 @@ class NeracaInventoryValuationTest extends TestCase
 
         // Spectator mencoba akses Gudang B (tidak diizinkan)
         $response = $this->withHeader('Authorization', "Bearer $token")
-            ->get('/api/v1/neraca?gudang_id='.$gudangB->id);
+            ->get('/api/v1/ringkasan-bisnis?gudang_id='.$gudangB->id);
 
         $response->assertStatus(403);
     }
@@ -231,7 +231,7 @@ class NeracaInventoryValuationTest extends TestCase
 
         // Spectator akses Gudang A (diizinkan)
         $response = $this->withHeader('Authorization', "Bearer $token")
-            ->get('/api/v1/neraca?gudang_id='.$gudangA->id);
+            ->get('/api/v1/ringkasan-bisnis?gudang_id='.$gudangA->id);
 
         $response->assertOk();
 
@@ -253,7 +253,7 @@ class NeracaInventoryValuationTest extends TestCase
         $token = $this->login('superadmin@hibiscusefsya.com');
 
         $response = $this->withHeader('Authorization', "Bearer $token")
-            ->get('/api/v1/neraca');
+            ->get('/api/v1/ringkasan-bisnis');
 
         $response->assertOk();
 
@@ -288,7 +288,7 @@ class NeracaInventoryValuationTest extends TestCase
         $token = $this->login('superadmin@hibiscusefsya.com');
 
         $response = $this->withHeader('Authorization', "Bearer $token")
-            ->get('/api/v1/neraca');
+            ->get('/api/v1/ringkasan-bisnis');
 
         $response->assertOk();
 
@@ -330,7 +330,7 @@ class NeracaInventoryValuationTest extends TestCase
 
         // Request dengan filter tanggal
         $response = $this->withHeader('Authorization', "Bearer $token")
-            ->get('/api/v1/neraca?from=2020-01-01&to=2020-12-31');
+            ->get('/api/v1/ringkasan-bisnis?from=2020-01-01&to=2020-12-31');
 
         $response->assertOk();
 
@@ -374,7 +374,7 @@ class NeracaInventoryValuationTest extends TestCase
         $token = $this->login('superadmin@hibiscusefsya.com');
 
         $response = $this->withHeader('Authorization', "Bearer $token")
-            ->get('/api/v1/neraca');
+            ->get('/api/v1/ringkasan-bisnis');
 
         $response->assertOk();
 
@@ -386,14 +386,14 @@ class NeracaInventoryValuationTest extends TestCase
     }
 
     /**
-     * Test: Unauthorized user tidak bisa akses neraca
+     * Test: Unauthorized user tidak bisa akses ringkasan bisnis
      */
-    public function test_unauthorized_user_cannot_access_neraca(): void
+    public function test_unauthorized_user_cannot_access_ringkasan_bisnis(): void
     {
         $token = $this->login('salesa@hibiscusefsya.com');
 
         $response = $this->withHeader('Authorization', "Bearer $token")
-            ->get('/api/v1/neraca');
+            ->get('/api/v1/ringkasan-bisnis');
 
         $response->assertStatus(403);
     }
@@ -422,7 +422,7 @@ class NeracaInventoryValuationTest extends TestCase
         $token = $this->login('superadmin@hibiscusefsya.com');
 
         $response = $this->withHeader('Authorization', "Bearer $token")
-            ->get('/api/v1/neraca/export-pdf');
+            ->get('/api/v1/ringkasan-bisnis/export-pdf');
 
         $response->assertOk()
             ->assertHeader('content-type', 'application/pdf');
@@ -454,7 +454,7 @@ class NeracaInventoryValuationTest extends TestCase
         $token = $this->login('superadmin@hibiscusefsya.com');
 
         $response = $this->withHeader('Authorization', "Bearer $token")
-            ->get('/api/v1/neraca/export-excel');
+            ->get('/api/v1/ringkasan-bisnis/export-excel');
 
         $response->assertOk();
         $this->assertStringContainsString('.xlsx', $response->headers->get('content-disposition'));
@@ -485,20 +485,20 @@ class NeracaInventoryValuationTest extends TestCase
 
         // JSON
         $jsonResponse = $this->withHeader('Authorization', "Bearer $token")
-            ->get('/api/v1/neraca');
+            ->get('/api/v1/ringkasan-bisnis');
 
         $jsonResponse->assertOk();
         $jsonData = $jsonResponse->json();
 
         // PDF
         $pdfResponse = $this->withHeader('Authorization', "Bearer $token")
-            ->get('/api/v1/neraca/export-pdf');
+            ->get('/api/v1/ringkasan-bisnis/export-pdf');
 
         $pdfResponse->assertOk();
 
         // Excel
         $excelResponse = $this->withHeader('Authorization', "Bearer $token")
-            ->get('/api/v1/neraca/export-excel');
+            ->get('/api/v1/ringkasan-bisnis/export-excel');
 
         $excelResponse->assertOk();
 
@@ -546,7 +546,7 @@ class NeracaInventoryValuationTest extends TestCase
 
         // Filter hanya Gudang A
         $response = $this->withHeader('Authorization', "Bearer $token")
-            ->get('/api/v1/neraca?gudang_id='.$gudangA->id);
+            ->get('/api/v1/ringkasan-bisnis?gudang_id='.$gudangA->id);
 
         $response->assertOk();
 
@@ -592,7 +592,7 @@ class NeracaInventoryValuationTest extends TestCase
         $token = $this->login('spectator@hibiscusefsya.com');
 
         $response = $this->withHeader('Authorization', "Bearer $token")
-            ->get('/api/v1/neraca');
+            ->get('/api/v1/ringkasan-bisnis');
 
         $response->assertOk();
 
@@ -615,7 +615,7 @@ class NeracaInventoryValuationTest extends TestCase
         $token = $this->login('superadmin@hibiscusefsya.com');
 
         $response = $this->withHeader('Authorization', "Bearer $token")
-            ->get('/api/v1/neraca?gudang_id=99999');
+            ->get('/api/v1/ringkasan-bisnis?gudang_id=99999');
 
         $response->assertStatus(404);
         $response->assertJson(['message' => 'Gudang tidak ditemukan']);
@@ -655,7 +655,7 @@ class NeracaInventoryValuationTest extends TestCase
         ])->json('token');
 
         $response = $this->withHeader('Authorization', "Bearer $token")
-            ->get('/api/v1/neraca');
+            ->get('/api/v1/ringkasan-bisnis');
 
         $response->assertOk();
 
@@ -700,7 +700,7 @@ class NeracaInventoryValuationTest extends TestCase
         $token = $this->login('superadmin@hibiscusefsya.com');
 
         $response = $this->withHeader('Authorization', "Bearer $token")
-            ->get('/api/v1/neraca');
+            ->get('/api/v1/ringkasan-bisnis');
 
         $response->assertOk();
 
@@ -747,7 +747,7 @@ class NeracaInventoryValuationTest extends TestCase
         $token = $this->login('superadmin@hibiscusefsya.com');
 
         $response = $this->withHeader('Authorization', "Bearer $token")
-            ->get('/api/v1/neraca');
+            ->get('/api/v1/ringkasan-bisnis');
 
         $response->assertOk();
 
@@ -793,7 +793,7 @@ class NeracaInventoryValuationTest extends TestCase
         $token = $this->login('superadmin@hibiscusefsya.com');
 
         $response = $this->withHeader('Authorization', "Bearer $token")
-            ->get('/api/v1/neraca');
+            ->get('/api/v1/ringkasan-bisnis');
 
         $response->assertOk();
 
@@ -845,7 +845,7 @@ class NeracaInventoryValuationTest extends TestCase
         $token = $this->login('superadmin@hibiscusefsya.com');
 
         $response = $this->withHeader('Authorization', "Bearer $token")
-            ->get('/api/v1/neraca');
+            ->get('/api/v1/ringkasan-bisnis');
 
         $response->assertOk();
 
@@ -890,7 +890,7 @@ class NeracaInventoryValuationTest extends TestCase
         $token = $this->login('superadmin@hibiscusefsya.com');
 
         $response = $this->withHeader('Authorization', "Bearer $token")
-            ->get('/api/v1/neraca');
+            ->get('/api/v1/ringkasan-bisnis');
 
         $response->assertOk();
 
@@ -938,7 +938,7 @@ class NeracaInventoryValuationTest extends TestCase
 
         // Filter to Gudang A only
         $response = $this->withHeader('Authorization', "Bearer $token")
-            ->get('/api/v1/neraca?gudang_id='.$gudangA->id);
+            ->get('/api/v1/ringkasan-bisnis?gudang_id='.$gudangA->id);
 
         $response->assertOk();
 
@@ -985,7 +985,7 @@ class NeracaInventoryValuationTest extends TestCase
         $token = $this->login('spectator@hibiscusefsya.com');
 
         $response = $this->withHeader('Authorization', "Bearer $token")
-            ->get('/api/v1/neraca');
+            ->get('/api/v1/ringkasan-bisnis');
 
         $response->assertOk();
 
@@ -1032,7 +1032,7 @@ class NeracaInventoryValuationTest extends TestCase
         $token = $this->login('superadmin@hibiscusefsya.com');
 
         $response = $this->withHeader('Authorization', "Bearer $token")
-            ->get('/api/v1/neraca');
+            ->get('/api/v1/ringkasan-bisnis');
 
         $response->assertOk();
 
@@ -1079,7 +1079,7 @@ class NeracaInventoryValuationTest extends TestCase
         ])->json('token');
 
         $response = $this->withHeader('Authorization', "Bearer $token")
-            ->get('/api/v1/neraca');
+            ->get('/api/v1/ringkasan-bisnis');
 
         $response->assertOk();
 
@@ -1114,7 +1114,7 @@ class NeracaInventoryValuationTest extends TestCase
         $token = $this->login('superadmin@hibiscusefsya.com');
 
         $response = $this->withHeader('Authorization', "Bearer $token")
-            ->get('/api/v1/neraca');
+            ->get('/api/v1/ringkasan-bisnis');
 
         $response->assertOk();
 
@@ -1134,6 +1134,57 @@ class NeracaInventoryValuationTest extends TestCase
         $this->assertArrayHasKey('total', $data['persediaan_retail']);
         $this->assertArrayHasKey('gudang', $data['persediaan_grosir']);
         $this->assertArrayHasKey('total', $data['persediaan_grosir']);
+    }
+
+    /**
+     * Test: /api/v1/neraca no longer exists (freed for future accounting report)
+     */
+    public function test_old_neraca_api_route_returns_404(): void
+    {
+        $token = $this->login('superadmin@hibiscusefsya.com');
+
+        $response = $this->withHeader('Authorization', "Bearer $token")
+            ->get('/api/v1/neraca');
+
+        $response->assertNotFound();
+    }
+
+    /**
+     * Test: /api/v1/neraca/export-pdf no longer exists
+     */
+    public function test_old_neraca_api_export_pdf_route_returns_404(): void
+    {
+        $token = $this->login('superadmin@hibiscusefsya.com');
+
+        $response = $this->withHeader('Authorization', "Bearer $token")
+            ->get('/api/v1/neraca/export-pdf');
+
+        $response->assertNotFound();
+    }
+
+    /**
+     * Test: /api/v1/neraca/export-excel no longer exists
+     */
+    public function test_old_neraca_api_export_excel_route_returns_404(): void
+    {
+        $token = $this->login('superadmin@hibiscusefsya.com');
+
+        $response = $this->withHeader('Authorization', "Bearer $token")
+            ->get('/api/v1/neraca/export-excel');
+
+        $response->assertNotFound();
+    }
+
+    /**
+     * Test: /app/neraca remains the Filament accounting placeholder
+     */
+    public function test_app_neraca_is_filament_placeholder(): void
+    {
+        $user = User::where('email', 'superadmin@hibiscusefsya.com')->first();
+
+        $response = $this->actingAs($user)->get('/app/neraca');
+
+        $response->assertStatus(200);
     }
 
     private function login(string $email): string

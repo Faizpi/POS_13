@@ -49,6 +49,7 @@ class AppPanelProvider extends PanelProvider
             ])
             ->databaseNotifications()
             ->sidebarCollapsibleOnDesktop()
+            ->sidebarWidth('17rem')
             ->maxContentWidth(Width::Full)
             ->navigationGroups([
                 NavigationGroup::make('Neraca'),

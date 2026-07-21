@@ -105,14 +105,14 @@ class ChartTrenPenjualan extends ChartWidget
                     // Amber – Pembelian
                     'borderColor' => '#D98B16',
 
-                    'fill' => 'origin',
-                    'tension' => 0.45,
+                    'fill' => false,
+                    'tension' => 0.4,
                     'borderWidth' => 2,
-                    'pointRadius' => 2.5,
+                    'pointRadius' => 2,
                     'pointBackgroundColor' => '#D98B16',
                     'pointBorderColor' => '#ffffff',
                     'pointBorderWidth' => 1.5,
-                    'pointHoverRadius' => 6,
+                    'pointHoverRadius' => 5,
                     'pointHoverBackgroundColor' => '#C07A10',
                     'pointHoverBorderColor' => '#ffffff',
                     'pointHoverBorderWidth' => 2,
@@ -124,14 +124,14 @@ class ChartTrenPenjualan extends ChartWidget
                     // Rose – Biaya
                     'borderColor' => '#E54865',
 
-                    'fill' => 'origin',
-                    'tension' => 0.45,
-                    'borderWidth' => 2,
-                    'pointRadius' => 2.5,
+                    'fill' => false,
+                    'tension' => 0.4,
+                    'borderWidth' => 2.25,
+                    'pointRadius' => 2,
                     'pointBackgroundColor' => '#E54865',
                     'pointBorderColor' => '#ffffff',
                     'pointBorderWidth' => 1.5,
-                    'pointHoverRadius' => 6,
+                    'pointHoverRadius' => 5,
                     'pointHoverBackgroundColor' => '#D03D58',
                     'pointHoverBorderColor' => '#ffffff',
                     'pointHoverBorderWidth' => 2,
@@ -158,23 +158,21 @@ class ChartTrenPenjualan extends ChartWidget
                     backgroundColor: (context) => {
                         const { chart, datasetIndex } = context;
                         const { ctx, chartArea } = chart;
-                        const colors = [
-                            [15, 159, 143, 0.30],
-                            [217, 139, 22, 0.22],
-                            [229, 72, 101, 0.19],
-                        ];
 
-                        const [red, green, blue, peakOpacity] = colors[datasetIndex] ?? colors[0];
+                        // Only the primary series (Penjualan, index 0) gets a gradient fill.
+                        // Pembelian and Biaya are line-only (fill=false), so return transparent.
+                        if (datasetIndex !== 0) {
+                            return 'transparent';
+                        }
 
                         if (! chartArea) {
-                            return `rgba(${red}, ${green}, ${blue}, ${peakOpacity})`;
+                            return 'rgba(15, 159, 143, 0.22)';
                         }
 
                         const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
-                        gradient.addColorStop(0, `rgba(${red}, ${green}, ${blue}, ${peakOpacity})`);
-                        gradient.addColorStop(0.35, `rgba(${red}, ${green}, ${blue}, ${peakOpacity * 0.55})`);
-                        gradient.addColorStop(0.72, `rgba(${red}, ${green}, ${blue}, ${peakOpacity * 0.14})`);
-                        gradient.addColorStop(1, `rgba(${red}, ${green}, ${blue}, 0)`);
+                        gradient.addColorStop(0, 'rgba(15, 159, 143, 0.22)');
+                        gradient.addColorStop(0.45, 'rgba(15, 159, 143, 0.08)');
+                        gradient.addColorStop(1, 'rgba(15, 159, 143, 0)');
 
                         return gradient;
                     }

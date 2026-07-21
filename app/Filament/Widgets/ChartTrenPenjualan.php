@@ -85,22 +85,7 @@ class ChartTrenPenjualan extends ChartWidget
 
                     // Teal – Penjualan
                     'borderColor' => '#0F9F8F',
-                    'backgroundColor' => RawJs::make(<<<'JS'
-                    (context) => {
-                        const chart = context.chart;
-                        const { ctx, chartArea } = chart;
-
-                        if (! chartArea) {
-                            return 'rgba(15, 159, 143, 0.20)';
-                        }
-
-                        const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
-                        gradient.addColorStop(0, 'rgba(15, 159, 143, 0.28)');
-                        gradient.addColorStop(1, 'rgba(15, 159, 143, 0.015)');
-
-                        return gradient;
-                    }
-                    JS),
+                    'backgroundColor' => 'rgba(15, 159, 143, 0.20)',
 
                     'fill' => 'origin',
                     'tension' => 0.4,
@@ -120,22 +105,7 @@ class ChartTrenPenjualan extends ChartWidget
 
                     // Amber – Pembelian
                     'borderColor' => '#D98B16',
-                    'backgroundColor' => RawJs::make(<<<'JS'
-                    (context) => {
-                        const chart = context.chart;
-                        const { ctx, chartArea } = chart;
-
-                        if (! chartArea) {
-                            return 'rgba(217, 139, 22, 0.14)';
-                        }
-
-                        const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
-                        gradient.addColorStop(0, 'rgba(217, 139, 22, 0.18)');
-                        gradient.addColorStop(1, 'rgba(217, 139, 22, 0.01)');
-
-                        return gradient;
-                    }
-                    JS),
+                    'backgroundColor' => 'rgba(217, 139, 22, 0.14)',
 
                     'fill' => 'origin',
                     'tension' => 0.45,
@@ -155,22 +125,7 @@ class ChartTrenPenjualan extends ChartWidget
 
                     // Rose – Biaya
                     'borderColor' => '#E54865',
-                    'backgroundColor' => RawJs::make(<<<'JS'
-                    (context) => {
-                        const chart = context.chart;
-                        const { ctx, chartArea } = chart;
-
-                        if (! chartArea) {
-                            return 'rgba(229, 72, 101, 0.12)';
-                        }
-
-                        const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
-                        gradient.addColorStop(0, 'rgba(229, 72, 101, 0.15)');
-                        gradient.addColorStop(1, 'rgba(229, 72, 101, 0.008)');
-
-                        return gradient;
-                    }
-                    JS),
+                    'backgroundColor' => 'rgba(229, 72, 101, 0.12)',
 
                     'fill' => 'origin',
                     'tension' => 0.45,
@@ -200,6 +155,30 @@ class ChartTrenPenjualan extends ChartWidget
             interaction: {
                 intersect: false,
                 mode: 'index'
+            },
+            datasets: {
+                line: {
+                    backgroundColor: (context) => {
+                        const { chart, datasetIndex } = context;
+                        const { ctx, chartArea } = chart;
+                        const colors = [
+                            ['rgba(15, 159, 143, 0.28)', 'rgba(15, 159, 143, 0.015)'],
+                            ['rgba(217, 139, 22, 0.18)', 'rgba(217, 139, 22, 0.01)'],
+                            ['rgba(229, 72, 101, 0.15)', 'rgba(229, 72, 101, 0.008)'],
+                        ];
+
+                        if (! chartArea) {
+                            return colors[datasetIndex]?.[0] ?? 'rgba(15, 159, 143, 0.18)';
+                        }
+
+                        const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+                        const [startColor, endColor] = colors[datasetIndex] ?? colors[0];
+                        gradient.addColorStop(0, startColor);
+                        gradient.addColorStop(1, endColor);
+
+                        return gradient;
+                    }
+                }
             },
             layout: {
                 padding: {

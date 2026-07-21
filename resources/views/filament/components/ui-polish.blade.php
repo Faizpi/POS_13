@@ -224,20 +224,20 @@
         border-color: var(--sidebar-border);
     }
 
-    .fi-sidebar > nav {
+    .fi-sidebar>nav {
         padding: 6px 10px 12px !important;
         scrollbar-width: none;
         -ms-overflow-style: none;
     }
 
-    .fi-sidebar > nav::-webkit-scrollbar {
+    .fi-sidebar>nav::-webkit-scrollbar {
         display: none;
     }
 
     .fi-sidebar .fi-sidebar-item,
     .fi-sidebar .fi-sidebar-item-btn,
     .fi-sidebar .fi-sidebar-group-label,
-    .fi-sidebar > nav > ul > li {
+    .fi-sidebar>nav>ul>li {
         border: 0 !important;
     }
 
@@ -245,13 +245,13 @@
         gap: 0 !important;
     }
 
-    .fi-sidebar-group + .fi-sidebar-group,
-    .fi-sidebar-group + li:not(.fi-sidebar-group),
-    li:not(.fi-sidebar-group) + .fi-sidebar-group {
+    .fi-sidebar-group+.fi-sidebar-group,
+    .fi-sidebar-group+li:not(.fi-sidebar-group),
+    li:not(.fi-sidebar-group)+.fi-sidebar-group {
         margin-top: 15px !important;
     }
 
-    .fi-sidebar-group > .fi-sidebar-group-label,
+    .fi-sidebar-group>.fi-sidebar-group-label,
     .fi-sidebar-group-label {
         min-height: 30px;
         margin: 0 !important;
@@ -264,25 +264,25 @@
         text-transform: uppercase !important;
     }
 
-    .fi-sidebar-group-label > button,
-    .fi-sidebar-group > button:first-child {
+    .fi-sidebar-group-label>button,
+    .fi-sidebar-group>button:first-child {
         min-height: 30px;
         padding: 4px 0 !important;
         border-radius: 6px;
         color: var(--sidebar-text-muted) !important;
     }
 
-    .fi-sidebar-group-label > button:hover,
-    .fi-sidebar-group > button:first-child:hover {
+    .fi-sidebar-group-label>button:hover,
+    .fi-sidebar-group>button:first-child:hover {
         color: var(--sidebar-text) !important;
     }
 
     .fi-sidebar-group-collapse-btn {
-        margin-inline-end: 10px !important;
+        margin-inline-end: 7px !important;
     }
 
-    .fi-sidebar-group-label > button:focus-visible,
-    .fi-sidebar-group > button:first-child:focus-visible {
+    .fi-sidebar-group-label>button:focus-visible,
+    .fi-sidebar-group>button:first-child:focus-visible {
         outline: 2px solid var(--sidebar-focus) !important;
         outline-offset: 2px;
     }
@@ -293,7 +293,7 @@
         padding: 0 !important;
     }
 
-    .fi-sidebar-group-items > li,
+    .fi-sidebar-group-items>li,
     .fi-sidebar-group-items .fi-sidebar-item {
         margin: 0 !important;
     }
@@ -316,7 +316,7 @@
     }
 
     .fi-sidebar-item-label,
-    .fi-sidebar-item-label > span {
+    .fi-sidebar-item-label>span {
         color: var(--sidebar-text) !important;
         font-size: 12.5px !important;
         font-weight: 500 !important;
@@ -355,7 +355,7 @@
     }
 
     .fi-sidebar-item.fi-active .fi-sidebar-item-label,
-    .fi-sidebar-item.fi-active .fi-sidebar-item-label > span {
+    .fi-sidebar-item.fi-active .fi-sidebar-item-label>span {
         color: var(--sidebar-text-active) !important;
         font-weight: 650 !important;
     }
@@ -366,7 +366,7 @@
     }
 
     @media (max-width: 1023px) {
-        .fi-sidebar > nav {
+        .fi-sidebar>nav {
             padding-inline: 12px !important;
         }
 
@@ -376,8 +376,8 @@
             padding-block: 11px !important;
         }
 
-        .fi-sidebar-group-label > button,
-        .fi-sidebar-group > button:first-child {
+        .fi-sidebar-group-label>button,
+        .fi-sidebar-group>button:first-child {
             min-height: 40px;
         }
     }
@@ -388,7 +388,7 @@
             padding-inline: 0 !important;
         }
 
-        .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) > nav {
+        .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open)>nav {
             padding-inline: 8px !important;
         }
 
@@ -432,7 +432,7 @@
         .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-group-label,
         .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-group-label-content,
         .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-group-collapse-btn,
-        .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-item > :not(a):not(.fi-sidebar-item-btn) {
+        .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-item> :not(a):not(.fi-sidebar-item-btn) {
             display: none !important;
         }
 
@@ -457,6 +457,7 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
+
         .fi-sidebar-item a,
         .fi-sidebar-item-btn,
         .fi-sidebar-item .fi-icon,

@@ -76,9 +76,22 @@ class TransactionsExport implements FromView, ShouldAutoSize, WithColumnFormatti
             'kunjungan' => ['F', 'H'],
             'biaya' => ['G'],
             'pembayaran', 'pembayaran_piutang', 'pembayaran_hutang' => ['G'],
+            'pembelian' => [],
             default => ['I'],
         };
 
-        return array_fill_keys($phoneColumns, NumberFormat::FORMAT_TEXT);
+        // Item code columns - set as TEXT to prevent scientific notation (e.g., 8.99E+12).
+        $itemCodeColumns = match ($this->exportType) {
+            'penjualan' => ['O'],
+            'pembelian' => ['P'],
+            'kunjungan' => ['M'],
+            'all' => ['N'],
+            default => [],
+        };
+
+        $formats = array_fill_keys($phoneColumns, NumberFormat::FORMAT_TEXT);
+        $formats = array_merge($formats, array_fill_keys($itemCodeColumns, NumberFormat::FORMAT_TEXT));
+
+        return $formats;
     }
 }

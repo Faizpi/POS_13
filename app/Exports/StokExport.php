@@ -6,11 +6,13 @@ use App\Models\Gudang;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithTitle;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class StokExport implements FromView, ShouldAutoSize, WithStyles, WithTitle
+class StokExport implements FromView, ShouldAutoSize, WithColumnFormatting, WithStyles, WithTitle
 {
     protected Gudang $gudang;
 
@@ -45,5 +47,11 @@ class StokExport implements FromView, ShouldAutoSize, WithStyles, WithTitle
         return [
             1 => ['font' => ['bold' => true]],
         ];
+    }
+
+    public function columnFormats(): array
+    {
+        // Item Code column (B) - set as TEXT to prevent scientific notation.
+        return ['B' => NumberFormat::FORMAT_TEXT];
     }
 }

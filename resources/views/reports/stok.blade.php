@@ -13,7 +13,7 @@
     <thead>
         <tr>
             <th>No</th>
-            <th>Item Code</th>
+            <th style="mso-number-format:'\@'">Item Code</th>
             <th>Nama Produk</th>
             <th>Satuan</th>
             <th>Stok Penjualan</th>
@@ -28,7 +28,7 @@
         @if($item->produk)
         <tr>
             <td>{{ $no++ }}</td>
-            <td>{{ $item->produk->item_code ?? '-' }}</td>
+            <td style="mso-number-format:'\@'">{{ $item->produk->item_code ?? '-' }}</td>
             <td>{{ $item->produk->nama_produk }}</td>
             <td>{{ $item->produk->satuan ?? 'Pcs' }}</td>
             <td>{{ $item->stok_penjualan ?? 0 }}</td>

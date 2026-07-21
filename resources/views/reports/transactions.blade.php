@@ -65,7 +65,7 @@
             <th>Referensi</th>
             <th>Memo/Keterangan</th>
             <th>Produk/Kategori</th>
-            <th>Kode Item</th>
+            <th style="mso-number-format:'\@'">Kode Item</th>
             <th>Deskripsi Item</th>
             <th>Qty</th>
             <th>Unit</th>
@@ -120,7 +120,7 @@
                     <td>{{ $reference }}</td>
                     <td>{{ $t->memo ?? $t->keterangan ?? '-' }}</td>
                     <td>{{ optional($produk)->nama_produk ?? optional($item)->kategori ?? '-' }}</td>
-                    <td>{{ optional($produk)->item_code ?? '-' }}</td>
+                    <td style="mso-number-format:'\@'">{{ optional($produk)->item_code ?? '-' }}</td>
                     <td>{{ optional($item)->deskripsi ?? optional($item)->keterangan ?? optional($produk)->deskripsi ?? '-' }}</td>
                     <td>{{ $qty ?? '-' }}</td>
                     <td>{{ optional($item)->unit ?? optional($produk)->satuan ?? '-' }}</td>

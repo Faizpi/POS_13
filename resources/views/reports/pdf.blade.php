@@ -39,7 +39,12 @@
 @php
     $transactions = collect($transactions ?? []);
     $exportType = $exportType ?? 'all';
-    $reportTitle = $exportType === 'all' ? 'Semua Transaksi' : ucfirst($exportType);
+    $reportTitle = match ($exportType) {
+        'pembayaran_piutang' => 'Pembayaran Piutang',
+        'pembayaran_hutang' => 'Pembayaran Hutang',
+        'all' => 'Semua Transaksi',
+        default => ucfirst($exportType),
+    };
     $money = function ($value) {
         return format_rupiah($value ?? 0);
     };
@@ -108,10 +113,10 @@
         return $detail->jumlah_baris ?? $detail->jumlah ?? (($detail->harga_satuan ?? 0) * ($detail->kuantitas ?? 0));
     };
     $contactName = function ($item) {
-        return $item->display_contact_name ?? $item->pelanggan ?? $item->penerima ?? optional($item->kontak)->nama ?? optional($item->penjualan)->pelanggan ?? '-';
+        return $item->display_contact_name ?? $item->pelanggan ?? $item->penerima ?? optional($item->kontak)->nama ?? optional($item->penjualan)->pelanggan ?? optional(optional($item->pembelian)->kontak)->nama ?? '-';
     };
     $phone = function ($item) {
-        return receipt_format_phone($item->no_telp_kontak ?? $item->no_telepon ?? $item->sales_no_telepon ?? optional($item->kontak)->no_telp ?? '');
+        return receipt_format_phone($item->no_telp_kontak ?? $item->no_telepon ?? $item->sales_no_telepon ?? optional($item->kontak)->no_telp ?? optional(optional($item->pembelian)->kontak)->no_telp ?? '');
     };
     $attachmentText = function ($item) {
         $paths = [];
@@ -142,6 +147,12 @@
         $cardFourLabel = 'Tujuan';
         $cardFourValue = $tujuanGroups->count();
     } elseif ($exportType === 'pembayaran') {
+        $cardFourLabel = 'Metode Pembayaran';
+        $cardFourValue = $metodePembayaranGroups->count();
+    } elseif ($exportType === 'pembayaran_piutang') {
+        $cardFourLabel = 'Metode Pembayaran';
+        $cardFourValue = $metodePembayaranGroups->count();
+    } elseif ($exportType === 'pembayaran_hutang') {
         $cardFourLabel = 'Metode Pembayaran';
         $cardFourValue = $metodePembayaranGroups->count();
     }
@@ -208,6 +219,16 @@
             <thead><tr><th>No</th><th>No. Pembayaran</th><th>Tanggal</th><th>Pembuat</th><th>Gudang</th><th>Pelanggan / Telp</th><th>Invoice</th><th>Metode</th><th>Status</th><th>Jumlah Bayar</th><th>Keterangan/Lampiran</th></tr></thead>
             <tbody>@foreach($transactions as $item)<tr><td>{{ $loop->iteration }}</td><td>{{ $number($item) }}</td><td>{{ $dateTime($item) }}</td><td>{{ optional($item->user)->name ?? '-' }}</td><td>{{ optional($item->gudang)->nama_gudang ?? '-' }}</td><td>{{ $contactName($item) }}<br><span class="muted">{{ $phone($item) }}</span></td><td>{{ optional($item->penjualan)->nomor ?? optional($item->penjualan)->custom_number ?? '-' }}<br><span class="muted">{{ $money(optional($item->penjualan)->grand_total ?? 0) }}</span></td><td>{{ $item->metode_pembayaran ?? '-' }}</td><td><span class="{{ $statusBadge($item->status ?? null) }}">{{ $item->status ?? '-' }}</span></td><td class="text-right"><strong>{{ $money($item->jumlah_bayar ?? 0) }}</strong></td><td>{{ $item->keterangan ?? '-' }}<br><span class="muted">{{ $attachmentText($item) }}</span></td></tr>@endforeach</tbody>
         </table>
+    @elseif($exportType === 'pembayaran_piutang')
+        <table class="compact">
+            <thead><tr><th>No</th><th>No. Pembayaran</th><th>Tanggal</th><th>Pembuat</th><th>Gudang</th><th>Pelanggan / Telp</th><th>Invoice Penjualan</th><th>Metode</th><th>Status</th><th>Jumlah Bayar</th><th>Keterangan/Lampiran</th></tr></thead>
+            <tbody>@foreach($transactions as $item)<tr><td>{{ $loop->iteration }}</td><td>{{ $number($item) }}</td><td>{{ $dateTime($item) }}</td><td>{{ optional($item->user)->name ?? '-' }}</td><td>{{ optional($item->gudang)->nama_gudang ?? '-' }}</td><td>{{ $contactName($item) }}<br><span class="muted">{{ $phone($item) }}</span></td><td>{{ optional($item->penjualan)->nomor ?? optional($item->penjualan)->custom_number ?? '-' }}<br><span class="muted">{{ $money(optional($item->penjualan)->grand_total ?? 0) }}</span></td><td>{{ $item->metode_pembayaran ?? '-' }}</td><td><span class="{{ $statusBadge($item->status ?? null) }}">{{ $item->status ?? '-' }}</span></td><td class="text-right"><strong>{{ $money($item->jumlah_bayar ?? 0) }}</strong></td><td>{{ $item->keterangan ?? '-' }}<br><span class="muted">{{ $attachmentText($item) }}</span></td></tr>@endforeach</tbody>
+        </table>
+    @elseif($exportType === 'pembayaran_hutang')
+        <table class="compact">
+            <thead><tr><th>No</th><th>No. Pembayaran</th><th>Tanggal</th><th>Pembuat</th><th>Gudang</th><th>Supplier / Telp</th><th>Invoice Pembelian</th><th>Metode</th><th>Status</th><th>Jumlah Bayar</th><th>Keterangan/Lampiran</th></tr></thead>
+            <tbody>@foreach($transactions as $item)<tr><td>{{ $loop->iteration }}</td><td>{{ $number($item) }}</td><td>{{ $dateTime($item) }}</td><td>{{ optional($item->user)->name ?? '-' }}</td><td>{{ optional($item->gudang)->nama_gudang ?? '-' }}</td><td>{{ $contactName($item) }}<br><span class="muted">{{ $phone($item) }}</span></td><td>{{ optional($item->pembelian)->nomor ?? optional($item->pembelian)->custom_number ?? '-' }}<br><span class="muted">{{ $money(optional($item->pembelian)->grand_total ?? 0) }}</span></td><td>{{ $item->metode_pembayaran ?? '-' }}</td><td><span class="{{ $statusBadge($item->status ?? null) }}">{{ $item->status ?? '-' }}</span></td><td class="text-right"><strong>{{ $money($item->jumlah_bayar ?? 0) }}</strong></td><td>{{ $item->keterangan ?? '-' }}<br><span class="muted">{{ $attachmentText($item) }}</span></td></tr>@endforeach</tbody>
+        </table>
     @else
         <table class="compact">
             <thead><tr><th>No</th><th>Tipe</th><th>Nomor</th><th>Tanggal</th><th>Pembuat/Sales</th><th>Kontak / Telp</th><th>Gudang</th><th>Status</th><th>Detail Item/Kategori</th><th>Qty</th><th>Harga/Jumlah</th><th>Pajak</th><th>Total/Bayar</th><th>Memo/Lampiran</th></tr></thead>
@@ -234,6 +255,12 @@
     @endif
     @if($exportType === 'pembayaran')
         <div class="section"><h2>Ringkasan Metode Pembayaran</h2><table class="compact"><thead><tr><th>Metode Pembayaran</th><th class="text-right">Jumlah Data</th><th class="text-right">Total Dibayar</th></tr></thead><tbody>@forelse($metodePembayaranGroups as $metode => $group)<tr><td>{{ $metode }}</td><td class="text-right">{{ $group->count() }}</td><td class="text-right">{{ $money($group->sum(function ($item) use ($totalOf) { return $totalOf($item); })) }}</td></tr>@empty<tr><td colspan="3" class="text-center muted">Tidak ada data.</td></tr>@endforelse</tbody></table></div>
+    @endif
+    @if($exportType === 'pembayaran_piutang')
+        <div class="section"><h2>Ringkasan Metode Pembayaran Piutang</h2><table class="compact"><thead><tr><th>Metode Pembayaran</th><th class="text-right">Jumlah Data</th><th class="text-right">Total Dibayar</th></tr></thead><tbody>@forelse($metodePembayaranGroups as $metode => $group)<tr><td>{{ $metode }}</td><td class="text-right">{{ $group->count() }}</td><td class="text-right">{{ $money($group->sum(function ($item) use ($totalOf) { return $totalOf($item); })) }}</td></tr>@empty<tr><td colspan="3" class="text-center muted">Tidak ada data.</td></tr>@endforelse</tbody></table></div>
+    @endif
+    @if($exportType === 'pembayaran_hutang')
+        <div class="section"><h2>Ringkasan Metode Pembayaran Hutang</h2><table class="compact"><thead><tr><th>Metode Pembayaran</th><th class="text-right">Jumlah Data</th><th class="text-right">Total Dibayar</th></tr></thead><tbody>@forelse($metodePembayaranGroups as $metode => $group)<tr><td>{{ $metode }}</td><td class="text-right">{{ $group->count() }}</td><td class="text-right">{{ $money($group->sum(function ($item) use ($totalOf) { return $totalOf($item); })) }}</td></tr>@empty<tr><td colspan="3" class="text-center muted">Tidak ada data.</td></tr>@endforelse</tbody></table></div>
     @endif
 @endif
 

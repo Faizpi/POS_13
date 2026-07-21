@@ -134,16 +134,38 @@ class ReportExportService
             $datasets = $datasets->concat($kunjungans);
         }
 
-        if (in_array($type, ['all', 'pembayaran'], true)) {
-            $pembayarans = $applyCommonFilters(
-                Pembayaran::with(['user', 'gudang', 'approver', 'penjualan.gudang']),
-                'tgl_pembayaran'
-            )->get()->each(function (Pembayaran $item) {
-                $item->type = 'Pembayaran';
-                $item->number = $item->custom_number;
-                $item->display_contact_name = $item->penjualan?->pelanggan ?: '-';
-                $item->no_telp_kontak = '-';
-            });
+        if (in_array($type, ['all', 'pembayaran', 'pembayaran_piutang', 'pembayaran_hutang'], true)) {
+            $pembayaranQuery = Pembayaran::with([
+                'user',
+                'gudang',
+                'approver',
+                'penjualan.gudang',
+                'pembelian.gudang',
+                'pembelian.kontak',
+            ]);
+
+            if ($type === 'pembayaran_piutang') {
+                $pembayaranQuery->where('type', 'piutang');
+            } elseif ($type === 'pembayaran_hutang') {
+                $pembayaranQuery->where('type', 'hutang');
+            }
+
+            $pembayarans = $applyCommonFilters($pembayaranQuery, 'tgl_pembayaran')
+                ->get()
+                ->each(function (Pembayaran $item) {
+                    $originalType = $item->type;
+                    $item->type = 'Pembayaran';
+                    $item->pembayaran_kind = $originalType;
+                    $item->number = $item->custom_number;
+
+                    if ($originalType === 'hutang') {
+                        $item->display_contact_name = $item->pembelian?->kontak?->nama ?: '-';
+                        $item->no_telp_kontak = $item->pembelian?->kontak?->no_telp ?: '-';
+                    } else {
+                        $item->display_contact_name = $item->penjualan?->pelanggan ?: '-';
+                        $item->no_telp_kontak = $item->penjualan?->no_telepon ?: '-';
+                    }
+                });
 
             $datasets = $datasets->concat($pembayarans);
         }

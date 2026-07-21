@@ -34,6 +34,8 @@ class TransactionsExport implements FromView, ShouldAutoSize, WithColumnFormatti
             'biaya' => 'reports.biaya',
             'kunjungan' => 'reports.kunjungan',
             'pembayaran' => 'reports.pembayaran',
+            'pembayaran_piutang' => 'reports.pembayaran_piutang',
+            'pembayaran_hutang' => 'reports.pembayaran_hutang',
             default => 'reports.transactions',
         };
 
@@ -53,6 +55,8 @@ class TransactionsExport implements FromView, ShouldAutoSize, WithColumnFormatti
             'biaya' => 'Laporan Biaya',
             'kunjungan' => 'Laporan Kunjungan',
             'pembayaran' => 'Laporan Pembayaran',
+            'pembayaran_piutang' => 'Laporan Pembayaran Piutang',
+            'pembayaran_hutang' => 'Laporan Pembayaran Hutang',
             default => 'Semua Transaksi',
         };
     }
@@ -71,7 +75,7 @@ class TransactionsExport implements FromView, ShouldAutoSize, WithColumnFormatti
             'penjualan' => ['E'],
             'kunjungan' => ['F', 'H'],
             'biaya' => ['G'],
-            'pembayaran' => ['G'],
+            'pembayaran', 'pembayaran_piutang', 'pembayaran_hutang' => ['G'],
             default => ['I'],
         };
 

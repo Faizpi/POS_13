@@ -126,6 +126,16 @@ class Dashboard extends BaseDashboard
                         ->native(false)
                         ->required(),
 
+                    Select::make('pembayaran_jenis')
+                        ->label('Jenis Pembayaran')
+                        ->options([
+                            'piutang' => 'Piutang',
+                            'hutang' => 'Hutang',
+                        ])
+                        ->visible(fn (Get $get): bool => $get('tipe_transaksi') === 'pembayaran')
+                        ->native(false)
+                        ->required(fn (Get $get): bool => $get('tipe_transaksi') === 'pembayaran'),
+
                     Select::make('format')
                         ->label('Format')
                         ->options(fn (): array => static::getExportFormatOptions())
@@ -322,7 +332,21 @@ class Dashboard extends BaseDashboard
                         return null;
                     }
 
-                    $type = $selectedType === 'semua' ? 'all' : $selectedType;
+                    $pembayaranJenis = $data['pembayaran_jenis'] ?? null;
+
+                    if ($selectedType === 'pembayaran') {
+                        if (! in_array($pembayaranJenis, ['piutang', 'hutang'], true)) {
+                            Notification::make()
+                                ->title('Jenis pembayaran harus dipilih')
+                                ->danger()
+                                ->send();
+
+                            return null;
+                        }
+                        $type = 'pembayaran_'.$pembayaranJenis;
+                    } else {
+                        $type = $selectedType === 'semua' ? 'all' : $selectedType;
+                    }
                     $dateFrom = Carbon::parse($data['start_date'])->toDateString();
                     $dateTo = Carbon::parse($data['end_date'])->toDateString();
 
@@ -350,7 +374,12 @@ class Dashboard extends BaseDashboard
                         $tujuanFilter,
                     );
 
-                    $fileBase = 'Laporan_'.ucfirst($type).'_'.str_replace('-', '', $dateFrom).'_sd_'.str_replace('-', '', $dateTo);
+                    $typeLabel = match ($type) {
+                        'pembayaran_piutang' => 'Pembayaran_Piutang',
+                        'pembayaran_hutang' => 'Pembayaran_Hutang',
+                        default => ucfirst($type),
+                    };
+                    $fileBase = 'Laporan_'.$typeLabel.'_'.str_replace('-', '', $dateFrom).'_sd_'.str_replace('-', '', $dateTo);
 
                     if ($format === 'pdf') {
                         return Pdf::loadView('reports.pdf', [

@@ -174,7 +174,8 @@ class DashboardController extends Controller
                 ['value' => 'pembelian', 'label' => 'Pembelian'],
                 ['value' => 'biaya', 'label' => 'Biaya'],
                 ['value' => 'kunjungan', 'label' => 'Kunjungan'],
-                ['value' => 'pembayaran', 'label' => 'Pembayaran'],
+                ['value' => 'pembayaran_piutang', 'label' => 'Pembayaran Piutang'],
+                ['value' => 'pembayaran_hutang', 'label' => 'Pembayaran Hutang'],
             ],
             'status_filters' => [
                 ['value' => 'all', 'label' => 'Semua Status'],
@@ -228,7 +229,7 @@ class DashboardController extends Controller
         $request->validate([
             'date_from' => 'required|date',
             'date_to' => 'required|date|after_or_equal:date_from',
-            'transaction_type' => 'required|in:all,penjualan,pembelian,biaya,kunjungan,pembayaran',
+            'transaction_type' => 'required|in:all,penjualan,pembelian,biaya,kunjungan,pembayaran,pembayaran_piutang,pembayaran_hutang',
             'status_filter' => 'nullable|in:all,Pending,Approved,Rejected,Canceled,Lunas',
             'gudang_id' => 'nullable|exists:gudangs,id',
             'biaya_jenis' => 'nullable|in:masuk,keluar',
@@ -240,7 +241,12 @@ class DashboardController extends Controller
         $type = $request->transaction_type;
         $dateFrom = $request->date_from;
         $dateTo = $request->date_to;
-        $fileBase = 'Laporan_'.ucfirst($type).'_'.str_replace('-', '', $dateFrom).'_sd_'.str_replace('-', '', $dateTo);
+        $typeLabel = match ($type) {
+            'pembayaran_piutang' => 'Pembayaran_Piutang',
+            'pembayaran_hutang' => 'Pembayaran_Hutang',
+            default => ucfirst($type),
+        };
+        $fileBase = 'Laporan_'.$typeLabel.'_'.str_replace('-', '', $dateFrom).'_sd_'.str_replace('-', '', $dateTo);
 
         if ($request->filled('gudang_id') && $user->role === 'admin' && ! $user->canAccessGudang($request->integer('gudang_id'))) {
             return response()->json(['message' => 'Tidak memiliki akses ke gudang ini.'], 403);

@@ -130,19 +130,132 @@
 
 ### GET `/dashboard/daily-report/pdf` → PDF download
 
-### GET `/dashboard/export/options` — Available filter options
+### GET `/dashboard/export/options` — Available export options
+Returns filter options and canonical transaction types for export.
 
-### POST `/dashboard/export` — Export report
+**Response:**
 ```json
 {
-  "type": "penjualan|pembelian|biaya|kunjungan|semua",
-  "format": "pdf|excel",
-  "date_from": "2026-01-01", "date_to": "2026-06-30",
-  "status": "Approved",
-  "gudang_id": 1,
-  "sales_id": 5
+  "role": "super_admin|admin|spectator|user",
+  "permissions": {
+    "can_export_full_report": true,
+    "can_export_pdf": true,
+    "can_export_excel": true,
+    "can_export_daily_pdf": true,
+    "allowed_formats": ["pdf", "excel"]
+  },
+  "transaction_types": [
+    { "value": "all", "label": "Semua Transaksi" },
+    { "value": "penjualan", "label": "Penjualan" },
+    { "value": "pembelian", "label": "Pembelian" },
+    { "value": "biaya", "label": "Biaya" },
+    { "value": "kunjungan", "label": "Kunjungan" },
+    { "value": "pembayaran_piutang", "label": "Pembayaran Piutang" },
+    { "value": "pembayaran_hutang", "label": "Pembayaran Hutang" }
+  ],
+  "status_filters": [
+    { "value": "all", "label": "Semua Status" },
+    { "value": "Pending", "label": "Pending" },
+    { "value": "Approved", "label": "Approved" },
+    { "value": "Lunas", "label": "Lunas" },
+    { "value": "Rejected", "label": "Rejected" },
+    { "value": "Canceled", "label": "Canceled" }
+  ],
+  "biaya_jenis_filters": [
+    { "value": "", "label": "Semua Jenis" },
+    { "value": "masuk", "label": "Masuk" },
+    { "value": "keluar", "label": "Keluar" }
+  ],
+  "tujuan_kunjungan_filters": [
+    { "value": "", "label": "Semua Tujuan" },
+    { "value": "Pemeriksaan Stock", "label": "Pemeriksaan Stock" },
+    { "value": "Penagihan", "label": "Penagihan" },
+    { "value": "Promo", "label": "Promo" },
+    { "value": "Promo Gratis", "label": "Promo Gratis" },
+    { "value": "Promo Sample", "label": "Promo Sample" },
+    { "value": "Penawaran", "label": "Penawaran" }
+  ],
+  "export_formats": [
+    { "value": "pdf", "label": "PDF" },
+    { "value": "excel", "label": "Excel" }
+  ],
+  "gudang_options": [
+    { "id": 1, "nama_gudang": "Gudang Utama" }
+  ],
+  "sales_options": [
+    { "id": 5, "name": "Sales A", "gudang_id": 1 }
+  ],
+  "defaults": {
+    "transaction_type": "all",
+    "status_filter": "all",
+    "export_format": "excel"
+  }
 }
 ```
+
+**Permissions:**
+- `super_admin`: sees all gudangs and sales users
+- `admin`: sees only assigned gudangs and their sales users
+- `spectator`, `user`: sees empty gudang_options and sales_options (no access to export endpoint)
+
+### POST `/dashboard/export` — Export report
+Export transactions to PDF or Excel format.
+
+**Request Body:**
+```json
+{
+  "transaction_type": "all",
+  "export_format": "excel",
+  "date_from": "2026-01-01",
+  "date_to": "2026-06-30",
+  "status_filter": "Approved",
+  "gudang_id": 1,
+  "sales_id": 5,
+  "biaya_jenis": "masuk",
+  "tujuan_filter": "Penagihan"
+}
+```
+
+**Parameters:**
+- `transaction_type` (required): One of `all`, `penjualan`, `pembelian`, `biaya`, `kunjungan`, `pembayaran_piutang`, `pembayaran_hutang`
+- `export_format` (required): `pdf` or `excel`
+- `date_from` (required): Start date (YYYY-MM-DD)
+- `date_to` (required): End date (YYYY-MM-DD)
+- `status_filter` (optional): Filter by transaction status (use `all` for no filter)
+- `gudang_id` (optional): Filter by warehouse
+- `sales_id` (optional): Filter by sales user (admin/super_admin only)
+- `biaya_jenis` (optional): Filter biaya by `masuk` or `keluar`
+- `tujuan_filter` (optional): Filter kunjungan by purpose
+
+**Response:**
+- **PDF**: `application/pdf` with `Content-Disposition: attachment; filename="Laporan_{TypeLabel}_{YYYYMMDD}_sd_{YYYYMMDD}.pdf"`
+- **Excel**: `application/vnd.openxmlformats-officedocument.spreadsheetml.sheet` with `Content-Disposition: attachment; filename="Laporan_{TypeLabel}_{YYYYMMDD}_sd_{YYYYMMDD}.xlsx"`
+
+**Filenames:**
+| Transaction Type | Filename Pattern |
+|------------------|------------------|
+| `all` | `Laporan_All_20260101_sd_20260630.pdf/xlsx` |
+| `penjualan` | `Laporan_Penjualan_20260101_sd_20260630.pdf/xlsx` |
+| `pembelian` | `Laporan_Pembelian_20260101_sd_20260630.pdf/xlsx` |
+| `biaya` | `Laporan_Biaya_20260101_sd_20260630.pdf/xlsx` |
+| `kunjungan` | `Laporan_Kunjungan_20260101_sd_20260630.pdf/xlsx` |
+| `pembayaran_piutang` | `Laporan_Pembayaran_Piutang_20260101_sd_20260630.pdf/xlsx` |
+| `pembayaran_hutang` | `Laporan_Pembayaran_Hutang_20260101_sd_20260630.pdf/xlsx` |
+
+**Export Content:**
+- **PDF**: Formatted report with summary cards, transaction table, and grouping summaries (by status, type, method, etc.)
+- **Excel**: Single-sheet workbook with transaction data and summary rows
+
+**Payment Type Split:**
+In `all` exports, payment rows are labeled `Pembayaran Piutang` or `Pembayaran Hutang` based on the original payment type. The `pembayaran_kind` field retains the original value (`piutang` or `hutang`) for programmatic access.
+
+**Legacy Compatibility:**
+The legacy `transaction_type=pembayaran` is deprecated. Use `pembayaran_piutang` or `pembayaran_hutang` instead. The legacy alias still works but returns both types combined.
+
+**Permissions:**
+- Endpoint restricted to `super_admin` and `admin` roles
+- `can_export_pdf` and `can_export_excel` user flags control format access
+- `spectator` and `user` roles cannot access this endpoint (403 Forbidden)
 
 ### GET `/lampiran/download?path=...` → Download attachment file
 

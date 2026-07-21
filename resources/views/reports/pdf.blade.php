@@ -74,6 +74,13 @@
     $kindOf = function ($item) {
         return $item ? class_basename($item) : '-';
     };
+    $displayKindOf = function ($item) use ($kindOf) {
+        if (!$item) return '-';
+        if ($item instanceof \App\Models\Pembayaran) {
+            return $item->type ?? 'Pembayaran';
+        }
+        return $kindOf($item);
+    };
     $totalOf = function ($item) use ($kindOf) {
         return match ($kindOf($item)) {
             'Penjualan', 'Pembelian', 'Biaya' => (float) ($item->grand_total ?? 0),
@@ -127,7 +134,7 @@
     };
     $totalAmount = $transactions->sum(function ($item) use ($totalOf) { return $totalOf($item); });
     $statusGroups = $transactions->groupBy(function ($item) use ($groupValue) { return $groupValue($item, 'status'); });
-    $typeGroups = $transactions->groupBy(function ($item) use ($kindOf) { return $kindOf($item); });
+    $typeGroups = $transactions->groupBy(function ($item) use ($displayKindOf) { return $displayKindOf($item); });
     $jenisBiayaGroups = $transactions->groupBy(function ($item) use ($groupValue) { return $groupValue($item, 'jenis_biaya'); });
     $tujuanGroups = $transactions->groupBy(function ($item) use ($groupValue) { return $groupValue($item, 'tujuan'); });
     $metodePembayaranGroups = $transactions->groupBy(function ($item) use ($groupValue) { return $groupValue($item, 'metode_pembayaran'); });
@@ -232,7 +239,7 @@
     @else
         <table class="compact">
             <thead><tr><th>No</th><th>Tipe</th><th>Nomor</th><th>Tanggal</th><th>Pembuat/Sales</th><th>Kontak / Telp</th><th>Gudang</th><th>Status</th><th>Detail Item/Kategori</th><th>Qty</th><th>Harga/Jumlah</th><th>Pajak</th><th>Total/Bayar</th><th>Memo/Lampiran</th></tr></thead>
-            <tbody>@foreach($transactions as $item) @php $rows = $itemsOf($item); @endphp @forelse($rows as $idx => $detail)<tr>@if($idx === 0)<td rowspan="{{ $rows->count() }}">{{ $loop->parent->iteration }}</td><td rowspan="{{ $rows->count() }}">{{ $kindOf($item) }}</td><td rowspan="{{ $rows->count() }}">{{ $number($item) }}</td><td rowspan="{{ $rows->count() }}">{{ $dateTime($item) }}</td><td rowspan="{{ $rows->count() }}">{{ $item->sales_nama ?? optional($item->user)->name ?? '-' }}</td><td rowspan="{{ $rows->count() }}">{{ $contactName($item) }}<br><span class="muted">{{ $phone($item) }}</span></td><td rowspan="{{ $rows->count() }}">{{ optional($item->gudang)->nama_gudang ?? '-' }}</td><td rowspan="{{ $rows->count() }}"><span class="{{ $statusBadge($item->status ?? null) }}">{{ $item->status ?? '-' }}</span></td>@endif<td>{{ optional($detail->produk)->nama_produk ?? $detail->kategori ?? $detail->deskripsi ?? '-' }}<br><span class="muted">{{ $detail->deskripsi ?? optional($detail->produk)->kategori ?? '' }}</span></td><td class="text-center">{{ $qtyTextOf($item, $detail) }}</td><td class="text-right">{{ $detailValueTextOf($item, $detail) }}</td>@if($idx === 0)<td rowspan="{{ $rows->count() }}">{{ $taxTextOf($item) }}</td><td rowspan="{{ $rows->count() }}" class="text-right"><strong>{{ $totalTextOf($item) }}</strong></td><td rowspan="{{ $rows->count() }}">{{ $item->memo ?? $item->keterangan ?? '-' }}<br><span class="muted">{{ $attachmentText($item) }}</span></td>@endif</tr>@empty<tr><td>{{ $loop->iteration }}</td><td>{{ $kindOf($item) }}</td><td>{{ $number($item) }}</td><td>{{ $dateTime($item) }}</td><td>{{ $item->sales_nama ?? optional($item->user)->name ?? '-' }}</td><td>{{ $contactName($item) }}<br>{{ $phone($item) }}</td><td>{{ optional($item->gudang)->nama_gudang ?? '-' }}</td><td>{{ $item->status ?? '-' }}</td><td>-</td><td>-</td><td>-</td><td>{{ $taxTextOf($item) }}</td><td class="text-right">{{ $totalTextOf($item) }}</td><td>{{ $item->memo ?? $item->keterangan ?? '-' }}<br>{{ $attachmentText($item) }}</td></tr>@endforelse @endforeach</tbody>
+            <tbody>@foreach($transactions as $item) @php $rows = $itemsOf($item); @endphp @forelse($rows as $idx => $detail)<tr>@if($idx === 0)<td rowspan="{{ $rows->count() }}">{{ $loop->parent->iteration }}</td><td rowspan="{{ $rows->count() }}">{{ $displayKindOf($item) }}</td><td rowspan="{{ $rows->count() }}">{{ $number($item) }}</td><td rowspan="{{ $rows->count() }}">{{ $dateTime($item) }}</td><td rowspan="{{ $rows->count() }}">{{ $item->sales_nama ?? optional($item->user)->name ?? '-' }}</td><td rowspan="{{ $rows->count() }}">{{ $contactName($item) }}<br><span class="muted">{{ $phone($item) }}</span></td><td rowspan="{{ $rows->count() }}">{{ optional($item->gudang)->nama_gudang ?? '-' }}</td><td rowspan="{{ $rows->count() }}"><span class="{{ $statusBadge($item->status ?? null) }}">{{ $item->status ?? '-' }}</span></td>@endif<td>{{ optional($detail->produk)->nama_produk ?? $detail->kategori ?? $detail->deskripsi ?? '-' }}<br><span class="muted">{{ $detail->deskripsi ?? optional($detail->produk)->kategori ?? '' }}</span></td><td class="text-center">{{ $qtyTextOf($item, $detail) }}</td><td class="text-right">{{ $detailValueTextOf($item, $detail) }}</td>@if($idx === 0)<td rowspan="{{ $rows->count() }}">{{ $taxTextOf($item) }}</td><td rowspan="{{ $rows->count() }}" class="text-right"><strong>{{ $totalTextOf($item) }}</strong></td><td rowspan="{{ $rows->count() }}">{{ $item->memo ?? $item->keterangan ?? '-' }}<br><span class="muted">{{ $attachmentText($item) }}</span></td>@endif</tr>@empty<tr><td>{{ $loop->iteration }}</td><td>{{ $displayKindOf($item) }}</td><td>{{ $number($item) }}</td><td>{{ $dateTime($item) }}</td><td>{{ $item->sales_nama ?? optional($item->user)->name ?? '-' }}</td><td>{{ $contactName($item) }}<br>{{ $phone($item) }}</td><td>{{ optional($item->gudang)->nama_gudang ?? '-' }}</td><td>{{ $item->status ?? '-' }}</td><td>-</td><td>-</td><td>-</td><td>{{ $taxTextOf($item) }}</td><td class="text-right">{{ $totalTextOf($item) }}</td><td>{{ $item->memo ?? $item->keterangan ?? '-' }}<br>{{ $attachmentText($item) }}</td></tr>@endforelse @endforeach</tbody>
         </table>
     @endif
 

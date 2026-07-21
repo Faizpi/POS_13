@@ -170,8 +170,8 @@ class ApiDocController extends Controller
             '/dashboard' => ['get' => $operation('Dashboard', 'Ambil metrik dashboard sesuai role', 'getDashboard', ['200' => $response('Metrik dashboard.', $success)])],
             '/dashboard/daily-report' => ['get' => $operation('Dashboard', 'Ambil laporan harian dashboard', 'getDashboardDailyReport', ['200' => $response('Laporan harian.', $success)])],
             '/dashboard/daily-report/pdf' => ['get' => $operation('Dashboard', 'Unduh laporan harian PDF', 'downloadDashboardDailyReportPdf', $file)],
-            '/dashboard/export/options' => ['get' => $operation('Dashboard', 'Ambil opsi export dashboard', 'getDashboardExportOptions', ['200' => $response('Opsi export.', $success)])],
-            '/dashboard/export' => ['post' => $operation('Dashboard', 'Export data dashboard', 'exportDashboard', $file + $validationError)],
+            '/dashboard/export/options' => ['get' => $operation('Dashboard', 'Ambil opsi filter dan tipe transaksi untuk export dashboard', 'getDashboardExportOptions', ['200' => $response('Opsi export termasuk transaction_types (all, penjualan, pembelian, biaya, kunjungan, pembayaran_piutang, pembayaran_hutang), status_filters, gudangs, sales_users, biaya_jenis_filters, tujuan_kunjungan_filters.', $ref('ExportOptionsResponse'))])],
+            '/dashboard/export' => ['post' => $operation('Dashboard', 'Export transaksi ke PDF atau Excel. Tipe pembayaran dipisah: pembayaran_piutang dan pembayaran_hutang. Dalam laporan all, baris pembayaran dilabeli Pembayaran Piutang atau Pembayaran Hutang.', 'exportDashboard', $file + $validationError, [], $requestBody($ref('ExportRequest')))],
             '/lampiran/download' => ['get' => $operation('Dashboard', 'Unduh lampiran laporan', 'downloadLampiran', $file)],
 
             '/print/{type}/{id}/qr' => ['get' => $operation('Print & QR', 'Ambil data QR untuk transaksi', 'getPrintQrData', ['200' => $response('Data QR.', $success)] + $notFound, $printParameters)],
@@ -481,6 +481,167 @@ class ApiDocController extends Controller
                 'properties' => [
                     'message' => ['type' => 'string', 'example' => 'Berhasil.'],
                     'data' => ['type' => 'object', 'nullable' => true],
+                ],
+            ],
+            'ExportOptionsResponse' => [
+                'type' => 'object',
+                'properties' => [
+                    'role' => [
+                        'type' => 'string',
+                        'example' => 'super_admin',
+                        'description' => 'Current user role',
+                    ],
+                    'permissions' => [
+                        'type' => 'object',
+                        'properties' => [
+                            'can_export_full_report' => ['type' => 'boolean'],
+                            'can_export_pdf' => ['type' => 'boolean'],
+                            'can_export_excel' => ['type' => 'boolean'],
+                            'can_export_daily_pdf' => ['type' => 'boolean'],
+                            'allowed_formats' => [
+                                'type' => 'array',
+                                'items' => ['type' => 'string', 'enum' => ['pdf', 'excel']],
+                            ],
+                        ],
+                    ],
+                    'transaction_types' => [
+                        'type' => 'array',
+                        'items' => [
+                            'type' => 'object',
+                            'properties' => [
+                                'value' => ['type' => 'string', 'example' => 'all'],
+                                'label' => ['type' => 'string', 'example' => 'Semua Transaksi'],
+                            ],
+                        ],
+                        'description' => 'Canonical transaction types for export. Payment types are split: pembayaran_piutang (receivable) and pembayaran_hutang (payable). Legacy pembayaran is deprecated.',
+                    ],
+                    'status_filters' => [
+                        'type' => 'array',
+                        'items' => [
+                            'type' => 'object',
+                            'properties' => [
+                                'value' => ['type' => 'string'],
+                                'label' => ['type' => 'string'],
+                            ],
+                        ],
+                        'description' => 'Status filter options. Use "all" for no filter.',
+                    ],
+                    'biaya_jenis_filters' => [
+                        'type' => 'array',
+                        'items' => [
+                            'type' => 'object',
+                            'properties' => [
+                                'value' => ['type' => 'string'],
+                                'label' => ['type' => 'string'],
+                            ],
+                        ],
+                    ],
+                    'tujuan_kunjungan_filters' => [
+                        'type' => 'array',
+                        'items' => [
+                            'type' => 'object',
+                            'properties' => [
+                                'value' => ['type' => 'string'],
+                                'label' => ['type' => 'string'],
+                            ],
+                        ],
+                    ],
+                    'export_formats' => [
+                        'type' => 'array',
+                        'items' => [
+                            'type' => 'object',
+                            'properties' => [
+                                'value' => ['type' => 'string', 'enum' => ['pdf', 'excel']],
+                                'label' => ['type' => 'string'],
+                            ],
+                        ],
+                    ],
+                    'gudang_options' => [
+                        'type' => 'array',
+                        'items' => [
+                            'type' => 'object',
+                            'properties' => [
+                                'id' => ['type' => 'integer'],
+                                'nama_gudang' => ['type' => 'string'],
+                            ],
+                        ],
+                        'description' => 'Available gudangs based on user role. Empty for spectator/user roles.',
+                    ],
+                    'sales_options' => [
+                        'type' => 'array',
+                        'items' => [
+                            'type' => 'object',
+                            'properties' => [
+                                'id' => ['type' => 'integer'],
+                                'name' => ['type' => 'string'],
+                                'gudang_id' => ['type' => 'integer'],
+                            ],
+                        ],
+                        'description' => 'Available sales users based on user role. Empty for spectator/user roles.',
+                    ],
+                    'defaults' => [
+                        'type' => 'object',
+                        'properties' => [
+                            'transaction_type' => ['type' => 'string', 'example' => 'all'],
+                            'status_filter' => ['type' => 'string', 'example' => 'all'],
+                            'export_format' => ['type' => 'string', 'example' => 'excel'],
+                        ],
+                    ],
+                ],
+            ],
+            'ExportRequest' => [
+                'type' => 'object',
+                'required' => ['transaction_type', 'export_format', 'date_from', 'date_to'],
+                'properties' => [
+                    'transaction_type' => [
+                        'type' => 'string',
+                        'enum' => ['all', 'penjualan', 'pembelian', 'biaya', 'kunjungan', 'pembayaran_piutang', 'pembayaran_hutang'],
+                        'example' => 'all',
+                        'description' => 'Type of transactions to export. Use pembayaran_piutang or pembayaran_hutang for payment reports. Legacy pembayaran is deprecated but still accepted.',
+                    ],
+                    'export_format' => [
+                        'type' => 'string',
+                        'enum' => ['pdf', 'excel'],
+                        'example' => 'excel',
+                    ],
+                    'date_from' => [
+                        'type' => 'string',
+                        'format' => 'date',
+                        'example' => '2026-01-01',
+                    ],
+                    'date_to' => [
+                        'type' => 'string',
+                        'format' => 'date',
+                        'example' => '2026-06-30',
+                    ],
+                    'status_filter' => [
+                        'type' => 'string',
+                        'nullable' => true,
+                        'example' => 'all',
+                        'description' => 'Filter by transaction status. Use "all" for no filter.',
+                    ],
+                    'gudang_id' => [
+                        'type' => 'integer',
+                        'nullable' => true,
+                        'example' => 1,
+                    ],
+                    'sales_id' => [
+                        'type' => 'integer',
+                        'nullable' => true,
+                        'example' => 5,
+                        'description' => 'Filter by sales user (admin/super_admin only)',
+                    ],
+                    'biaya_jenis' => [
+                        'type' => 'string',
+                        'nullable' => true,
+                        'enum' => ['masuk', 'keluar'],
+                        'description' => 'Filter biaya by type',
+                    ],
+                    'tujuan_filter' => [
+                        'type' => 'string',
+                        'nullable' => true,
+                        'description' => 'Filter kunjungan by purpose',
+                    ],
                 ],
             ],
         ];

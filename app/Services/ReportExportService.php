@@ -154,7 +154,7 @@ class ReportExportService
                 ->get()
                 ->each(function (Pembayaran $item) {
                     $originalType = $item->type;
-                    $item->type = 'Pembayaran';
+                    $item->type = $originalType === 'hutang' ? 'Pembayaran Hutang' : 'Pembayaran Piutang';
                     $item->pembayaran_kind = $originalType;
                     $item->number = $item->custom_number;
 

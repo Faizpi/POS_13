@@ -13,6 +13,9 @@
 
     $resolveTransaction = static function ($transaction): array {
         $kind = class_basename($transaction);
+        $displayKind = $transaction instanceof \App\Models\Pembayaran
+            ? ($transaction->type ?? 'Pembayaran')
+            : $kind;
         $value = match ($kind) {
             'Penjualan', 'Pembelian', 'Biaya' => (float) ($transaction->grand_total ?? 0),
             'Pembayaran' => (float) ($transaction->jumlah_bayar ?? 0),
@@ -20,7 +23,7 @@
             default => null,
         };
 
-        return ['kind' => $kind, 'value' => $value];
+        return ['kind' => $kind, 'display_kind' => $displayKind, 'value' => $value];
     };
 
     $transactionCollection = collect($transactions ?? []);
@@ -28,7 +31,7 @@
         $resolved = $resolveTransaction($transaction);
 
         return [
-            'kind' => $resolved['kind'],
+            'kind' => $resolved['display_kind'],
             'status' => filled($transaction->status ?? null) ? (string) $transaction->status : 'Tanpa Status',
             'value' => $resolved['value'],
         ];
@@ -89,6 +92,7 @@
                 $phone = $t->no_telepon ?? $t->no_telp_kontak ?? $t->sales_no_telepon ?? '-';
                 $resolvedTransaction = $resolveTransaction($t);
                 $transactionKind = $resolvedTransaction['kind'];
+                $transactionDisplayKind = $resolvedTransaction['display_kind'];
                 $transactionValue = $resolvedTransaction['value'];
                 $reference = $t->no_referensi ?? optional($t->penjualan)->custom_number ?? optional($t->penjualan)->nomor ?? '-';
             @endphp
@@ -104,7 +108,7 @@
                 @endphp
                 <tr>
                     <td>{{ $itemIndex === 0 ? $transactionIndex + 1 : '' }}</td>
-                    <td>{{ $transactionKind }}</td>
+                    <td>{{ $itemIndex === 0 ? $transactionDisplayKind : '' }}</td>
                     <td>{{ $transactionNumber }}</td>
                     <td>{{ $formatDate($transactionDate) }}</td>
                     <td>{{ optional($t->user)->name ?? $t->sales_nama ?? '-' }}</td>

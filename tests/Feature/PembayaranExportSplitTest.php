@@ -199,6 +199,56 @@ class PembayaranExportSplitTest extends TestCase
         $this->assertCount(2, $result);
     }
 
+    public function test_all_report_contains_both_payment_labels(): void
+    {
+        $penjualan = $this->makePenjualan();
+        $pembelian = $this->makePembelian();
+
+        Pembayaran::create([
+            'type' => 'piutang',
+            'penjualan_id' => $penjualan->id,
+            'user_id' => $penjualan->user_id,
+            'gudang_id' => $penjualan->gudang_id,
+            'tgl_pembayaran' => '2026-06-06',
+            'metode_pembayaran' => 'Transfer',
+            'jumlah_bayar' => 25000,
+            'status' => 'Approved',
+        ]);
+
+        Pembayaran::create([
+            'type' => 'hutang',
+            'pembelian_id' => $pembelian->id,
+            'user_id' => $pembelian->user_id,
+            'gudang_id' => $pembelian->gudang_id,
+            'tgl_pembayaran' => '2026-06-06',
+            'metode_pembayaran' => 'Transfer',
+            'jumlah_bayar' => 50000,
+            'status' => 'Approved',
+        ]);
+
+        $service = app(ReportExportService::class);
+        $result = $service->buildExportData(
+            $this->makeSuperAdmin(),
+            'all',
+            '2026-06-01',
+            '2026-06-30',
+        );
+
+        $types = $result->pluck('type')->toArray();
+        $this->assertContains('Pembayaran Piutang', $types);
+        $this->assertContains('Pembayaran Hutang', $types);
+
+        $piutang = $result->firstWhere('type', 'Pembayaran Piutang');
+        $this->assertNotNull($piutang);
+        $this->assertSame('piutang', $piutang->pembayaran_kind);
+        $this->assertSame(25000, $piutang->jumlah_bayar);
+
+        $hutang = $result->firstWhere('type', 'Pembayaran Hutang');
+        $this->assertNotNull($hutang);
+        $this->assertSame('hutang', $hutang->pembayaran_kind);
+        $this->assertSame(50000, $hutang->jumlah_bayar);
+    }
+
     public function test_api_export_piutang_excel(): void
     {
         $token = $this->postJson('/api/v1/login', [

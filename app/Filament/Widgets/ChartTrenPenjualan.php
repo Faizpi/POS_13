@@ -162,19 +162,22 @@ class ChartTrenPenjualan extends ChartWidget
                         const { chart, datasetIndex } = context;
                         const { ctx, chartArea } = chart;
                         const colors = [
-                            ['rgba(15, 159, 143, 0.28)', 'rgba(15, 159, 143, 0.015)'],
-                            ['rgba(217, 139, 22, 0.18)', 'rgba(217, 139, 22, 0.01)'],
-                            ['rgba(229, 72, 101, 0.15)', 'rgba(229, 72, 101, 0.008)'],
+                            [15, 159, 143, 0.30],
+                            [217, 139, 22, 0.22],
+                            [229, 72, 101, 0.19],
                         ];
 
+                        const [red, green, blue, peakOpacity] = colors[datasetIndex] ?? colors[0];
+
                         if (! chartArea) {
-                            return colors[datasetIndex]?.[0] ?? 'rgba(15, 159, 143, 0.18)';
+                            return `rgba(${red}, ${green}, ${blue}, ${peakOpacity})`;
                         }
 
                         const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
-                        const [startColor, endColor] = colors[datasetIndex] ?? colors[0];
-                        gradient.addColorStop(0, startColor);
-                        gradient.addColorStop(1, endColor);
+                        gradient.addColorStop(0, `rgba(${red}, ${green}, ${blue}, ${peakOpacity})`);
+                        gradient.addColorStop(0.35, `rgba(${red}, ${green}, ${blue}, ${peakOpacity * 0.55})`);
+                        gradient.addColorStop(0.72, `rgba(${red}, ${green}, ${blue}, ${peakOpacity * 0.14})`);
+                        gradient.addColorStop(1, `rgba(${red}, ${green}, ${blue}, 0)`);
 
                         return gradient;
                     }

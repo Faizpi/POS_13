@@ -10,11 +10,9 @@ use Filament\Widgets\ChartWidget;
 
 class ChartTrenPenjualan extends ChartWidget
 {
-    protected ?string $heading = 'Tren Transaksi 6 Bulan';
+    protected string $view = 'filament.widgets.chart-tren-penjualan';
 
-    protected ?string $description = 'Nilai penjualan, pembelian, dan biaya per bulan.';
-
-    protected ?string $maxHeight = '200px';
+    protected ?string $maxHeight = '220px';
 
     protected int|string|array $columnSpan = 1;
 
@@ -31,10 +29,10 @@ class ChartTrenPenjualan extends ChartWidget
         // Build month labels for last 6 months
         $months = collect();
         for ($i = 5; $i >= 0; $i--) {
-            $months->push(now()->subMonths($i));
+            $months->push(now()->subMonthsNoOverflow($i));
         }
 
-        $labels = $months->map(fn ($date) => $date->format('M Y'))->toArray();
+        $labels = $months->map(fn ($date) => $date->translatedFormat('M Y'))->toArray();
 
         $penjualanData = [];
         $pembelianData = [];
@@ -90,8 +88,8 @@ class ChartTrenPenjualan extends ChartWidget
                     'backgroundColor' => 'rgba(15, 159, 143, 0.14)',
 
                     'fill' => false,
-                    'tension' => 0.45,
-                    'borderWidth' => 2,
+                    'tension' => 0.4,
+                    'borderWidth' => 2.5,
                     'pointRadius' => 2.5,
                     'pointBackgroundColor' => '#0F9F8F',
                     'pointBorderColor' => '#ffffff',
@@ -168,19 +166,7 @@ class ChartTrenPenjualan extends ChartWidget
             },
             plugins: {
                 legend: {
-                    position: 'bottom',
-                    labels: {
-                        boxWidth: 10,
-                        boxHeight: 10,
-                        usePointStyle: true,
-                        pointStyle: 'circle',
-                        padding: 20,
-                        color: '#64748B',
-                        font: {
-                            size: 12,
-                            weight: '600'
-                        }
-                    }
+                    display: false
                 },
                 tooltip: {
                     backgroundColor: 'rgba(15, 23, 42, 0.94)',
@@ -215,6 +201,9 @@ class ChartTrenPenjualan extends ChartWidget
                         color: '#94A3B8',
                         font: {
                             size: 11
+                        },
+                        callback: function (value) {
+                            return String(this.getLabelForValue(value)).split(' ')[0];
                         }
                     },
                 },

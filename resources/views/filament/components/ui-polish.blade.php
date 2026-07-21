@@ -153,6 +153,125 @@
         max-height: 15rem;
     }
 
+    /* ===== Dashboard Transaction Trend ===== */
+    .he-trend-widget .fi-section-content {
+        padding: 0 !important;
+    }
+
+    .he-trend-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 1.15rem 1.25rem 0.95rem;
+        border-bottom: 1px solid var(--admin-border-subtle);
+    }
+
+    .he-trend-title-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.6rem;
+    }
+
+    .he-trend-title {
+        color: rgb(15, 23, 42);
+        font-size: 0.95rem;
+        font-weight: 750;
+        letter-spacing: -0.015em;
+        line-height: 1.3;
+    }
+
+    .dark .he-trend-title {
+        color: rgb(248, 250, 252);
+    }
+
+    .he-trend-period,
+    .he-trend-latest {
+        color: var(--admin-text-muted);
+        font-size: 0.68rem;
+        font-weight: 650;
+        line-height: 1.3;
+    }
+
+    .he-trend-period {
+        padding: 0.25rem 0.5rem;
+        border-radius: 999px;
+        background: var(--admin-surface-card-muted);
+    }
+
+    .he-trend-latest {
+        padding-top: 0.2rem;
+        white-space: nowrap;
+    }
+
+    .he-trend-description {
+        margin-top: 0.3rem;
+        color: var(--admin-text-muted);
+        font-size: 0.74rem;
+        line-height: 1.45;
+    }
+
+    .he-trend-metrics {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        border-bottom: 1px solid var(--admin-border-subtle);
+    }
+
+    .he-trend-metric {
+        min-width: 0;
+        padding: 0.9rem 1.25rem;
+    }
+
+    .he-trend-metric + .he-trend-metric {
+        border-inline-start: 1px solid var(--admin-border-subtle);
+    }
+
+    .he-trend-metric-label {
+        display: flex;
+        align-items: center;
+        gap: 0.45rem;
+        color: var(--admin-text-muted);
+        font-size: 0.7rem;
+        font-weight: 650;
+    }
+
+    .he-trend-dot {
+        width: 0.5rem;
+        height: 0.5rem;
+        flex: 0 0 0.5rem;
+        border-radius: 999px;
+    }
+
+    .he-trend-metric-value {
+        margin-top: 0.4rem;
+        overflow: hidden;
+        font-size: 1.15rem;
+        font-weight: 750;
+        letter-spacing: -0.025em;
+        line-height: 1.2;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .he-trend-metric-change {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.25rem;
+        margin-top: 0.3rem;
+        color: var(--admin-text-muted);
+        font-size: 0.66rem;
+        line-height: 1.35;
+    }
+
+    .he-trend-metric-change > span:first-child {
+        font-weight: 700;
+    }
+
+    .he-trend-chart {
+        padding: 0.95rem 1.15rem 0.75rem;
+    }
+
     @media (max-width: 768px) {
         .fi-dashboard-page .fi-wi-stats-overview-stat {
             min-height: 7.75rem;
@@ -161,6 +280,46 @@
         .fi-dashboard-page .fi-wi-chart .fi-wi-chart-canvas-ctn {
             min-height: 11.5rem;
             max-height: 13rem;
+        }
+
+        .he-trend-header {
+            align-items: flex-start;
+            padding: 1rem;
+        }
+
+        .he-trend-latest {
+            display: none;
+        }
+
+        .he-trend-metrics {
+            grid-template-columns: 1fr;
+        }
+
+        .he-trend-metric {
+            display: grid;
+            grid-template-columns: minmax(6rem, 0.8fr) minmax(0, 1fr);
+            align-items: center;
+            gap: 0.25rem 0.75rem;
+            padding: 0.75rem 1rem;
+        }
+
+        .he-trend-metric + .he-trend-metric {
+            border-top: 1px solid var(--admin-border-subtle);
+            border-inline-start: 0;
+        }
+
+        .he-trend-metric-value {
+            margin-top: 0;
+            text-align: end;
+        }
+
+        .he-trend-metric-change {
+            grid-column: 1 / -1;
+            margin-top: 0;
+        }
+
+        .he-trend-chart {
+            padding: 0.85rem 0.65rem 0.65rem;
         }
     }
 

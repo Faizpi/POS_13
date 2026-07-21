@@ -226,6 +226,12 @@
 
     .fi-sidebar > nav {
         padding: 6px 10px 12px !important;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .fi-sidebar > nav::-webkit-scrollbar {
+        display: none;
     }
 
     .fi-sidebar .fi-sidebar-item,

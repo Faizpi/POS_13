@@ -85,7 +85,6 @@ class ChartTrenPenjualan extends ChartWidget
 
                     // Teal – Penjualan
                     'borderColor' => '#0F9F8F',
-                    'backgroundColor' => 'rgba(15, 159, 143, 0.20)',
 
                     'fill' => 'origin',
                     'tension' => 0.4,
@@ -105,7 +104,6 @@ class ChartTrenPenjualan extends ChartWidget
 
                     // Amber – Pembelian
                     'borderColor' => '#D98B16',
-                    'backgroundColor' => 'rgba(217, 139, 22, 0.14)',
 
                     'fill' => 'origin',
                     'tension' => 0.45,
@@ -125,7 +123,6 @@ class ChartTrenPenjualan extends ChartWidget
 
                     // Rose – Biaya
                     'borderColor' => '#E54865',
-                    'backgroundColor' => 'rgba(229, 72, 101, 0.12)',
 
                     'fill' => 'origin',
                     'tension' => 0.45,

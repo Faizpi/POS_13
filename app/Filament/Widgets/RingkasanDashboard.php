@@ -89,7 +89,7 @@ class RingkasanDashboard extends Widget
     }
 
     /**
-     * @param Builder<Model> $query
+     * @param  Builder<Model>  $query
      * @return array{total: float, count: int}
      */
     private function totals(Builder $query, string $amountColumn): array
@@ -121,7 +121,8 @@ class RingkasanDashboard extends Widget
 
     /**
      * @template TModel of Model
-     * @param Builder<TModel> $query
+     *
+     * @param  Builder<TModel>  $query
      * @return Builder<TModel>
      */
     private function applyScope(Builder $query): Builder

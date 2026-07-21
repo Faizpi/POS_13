@@ -7,49 +7,39 @@ use App\Http\Controllers\Controller;
 use App\Models\Gudang;
 use App\Services\NeracaService;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
 class NeracaController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
-        $user = auth()->user();
-
-        if (! in_array($user->role, ['super_admin', 'spectator'])) {
-            return response()->json(['message' => 'Unauthorized'], 403);
+        $authResult = $this->authorizeAndValidate($request);
+        if ($authResult instanceof JsonResponse) {
+            return $authResult;
         }
 
-        $from = $request->filled('from') ? $request->from : null;
-        $to = $request->filled('to') ? $request->to : null;
-        $gudangId = $request->filled('gudang_id') ? $request->integer('gudang_id') : null;
+        [$user, $from, $to, $gudangId, $allowedWarehouseIds] = $authResult;
 
         $service = new NeracaService;
-        $data = $service->getRingkasan($from, $to, $gudangId);
+        $data = $service->getRingkasan($from, $to, $gudangId, $allowedWarehouseIds);
 
         return response()->json($data);
     }
 
     public function exportPdf(Request $request)
     {
-        $user = auth()->user();
-
-        if (! in_array($user->role, ['super_admin', 'spectator'])) {
-            return response()->json(['message' => 'Unauthorized'], 403);
+        $authResult = $this->authorizeAndValidate($request);
+        if ($authResult instanceof JsonResponse) {
+            return $authResult;
         }
 
-        $from = $request->filled('from') ? $request->from : null;
-        $to = $request->filled('to') ? $request->to : null;
-        $gudangId = $request->filled('gudang_id') ? $request->integer('gudang_id') : null;
-        $gudangName = 'Semua Gudang';
-
-        if ($gudangId) {
-            $gudang = Gudang::find($gudangId);
-            $gudangName = $gudang?->nama_gudang ?? 'Semua Gudang';
-        }
+        [$user, $from, $to, $gudangId, $allowedWarehouseIds] = $authResult;
+        $gudangName = $this->getGudangName($gudangId);
 
         $service = new NeracaService;
-        $data = $service->getRingkasan($from, $to, $gudangId);
+        $data = $service->getRingkasan($from, $to, $gudangId, $allowedWarehouseIds);
 
         $fileName = 'Neraca_'.($from ?? 'semua').'_sd_'.($to ?? 'semua').'.pdf';
 
@@ -65,6 +55,29 @@ class NeracaController extends Controller
 
     public function exportExcel(Request $request)
     {
+        $authResult = $this->authorizeAndValidate($request);
+        if ($authResult instanceof JsonResponse) {
+            return $authResult;
+        }
+
+        [$user, $from, $to, $gudangId, $allowedWarehouseIds] = $authResult;
+        $gudangName = $this->getGudangName($gudangId);
+
+        $service = new NeracaService;
+        $data = $service->getRingkasan($from, $to, $gudangId, $allowedWarehouseIds);
+
+        $fileName = 'Neraca_'.($from ?? 'semua').'_sd_'.($to ?? 'semua').'.xlsx';
+
+        return Excel::download(new NeracaExport($data, $from, $to, $gudangName), $fileName);
+    }
+
+    /**
+     * Authorize user and validate warehouse access.
+     *
+     * @return array|JsonResponse Returns [user, from, to, gudangId, allowedWarehouseIds] or error response
+     */
+    private function authorizeAndValidate(Request $request): array|JsonResponse
+    {
         $user = auth()->user();
 
         if (! in_array($user->role, ['super_admin', 'spectator'])) {
@@ -74,18 +87,34 @@ class NeracaController extends Controller
         $from = $request->filled('from') ? $request->from : null;
         $to = $request->filled('to') ? $request->to : null;
         $gudangId = $request->filled('gudang_id') ? $request->integer('gudang_id') : null;
-        $gudangName = 'Semua Gudang';
 
-        if ($gudangId) {
-            $gudang = Gudang::find($gudangId);
-            $gudangName = $gudang?->nama_gudang ?? 'Semua Gudang';
+        // Validate gudang_id exists if provided
+        if ($gudangId !== null && ! Gudang::where('id', $gudangId)->exists()) {
+            return response()->json(['message' => 'Gudang tidak ditemukan'], 404);
         }
 
-        $service = new NeracaService;
-        $data = $service->getRingkasan($from, $to, $gudangId);
+        // Determine allowed warehouse IDs based on role
+        if ($user->role === 'super_admin') {
+            $allowedWarehouseIds = null; // null means all warehouses
+        } else {
+            // spectator
+            $allowedWarehouseIds = $user->spectatorGudangs()->pluck('gudangs.id')->toArray();
 
-        $fileName = 'Neraca_'.($from ?? 'semua').'_sd_'.($to ?? 'semua').'.xlsx';
+            // If specific gudang requested, validate access
+            if ($gudangId !== null && ! in_array($gudangId, $allowedWarehouseIds)) {
+                return response()->json(['message' => 'Tidak memiliki akses ke gudang ini'], 403);
+            }
+        }
 
-        return Excel::download(new NeracaExport($data, $from, $to, $gudangName), $fileName);
+        return [$user, $from, $to, $gudangId, $allowedWarehouseIds];
+    }
+
+    private function getGudangName(?int $gudangId): string
+    {
+        if ($gudangId === null) {
+            return 'Semua Gudang';
+        }
+
+        return Gudang::where('id', $gudangId)->value('nama_gudang') ?? 'Semua Gudang';
     }
 }

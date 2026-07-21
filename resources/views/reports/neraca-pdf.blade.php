@@ -118,5 +118,27 @@
             </tr>
         </tbody>
     </table>
+
+    {{-- NILAI PERSEDIAAN --}}
+    <table>
+        <thead>
+            <tr class="section-title"><th colspan="2">NILAI PERSEDIAAN</th></tr>
+            <tr><th>Gudang</th><th class="text-right">Nilai (Rp)</th></tr>
+        </thead>
+        <tbody>
+            @forelse($data['persediaan_retail']['gudang'] as $item)
+            <tr>
+                <td>{{ $item['gudang'] }}</td>
+                <td class="text-right">{{ number_format($item['total'], 0, ',', '.') }}</td>
+            </tr>
+            @empty
+            <tr><td colspan="2" style="color:#9ca3af;">Tidak ada persediaan</td></tr>
+            @endforelse
+            <tr class="total-row">
+                <td>TOTAL NILAI PERSEDIAAN</td>
+                <td class="text-right">{{ number_format($data['persediaan_retail']['total'], 0, ',', '.') }}</td>
+            </tr>
+        </tbody>
+    </table>
 </body>
 </html>

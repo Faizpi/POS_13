@@ -152,6 +152,31 @@
             </div>
         </div>
 
+        {{-- NILAI PERSEDIAAN --}}
+        <div class="fi-wi-stats-overview-stat relative flex flex-col p-6 overflow-hidden border-2 border-primary-200 dark:border-primary-700">
+            <div class="flex items-center gap-4 fi-wi-stats-overview-stat-content">
+                <div class="p-3 rounded-full bg-primary-50 dark:bg-primary-900/50 text-primary-600 dark:text-primary-400">
+                    <x-filament::icon icon="heroicon-o-archive-box" class="w-7 h-7" />
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 tracking-wider">NILAI PERSEDIAAN</h3>
+                    <p class="text-2xl font-bold text-primary-600 dark:text-primary-400 mt-1">
+                        Rp {{ number_format($data['persediaan_retail']['total'], 2, ',', '.') }}
+                    </p>
+                </div>
+            </div>
+            @if($data['persediaan_retail']['gudang']->count() > 1)
+                <div class="mt-5 pt-4 border-t border-gray-100 dark:border-white/5 space-y-2">
+                    @foreach($data['persediaan_retail']['gudang'] as $item)
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-gray-500 dark:text-gray-400">{{ $item['gudang'] }}</span>
+                            <span class="font-semibold text-primary-600 dark:text-primary-400">Rp {{ number_format($item['total'], 2, ',', '.') }}</span>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+        </div>
+
     </div>
 
 </x-filament-panels::page>

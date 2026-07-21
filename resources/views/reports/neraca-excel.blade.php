@@ -100,5 +100,20 @@
             <td></td>
             <td style="font-weight: bold; color: red;">{{ number_format($data['total_belum_lunas'], 2, ',', '.') }}</td>
         </tr>
+        <tr></tr>
+
+        {{-- NILAI PERSEDIAAN --}}
+        @foreach($data['persediaan_retail']['gudang'] as $item)
+        <tr>
+            <td>{{ $loop->first ? 'Nilai Persediaan' : '' }}</td>
+            <td>{{ $item['gudang'] }}</td>
+            <td>{{ number_format($item['total'], 2, ',', '.') }}</td>
+        </tr>
+        @endforeach
+        <tr>
+            <td style="font-weight: bold;">TOTAL NILAI PERSEDIAAN</td>
+            <td></td>
+            <td style="font-weight: bold;">{{ number_format($data['persediaan_retail']['total'], 2, ',', '.') }}</td>
+        </tr>
     </tbody>
 </table>

@@ -32,12 +32,13 @@ return new class extends Migration
             foreach ($records as $record) {
                 if ($first) {
                     $first = false;
+
                     continue;
                 }
 
                 DB::table('biayas')
                     ->where('id', $record->id)
-                    ->update(['nomor' => $nomor . '-' . $counter]);
+                    ->update(['nomor' => $nomor.'-'.$counter]);
 
                 $counter++;
             }

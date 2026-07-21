@@ -10,16 +10,17 @@ use Filament\Actions\Action;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Pages\Page;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Livewire\WithPagination;
 use UnitEnum;
 
 class HutangPage extends Page
 {
     use WithPagination;
+
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-inbox-stack';
 
     protected static string|UnitEnum|null $navigationGroup = 'Hutang';

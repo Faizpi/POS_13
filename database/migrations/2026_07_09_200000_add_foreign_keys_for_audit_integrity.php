@@ -11,18 +11,34 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Helper function to check if foreign key exists
+        // Helper function to check if foreign key exists (database-agnostic)
         $foreignKeyExists = function ($tableName, $columnName) {
-            $result = DB::select("
-                SELECT CONSTRAINT_NAME 
-                FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE 
-                WHERE TABLE_NAME = ? AND COLUMN_NAME = ? AND REFERENCED_TABLE_NAME IS NOT NULL
-            ", [$tableName, $columnName]);
-            return count($result) > 0;
+            $driver = DB::getDriverName();
+
+            if ($driver === 'sqlite') {
+                // SQLite: use PRAGMA foreign_key_list
+                $result = DB::select("PRAGMA foreign_key_list({$tableName})");
+                foreach ($result as $fk) {
+                    if (isset($fk->from) && $fk->from === $columnName) {
+                        return true;
+                    }
+                }
+
+                return false;
+            } else {
+                // MySQL/MariaDB
+                $result = DB::select('
+                    SELECT CONSTRAINT_NAME 
+                    FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE 
+                    WHERE TABLE_NAME = ? AND COLUMN_NAME = ? AND REFERENCED_TABLE_NAME IS NOT NULL
+                ', [$tableName, $columnName]);
+
+                return count($result) > 0;
+            }
         };
 
         // Add FK for stok_logs.gudang_produk_id
-        if (!$foreignKeyExists('stok_logs', 'gudang_produk_id')) {
+        if (! $foreignKeyExists('stok_logs', 'gudang_produk_id')) {
             // First, make the column nullable (it might be NOT NULL in old databases)
             Schema::table('stok_logs', function (Blueprint $table) {
                 $table->unsignedBigInteger('gudang_produk_id')->nullable()->change();
@@ -49,7 +65,7 @@ return new class extends Migration
         $tables = ['pembelians', 'penjualans', 'pembayarans', 'kunjungans', 'penerimaan_barangs'];
 
         foreach ($tables as $table) {
-            if (Schema::hasColumn($table, 'approver_id') && !$foreignKeyExists($table, 'approver_id')) {
+            if (Schema::hasColumn($table, 'approver_id') && ! $foreignKeyExists($table, 'approver_id')) {
                 Schema::table($table, function (Blueprint $table) {
                     $table->foreign('approver_id')
                         ->references('id')

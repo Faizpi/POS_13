@@ -49,13 +49,95 @@ class NeracaPage extends Page
 
     public function getData(): array
     {
+        $this->validateAndResetUnauthorizedFilter();
+
         $service = app(NeracaService::class);
+        $allowedWarehouseIds = $this->getAllowedWarehouseIds();
 
         return $service->getRingkasan(
             $this->filter_from,
             $this->filter_to,
-            $this->filter_gudang_id
+            $this->filter_gudang_id,
+            $allowedWarehouseIds
         );
+    }
+
+    /**
+     * Get allowed warehouse IDs based on user role.
+     */
+    private function getAllowedWarehouseIds(): ?array
+    {
+        $user = Auth::user();
+
+        if ($user->role === 'super_admin') {
+            return null; // Super admin sees all warehouses
+        }
+
+        if ($user->role === 'spectator') {
+            return $user->spectatorGudangs()->pluck('gudangs.id')->toArray();
+        }
+
+        return [];
+    }
+
+    /**
+     * Get warehouse options for the filter dropdown based on user role.
+     */
+    private function getWarehouseOptions(): array
+    {
+        $user = Auth::user();
+
+        if ($user->role === 'super_admin') {
+            return Gudang::orderBy('nama_gudang')->pluck('nama_gudang', 'id')->toArray();
+        }
+
+        if ($user->role === 'spectator') {
+            $allowedIds = $user->spectatorGudangs()->pluck('gudangs.id')->toArray();
+            if (empty($allowedIds)) {
+                return [];
+            }
+
+            return Gudang::whereIn('id', $allowedIds)
+                ->orderBy('nama_gudang')
+                ->pluck('nama_gudang', 'id')
+                ->toArray();
+        }
+
+        return [];
+    }
+
+    /**
+     * Validate and reset filter_gudang_id if unauthorized.
+     */
+    private function validateAndResetUnauthorizedFilter(): void
+    {
+        $user = Auth::user();
+
+        if ($this->filter_gudang_id === null) {
+            return;
+        }
+
+        if ($user->role === 'super_admin') {
+            // Super admin can access any warehouse, but validate it exists
+            if (! Gudang::where('id', $this->filter_gudang_id)->exists()) {
+                $this->filter_gudang_id = null;
+            }
+
+            return;
+        }
+
+        if ($user->role === 'spectator') {
+            $allowedIds = $user->spectatorGudangs()->pluck('gudangs.id')->toArray();
+            if (! in_array($this->filter_gudang_id, $allowedIds)) {
+                // Reset unauthorized selection
+                $this->filter_gudang_id = null;
+            }
+
+            return;
+        }
+
+        // Other roles should not have access
+        $this->filter_gudang_id = null;
     }
 
     public function applyFilter(): void
@@ -89,7 +171,7 @@ class NeracaPage extends Page
 
                     Select::make('gudang_id')
                         ->label('Gudang (Opsional)')
-                        ->options(fn () => Gudang::pluck('nama_gudang', 'id'))
+                        ->options(fn () => $this->getWarehouseOptions())
                         ->placeholder('Semua Gudang')
                         ->searchable()
                         ->preload(),
@@ -110,15 +192,20 @@ class NeracaPage extends Page
                 ->visible(fn () => $user?->canExportExcel())
                 ->action(function () {
                     $service = app(NeracaService::class);
+                    $allowedWarehouseIds = $this->getAllowedWarehouseIds();
                     $data = $service->getRingkasan(
                         $this->filter_from,
                         $this->filter_to,
-                        $this->filter_gudang_id
+                        $this->filter_gudang_id,
+                        $allowedWarehouseIds
                     );
+                    $gudangName = $this->filter_gudang_id
+                        ? Gudang::find($this->filter_gudang_id)?->nama_gudang ?? 'Semua Gudang'
+                        : 'Semua Gudang';
                     $filename = 'Neraca_'.($this->filter_from ?? 'all').'_'.($this->filter_to ?? 'all').'.xlsx';
 
-                    return response()->streamDownload(function () use ($data) {
-                        echo Excel::raw(new NeracaExport($data), \Maatwebsite\Excel\Excel::XLSX);
+                    return response()->streamDownload(function () use ($data, $gudangName) {
+                        echo Excel::raw(new NeracaExport($data, null, null, $gudangName), \Maatwebsite\Excel\Excel::XLSX);
                     }, $filename);
                 }),
 
@@ -129,10 +216,12 @@ class NeracaPage extends Page
                 ->visible(fn () => $user?->canExportPdf())
                 ->action(function () {
                     $service = app(NeracaService::class);
+                    $allowedWarehouseIds = $this->getAllowedWarehouseIds();
                     $data = $service->getRingkasan(
                         $this->filter_from,
                         $this->filter_to,
-                        $this->filter_gudang_id
+                        $this->filter_gudang_id,
+                        $allowedWarehouseIds
                     );
                     $pdf = app('dompdf.wrapper');
                     $pdf->loadView('reports.neraca-pdf', [
@@ -142,6 +231,8 @@ class NeracaPage extends Page
                         'gudang' => $this->filter_gudang_id
                             ? Gudang::find($this->filter_gudang_id)?->nama_gudang
                             : 'Semua Gudang',
+                        'generatedBy' => $user->name,
+                        'generatedAt' => now()->format('d/m/Y H:i:s'),
                     ]);
                     $filename = 'Neraca_'.($this->filter_from ?? 'all').'_'.($this->filter_to ?? 'all').'.pdf';
 

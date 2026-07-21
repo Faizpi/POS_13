@@ -231,7 +231,7 @@ class NeracaPage extends Page
                         'gudang' => $this->filter_gudang_id
                             ? Gudang::find($this->filter_gudang_id)?->nama_gudang
                             : 'Semua Gudang',
-                        'generatedBy' => $user->name,
+                        'generatedBy' => Auth::user()?->name ?? 'System',
                         'generatedAt' => now()->format('d/m/Y H:i:s'),
                     ]);
                     $filename = 'Neraca_'.($this->filter_from ?? 'all').'_'.($this->filter_to ?? 'all').'.pdf';

@@ -277,7 +277,7 @@
         color: var(--sidebar-text) !important;
     }
 
-    .fi-sidebar-group-collapse-button {
+    .fi-sidebar-group-collapse-btn {
         margin-inline-end: 10px !important;
     }
 
@@ -431,7 +431,7 @@
         .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-item-label,
         .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-group-label,
         .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-group-label-content,
-        .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-group-collapse-button,
+        .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-group-collapse-btn,
         .fi-body-has-sidebar-collapsible-on-desktop .fi-sidebar:not(.fi-sidebar-open) .fi-sidebar-item > :not(a):not(.fi-sidebar-item-btn) {
             display: none !important;
         }

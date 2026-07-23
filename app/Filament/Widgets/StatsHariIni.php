@@ -61,7 +61,7 @@ class StatsHariIni extends BaseStatsOverviewWidget
             Stat::make('Penjualan', format_rupiah($penjualan->sum('grand_total')))
                 ->description(number_format($penjualan->count()).' transaksi hari ini')
                 ->descriptionIcon('heroicon-o-shopping-cart')
-                ->color('primary'),
+                ->color('success'),
 
             Stat::make('Pembayaran Diterima', format_rupiah($pembayaran->sum('jumlah_bayar')))
                 ->description(number_format($pembayaran->count()).' transaksi hari ini')
@@ -71,12 +71,12 @@ class StatsHariIni extends BaseStatsOverviewWidget
             Stat::make('Biaya Masuk', format_rupiah($biayaMasuk->sum('grand_total')))
                 ->description(number_format($biayaMasuk->count()).' transaksi hari ini')
                 ->descriptionIcon('heroicon-o-arrow-down-circle')
-                ->color('primary'),
+                ->color('success'),
 
             Stat::make('Biaya Keluar', format_rupiah($biayaKeluar->sum('grand_total')))
                 ->description(number_format($biayaKeluar->count()).' transaksi hari ini')
                 ->descriptionIcon('heroicon-o-arrow-up-circle')
-                ->color('gray'),
+                ->color('danger'),
         ];
     }
 }

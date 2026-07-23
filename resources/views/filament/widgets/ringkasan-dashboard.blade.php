@@ -43,9 +43,9 @@
 
                 <dl class="grid grid-cols-1 gap-6">
                     @foreach ([
-                        ['label' => 'Penjualan', 'icon' => 'heroicon-o-shopping-cart', 'color' => 'text-blue-600 dark:text-blue-400', 'data' => $panel['metrics']['penjualan']],
-                        ['label' => 'Biaya', 'icon' => 'heroicon-o-receipt-percent', 'color' => 'text-pink-600 dark:text-pink-400', 'data' => $panel['metrics']['biaya']],
-                        ['label' => 'Pembayaran', 'icon' => 'heroicon-o-banknotes', 'color' => 'text-indigo-600 dark:text-indigo-400', 'data' => $panel['metrics']['pembayaran']],
+                        ['label' => 'Penjualan', 'icon' => 'heroicon-o-shopping-cart', 'color' => 'text-primary-600 dark:text-primary-400', 'data' => $panel['metrics']['penjualan']],
+                        ['label' => 'Biaya', 'icon' => 'heroicon-o-receipt-percent', 'color' => 'text-amber-600 dark:text-amber-400', 'data' => $panel['metrics']['biaya']],
+                        ['label' => 'Pembayaran', 'icon' => 'heroicon-o-banknotes', 'color' => 'text-emerald-600 dark:text-emerald-400', 'data' => $panel['metrics']['pembayaran']],
                     ] as $metric)
                         <div>
                             <div class="flex items-center gap-2 text-sm font-medium text-gray-500 dark:text-gray-400">

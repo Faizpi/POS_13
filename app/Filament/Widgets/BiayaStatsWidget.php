@@ -63,12 +63,12 @@ class BiayaStatsWidget extends BaseStatsOverviewWidget
             Stat::make('↓ Biaya Masuk (Approved)', format_rupiah($biayaMasuk))
                 ->description('Semua periode · Approved')
                 ->descriptionIcon('heroicon-o-arrow-down-circle')
-                ->color('info'),
+                ->color('success'),
 
             Stat::make('↑ Biaya Keluar (Approved)', format_rupiah($biayaKeluar))
                 ->description('Semua periode · Approved')
                 ->descriptionIcon('heroicon-o-arrow-up-circle')
-                ->color('primary'),
+                ->color('danger'),
 
             Stat::make('Total Bulan Ini', format_rupiah($totalBulanIni))
                 ->description('Semua status · '.$bulanLabel)
@@ -78,7 +78,7 @@ class BiayaStatsWidget extends BaseStatsOverviewWidget
             Stat::make('Pending Approval', format_rupiah($totalPending))
                 ->description('Menunggu persetujuan')
                 ->descriptionIcon('heroicon-o-clock')
-                ->color($totalPending > 0 ? 'gray' : 'primary'),
+                ->color($totalPending > 0 ? 'warning' : 'success'),
         ];
     }
 }

@@ -29,7 +29,7 @@ class CustomerPanelProvider extends PanelProvider
             ->login(CustomerLogin::class)
             ->authGuard('customer')
             ->colors([
-                'primary' => Color::Blue,
+                'primary' => Color::Amber,
             ])
             ->discoverPages(in: app_path('Filament/Customer/Pages'), for: 'App\Filament\Customer\Pages')
             ->pages([

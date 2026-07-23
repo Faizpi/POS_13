@@ -67,22 +67,22 @@ class PenjualanStatsWidget extends BaseStatsOverviewWidget
             Stat::make('Belum Dibayar', format_rupiah($totalBelumDibayar))
                 ->description('Pending + Approved')
                 ->descriptionIcon('heroicon-o-banknotes')
-                ->color('primary'),
+                ->color('warning'),
 
             Stat::make('Telat Bayar', number_format($totalTelatBayar).' invoice')
                 ->description(format_rupiah($nominalTelatBayar))
                 ->descriptionIcon('heroicon-o-exclamation-triangle')
-                ->color($totalTelatBayar > 0 ? 'danger' : 'primary'),
+                ->color($totalTelatBayar > 0 ? 'danger' : 'success'),
 
             Stat::make('Pelunasan 30 Hari', format_rupiah($pelunasan30Hari))
                 ->description('Lunas dalam 30 hari terakhir')
                 ->descriptionIcon('heroicon-o-check-badge')
-                ->color('info'),
+                ->color('success'),
 
             Stat::make('Total Canceled', number_format($totalCanceled).' transaksi')
                 ->description('Semua periode')
                 ->descriptionIcon('heroicon-o-x-circle')
-                ->color('gray'),
+                ->color($totalCanceled > 0 ? 'gray' : 'success'),
         ];
     }
 }

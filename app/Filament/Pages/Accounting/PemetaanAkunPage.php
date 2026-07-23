@@ -180,10 +180,14 @@ final class PemetaanAkunPage extends Page
         return collect($this->mappingCatalog())
             ->groupBy('section')
             ->map(function ($items, string $section): Section {
+                $runtimeCount = $items->filter(fn (array $item): bool => $item['key']->isRuntimeRequired())->count();
+
                 return Section::make($section)
+                    ->description("{$items->count()} pemetaan · {$runtimeCount} diperlukan untuk runtime")
+                    ->icon('heroicon-o-folder-open')
                     ->collapsible()
                     ->schema($items->map(fn (array $item) => $this->mappingFields($item))->all())
-                    ->columns(2);
+                    ->columns(1);
             })
             ->values()
             ->all();
@@ -195,8 +199,8 @@ final class PemetaanAkunPage extends Page
         $stateKey = $item['key']->formStateKey();
 
         return Section::make($item['label'])
-            ->description(fn (): string => $this->isProtected($item['key']) ? 'Terkunci' : ($item['key']->isRuntimeRequired() ? 'Diperlukan untuk runtime' : 'Disiapkan, belum diaktifkan'))
-            ->icon(fn (): string => $this->isProtected($item['key']) ? 'heroicon-o-lock-closed' : 'heroicon-o-link')
+            ->description(fn (): string => $this->isProtected($item['key']) ? 'Terkunci' : ($item['key']->isRuntimeRequired() ? 'Wajib · digunakan saat posting' : 'Opsional · belum diaktifkan'))
+            ->icon(fn (): string => $this->isProtected($item['key']) ? 'heroicon-o-lock-closed' : ($item['key']->isRuntimeRequired() ? 'heroicon-o-bolt' : 'heroicon-o-link'))
             ->schema([
                 Select::make("mappings.{$stateKey}.account_id")
                     ->label('Akun COA')

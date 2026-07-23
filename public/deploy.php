@@ -35,14 +35,12 @@ $commands = [
     'Storage Unlink' => 'storage:unlink',
     'Storage Force Link' => 'storage:link --force',
     'Migrate Status' => 'migrate:status',
-    'Migrate' => 'migrate',
-    'Migrate Sync' => 'migrate --path=database/migrations/2026_06_19_120000_sync_schema_after_import.php --force',
-    'Mark Migrations Ran' => 'migrate:mark-ran',
-    'Fix Missing Tables' => 'fix-tables',
-    'Migrate Fresh' => 'migrate:fresh',
-    'Migrate Seed' => 'migrate --seed',
+    'Migrate Production' => 'migrate --force',
+    'Sync Legacy Schema' => 'migrate --path=database/migrations/2026_06_19_120000_sync_schema_after_import.php --force',
+    'Baseline Legacy Migrations' => 'migrate:mark-ran --except-accounting',
+    'Fix Missing Legacy Tables' => 'fix-tables',
+    'Seed Accounting COA' => 'db:seed --class=HibiscusEfsyaChartOfAccountsSeeder --force',
     'Filament Upgrade' => 'filament:upgrade',
-    'Import Legacy Data' => 'import:legacy-data',
     'Apply Transaction Integrity Fixes' => 'migrate --force',
     'Audit Transaction Integrity' => 'audit:transaction-integrity',
     'Audit Duplicate Nomor' => 'audit:duplicate-nomor',
@@ -53,9 +51,8 @@ $presets = [
     'Quick Deploy' => ['Cache Clear', 'Config Clear', 'Route Clear', 'View Clear', 'Optimize'],
     'Full Clear' => ['Cache Clear', 'Config Clear', 'Route Clear', 'View Clear', 'Optimize Clear'],
     'Filament Assets Update' => ['Filament Upgrade', 'Cache Clear', 'View Clear', 'Optimize'],
-    'Sync Schema (Import)' => ['Migrate Sync', 'Cache Clear', 'Optimize', 'Migrate Status'],
-    'Database Refresh' => ['Migrate Fresh', 'Migrate Seed', 'Storage Force Link'],
-    'Import SQL' => ['Migrate Sync', 'Mark Migrations Ran', 'Fix Missing Tables', 'Migrate', 'Cache Clear', 'View Clear', 'Optimize', 'Migrate Status'],
+    'Upgrade Restored Legacy DB' => ['Sync Legacy Schema', 'Baseline Legacy Migrations', 'Fix Missing Legacy Tables', 'Migrate Production', 'Seed Accounting COA', 'Cache Clear', 'View Clear', 'Optimize', 'Migrate Status'],
+    'Production Migration' => ['Migrate Production', 'Seed Accounting COA', 'Cache Clear', 'View Clear', 'Optimize', 'Migrate Status'],
     'Transaction Integrity Update' => ['Apply Transaction Integrity Fixes', 'Audit Transaction Integrity', 'Audit Duplicate Nomor', 'Audit Stock Consistency', 'Cache Clear', 'View Clear', 'Optimize', 'Migrate Status'],
 ];
 
@@ -170,100 +167,135 @@ $logSize = file_exists($logFile) ? round(filesize($logFile) / 1024, 1).' KB' : '
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Deploy Console — <?= htmlspecialchars(basename($projectPath)) ?></title>
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+
 :root {
-  --bg: #0f1117;
-  --surface: #181c27;
-  --panel: #1e2332;
-  --border: #2b3148;
-  --accent: #f59e0b;
-  --green: #22c55e;
-  --red: #ef4444;
-  --blue: #3b82f6;
-  --text: #e2e8f0;
-  --muted: #64748b;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --canvas: #f5f5f4;
+  --surface: #ffffff;
+  --surface-soft: #fafaf9;
+  --ink: #202124;
+  --ink-soft: #4d5056;
+  --muted: #6f737b;
+  --line: #dededb;
+  --line-strong: #c9cac6;
+  --lime: #daf39f;
+  --lime-strong: #bde867;
+  --blue: #dceff7;
+  --blue-strong: #3d7f9c;
+  --lilac: #ebd3ff;
+  --lilac-strong: #8655ad;
+  --yellow: #ffdeb0;
+  --yellow-strong: #9b6016;
+  --danger: #b42318;
+  --danger-soft: #fee4e2;
+  --success: #237a45;
+  --success-soft: #dcf3e5;
+  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
 }
+
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { background: var(--bg); color: var(--text); font-family: var(--font-sans); padding: 20px; line-height: 1.5; }
-.container { max-width: 1000px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; }
-.header { display: flex; justify-content: space-between; align-items: center; background: var(--surface); padding: 20px; border-radius: 8px; border: 1px solid var(--border); }
-.header h1 { font-size: 20px; font-weight: 600; }
-.header-path { font-family: var(--font-mono); font-size: 12px; color: var(--muted); background: var(--bg); padding: 4px 8px; border-radius: 4px; }
-.card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 20px; }
-h2 { font-size: 16px; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+html { background: var(--canvas); }
+body { min-height: 100vh; background: var(--canvas); color: var(--ink); font-family: var(--font-sans); padding: 28px; line-height: 1.5; }
+button, input, select { font: inherit; }
+.container { width: min(1180px, 100%); margin: 0 auto; display: flex; flex-direction: column; gap: 18px; }
+.header { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; padding: 10px 2px 20px; border-bottom: 1px solid var(--line-strong); }
+.header h1 { font-size: 32px; line-height: 1.08; font-weight: 800; letter-spacing: -0.035em; text-wrap: balance; }
+.header h1::before { content: "HE"; display: inline-grid; place-items: center; width: 42px; height: 42px; margin-right: 12px; border-radius: 12px; background: var(--lilac); color: var(--ink); font-size: 13px; letter-spacing: -0.02em; vertical-align: 5px; }
+.header-path { max-width: 52%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--font-mono); font-size: 11px; color: var(--ink-soft); background: var(--blue); padding: 9px 12px; border-radius: 8px; }
+.card, .tab-content { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 24px; }
+h2 { font-size: 15px; font-weight: 800; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; letter-spacing: -0.015em; }
 
-/* Nav tabs */
-.tabs { display: flex; gap: 8px; margin-bottom: 0; }
-.tab { padding: 8px 18px; border-radius: 6px 6px 0 0; font-size: 13px; font-weight: 500; cursor: pointer; text-decoration: none; border: 1px solid var(--border); border-bottom: none; color: var(--muted); background: var(--panel); }
-.tab.active { background: var(--surface); color: var(--text); border-bottom: 1px solid var(--surface); margin-bottom: -1px; }
-.tab:hover { color: var(--text); }
-.tab-content { border: 1px solid var(--border); border-radius: 0 8px 8px 8px; background: var(--surface); padding: 20px; }
+.tabs { display: flex; gap: 6px; margin: 0 0 10px; padding: 4px; width: fit-content; background: #e9e9e6; border-radius: 10px; }
+.tab { padding: 9px 16px; border-radius: 7px; font-size: 12px; font-weight: 700; cursor: pointer; text-decoration: none; color: var(--ink-soft); transition: background-color 180ms ease, color 180ms ease; }
+.tab.active { background: var(--ink); color: #fff; }
+.tab:hover:not(.active) { background: var(--surface); color: var(--ink); }
+.tab:focus-visible, .btn:focus-visible, .preset-btn:focus-visible, .cmd-tile:focus-within, input:focus-visible, select:focus-visible { outline: 3px solid rgba(61, 127, 156, 0.28); outline-offset: 2px; }
+.tab-content { border-radius: 14px; }
 
-/* Preset */
-.preset-grid { display: flex; flex-wrap: wrap; gap: 10px; }
-.preset-btn { background: var(--panel); border: 1px solid var(--border); color: var(--text); padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 500; transition: 0.2s; }
-.preset-btn:hover { border-color: var(--accent); color: var(--accent); }
+.preset-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; }
+.preset-btn { width: 100%; min-height: 70px; background: var(--lime); border: 0; color: var(--ink); padding: 14px 16px; border-radius: 11px; cursor: pointer; text-align: left; font-size: 13px; font-weight: 800; line-height: 1.35; transition: background-color 180ms ease, transform 180ms ease; }
+.preset-grid form:nth-child(2n) .preset-btn { background: var(--blue); }
+.preset-grid form:nth-child(3n) .preset-btn { background: var(--lilac); }
+.preset-grid form:nth-child(4n) .preset-btn { background: var(--yellow); }
+.preset-btn:hover { transform: translateY(-2px); background: var(--lime-strong); }
 
-/* Commands */
-.cmd-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-.cmd-tile { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; cursor: pointer; transition: 0.2s; }
-.cmd-tile:hover { border-color: var(--accent); }
-.cmd-tile label { display: flex; gap: 10px; padding: 12px; cursor: pointer; align-items: center; font-size: 13px; }
-.cmd-tile input { accent-color: var(--accent); }
-.danger-tile { border-color: rgba(239, 68, 68, 0.3); }
-.danger-tile:hover { border-color: var(--red); }
+.cmd-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 8px; }
+.cmd-tile { background: var(--surface-soft); border: 1px solid var(--line); border-radius: 10px; cursor: pointer; transition: border-color 180ms ease, background-color 180ms ease; }
+.cmd-tile:hover { background: var(--blue); border-color: var(--blue-strong); }
+.cmd-tile label { display: flex; gap: 10px; min-height: 48px; padding: 11px 12px; cursor: pointer; align-items: center; font-size: 12px; font-weight: 650; }
+.cmd-tile input { width: 16px; height: 16px; accent-color: var(--ink); flex: 0 0 auto; }
+.danger-tile { background: var(--danger-soft); border-color: #f4b8b3; }
+.danger-tile:hover { background: #ffd5d1; border-color: var(--danger); }
 
-/* Buttons */
-.action-bar { margin-top: 20px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
-.btn { padding: 10px 20px; border-radius: 6px; font-weight: 600; font-size: 13px; cursor: pointer; border: none; transition: 0.2s; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
-.btn-run  { background: var(--accent); color: #000; }
-.btn-run:hover { background: #fbbf24; }
-.btn-ghost { background: transparent; color: var(--muted); border: 1px solid var(--border); }
-.btn-ghost:hover { color: var(--text); }
-.btn-blue  { background: var(--blue); color: #fff; }
-.btn-blue:hover { background: #2563eb; }
-.btn-red   { background: rgba(239,68,68,0.15); color: var(--red); border: 1px solid rgba(239,68,68,0.3); }
-.btn-red:hover { background: rgba(239,68,68,0.25); }
+.action-bar { margin-top: 18px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.btn { min-height: 40px; padding: 9px 16px; border-radius: 8px; font-weight: 800; font-size: 12px; cursor: pointer; border: 0; transition: background-color 180ms ease, transform 180ms ease; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+.btn:hover { transform: translateY(-1px); }
+.btn-run { background: var(--ink); color: #fff; margin-left: auto; }
+.btn-run:hover { background: #35373b; }
+.btn-ghost { background: #ececea; color: var(--ink-soft); }
+.btn-ghost:hover { background: var(--lilac); color: var(--ink); }
+.btn-blue { background: var(--blue); color: var(--ink); }
+.btn-blue:hover { background: #c8e7f3; }
+.btn-red { background: var(--danger-soft); color: var(--danger); }
+.btn-red:hover { background: #ffd5d1; }
 
-/* Input Custom */
-.custom-input { display: flex; gap: 10px; margin-top: 20px; }
-.custom-input span { background: var(--panel); padding: 10px 16px; border: 1px solid var(--border); border-radius: 6px; font-family: var(--font-mono); font-size: 13px; color: var(--muted); }
-.custom-input input { flex: 1; background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 10px; border-radius: 6px; font-family: var(--font-mono); font-size: 13px; outline: none; }
-.custom-input input:focus { border-color: var(--accent); }
+.custom-input { display: flex; gap: 0; margin-top: 18px; }
+.custom-input span { display: flex; align-items: center; background: var(--ink); padding: 10px 13px; border-radius: 8px 0 0 8px; font-family: var(--font-mono); font-size: 11px; color: #fff; white-space: nowrap; }
+.custom-input input { flex: 1; min-width: 0; background: var(--surface-soft); border: 1px solid var(--line-strong); color: var(--ink); padding: 10px 12px; border-radius: 0 8px 8px 0; font-family: var(--font-mono); font-size: 12px; outline: none; }
+.custom-input input::placeholder, .log-toolbar input::placeholder { color: #656970; opacity: 1; }
+.custom-input input:focus { border-color: var(--blue-strong); background: #fff; }
 
-/* Terminal */
-.terminal { background: #0a0c12; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-top: 20px; }
-.terminal-header { background: var(--panel); padding: 8px 16px; font-size: 12px; color: var(--muted); font-family: var(--font-mono); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-.terminal-body { padding: 16px; font-family: var(--font-mono); font-size: 12px; color: #a1a1aa; line-height: 1.6; max-height: 600px; overflow-y: auto; white-space: pre-wrap; word-break: break-all; }
-.t-cmd { color: #fff; font-weight: 600; }
-.t-ok   { color: var(--green); }
-.t-err  { color: var(--red); }
-.t-warn { color: var(--accent); }
+.terminal { background: var(--ink); border-radius: 12px; overflow: hidden; margin-top: 18px; }
+.terminal-header { background: #303236; padding: 10px 14px; font-size: 11px; color: #d9dadc; font-family: var(--font-mono); display: flex; justify-content: space-between; align-items: center; }
+.terminal-body { padding: 16px; font-family: var(--font-mono); font-size: 11px; color: #d4d6d9; line-height: 1.7; max-height: 560px; overflow-y: auto; white-space: pre-wrap; word-break: break-word; }
+.t-cmd { color: #fff; font-weight: 700; }
+.t-ok { color: #b7efc9; }
+.t-err { color: #ffaaa3; }
+.t-warn { color: var(--yellow); }
 
-/* Log toolbar */
-.log-toolbar { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 16px; }
-.log-toolbar input[type=text] { background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 8px 12px; border-radius: 6px; font-family: var(--font-mono); font-size: 13px; outline: none; width: 220px; }
-.log-toolbar input[type=text]:focus { border-color: var(--accent); }
-.log-toolbar select { background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 8px 12px; border-radius: 6px; font-size: 13px; outline: none; }
-.log-meta { font-size: 12px; color: var(--muted); }
-.log-highlight-wa  { color: #22d3ee; }
-.log-highlight-err { color: var(--red); }
-.log-highlight-info { color: var(--green); }
+.log-toolbar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 16px; }
+.log-toolbar input[type=text], .log-toolbar select { min-height: 40px; background: var(--surface-soft); border: 1px solid var(--line-strong); color: var(--ink); padding: 8px 11px; border-radius: 8px; font-size: 12px; outline: none; }
+.log-toolbar input[type=text] { width: min(240px, 100%); font-family: var(--font-mono); }
+.log-toolbar input[type=text]:focus, .log-toolbar select:focus { border-color: var(--blue-strong); background: #fff; }
+.log-meta { font-size: 11px; color: var(--muted); margin-left: auto; }
+.log-highlight-wa { color: #9edcf2; }
+.log-highlight-err { color: #ffaaa3; }
+.log-highlight-info { color: #b7efc9; }
 
-/* Storage */
-.storage-pill { display: inline-block; padding: 6px 12px; border-radius: 4px; font-family: var(--font-mono); font-size: 13px; }
-.spl-ok    { background: rgba(34, 197, 94, 0.1); color: var(--green); border: 1px solid rgba(34, 197, 94, 0.2); }
-.spl-warn  { background: rgba(245, 158, 11, 0.1); color: var(--accent); border: 1px solid rgba(245, 158, 11, 0.2); }
-.spl-error { background: rgba(239, 68, 68, 0.1); color: var(--red); border: 1px solid rgba(239, 68, 68, 0.2); }
+.storage-pill { display: inline-flex; align-items: center; padding: 9px 12px; border-radius: 8px; font-family: var(--font-mono); font-size: 11px; font-weight: 700; }
+.spl-ok { background: var(--success-soft); color: var(--success); }
+.spl-warn { background: var(--yellow); color: var(--yellow-strong); }
+.spl-error { background: var(--danger-soft); color: var(--danger); }
+
+@media (max-width: 720px) {
+  body { padding: 16px; }
+  .header { align-items: flex-start; flex-direction: column; gap: 12px; }
+  .header h1 { font-size: 26px; }
+  .header-path { max-width: 100%; width: 100%; }
+  .card, .tab-content { padding: 17px; }
+  .tabs { width: 100%; }
+  .tab { flex: 1; text-align: center; }
+  .custom-input { flex-direction: column; gap: 6px; }
+  .custom-input span, .custom-input input { border-radius: 8px; }
+  .btn-run { width: 100%; margin-left: 0; order: -1; }
+  .log-meta { width: 100%; margin-left: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; }
+}
 </style>
 </head>
 <body>
 
 <div class="container">
     <div class="header">
-        <h1>⚡ Deploy Console</h1>
-        <div class="header-path"><?= htmlspecialchars($projectPath) ?></div>
+        <div>
+            <h1>Deploy workspace</h1>
+            <p style="margin-top:7px;color:var(--muted);font-size:12px;font-weight:600">Release, migrate, dan audit aplikasi dari satu ruang kerja yang terarah.</p>
+        </div>
+        <div class="header-path" title="<?= htmlspecialchars($projectPath) ?>"><?= htmlspecialchars($projectPath) ?></div>
     </div>
 
     <?php if ($executionResults) { ?>
@@ -296,14 +328,15 @@ h2 { font-size: 16px; margin-bottom: 16px; display: flex; align-items: center; g
     <!-- TABS -->
     <div>
         <div class="tabs">
-            <a class="tab <?= ! $logAction ? 'active' : '' ?>" href="?">🚀 Deploy</a>
-            <a class="tab <?= $logAction ? 'active' : '' ?>" href="?log=view">📋 Log Viewer</a>
+            <a class="tab <?= ! $logAction ? 'active' : '' ?>" href="?">Deploy</a>
+            <a class="tab <?= $logAction ? 'active' : '' ?>" href="?log=view">Log viewer</a>
         </div>
 
         <?php if (! $logAction) { ?>
         <!-- ── DEPLOY TAB ── -->
         <div class="tab-content">
-            <h2 style="margin-bottom:16px">🚀 Quick Presets</h2>
+            <h2 style="margin-bottom:6px">Quick presets</h2>
+            <p style="margin-bottom:16px;color:var(--muted);font-size:12px;max-width:68ch">Pilih alur siap pakai untuk deployment rutin, upgrade database lama, atau pemeriksaan integritas.</p>
             <div class="preset-grid">
                 <?php foreach ($presets as $name => $cmds) { ?>
                 <form method="post" style="display:inline-block">
@@ -316,7 +349,8 @@ h2 { font-size: 16px; margin-bottom: 16px; display: flex; align-items: center; g
             </div>
 
             <form method="post" style="margin-top:24px">
-                <h2>📦 All Commands</h2>
+                <h2 style="margin-bottom:6px">Command library</h2>
+                <p style="margin-bottom:16px;color:var(--muted);font-size:12px;max-width:68ch">Susun eksekusi manual. Command berjalan berurutan sesuai pilihan yang dikirim.</p>
                 <div class="cmd-grid" id="tileGrid">
                     <?php foreach ($commands as $label => $cmd) {
                         $isDanger = str_contains($label, 'Fresh') || str_contains($label, 'Unlink');
@@ -338,12 +372,12 @@ h2 { font-size: 16px; margin-bottom: 16px; display: flex; align-items: center; g
                 <div class="action-bar">
                     <button type="button" class="btn btn-ghost" onclick="selectAll()">Pilih Semua</button>
                     <button type="button" class="btn btn-ghost" onclick="deselectAll()">Reset</button>
-                    <button type="submit" class="btn btn-run">▶ Jalankan Terpilih</button>
+                    <button type="submit" class="btn btn-run">Jalankan command</button>
                 </div>
             </form>
 
             <div style="margin-top:24px">
-                <h2>💾 Status Storage</h2>
+                <h2>Storage status</h2>
                 <?php
                         [$st, $msg] = $storageStatus;
             $cls = $st === 'ok' ? 'spl-ok' : ($st === 'warn' ? 'spl-warn' : 'spl-error');

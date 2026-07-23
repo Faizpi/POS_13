@@ -73,6 +73,11 @@ class User extends Authenticatable implements FilamentUser
         return $this->belongsTo(Gudang::class);
     }
 
+    public function currentGudang()
+    {
+        return $this->belongsTo(Gudang::class, 'current_gudang_id');
+    }
+
     public function gudangs()
     {
         return $this->belongsToMany(Gudang::class, 'admin_gudang')
@@ -109,13 +114,17 @@ class User extends Authenticatable implements FilamentUser
         }
 
         if ($this->current_gudang_id) {
-            return Gudang::find($this->current_gudang_id);
+            if (! $this->relationLoaded('currentGudang')) {
+                $this->setRelation('currentGudang', $this->currentGudang()->first());
+            }
+
+            return $this->getRelation('currentGudang');
         }
 
         if ($this->role === 'admin') {
-            return $this->gudangs()->first();
+            return $this->gudangs->first();
         } elseif ($this->role === 'spectator') {
-            return $this->spectatorGudangs()->first();
+            return $this->spectatorGudangs->first();
         }
 
         return null;

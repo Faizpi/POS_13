@@ -191,7 +191,7 @@ class ReportNavigationTest extends TestCase
 
     public function test_jurnal_has_correct_label(): void
     {
-        $this->assertEquals('Jurnal', $this->getStaticProperty(JurnalPage::class, 'navigationLabel'));
+        $this->assertEquals('Laporan Jurnal', $this->getStaticProperty(JurnalPage::class, 'navigationLabel'));
     }
 
     public function test_jurnal_has_correct_slug(): void
@@ -310,13 +310,16 @@ class ReportNavigationTest extends TestCase
         $response->assertSee('Halaman ini masih dalam tahap pengembangan');
 
         $response = $this->actingAs($user)->get('/app/buku-besar');
-        $response->assertSee('Halaman ini masih dalam tahap pengembangan');
+        $response->assertDontSee('Halaman ini masih dalam tahap pengembangan');
+        $response->assertSee('Saldo awal');
 
         $response = $this->actingAs($user)->get('/app/jurnal');
-        $response->assertSee('Halaman ini masih dalam tahap pengembangan');
+        $response->assertDontSee('Halaman ini masih dalam tahap pengembangan');
+        $response->assertSee('Tidak ada jurnal posted untuk filter ini.');
 
         $response = $this->actingAs($user)->get('/app/neraca-saldo');
-        $response->assertSee('Halaman ini masih dalam tahap pengembangan');
+        $response->assertDontSee('Halaman ini masih dalam tahap pengembangan');
+        $response->assertSee('Consolidated view only.');
     }
 
     public function test_ringkasan_bisnis_is_not_placeholder(): void

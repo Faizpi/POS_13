@@ -123,7 +123,7 @@
                     </div>
                 </div>
 
-                <div class="mt-6 flex items-center justify-end border-t border-gray-200 pt-5 dark:border-white/10">
+                <div class="mt-6 flex items-center justify-end rounded-lg bg-gray-50 px-4 py-3 dark:bg-white/5">
                     <x-filament::button
                         type="submit"
                         icon="heroicon-m-paper-airplane"

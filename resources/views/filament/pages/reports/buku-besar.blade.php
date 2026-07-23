@@ -56,7 +56,7 @@
         @endif
 
         <div class="overflow-hidden rounded-xl bg-white ring-1 ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10">
-            <dl class="grid divide-y divide-gray-200 sm:grid-cols-2 sm:divide-x sm:divide-y-0 xl:grid-cols-4 dark:divide-white/10">
+            <dl class="grid divide-y divide-gray-100 sm:grid-cols-2 sm:divide-x sm:divide-y-0 xl:grid-cols-4 dark:divide-white/5">
                 <div class="px-5 py-4">
                     <dt class="text-xs font-medium text-gray-500 dark:text-gray-400">Saldo awal</dt>
                     <dd class="mt-1 text-lg font-semibold tabular-nums text-gray-950 dark:text-white">{{ $data['opening_balance'] }}</dd>
@@ -89,7 +89,7 @@
                             <th class="px-4 py-3 text-right">Saldo</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-gray-200 dark:divide-white/10">
+                    <tbody class="divide-y divide-gray-100 dark:divide-white/5">
                         @forelse ($data['rows'] as $row)
                             <tr class="text-gray-700 transition-colors hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-white/5">
                                 <td class="whitespace-nowrap px-4 py-3">{{ $row['journal_date'] }}</td>

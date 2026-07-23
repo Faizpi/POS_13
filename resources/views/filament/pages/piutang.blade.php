@@ -8,8 +8,9 @@
         $aging = $this->getAgingSummary();
     @endphp
 
+    <div class="space-y-6">
     {{-- Info bar --}}
-    <div class="he-finance-filter flex flex-wrap items-center gap-4 p-3 mb-2 text-sm text-gray-500 dark:text-gray-400">
+    <div class="he-finance-filter flex flex-wrap items-center gap-3 px-4 py-3 text-sm text-gray-500 dark:text-gray-400">
         <span>
             Periode:
             <strong class="text-gray-700 dark:text-gray-200">
@@ -20,7 +21,7 @@
     </div>
 
     {{-- Summary cards --}}
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <x-filament::section class="he-finance-section">
             <p class="text-sm text-gray-500 dark:text-gray-400">Total Piutang Belum Lunas</p>
             <p class="text-2xl font-bold text-danger-600">Rp {{ number_format($totalPiutang, 0, ',', '.') }}</p>
@@ -35,7 +36,7 @@
         </x-filament::section>
     </div>
 
-    <x-filament::section heading="Aging Piutang (Posted Ledger)" class="he-finance-section mb-6">
+    <x-filament::section heading="Aging Piutang (Posted Ledger)" class="he-finance-section">
         <div class="grid grid-cols-2 gap-3 sm:grid-cols-5">
             @foreach (['current' => 'Current', '1-30' => '1–30', '31-60' => '31–60', '61-90' => '61–90', '90+' => '90+'] as $key => $label)
                 <div><p class="text-xs text-gray-500">{{ $label }}</p><p class="font-semibold tabular-nums text-gray-950 dark:text-white">Rp {{ number_format($aging['buckets'][$key], 0, ',', '.') }}</p></div>
@@ -89,11 +90,11 @@
 
     {{-- List Toko Tempo --}}
     @if(in_array(auth()->user()?->role, ['spectator', 'super_admin']))
-    <x-filament::section heading="List Toko — Tempo Belum & Sudah Terbayar" class="he-finance-section mt-4">
+    <x-filament::section heading="List Toko — Tempo Belum & Sudah Terbayar" class="he-finance-section">
         <div class="overflow-x-auto">
             <table class="he-finance-table w-full text-sm">
                 <thead>
-                    <tr class="border-b border-gray-200 dark:border-gray-700">
+                    <tr class="bg-gray-50 text-gray-600 dark:bg-white/5 dark:text-gray-300">
                         <th class="text-left py-2 px-3 font-medium">Pelanggan</th>
                         <th class="text-left py-2 px-3 font-medium">Nomor</th>
                         <th class="text-left py-2 px-3 font-medium">Gudang</th>
@@ -108,9 +109,9 @@
                         <th class="text-center py-2 px-3 font-medium">Status</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="divide-y divide-gray-100 dark:divide-white/5">
                     @forelse($listToko as $item)
-                    <tr class="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50">
+                    <tr class="hover:bg-gray-50 dark:hover:bg-white/5">
                         <td class="py-2 px-3 font-medium">{{ $item['pelanggan'] ?? '—' }}</td>
                         <td class="py-2 px-3 font-mono text-xs">{{ $item['nomor'] }}</td>
                         <td class="py-2 px-3">{{ $item['gudang'] ?? '—' }}</td>
@@ -154,6 +155,7 @@
         @endif
     </x-filament::section>
     @endif
+    </div>
 
     @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

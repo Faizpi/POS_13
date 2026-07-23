@@ -49,9 +49,9 @@
                     <thead class="text-xs font-semibold text-gray-600 dark:text-gray-300">
                         <tr class="bg-gray-50 dark:bg-white/5">
                             <th rowspan="2" class="sticky left-0 z-10 min-w-64 bg-gray-50 px-4 py-3 text-left align-bottom dark:bg-gray-800">Akun</th>
-                            <th colspan="2" class="border-b border-gray-200 px-4 py-2 text-center dark:border-white/10">Saldo awal</th>
-                            <th colspan="2" class="border-b border-gray-200 px-4 py-2 text-center dark:border-white/10">Mutasi</th>
-                            <th colspan="2" class="border-b border-gray-200 px-4 py-2 text-center dark:border-white/10">Saldo akhir</th>
+                            <th colspan="2" class="border-b border-gray-100 px-4 py-2 text-center dark:border-white/5">Saldo awal</th>
+                            <th colspan="2" class="border-b border-gray-100 px-4 py-2 text-center dark:border-white/5">Mutasi</th>
+                            <th colspan="2" class="border-b border-gray-100 px-4 py-2 text-center dark:border-white/5">Saldo akhir</th>
                         </tr>
                         <tr class="bg-gray-50 dark:bg-white/5">
                             <th class="px-4 py-2 text-right">Debit</th>
@@ -62,7 +62,7 @@
                             <th class="px-4 py-2 text-right">Kredit</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-gray-200 dark:divide-white/10">
+                    <tbody class="divide-y divide-gray-100 dark:divide-white/5">
                         @forelse ($data['rows'] as $row)
                             <tr class="text-gray-700 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-white/5">
                                 <td class="sticky left-0 z-10 bg-white px-4 py-3 dark:bg-gray-900">
@@ -86,7 +86,7 @@
                             </tr>
                         @endforelse
                     </tbody>
-                    <tfoot class="border-t-2 border-gray-200 bg-gray-50 font-semibold text-gray-950 dark:border-white/10 dark:bg-white/5 dark:text-white">
+                    <tfoot class="bg-gray-50 font-semibold text-gray-950 dark:bg-white/5 dark:text-white">
                         <tr>
                             <td class="sticky left-0 z-10 bg-gray-50 px-4 py-3 dark:bg-gray-800">Total</td>
                             <td class="px-4 py-3 text-right tabular-nums">{{ $data['totals']['opening_debit'] }}</td>

@@ -77,7 +77,7 @@
                             <th class="px-4 py-3 text-right">Kredit</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-gray-200 dark:divide-white/10">
+                    <tbody class="divide-y divide-gray-100 dark:divide-white/5">
                         @forelse ($data['rows'] as $row)
                             <tr class="text-gray-700 transition-colors hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-white/5">
                                 <td class="whitespace-nowrap px-4 py-3">{{ $row['journal_date'] }}</td>
@@ -98,7 +98,7 @@
                             </tr>
                         @endforelse
                     </tbody>
-                    <tfoot class="border-t-2 border-gray-200 bg-gray-50 font-semibold text-gray-950 dark:border-white/10 dark:bg-white/5 dark:text-white">
+                    <tfoot class="bg-gray-50 font-semibold text-gray-950 dark:bg-white/5 dark:text-white">
                         <tr>
                             <td colspan="3" class="px-4 py-3">Total</td>
                             <td class="whitespace-nowrap px-4 py-3 text-right tabular-nums">{{ $data['total_debit'] }}</td>

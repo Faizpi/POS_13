@@ -48,14 +48,27 @@
 
     /* ===== Shared Admin Card Surface ===== */
     .fi-wi-stats-overview-stat,
-    .fi-dashboard-page .fi-wi-chart .fi-section,
-    .he-finance-section.fi-section,
-    .he-finance-filter {
+    .fi-dashboard-page .fi-wi-chart .fi-section {
         overflow: hidden;
         border: 1px solid var(--admin-border-subtle);
         border-radius: 0.875rem;
         background: var(--admin-surface-card);
         box-shadow: var(--admin-shadow-card);
+    }
+
+    .he-finance-section.fi-section {
+        overflow: hidden;
+        border: 0;
+        border-radius: 0.875rem;
+        background: var(--admin-surface-card);
+        box-shadow: 0 0 0 1px var(--admin-border-subtle);
+    }
+
+    .he-finance-filter {
+        border: 0;
+        border-radius: 0.75rem;
+        background: var(--admin-surface-card-muted);
+        box-shadow: inset 0 0 0 1px var(--admin-border-subtle);
     }
 
     /* ===== Harian / Bulanan summary cards ===== */

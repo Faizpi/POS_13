@@ -4,6 +4,8 @@ namespace App\Filament\Pages;
 
 use App\Models\Gudang;
 use App\Models\Pembelian;
+use App\Services\Accounting\AccountingReportService;
+use App\Services\Accounting\HutangLedgerService;
 use BackedEnum;
 use Carbon\Carbon;
 use Filament\Actions\Action;
@@ -61,8 +63,11 @@ class HutangPage extends Page
 
     public function getChartData(): array
     {
+        $monthExpression = DB::connection()->getDriverName() === 'sqlite'
+            ? "strftime('%Y-%m', tgl_jatuh_tempo)"
+            : "DATE_FORMAT(tgl_jatuh_tempo, '%Y-%m')";
         $query = Pembelian::select(
-            DB::raw("DATE_FORMAT(tgl_jatuh_tempo, '%Y-%m') as bulan"),
+            DB::raw("{$monthExpression} as bulan"),
             DB::raw('SUM(grand_total) as total'),
             DB::raw('COUNT(*) as jumlah')
         )
@@ -88,6 +93,18 @@ class HutangPage extends Page
         ];
     }
 
+    /** @return array<string, mixed> */
+    public function getAgingSummary(): array
+    {
+        return app(AccountingReportService::class)->receivablePayableAging(now()->toDateString())['payables'];
+    }
+
+    /** @return Collection<int, array<string, mixed>> */
+    public function getLedgerMutationsForPurchase(Pembelian $purchase): Collection
+    {
+        return app(HutangLedgerService::class)->mutationsForPurchase($purchase);
+    }
+
     public function getListTempo(): LengthAwarePaginator
     {
         $query = Pembelian::with(['gudang', 'kontak'])
@@ -108,9 +125,12 @@ class HutangPage extends Page
             ->paginate($this->perPage, ['*'], 'page', $this->getPage())
             ->onEachSide(0);
 
-        $paginator->setCollection($paginator->getCollection()->map(function ($p) {
-            $totalBayar = $p->pembayarans()->where('status', 'Approved')->sum('jumlah_bayar');
-            $sisa = max(0, $p->grand_total - $totalBayar);
+        $ledger = app(HutangLedgerService::class);
+        $paginator->setCollection($paginator->getCollection()->map(function ($p) use ($ledger) {
+            $mutations = $ledger->mutationsForPurchase($p);
+            $latestMutation = $mutations->last();
+            $sisa = $latestMutation['running_balance'] ?? '0.00';
+            $totalBayar = bcsub((string) $p->grand_total, $sisa, 2);
 
             return [
                 'nomor' => $p->custom_number,
@@ -121,6 +141,10 @@ class HutangPage extends Page
                 'grand_total' => $p->grand_total,
                 'sudah_bayar' => $totalBayar,
                 'sisa' => $sisa,
+                'debit' => $latestMutation['debit'] ?? '0.00',
+                'credit' => $latestMutation['credit'] ?? '0.00',
+                'saldo' => $latestMutation['running_balance'] ?? '0.00',
+                'journal_number' => $latestMutation['journal_number'] ?? null,
                 'status' => $p->status,
             ];
         }));
@@ -144,9 +168,13 @@ class HutangPage extends Page
             $query->where('tgl_jatuh_tempo', '<=', $this->filter_to);
         }
 
-        return $query->orderBy('tgl_jatuh_tempo')->get()->map(function ($p) {
-            $totalBayar = $p->pembayarans()->where('status', 'Approved')->sum('jumlah_bayar');
-            $sisa = max(0, $p->grand_total - $totalBayar);
+        $ledger = app(HutangLedgerService::class);
+
+        return $query->orderBy('tgl_jatuh_tempo')->get()->map(function ($p) use ($ledger) {
+            $mutations = $ledger->mutationsForPurchase($p);
+            $latestMutation = $mutations->last();
+            $sisa = $latestMutation['running_balance'] ?? '0.00';
+            $totalBayar = bcsub((string) $p->grand_total, $sisa, 2);
 
             return [
                 'nomor' => $p->custom_number,
@@ -157,6 +185,10 @@ class HutangPage extends Page
                 'grand_total' => $p->grand_total,
                 'sudah_bayar' => $totalBayar,
                 'sisa' => $sisa,
+                'debit' => $latestMutation['debit'] ?? '0.00',
+                'credit' => $latestMutation['credit'] ?? '0.00',
+                'saldo' => $latestMutation['running_balance'] ?? '0.00',
+                'journal_number' => $latestMutation['journal_number'] ?? null,
                 'status' => $p->status,
             ];
         });

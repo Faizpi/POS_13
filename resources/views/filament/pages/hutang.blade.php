@@ -5,6 +5,7 @@
         $listTempo = $this->getListTempo();
         $totalHutang = $summaryTempo->where('status', 'Approved')->sum('sisa');
         $totalLunas = $summaryTempo->where('status', 'Lunas')->sum('grand_total');
+        $aging = $this->getAgingSummary();
     @endphp
 
     <div class="he-finance-filter flex items-center gap-2 p-3 mb-2 text-sm text-gray-500">
@@ -26,6 +27,14 @@
             <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ $listTempo->total() }} transaksi</p>
         </x-filament::section>
     </div>
+
+    <x-filament::section heading="Aging Hutang (Posted Ledger)" class="he-finance-section mb-6">
+        <div class="grid grid-cols-2 gap-3 sm:grid-cols-5">
+            @foreach (['current' => 'Current', '1-30' => '1–30', '31-60' => '31–60', '61-90' => '61–90', '90+' => '90+'] as $key => $label)
+                <div><p class="text-xs text-gray-500">{{ $label }}</p><p class="font-semibold">Rp {{ number_format($aging['buckets'][$key], 0, ',', '.') }}</p></div>
+            @endforeach
+        </div>
+    </x-filament::section>
 
     {{-- Chart --}}
     <x-filament::section heading="Graph Total Pembelian Monthly" class="he-finance-section">
@@ -82,6 +91,10 @@
                         <th class="text-left py-2 px-3 font-medium">Gudang</th>
                         <th class="text-left py-2 px-3 font-medium">Jatuh Tempo</th>
                         <th class="text-right py-2 px-3 font-medium">Total</th>
+                        <th class="text-right py-2 px-3 font-medium">Debit</th>
+                        <th class="text-right py-2 px-3 font-medium">Kredit</th>
+                        <th class="text-right py-2 px-3 font-medium">Saldo</th>
+                        <th class="text-left py-2 px-3 font-medium">Jurnal</th>
                         <th class="text-right py-2 px-3 font-medium">Sudah Bayar</th>
                         <th class="text-right py-2 px-3 font-medium">Sisa</th>
                         <th class="text-center py-2 px-3 font-medium">Status</th>
@@ -95,6 +108,10 @@
                         <td class="py-2 px-3">{{ $item['gudang'] ?? '—' }}</td>
                         <td class="py-2 px-3 @if($item['jatuh_tempo_lewat']) text-danger-600 font-bold @endif">{{ $item['tgl_jatuh_tempo'] ?? '—' }}</td>
                         <td class="py-2 px-3 text-right">Rp {{ number_format($item['grand_total'], 0, ',', '.') }}</td>
+                        <td class="py-2 px-3 text-right text-success-600">Rp {{ number_format($item['debit'], 0, ',', '.') }}</td>
+                        <td class="py-2 px-3 text-right">Rp {{ number_format($item['credit'], 0, ',', '.') }}</td>
+                        <td class="py-2 px-3 text-right font-medium">Rp {{ number_format($item['saldo'], 0, ',', '.') }}</td>
+                        <td class="py-2 px-3 font-mono text-xs">{{ $item['journal_number'] ?? '—' }}</td>
                         <td class="py-2 px-3 text-right text-success-600">Rp {{ number_format($item['sudah_bayar'], 0, ',', '.') }}</td>
                         <td class="py-2 px-3 text-right @if($item['sisa'] > 0) text-danger-600 font-bold @endif">Rp {{ number_format($item['sisa'], 0, ',', '.') }}</td>
                         <td class="py-2 px-3 text-center">

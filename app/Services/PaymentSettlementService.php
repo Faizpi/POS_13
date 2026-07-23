@@ -7,11 +7,19 @@ namespace App\Services;
 use App\Models\Pembayaran;
 use App\Models\Pembelian;
 use App\Models\Penjualan;
+use App\Models\User;
+use App\Services\Accounting\HutangPostingService;
+use App\Services\Accounting\PiutangPostingService;
 use DomainException;
 use Illuminate\Support\Facades\DB;
 
 final class PaymentSettlementService
 {
+    public function __construct(
+        private readonly PiutangPostingService $piutangPostingService,
+        private readonly HutangPostingService $hutangPostingService,
+    ) {}
+
     public const INVALID_SALE_STATUS_MESSAGE = 'Pembayaran hanya dapat dibuat untuk penjualan yang sudah Approved dan belum lunas.';
 
     public const INVALID_PURCHASE_STATUS_MESSAGE = 'Pembayaran hutang hanya dapat dibuat untuk pembelian yang sudah Approved dan belum lunas.';
@@ -88,6 +96,8 @@ final class PaymentSettlementService
                 'approver_id' => $approverId,
             ]);
 
+            $actor = User::query()->findOrFail($approverId);
+            $this->piutangPostingService->postPayment($actor, $lockedPayment->refresh());
             $this->recomputePenjualanStatus($penjualan);
 
             return $lockedPayment->refresh();
@@ -105,6 +115,13 @@ final class PaymentSettlementService
 
             $wasApproved = $lockedPayment->status === 'Approved';
             $this->lockRelatedPiutangPayments($penjualan);
+
+            if ($wasApproved) {
+                $actor = $lockedPayment->approver_id !== null
+                    ? User::query()->findOrFail($lockedPayment->approver_id)
+                    : User::query()->where('role', 'super_admin')->firstOrFail();
+                $this->piutangPostingService->reversePayment($actor, $lockedPayment, 'AR payment canceled');
+            }
 
             $lockedPayment->update(['status' => 'Canceled']);
 
@@ -160,6 +177,8 @@ final class PaymentSettlementService
                 'approver_id' => $approverId,
             ]);
 
+            $actor = User::query()->findOrFail($approverId);
+            $this->hutangPostingService->postPayment($actor, $lockedPayment->refresh());
             $this->recomputePembelianStatus($pembelian);
 
             return $lockedPayment->refresh();
@@ -176,6 +195,14 @@ final class PaymentSettlementService
             }
 
             $this->lockRelatedHutangPayments($pembelian);
+
+            $wasApproved = $lockedPayment->status === 'Approved';
+            if ($wasApproved) {
+                $actor = $lockedPayment->approver_id !== null
+                    ? User::query()->findOrFail($lockedPayment->approver_id)
+                    : User::query()->where('role', 'super_admin')->firstOrFail();
+                $this->hutangPostingService->reversePayment($actor, $lockedPayment, 'AP payment canceled');
+            }
 
             $lockedPayment->update(['status' => 'Canceled']);
             $this->recomputePembelianStatus($pembelian);

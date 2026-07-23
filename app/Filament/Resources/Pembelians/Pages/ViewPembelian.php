@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Pembelians\Pages;
 use App\Filament\Concerns\TransactionDeleteGuard;
 use App\Filament\Resources\Pembelians\PembelianResource;
 use App\Models\User;
+use App\Services\Accounting\HutangPostingService;
 use App\Services\InvoiceEmailService;
 use Filament\Actions\Action;
 use Filament\Actions\DeleteAction;
@@ -15,6 +16,7 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Illuminate\Support\Facades\DB;
 
 class ViewPembelian extends ViewRecord
 {
@@ -186,7 +188,15 @@ class ViewPembelian extends ViewRecord
                             return;
                         }
                     }
-                    $record->update(['status' => 'Approved', 'approver_id' => $user->id]);
+                    DB::transaction(function () use ($record, $user): void {
+                        $lockedPurchase = $record->newQuery()->lockForUpdate()->findOrFail($record->id);
+                        if ($lockedPurchase->status !== 'Pending') {
+                            throw new \DomainException('Hanya transaksi Pending yang bisa di-approve.');
+                        }
+
+                        $lockedPurchase->update(['status' => 'Approved', 'approver_id' => $user->id]);
+                        app(HutangPostingService::class)->postPurchase($user, $lockedPurchase->refresh());
+                    });
 
                     // Send email notification to creator
                     InvoiceEmailService::sendApprovedNotification($record, 'pembelian');
@@ -227,7 +237,13 @@ class ViewPembelian extends ViewRecord
                             return;
                         }
                     }
-                    $record->update(['status' => 'Canceled']);
+                    DB::transaction(function () use ($record, $user): void {
+                        $lockedPurchase = $record->newQuery()->lockForUpdate()->findOrFail($record->id);
+                        if ($lockedPurchase->status !== 'Canceled' && $lockedPurchase->syarat_pembayaran !== 'Cash') {
+                            app(HutangPostingService::class)->reversePurchase($user, $lockedPurchase, 'Purchase canceled');
+                        }
+                        $lockedPurchase->update(['status' => 'Canceled']);
+                    });
                     Notification::make()->title('Pembelian dibatalkan.')->success()->send();
                 }),
 

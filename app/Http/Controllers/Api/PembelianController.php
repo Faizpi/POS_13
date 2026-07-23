@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Pembelian;
 use App\Models\PembelianItem;
 use App\Models\User;
+use App\Services\Accounting\HutangPostingService;
 use App\Services\PurchaseMoneyCalculator;
 use Carbon\Carbon;
+use DomainException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -272,7 +274,7 @@ class PembelianController extends Controller
         }
     }
 
-    public function approve($id)
+    public function approve($id, HutangPostingService $hutangPostingService)
     {
         $user = auth()->user();
         $pembelian = Pembelian::findOrFail($id);
@@ -290,12 +292,22 @@ class PembelianController extends Controller
             }
         }
 
-        $pembelian->update(['status' => 'Approved', 'approver_id' => $user->id]);
+        $pembelian = DB::transaction(function () use ($id, $user, $hutangPostingService): Pembelian {
+            $lockedPurchase = Pembelian::query()->lockForUpdate()->findOrFail($id);
+            if ($lockedPurchase->status !== 'Pending') {
+                throw new DomainException('Hanya transaksi Pending yang bisa di-approve.');
+            }
+
+            $lockedPurchase->update(['status' => 'Approved', 'approver_id' => $user->id]);
+            $hutangPostingService->postPurchase($user, $lockedPurchase->refresh());
+
+            return $lockedPurchase->refresh();
+        });
 
         return response()->json(['message' => 'Pembelian berhasil di-approve.', 'data' => $pembelian]);
     }
 
-    public function cancel($id)
+    public function cancel($id, HutangPostingService $hutangPostingService)
     {
         $pembelian = Pembelian::findOrFail($id);
         $user = auth()->user();
@@ -310,7 +322,13 @@ class PembelianController extends Controller
             }
         }
 
-        $pembelian->update(['status' => 'Canceled']);
+        DB::transaction(function () use ($id, $user, $hutangPostingService): void {
+            $lockedPurchase = Pembelian::query()->lockForUpdate()->findOrFail($id);
+            if ($lockedPurchase->status !== 'Canceled' && $lockedPurchase->syarat_pembayaran !== 'Cash') {
+                $hutangPostingService->reversePurchase($user, $lockedPurchase, 'Purchase canceled');
+            }
+            $lockedPurchase->update(['status' => 'Canceled']);
+        });
 
         return response()->json(['message' => 'Pembelian berhasil dibatalkan.']);
     }

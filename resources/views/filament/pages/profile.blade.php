@@ -54,7 +54,7 @@
             height: 6rem;
             border-radius: 9999px;
             overflow: hidden;
-            border: 2px solid #0F9F8F;
+            border: 2px solid #2563eb;
             flex-shrink: 0;
         }
 
@@ -67,20 +67,20 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #f0fdfa;
-            color: #0F9F8F;
+            background-color: #eff6ff;
+            color: #2563eb;
             font-size: 1.875rem;
             font-weight: 600;
             line-height: 1;
         }
 
         .dark .he-profile-avatar {
-            border-color: #5EEAD4;
+            border-color: #60a5fa;
         }
 
         .dark .he-profile-avatar-fallback {
-            background-color: #042f2e;
-            color: #5EEAD4;
+            background-color: #172554;
+            color: #60a5fa;
         }
     </style>
 

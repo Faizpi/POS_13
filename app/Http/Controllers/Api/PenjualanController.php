@@ -9,6 +9,7 @@ use App\Models\Penjualan;
 use App\Models\PenjualanItem;
 use App\Models\Produk;
 use App\Models\User;
+use App\Services\Accounting\PiutangPostingService;
 use App\Services\InventoryMutationService;
 use App\Services\InvoiceEmailService;
 use App\Services\SaleCashSettlementService;
@@ -371,7 +372,7 @@ class PenjualanController extends Controller
         }
     }
 
-    public function approve($id, InventoryMutationService $inventoryMutationService)
+    public function approve($id, InventoryMutationService $inventoryMutationService, PiutangPostingService $piutangPostingService)
     {
         $user = auth()->user();
         $penjualan = Penjualan::findOrFail($id);
@@ -392,7 +393,7 @@ class PenjualanController extends Controller
         }
 
         try {
-            $penjualan = DB::transaction(function () use ($id, $inventoryMutationService, $user) {
+            $penjualan = DB::transaction(function () use ($id, $inventoryMutationService, $piutangPostingService, $user) {
                 $lockedPenjualan = Penjualan::with('items')
                     ->lockForUpdate()
                     ->findOrFail($id);
@@ -416,6 +417,7 @@ class PenjualanController extends Controller
                 }
 
                 $lockedPenjualan->update(['status' => 'Approved', 'approver_id' => $user->id]);
+                $piutangPostingService->postSale($user, $lockedPenjualan->refresh());
 
                 return $lockedPenjualan->refresh();
             });
@@ -431,7 +433,7 @@ class PenjualanController extends Controller
         return response()->json(['message' => 'Penjualan berhasil di-approve.', 'data' => $penjualan]);
     }
 
-    public function cancel($id, InventoryMutationService $inventoryMutationService)
+    public function cancel($id, InventoryMutationService $inventoryMutationService, PiutangPostingService $piutangPostingService)
     {
         $penjualan = Penjualan::findOrFail($id);
         $user = auth()->user();
@@ -452,7 +454,7 @@ class PenjualanController extends Controller
         }
 
         try {
-            DB::transaction(function () use ($id, $inventoryMutationService): void {
+            DB::transaction(function () use ($id, $inventoryMutationService, $piutangPostingService, $user): void {
                 $lockedPenjualan = Penjualan::with('items')
                     ->lockForUpdate()
                     ->findOrFail($id);
@@ -475,6 +477,11 @@ class PenjualanController extends Controller
                             ]
                         );
                     }
+                }
+
+                if ($lockedPenjualan->syarat_pembayaran !== 'Cash'
+                    && in_array($lockedPenjualan->status, ['Approved', 'Lunas'], true)) {
+                    $piutangPostingService->reverseSale($user, $lockedPenjualan, 'Sale canceled');
                 }
 
                 $lockedPenjualan->update(['status' => 'Canceled']);

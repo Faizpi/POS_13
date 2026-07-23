@@ -7,6 +7,7 @@ use App\Filament\Concerns\TransactionDeleteGuard;
 use App\Filament\Resources\Penjualans\PenjualanResource;
 use App\Models\Penjualan;
 use App\Models\User;
+use App\Services\Accounting\PiutangPostingService;
 use App\Services\InventoryMutationService;
 use App\Services\InvoiceEmailService;
 use App\Services\SaleCashSettlementService;
@@ -191,6 +192,7 @@ class ViewPenjualan extends ViewRecord
                     DB::beginTransaction();
                     try {
                         $inventoryMutationService = app(InventoryMutationService::class);
+                        $piutangPostingService = app(PiutangPostingService::class);
                         $record->loadMissing('items');
 
                         foreach ($record->items as $item) {
@@ -208,6 +210,7 @@ class ViewPenjualan extends ViewRecord
                         }
 
                         $record->update(['status' => 'Approved', 'approver_id' => $user->id]);
+                        $piutangPostingService->postSale($user, $record->refresh());
                         DB::commit();
 
                         // Send email notification to creator
@@ -302,6 +305,7 @@ class ViewPenjualan extends ViewRecord
                         // Kembalikan stok jika sudah Approved atau Lunas
                         if (in_array($record->status, ['Approved', 'Lunas'])) {
                             $inventoryMutationService = app(InventoryMutationService::class);
+                            $piutangPostingService = app(PiutangPostingService::class);
                             $record->loadMissing('items');
 
                             foreach ($record->items as $item) {
@@ -317,6 +321,11 @@ class ViewPenjualan extends ViewRecord
                                     ]
                                 );
                             }
+                        }
+
+                        if ($record->syarat_pembayaran !== 'Cash'
+                            && in_array($record->status, ['Approved', 'Lunas'], true)) {
+                            $piutangPostingService->reverseSale($user, $record, 'Sale canceled');
                         }
 
                         $record->update(['status' => 'Canceled']);

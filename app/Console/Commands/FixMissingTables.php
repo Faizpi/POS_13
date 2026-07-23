@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Attributes\Description;
 use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 #[Signature('fix-tables')]
@@ -37,12 +38,12 @@ class FixMissingTables extends Command
         'pembayarans' => '0001_01_01_000010_create_pembayarans_table.php',
         'penerimaan_barangs' => '0001_01_01_000011_create_penerimaan_barangs_table.php',
         'penerimaan_barang_items' => '0001_01_01_000011_create_penerimaan_barangs_table.php',
-        'personal_access_tokens' => '0001_01_01_000012_create_personal_access_tokens_table.php',
-        'cache' => '0001_01_01_000012_create_personal_access_tokens_table.php',
-        'cache_locks' => '0001_01_01_000012_create_personal_access_tokens_table.php',
-        'jobs' => '0001_01_01_000012_create_personal_access_tokens_table.php',
-        'job_batches' => '0001_01_01_000012_create_personal_access_tokens_table.php',
-        'failed_jobs' => '0001_01_01_000012_create_personal_access_tokens_table.php',
+        'personal_access_tokens' => null,
+        'cache' => null,
+        'cache_locks' => null,
+        'jobs' => null,
+        'job_batches' => null,
+        'failed_jobs' => null,
         // Later migrations
         'tutup_buku' => '2026_06_12_193338_create_tutup_buku_table.php',
         'archive_penjualans' => '2026_06_12_193338_create_archive_tables.php',
@@ -77,11 +78,24 @@ class FixMissingTables extends Command
             return 0;
         }
 
-        // Collect which migration files need to run
+        $infrastructureTables = array_intersect($missing, [
+            'personal_access_tokens',
+            'cache',
+            'cache_locks',
+            'jobs',
+            'job_batches',
+            'failed_jobs',
+        ]);
+
+        foreach ($infrastructureTables as $table) {
+            $this->createInfrastructureTable($table);
+        }
+
+        // Collect which migration files need to run for legacy domain tables.
         $migrationsToRun = [];
         foreach ($missing as $table) {
             $migrationFile = $this->tableToMigration[$table] ?? null;
-            if ($migrationFile) {
+            if ($migrationFile !== null) {
                 $migrationsToRun[$migrationFile] = true;
             }
         }
@@ -161,5 +175,64 @@ class FixMissingTables extends Command
         }
 
         return $failCount > 0 ? 1 : 0;
+    }
+
+    private function createInfrastructureTable(string $table): void
+    {
+        match ($table) {
+            'personal_access_tokens' => Schema::create($table, function (Blueprint $blueprint): void {
+                $blueprint->id();
+                $blueprint->foreignId('user_id')->constrained()->cascadeOnDelete();
+                $blueprint->string('name');
+                $blueprint->string('token', 64)->unique();
+                $blueprint->timestamp('last_used_at')->nullable();
+                $blueprint->timestamp('expires_at')->nullable();
+                $blueprint->timestamps();
+                $blueprint->index('user_id');
+            }),
+            'cache' => Schema::create($table, function (Blueprint $blueprint): void {
+                $blueprint->string('key')->primary();
+                $blueprint->mediumText('value');
+                $blueprint->integer('expiration');
+            }),
+            'cache_locks' => Schema::create($table, function (Blueprint $blueprint): void {
+                $blueprint->string('key')->primary();
+                $blueprint->string('owner');
+                $blueprint->integer('expiration');
+            }),
+            'jobs' => Schema::create($table, function (Blueprint $blueprint): void {
+                $blueprint->id();
+                $blueprint->string('queue')->index();
+                $blueprint->longText('payload');
+                $blueprint->unsignedTinyInteger('attempts');
+                $blueprint->unsignedInteger('reserved_at')->nullable();
+                $blueprint->unsignedInteger('available_at');
+                $blueprint->unsignedInteger('created_at');
+            }),
+            'job_batches' => Schema::create($table, function (Blueprint $blueprint): void {
+                $blueprint->string('id')->primary();
+                $blueprint->string('name');
+                $blueprint->integer('total_jobs');
+                $blueprint->integer('pending_jobs');
+                $blueprint->integer('failed_jobs');
+                $blueprint->longText('failed_job_ids');
+                $blueprint->mediumText('options')->nullable();
+                $blueprint->integer('cancelled_at')->nullable();
+                $blueprint->integer('created_at');
+                $blueprint->integer('finished_at')->nullable();
+            }),
+            'failed_jobs' => Schema::create($table, function (Blueprint $blueprint): void {
+                $blueprint->id();
+                $blueprint->string('uuid')->unique();
+                $blueprint->text('connection');
+                $blueprint->text('queue');
+                $blueprint->longText('payload');
+                $blueprint->longText('exception');
+                $blueprint->timestamp('failed_at')->useCurrent();
+            }),
+            default => throw new \LogicException("Unsupported infrastructure table: {$table}"),
+        };
+
+        $this->line("  ✓ {$table}");
     }
 }

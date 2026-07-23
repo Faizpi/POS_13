@@ -109,8 +109,8 @@ class ChartPenjualanSales extends ChartWidget
                 [
                     'label' => 'Total Penjualan',
                     'data' => $values,
-                    'backgroundColor' => '#0F9F8F',
-                    'hoverBackgroundColor' => '#0D8A7C',
+                    'backgroundColor' => '#2563EB',
+                    'hoverBackgroundColor' => '#1D4ED8',
                     'borderWidth' => 0,
                     'borderRadius' => 10,
                     'borderSkipped' => false,
@@ -180,7 +180,7 @@ class ChartPenjualanSales extends ChartWidget
                 [
                     'label' => 'Total Penjualan',
                     'data' => [],
-                    'backgroundColor' => '#0F9F8F',
+                    'backgroundColor' => '#2563EB',
                     'borderRadius' => 10,
                     'borderSkipped' => false,
                     'barThickness' => 14,

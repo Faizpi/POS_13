@@ -57,7 +57,7 @@ class PembelianStatsWidget extends BaseStatsOverviewWidget
             Stat::make('Pending Approval', format_rupiah($fakturPending))
                 ->description('Menunggu persetujuan')
                 ->descriptionIcon('heroicon-o-clock')
-                ->color($fakturPending > 0 ? 'warning' : 'success'),
+                ->color($fakturPending > 0 ? 'gray' : 'primary'),
 
             Stat::make('Total (Pending/Approved)', format_rupiah($fakturBelumDibayar))
                 ->description('Belum dilunasi')
@@ -67,12 +67,12 @@ class PembelianStatsWidget extends BaseStatsOverviewWidget
             Stat::make('Jatuh Tempo Lewat', format_rupiah($fakturTelatBayar))
                 ->description('Approved & telat bayar')
                 ->descriptionIcon('heroicon-o-exclamation-triangle')
-                ->color($fakturTelatBayar > 0 ? 'danger' : 'success'),
+                ->color($fakturTelatBayar > 0 ? 'danger' : 'primary'),
 
             Stat::make('Dibatalkan (Canceled)', number_format($fakturCanceled).' Transaksi')
                 ->description('Semua periode')
                 ->descriptionIcon('heroicon-o-x-circle')
-                ->color($fakturCanceled > 0 ? 'gray' : 'success'),
+                ->color('gray'),
         ];
     }
 }

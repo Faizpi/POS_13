@@ -105,22 +105,22 @@ class StatsOperasional extends BaseStatsOverviewWidget
             Stat::make('Menunggu Approval', number_format($menungguApproval))
                 ->description('Pending di semua modul')
                 ->descriptionIcon('heroicon-o-clock')
-                ->color($menungguApproval > 0 ? 'warning' : 'success'),
+                ->color($menungguApproval > 0 ? 'gray' : 'primary'),
 
             Stat::make('Transaksi Batal', number_format($canceled))
                 ->description('Semua modul · '.$bulanLabel)
                 ->descriptionIcon('heroicon-o-x-circle')
-                ->color($canceled > 0 ? 'danger' : 'gray'),
+                ->color('gray'),
 
             Stat::make('Kunjungan Sales', number_format($kunjungan->count()).' kali')
                 ->description('Bulan '.$bulanLabel)
                 ->descriptionIcon('heroicon-o-map-pin')
-                ->color('gray'),
+                ->color('info'),
 
             Stat::make($produkLabel, number_format($totalProduk))
                 ->description('Produk terdaftar')
                 ->descriptionIcon('heroicon-o-cube')
-                ->color('gray'),
+                ->color('primary'),
         ];
     }
 }

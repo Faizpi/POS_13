@@ -62,12 +62,12 @@ class KunjunganStatsWidget extends BaseStatsOverviewWidget
             Stat::make('Penagihan', number_format($totalPenagihan).' kunjungan')
                 ->description('Pending + Approved')
                 ->descriptionIcon('heroicon-o-currency-dollar')
-                ->color('warning'),
+                ->color('primary'),
 
             Stat::make('Promo Gratis', number_format($totalPromoGratis).' kunjungan')
                 ->description('Pending + Approved')
                 ->descriptionIcon('heroicon-o-gift')
-                ->color('success'),
+                ->color('info'),
 
             Stat::make('Promo Sample', number_format($totalPromoSample).' kunjungan')
                 ->description('Pending + Approved')
@@ -77,7 +77,7 @@ class KunjunganStatsWidget extends BaseStatsOverviewWidget
             Stat::make('Total Canceled', number_format($totalCanceled).' kunjungan')
                 ->description('Semua periode')
                 ->descriptionIcon('heroicon-o-x-circle')
-                ->color($totalCanceled > 0 ? 'gray' : 'success'),
+                ->color('gray'),
         ];
     }
 }

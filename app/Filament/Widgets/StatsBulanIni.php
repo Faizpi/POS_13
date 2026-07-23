@@ -70,17 +70,17 @@ class StatsBulanIni extends BaseStatsOverviewWidget
             Stat::make('Pembelian', format_rupiah($pembelian->sum('grand_total')))
                 ->description(number_format($pembelian->count()).' transaksi · '.$bulanLabel)
                 ->descriptionIcon('heroicon-o-arrow-trending-down')
-                ->color('warning'),
+                ->color('info'),
 
             Stat::make('Biaya Masuk', format_rupiah($biayaMasuk->sum('grand_total')))
                 ->description(number_format($biayaMasuk->count()).' transaksi · '.$bulanLabel)
                 ->descriptionIcon('heroicon-o-arrow-down-circle')
-                ->color('success'),
+                ->color('primary'),
 
             Stat::make('Biaya Keluar', format_rupiah($biayaKeluar->sum('grand_total')))
                 ->description(number_format($biayaKeluar->count()).' transaksi · '.$bulanLabel)
                 ->descriptionIcon('heroicon-o-arrow-up-circle')
-                ->color('danger'),
+                ->color('gray'),
         ];
     }
 }

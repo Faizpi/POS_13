@@ -83,18 +83,18 @@ class ChartTrenPenjualan extends ChartWidget
                     'label' => 'Penjualan',
                     'data' => $penjualanData,
 
-                    // Teal – Penjualan
-                    'borderColor' => '#0F9F8F',
+                    // Cobalt blue – Penjualan
+                    'borderColor' => '#2563EB',
 
                     'fill' => false,
                     'tension' => 0.4,
                     'borderWidth' => 2.5,
                     'pointRadius' => 2.5,
-                    'pointBackgroundColor' => '#0F9F8F',
+                    'pointBackgroundColor' => '#2563EB',
                     'pointBorderColor' => '#ffffff',
                     'pointBorderWidth' => 1.5,
                     'pointHoverRadius' => 6,
-                    'pointHoverBackgroundColor' => '#0D8A7C',
+                    'pointHoverBackgroundColor' => '#1D4ED8',
                     'pointHoverBorderColor' => '#ffffff',
                     'pointHoverBorderWidth' => 2,
                 ],
@@ -102,18 +102,18 @@ class ChartTrenPenjualan extends ChartWidget
                     'label' => 'Pembelian',
                     'data' => $pembelianData,
 
-                    // Amber – Pembelian
-                    'borderColor' => '#D98B16',
+                    // Violet – Pembelian
+                    'borderColor' => '#7C3AED',
 
                     'fill' => false,
                     'tension' => 0.4,
                     'borderWidth' => 2,
                     'pointRadius' => 2,
-                    'pointBackgroundColor' => '#D98B16',
+                    'pointBackgroundColor' => '#7C3AED',
                     'pointBorderColor' => '#ffffff',
                     'pointBorderWidth' => 1.5,
                     'pointHoverRadius' => 5,
-                    'pointHoverBackgroundColor' => '#C07A10',
+                    'pointHoverBackgroundColor' => '#6D28D9',
                     'pointHoverBorderColor' => '#ffffff',
                     'pointHoverBorderWidth' => 2,
                 ],
@@ -121,18 +121,18 @@ class ChartTrenPenjualan extends ChartWidget
                     'label' => 'Biaya',
                     'data' => $biayaData,
 
-                    // Rose – Biaya
-                    'borderColor' => '#E54865',
+                    // Magenta – Biaya
+                    'borderColor' => '#EC4899',
 
                     'fill' => false,
                     'tension' => 0.4,
                     'borderWidth' => 2.25,
                     'pointRadius' => 2,
-                    'pointBackgroundColor' => '#E54865',
+                    'pointBackgroundColor' => '#EC4899',
                     'pointBorderColor' => '#ffffff',
                     'pointBorderWidth' => 1.5,
                     'pointHoverRadius' => 5,
-                    'pointHoverBackgroundColor' => '#D03D58',
+                    'pointHoverBackgroundColor' => '#DB2777',
                     'pointHoverBorderColor' => '#ffffff',
                     'pointHoverBorderWidth' => 2,
                 ],

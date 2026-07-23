@@ -11,9 +11,9 @@
     $hasMaxHeight = filled($maxHeight) && $maxHeight !== '100%';
 
     $metricColors = [
-        'Penjualan' => ['dot' => 'bg-teal-500', 'text' => 'text-teal-700 dark:text-teal-400'],
-        'Pembelian' => ['dot' => 'bg-amber-500', 'text' => 'text-amber-700 dark:text-amber-400'],
-        'Biaya' => ['dot' => 'bg-rose-500', 'text' => 'text-rose-700 dark:text-rose-400'],
+        'Penjualan' => ['dot' => 'bg-blue-600', 'text' => 'text-blue-700 dark:text-blue-400'],
+        'Pembelian' => ['dot' => 'bg-violet-600', 'text' => 'text-violet-700 dark:text-violet-400'],
+        'Biaya' => ['dot' => 'bg-pink-500', 'text' => 'text-pink-700 dark:text-pink-400'],
     ];
 
     $formatCompactRupiah = static function (float|int $value): string {
@@ -70,7 +70,7 @@
                     <dd class="he-trend-metric-value {{ $styles['text'] }}">{{ $formatCompactRupiah($latestValue) }}</dd>
                     <p class="he-trend-metric-change">
                         @if ($change !== null)
-                            <span class="{{ $change >= 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400' }}">
+                            <span class="{{ $change >= 0 ? 'text-blue-600 dark:text-blue-400' : 'text-pink-600 dark:text-pink-400' }}">
                                 {{ $change >= 0 ? '↑' : '↓' }} {{ number_format(abs($change), 1, ',', '.') }}%
                             </span>
                             <span>dari bulan lalu</span>

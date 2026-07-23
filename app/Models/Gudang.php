@@ -3,13 +3,26 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Gudang extends Model
 {
+    protected $attributes = [
+        'is_active' => true,
+    ];
+
     protected $fillable = [
         'nama_gudang',
         'alamat_gudang',
+        'is_active',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'is_active' => 'boolean',
+        ];
+    }
 
     public function users()
     {
@@ -29,5 +42,10 @@ class Gudang extends Model
     public function spectators()
     {
         return $this->belongsToMany(User::class, 'spectator_gudang')->withTimestamps();
+    }
+
+    public function cashBankAccounts(): HasMany
+    {
+        return $this->hasMany(CashBankAccount::class);
     }
 }

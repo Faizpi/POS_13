@@ -18,6 +18,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // Seed Chart of Accounts first
+        $this->call(HibiscusEfsyaChartOfAccountsSeeder::class);
+
         // === Gudang ===
         $gudangA = Gudang::create(['nama_gudang' => 'Gudang A', 'alamat_gudang' => 'Jl. Gudang A No.1']);
         $gudangB = Gudang::create(['nama_gudang' => 'Gudang B', 'alamat_gudang' => 'Jl. Gudang B No.2']);

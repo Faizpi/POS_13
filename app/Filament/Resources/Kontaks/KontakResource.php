@@ -48,7 +48,7 @@ class KontakResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        $query = parent::getEloquentQuery()->with(['gudang:id,nama_gudang', 'creator:id,name']);
+        $query = parent::getEloquentQuery();
         $user = auth()->user();
         if (! $user) {
             return $query->whereRaw('1=0');

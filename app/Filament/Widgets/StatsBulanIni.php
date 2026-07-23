@@ -8,7 +8,6 @@ use App\Models\Penjualan;
 use Carbon\Carbon;
 use Filament\Widgets\StatsOverviewWidget as BaseStatsOverviewWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
-use Illuminate\Support\Facades\Cache;
 
 class StatsBulanIni extends BaseStatsOverviewWidget
 {
@@ -46,42 +45,42 @@ class StatsBulanIni extends BaseStatsOverviewWidget
         $now = Carbon::now();
         $bulanLabel = $now->translatedFormat('F Y');
 
-        $cacheKey = 'widget_stats_bulan_ini:'.$user->id.':'.($gudangId ?? $userId ?? 'all').':'.$now->format('Y-m');
+        $bulanQuery = fn ($q) => $q->whereYear('tgl_transaksi', $now->year)->whereMonth('tgl_transaksi', $now->month);
 
-        return Cache::remember($cacheKey, 300, function () use ($scope, $now, $bulanLabel) {
-            $bulanQuery = fn ($q) => $q->whereYear('tgl_transaksi', $now->year)->whereMonth('tgl_transaksi', $now->month);
+        $penjualan = $scope($bulanQuery(Penjualan::query()));
+        $pembelian = $scope($bulanQuery(Pembelian::query()));
+        $biayaMasuk = $scope($bulanQuery(Biaya::query())->where('jenis_biaya', 'masuk')->where('status', 'Approved'));
+        $biayaKeluar = $scope($bulanQuery(Biaya::query())->where('jenis_biaya', 'keluar')->where('status', 'Approved'));
 
-            // Single query per stat with sum + count
-            $penjualanRow = $scope($bulanQuery(Penjualan::query()))
-                ->selectRaw('COALESCE(SUM(grand_total),0) as total, COUNT(*) as cnt')->first();
-            $pembelianRow = $scope($bulanQuery(Pembelian::query()))
-                ->selectRaw('COALESCE(SUM(grand_total),0) as total, COUNT(*) as cnt')->first();
-            $biayaMasukRow = $scope($bulanQuery(Biaya::query())->where('jenis_biaya', 'masuk')->where('status', 'Approved'))
-                ->selectRaw('COALESCE(SUM(grand_total),0) as total, COUNT(*) as cnt')->first();
-            $biayaKeluarRow = $scope($bulanQuery(Biaya::query())->where('jenis_biaya', 'keluar')->where('status', 'Approved'))
-                ->selectRaw('COALESCE(SUM(grand_total),0) as total, COUNT(*) as cnt')->first();
+        $lastSixMonths = collect(range(5, 0))->map(fn ($month) => $now->copy()->subMonths($month));
+        $monthlySum = function ($queryBuilder) use ($lastSixMonths, $scope): array {
+            return $lastSixMonths->map(function ($date) use ($queryBuilder, $scope) {
+                $q = clone $queryBuilder;
 
-            return [
-                Stat::make('Penjualan', format_rupiah($penjualanRow->total))
-                    ->description(number_format($penjualanRow->cnt).' transaksi · '.$bulanLabel)
-                    ->descriptionIcon('heroicon-o-arrow-trending-up')
-                    ->color('primary'),
+                return (float) $scope($q->whereYear('tgl_transaksi', $date->year)->whereMonth('tgl_transaksi', $date->month))->sum('grand_total');
+            })->all();
+        };
 
-                Stat::make('Pembelian', format_rupiah($pembelianRow->total))
-                    ->description(number_format($pembelianRow->cnt).' transaksi · '.$bulanLabel)
-                    ->descriptionIcon('heroicon-o-arrow-trending-down')
-                    ->color('warning'),
+        return [
+            Stat::make('Penjualan', format_rupiah($penjualan->sum('grand_total')))
+                ->description(number_format($penjualan->count()).' transaksi · '.$bulanLabel)
+                ->descriptionIcon('heroicon-o-arrow-trending-up')
+                ->color('primary'),
 
-                Stat::make('Biaya Masuk', format_rupiah($biayaMasukRow->total))
-                    ->description(number_format($biayaMasukRow->cnt).' transaksi · '.$bulanLabel)
-                    ->descriptionIcon('heroicon-o-arrow-down-circle')
-                    ->color('success'),
+            Stat::make('Pembelian', format_rupiah($pembelian->sum('grand_total')))
+                ->description(number_format($pembelian->count()).' transaksi · '.$bulanLabel)
+                ->descriptionIcon('heroicon-o-arrow-trending-down')
+                ->color('warning'),
 
-                Stat::make('Biaya Keluar', format_rupiah($biayaKeluarRow->total))
-                    ->description(number_format($biayaKeluarRow->cnt).' transaksi · '.$bulanLabel)
-                    ->descriptionIcon('heroicon-o-arrow-up-circle')
-                    ->color('danger'),
-            ];
-        });
+            Stat::make('Biaya Masuk', format_rupiah($biayaMasuk->sum('grand_total')))
+                ->description(number_format($biayaMasuk->count()).' transaksi · '.$bulanLabel)
+                ->descriptionIcon('heroicon-o-arrow-down-circle')
+                ->color('success'),
+
+            Stat::make('Biaya Keluar', format_rupiah($biayaKeluar->sum('grand_total')))
+                ->description(number_format($biayaKeluar->count()).' transaksi · '.$bulanLabel)
+                ->descriptionIcon('heroicon-o-arrow-up-circle')
+                ->color('danger'),
+        ];
     }
 }

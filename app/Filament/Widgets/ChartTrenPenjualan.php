@@ -7,8 +7,6 @@ use App\Models\Pembelian;
 use App\Models\Penjualan;
 use Filament\Support\RawJs;
 use Filament\Widgets\ChartWidget;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
 
 class ChartTrenPenjualan extends ChartWidget
 {
@@ -28,67 +26,66 @@ class ChartTrenPenjualan extends ChartWidget
         $user = auth()->user();
         $isSuperAdmin = $user?->isSuperAdmin();
 
-        $gudangId = null;
-        if (! $isSuperAdmin) {
-            if ($user?->current_gudang_id) {
-                $gudangId = $user->current_gudang_id;
-            } elseif ($user?->role === 'admin' || $user?->role === 'spectator') {
-                $fallbackGudang = $user?->getCurrentGudang();
-                $gudangId = $fallbackGudang ? $fallbackGudang->id : null;
-            }
+        // Build month labels for last 6 months
+        $months = collect();
+        for ($i = 5; $i >= 0; $i--) {
+            $months->push(now()->subMonthsNoOverflow($i));
         }
 
-        $cacheKey = 'widget_chart_tren:'.$user->id.':'.($gudangId ?? 'all').':'.now()->format('Y-m-d');
+        $labels = $months->map(fn ($date) => $date->translatedFormat('M Y'))->toArray();
 
-        $data = Cache::remember($cacheKey, 300, function () use ($gudangId) {
-            // Build month labels for last 6 months
-            $months = collect();
-            for ($i = 5; $i >= 0; $i--) {
-                $months->push(now()->subMonthsNoOverflow($i));
-            }
+        $penjualanData = [];
+        $pembelianData = [];
+        $biayaData = [];
 
-            $labels = $months->map(fn ($date) => $date->translatedFormat('M Y'))->toArray();
-            $startDate = $months->first()->copy()->startOfMonth();
+        foreach ($months as $month) {
+            $penjualanQuery = Penjualan::whereYear('tgl_transaksi', $month->year)
+                ->whereMonth('tgl_transaksi', $month->month);
 
-            $queryModifier = function ($query) use ($gudangId, $startDate) {
-                $query->whereDate('tgl_transaksi', '>=', $startDate)
-                    ->selectRaw('YEAR(tgl_transaksi) as y, MONTH(tgl_transaksi) as m, SUM(grand_total) as total')
-                    ->groupBy('y', 'm');
-                if ($gudangId) {
-                    $query->where('gudang_id', $gudangId);
+            $pembelianQuery = Pembelian::whereYear('tgl_transaksi', $month->year)
+                ->whereMonth('tgl_transaksi', $month->month);
+
+            $biayaQuery = Biaya::whereYear('tgl_transaksi', $month->year)
+                ->whereMonth('tgl_transaksi', $month->month);
+
+            // Apply role-based filtering
+            if (! $isSuperAdmin) {
+                $gudangId = null;
+
+                if ($user?->current_gudang_id) {
+                    $gudangId = $user->current_gudang_id;
+                } elseif ($user?->role === 'admin' || $user?->role === 'spectator') {
+                    $fallbackGudang = $user?->getCurrentGudang();
+                    $gudangId = $fallbackGudang ? $fallbackGudang->id : null;
                 }
 
-                return $query;
-            };
+                if ($gudangId) {
+                    $penjualanQuery->where('gudang_id', $gudangId);
+                    $pembelianQuery->where('gudang_id', $gudangId);
+                    $biayaQuery->where('gudang_id', $gudangId);
+                } else {
+                    $penjualanData[] = 0;
+                    $pembelianData[] = 0;
+                    $biayaData[] = 0;
 
-            $penjualanMap = $queryModifier(Penjualan::query())->pluck('total', 'm')->toArray();
-            $pembelianMap = $queryModifier(Pembelian::query())->pluck('total', 'm')->toArray();
-            $biayaMap = $queryModifier(Biaya::query())->pluck('total', 'm')->toArray();
-
-            $penjualanData = [];
-            $pembelianData = [];
-            $biayaData = [];
-
-            foreach ($months as $month) {
-                $penjualanData[] = (float) ($penjualanMap[$month->month] ?? 0);
-                $pembelianData[] = (float) ($pembelianMap[$month->month] ?? 0);
-                $biayaData[] = (float) ($biayaMap[$month->month] ?? 0);
+                    continue;
+                }
             }
 
-            return [
-                'labels' => $labels,
-                'penjualanData' => $penjualanData,
-                'pembelianData' => $pembelianData,
-                'biayaData' => $biayaData,
-            ];
-        });
+            $penjualanData[] = (float) $penjualanQuery->sum('grand_total');
+            $pembelianData[] = (float) $pembelianQuery->sum('grand_total');
+            $biayaData[] = (float) $biayaQuery->sum('grand_total');
+        }
 
         return [
             'datasets' => [
                 [
                     'label' => 'Penjualan',
-                    'data' => $data['penjualanData'],
+                    'data' => $penjualanData,
+
+                    // Teal – Penjualan
                     'borderColor' => '#0F9F8F',
+
                     'fill' => false,
                     'tension' => 0.4,
                     'borderWidth' => 2.5,
@@ -103,8 +100,11 @@ class ChartTrenPenjualan extends ChartWidget
                 ],
                 [
                     'label' => 'Pembelian',
-                    'data' => $data['pembelianData'],
+                    'data' => $pembelianData,
+
+                    // Amber – Pembelian
                     'borderColor' => '#D98B16',
+
                     'fill' => false,
                     'tension' => 0.4,
                     'borderWidth' => 2,
@@ -119,8 +119,11 @@ class ChartTrenPenjualan extends ChartWidget
                 ],
                 [
                     'label' => 'Biaya',
-                    'data' => $data['biayaData'],
+                    'data' => $biayaData,
+
+                    // Rose – Biaya
                     'borderColor' => '#E54865',
+
                     'fill' => false,
                     'tension' => 0.4,
                     'borderWidth' => 2.25,
@@ -134,7 +137,7 @@ class ChartTrenPenjualan extends ChartWidget
                     'pointHoverBorderWidth' => 2,
                 ],
             ],
-            'labels' => $data['labels'],
+            'labels' => $labels,
         ];
     }
 

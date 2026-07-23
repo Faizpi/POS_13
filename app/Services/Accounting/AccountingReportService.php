@@ -150,32 +150,37 @@ final class AccountingReportService
     {
         $from = $filters['date_from'] ?? null;
         $to = $filters['date_to'] ?? null;
-
-        // Opening: all posted lines before $from
-        $openingRows = $this->trialBalanceAggregate(null, $from);
-
-        // Movement: all posted lines between $from and $to
-        $movementRows = $this->trialBalanceAggregate($from, $to);
-
-        // Ending: all posted lines up to $to (opening + movement)
-        $endingRows = $this->trialBalanceAggregate(null, $to ?: null);
-
-        $accounts = Account::query()
-            ->whereHas('journalLines', fn (Builder $q): Builder => $q
-                ->whereHas('journalEntry', fn (Builder $je): Builder => $je->where('status', 'posted'))
-                ->when($to !== null, fn (Builder $q2): Builder => $q2
-                    ->whereHas('journalEntry', fn (Builder $je2): Builder => $je2->whereDate('journal_date', '<=', $to))
-                )
-            )
-            ->orderBy('code')
+        $lines = JournalLine::query()
+            ->with(['account', 'journalEntry'])
+            ->whereHas('journalEntry', function (Builder $query): void {
+                $query->where('status', 'posted');
+            })
             ->get();
 
-        $rows = $accounts->map(function (Account $account) use ($openingRows, $movementRows, $endingRows): array {
-            $id = (string) $account->id;
-            $openingDebit = $openingRows[$id]['debit'] ?? '0.00';
-            $openingCredit = $openingRows[$id]['credit'] ?? '0.00';
-            $movementDebit = $movementRows[$id]['debit'] ?? '0.00';
-            $movementCredit = $movementRows[$id]['credit'] ?? '0.00';
+        $accounts = $lines->groupBy('account_id')->map(function (Collection $accountLines): array {
+            $account = $accountLines->firstOrFail()->account;
+            if ($account === null) {
+                throw new \LogicException('A journal line must reference an account.');
+            }
+
+            return ['account' => $account, 'lines' => $accountLines];
+        })->sortBy(fn (array $item): string => $item['account']->code)->values();
+
+        $rows = $accounts->map(function (array $item) use ($from, $to): array {
+            /** @var Account $account */
+            $account = $item['account'];
+            /** @var Collection<int, JournalLine> $lines */
+            $lines = $item['lines'];
+            $opening = $from === null ? collect() : $lines->filter(fn (JournalLine $line): bool => $line->journalEntry->journal_date->format('Y-m-d') < $from);
+            $movement = $lines->filter(function (JournalLine $line) use ($from, $to): bool {
+                $date = $line->journalEntry->journal_date->format('Y-m-d');
+
+                return ($from === null || $date >= $from) && ($to === null || $date <= $to);
+            });
+            $openingDebit = $this->sum($opening->pluck('debit'));
+            $openingCredit = $this->sum($opening->pluck('credit'));
+            $movementDebit = $this->sum($movement->pluck('debit'));
+            $movementCredit = $this->sum($movement->pluck('credit'));
             $ending = bcadd(bcsub($openingDebit, $openingCredit, 2), bcsub($movementDebit, $movementCredit, 2), 2);
 
             return [
@@ -303,37 +308,5 @@ final class AccountingReportService
     private function minor(string $amount): int
     {
         return (int) bcmul($amount, '100', 0);
-    }
-
-    /**
-     * Aggregate debit/credit per account_id from posted journal lines,
-     * optionally filtered by date range at the SQL level.
-     *
-     * @return array<string, array{debit: string, credit: string}>
-     */
-    private function trialBalanceAggregate(?string $from, ?string $to): array
-    {
-        $query = JournalLine::query()
-            ->selectRaw('account_id, SUM(debit) as total_debit, SUM(credit) as total_credit')
-            ->whereHas('journalEntry', function (Builder $q) use ($from, $to): void {
-                $q->where('status', 'posted');
-                if ($from !== null) {
-                    $q->whereDate('journal_date', '>=', $from);
-                }
-                if ($to !== null) {
-                    $q->whereDate('journal_date', '<=', $to);
-                }
-            })
-            ->groupBy('account_id');
-
-        $results = [];
-        foreach ($query->get() as $row) {
-            $results[(string) $row->account_id] = [
-                'debit' => (string) $row->total_debit,
-                'credit' => (string) $row->total_credit,
-            ];
-        }
-
-        return $results;
     }
 }

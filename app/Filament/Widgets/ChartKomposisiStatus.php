@@ -9,7 +9,6 @@ use App\Models\Pembelian;
 use App\Models\Penjualan;
 use Filament\Support\RawJs;
 use Filament\Widgets\ChartWidget;
-use Illuminate\Support\Facades\Cache;
 
 class ChartKomposisiStatus extends ChartWidget
 {
@@ -34,44 +33,31 @@ class ChartKomposisiStatus extends ChartWidget
             $gudangId = $user?->getCurrentGudang()?->id;
         }
 
-        $cacheKey = 'widget_chart_komposisi:'.$user->id.':'.($gudangId ?? 'all').':'.now()->format('Y-m-d');
-
-        $statuses = Cache::remember($cacheKey, 300, function () use ($isSuperAdmin, $gudangId) {
-            // Closure to apply role-based scoping
-            $scoped = function ($query) use ($isSuperAdmin, $gudangId) {
-                if ($isSuperAdmin) {
-                    return $query;
-                }
-                if ($gudangId) {
-                    return $query->where('gudang_id', $gudangId);
-                }
-
-                return $query->whereRaw('1=0');
-            };
-
-            $result = [
-                'Pending' => 0,
-                'Approved' => 0,
-                'Canceled' => 0,
-            ];
-
-            // Single GROUP BY query per model instead of per-status × per-model
-            $models = [Penjualan::class, Pembelian::class, Biaya::class, Kunjungan::class, Pembayaran::class];
-
-            foreach ($models as $model) {
-                $counts = $scoped($model::query())
-                    ->selectRaw('status, COUNT(*) as cnt')
-                    ->whereIn('status', array_keys($result))
-                    ->groupBy('status')
-                    ->pluck('cnt', 'status');
-
-                foreach ($counts as $status => $cnt) {
-                    $result[$status] += (int) $cnt;
-                }
+        // Closure to apply role-based scoping
+        $scoped = function ($query) use ($isSuperAdmin, $gudangId) {
+            if ($isSuperAdmin) {
+                return $query;
+            }
+            if ($gudangId) {
+                return $query->where('gudang_id', $gudangId);
             }
 
-            return $result;
-        });
+            return $query->whereRaw('1=0');
+        };
+
+        $statuses = [
+            'Pending' => 0,
+            'Approved' => 0,
+            'Canceled' => 0,
+        ];
+
+        foreach ($statuses as $status => $count) {
+            $statuses[$status] += (int) $scoped(Penjualan::where('status', $status))->count();
+            $statuses[$status] += (int) $scoped(Pembelian::where('status', $status))->count();
+            $statuses[$status] += (int) $scoped(Biaya::where('status', $status))->count();
+            $statuses[$status] += (int) $scoped(Kunjungan::where('status', $status))->count();
+            $statuses[$status] += (int) $scoped(Pembayaran::where('status', $status))->count();
+        }
 
         return [
             'datasets' => [

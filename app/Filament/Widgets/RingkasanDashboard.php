@@ -9,7 +9,6 @@ use Carbon\Carbon;
 use Filament\Widgets\Widget;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Cache;
 
 class RingkasanDashboard extends Widget
 {
@@ -40,10 +39,8 @@ class RingkasanDashboard extends Widget
     public function dailyMetrics(): array
     {
         $today = today();
-        $user = auth()->user();
-        $cacheKey = 'widget_ringkasan_daily:'.$user->id.':'.($user->current_gudang_id ?? 'all').':'.$today->format('Y-m-d');
 
-        return Cache::remember($cacheKey, 300, fn () => $this->metricsFor($today, $today, 'Hari ini'));
+        return $this->metricsFor($today, $today, 'Hari ini');
     }
 
     /**
@@ -52,14 +49,12 @@ class RingkasanDashboard extends Widget
     public function monthlyMetrics(): array
     {
         $period = $this->selectedPeriod();
-        $user = auth()->user();
-        $cacheKey = 'widget_ringkasan_monthly:'.$user->id.':'.($user->current_gudang_id ?? 'all').':'.$period->format('Y-m');
 
-        return Cache::remember($cacheKey, 300, fn () => $this->metricsFor(
+        return $this->metricsFor(
             $period->copy()->startOfMonth(),
             $period->copy()->endOfMonth(),
             $period->translatedFormat('F Y'),
-        ));
+        );
     }
 
     private function selectedPeriod(): Carbon
@@ -107,8 +102,7 @@ class RingkasanDashboard extends Widget
 
     private function outstandingDueTotal(Carbon $start, Carbon $end): float
     {
-        // Use SQL aggregation instead of loading all records into PHP
-        $row = $this->applyScope(
+        return $this->applyScope(
             Penjualan::query()
                 ->where('status', 'Approved')
                 ->whereNotNull('tgl_jatuh_tempo')
@@ -117,9 +111,12 @@ class RingkasanDashboard extends Widget
                     'pembayarans as approved_payments_total' => fn (Builder $query): Builder => $query
                         ->where('status', 'Approved'),
                 ], 'jumlah_bayar'),
-        )->selectRaw('COALESCE(SUM(GREATEST(grand_total - COALESCE(approved_payments_total, 0), 0)), 0) as total')->first();
-
-        return (float) ($row->total ?? 0);
+        )->get(['id', 'grand_total'])->sum(
+            fn (Penjualan $penjualan): float => max(
+                (float) $penjualan->grand_total - (float) ($penjualan->approved_payments_total ?? 0),
+                0,
+            ),
+        );
     }
 
     /**

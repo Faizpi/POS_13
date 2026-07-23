@@ -13,13 +13,13 @@
                 <div class="space-y-2">
                     <label for="trial-from" class="text-sm font-medium text-gray-950 dark:text-white">Dari tanggal</label>
                     <x-filament::input.wrapper>
-                        <x-filament::input id="trial-from" wire:model.live.debounce.500ms="filter_from" type="date" />
+                        <x-filament::input id="trial-from" wire:model.live="filter_from" type="date" />
                     </x-filament::input.wrapper>
                 </div>
                 <div class="space-y-2">
                     <label for="trial-to" class="text-sm font-medium text-gray-950 dark:text-white">Sampai tanggal</label>
                     <x-filament::input.wrapper>
-                        <x-filament::input id="trial-to" wire:model.live.debounce.500ms="filter_to" type="date" />
+                        <x-filament::input id="trial-to" wire:model.live="filter_to" type="date" />
                     </x-filament::input.wrapper>
                 </div>
             </div>

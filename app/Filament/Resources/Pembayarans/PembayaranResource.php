@@ -46,8 +46,7 @@ class PembayaranResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         // Pembayaran Resource ini khusus untuk PIUTANG
-        return static::applyRoleScope(parent::getEloquentQuery()->where('type', 'piutang'))
-            ->with(['penjualan:id,nomor,pelanggan', 'user:id,name', 'gudang:id,nama_gudang']);
+        return static::applyRoleScope(parent::getEloquentQuery()->where('type', 'piutang'));
     }
 
     public static function canCreate(): bool

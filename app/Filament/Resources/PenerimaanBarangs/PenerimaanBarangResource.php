@@ -45,8 +45,7 @@ class PenerimaanBarangResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return static::applyRoleScope(parent::getEloquentQuery())
-            ->with(['pembelian:id,nomor', 'gudang:id,nama_gudang', 'user:id,name']);
+        return static::applyRoleScope(parent::getEloquentQuery());
     }
 
     public static function canCreate(): bool

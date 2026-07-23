@@ -37,8 +37,7 @@ class PembayaranHutangResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         // Filter khusus type=hutang
-        return static::applyRoleScope(parent::getEloquentQuery()->where('type', 'hutang'))
-            ->with(['pembelian:id,nomor', 'pembelian.kontak:id,nama', 'user:id,name', 'gudang:id,nama_gudang']);
+        return static::applyRoleScope(parent::getEloquentQuery()->where('type', 'hutang'));
     }
 
     public static function form(Schema $schema): Schema

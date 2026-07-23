@@ -50,7 +50,7 @@ class CashBankAccountResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        $query = parent::getEloquentQuery()->with(['account:id,code,name', 'gudang:id,nama_gudang']);
+        $query = parent::getEloquentQuery();
         $user = auth()->user();
 
         if ($user === null) {

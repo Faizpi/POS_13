@@ -55,7 +55,7 @@
             </div>
         @endif
 
-        <div class="overflow-hidden rounded-xl bg-white ring-1 ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10">
+        <div class="he-summary-surface overflow-hidden rounded-xl bg-white dark:bg-gray-900">
             <dl class="grid divide-y divide-gray-100 sm:grid-cols-2 sm:divide-x sm:divide-y-0 xl:grid-cols-4 dark:divide-white/5">
                 <div class="px-5 py-4">
                     <dt class="text-xs font-medium text-gray-500 dark:text-gray-400">Saldo awal</dt>

@@ -16,6 +16,7 @@ use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Excel;
 use UnitEnum;
@@ -56,28 +57,40 @@ class StokPage extends Page
     {
         $user = Auth::user();
 
-        if ($user->isSuperAdmin()) {
-            $gudangs = Gudang::with(['gudangProduks.produk'])->get();
-        } elseif ($user->role === 'admin') {
-            $gudangIds = $user->gudangs->pluck('id');
-            $gudangs = Gudang::with(['gudangProduks.produk'])->whereIn('id', $gudangIds)->get();
-        } else {
-            $cg = $user?->getCurrentGudang();
-            $gudangs = $cg ? Gudang::with(['gudangProduks.produk'])->where('id', $cg->id)->get() : collect();
-        }
+        // Cache stok data selama 60 detik untuk mengurangi query berat
+        $cacheKey = 'stok_page:'.$user->id.':'.$user->current_gudang_id;
 
-        // Normalize stok total
-        $gudangs->each(function ($g) {
-            $g->gudangProduks->each(function ($s) {
-                $s->stok = ($s->stok_penjualan ?? 0) + ($s->stok_gratis ?? 0) + ($s->stok_sample ?? 0);
+        return Cache::remember($cacheKey, 60, function () use ($user) {
+            if ($user->isSuperAdmin()) {
+                // Limit stok per gudang untuk mencegah memory exhaustion
+                $gudangs = Gudang::with(['gudangProduks' => function ($q) {
+                    $q->with('produk:id,nama_produk,item_code')->limit(500);
+                }])->get();
+            } elseif ($user->role === 'admin') {
+                $gudangIds = $user->gudangs->pluck('id');
+                $gudangs = Gudang::with(['gudangProduks' => function ($q) {
+                    $q->with('produk:id,nama_produk,item_code')->limit(500);
+                }])->whereIn('id', $gudangIds)->get();
+            } else {
+                $cg = $user?->getCurrentGudang();
+                $gudangs = $cg ? Gudang::with(['gudangProduks' => function ($q) {
+                    $q->with('produk:id,nama_produk,item_code')->limit(500);
+                }])->where('id', $cg->id)->get() : collect();
+            }
+
+            // Normalize stok total
+            $gudangs->each(function ($g) {
+                $g->gudangProduks->each(function ($s) {
+                    $s->stok = ($s->stok_penjualan ?? 0) + ($s->stok_gratis ?? 0) + ($s->stok_sample ?? 0);
+                });
             });
-        });
 
-        return [
-            'gudangs' => $gudangs,
-            'allGudangs' => Gudang::pluck('nama_gudang', 'id'),
-            'allProduks' => Produk::orderBy('nama_produk')->pluck('nama_produk', 'id'),
-        ];
+            return [
+                'gudangs' => $gudangs,
+                'allGudangs' => Gudang::pluck('nama_gudang', 'id'),
+                'allProduks' => Produk::orderBy('nama_produk')->pluck('nama_produk', 'id'),
+            ];
+        });
     }
 
     /**

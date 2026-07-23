@@ -38,7 +38,7 @@ class FonnteService
         }
 
         try {
-            $response = Http::withHeaders([
+            $response = Http::timeout(10)->withHeaders([
                 'Authorization' => $this->apiToken,
             ])->post("{$this->baseUrl}/send", [
                 'target' => $normalized,

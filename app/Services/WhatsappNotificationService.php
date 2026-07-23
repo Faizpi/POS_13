@@ -19,7 +19,8 @@ class WhatsappNotificationService
     {
         $id = $penjualan->id;
 
-        // Eksekusi langsung tanpa queue database agar instan di shared hosting/tanpa worker
+        // Dispatch after response agar tidak memblokir request user
+        dispatch(function () use ($id): void {
         try {
             $penjualan = Penjualan::with(['items.produk', 'user', 'gudang'])
                 ->find($id);
@@ -112,6 +113,7 @@ class WhatsappNotificationService
         } catch (\Throwable $e) {
             Log::error("WhatsappNotificationService::sendPenjualanCreated [#{$id}]: ".$e->getMessage());
         }
+        })->afterResponse();
     }
 
     /**

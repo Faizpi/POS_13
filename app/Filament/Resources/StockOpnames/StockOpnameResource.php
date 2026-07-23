@@ -47,7 +47,8 @@ class StockOpnameResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return static::applyRoleScope(parent::getEloquentQuery());
+        return static::applyRoleScope(parent::getEloquentQuery())
+            ->with(['gudang:id,nama_gudang', 'user:id,name']);
     }
 
     public static function canCreate(): bool

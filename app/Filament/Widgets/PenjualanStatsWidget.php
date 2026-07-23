@@ -6,6 +6,7 @@ use App\Models\Penjualan;
 use Carbon\Carbon;
 use Filament\Widgets\StatsOverviewWidget as BaseStatsOverviewWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
+use Illuminate\Support\Facades\Cache;
 
 class PenjualanStatsWidget extends BaseStatsOverviewWidget
 {
@@ -34,55 +35,50 @@ class PenjualanStatsWidget extends BaseStatsOverviewWidget
 
         $now = Carbon::now();
 
-        // Total Belum Dibayar (Pending + Approved)
-        $totalBelumDibayar = $scope(
-            Penjualan::whereIn('status', ['Pending', 'Approved'])
-        )->sum('grand_total');
+        $cacheKey = 'widget_penjualan_stats:'.$user->id.':'.($gudangId ?? 'all').':'.$now->format('Y-m-d');
 
-        // Total Telat Bayar (Approved + tgl_jatuh_tempo sudah lewat)
-        $totalTelatBayar = $scope(
-            Penjualan::where('status', 'Approved')
-                ->whereNotNull('tgl_jatuh_tempo')
-                ->where('tgl_jatuh_tempo', '<', today())
-        )->count();
+        return Cache::remember($cacheKey, 300, function () use ($scope, $now) {
+            // Combine sum + count into single queries where possible
+            $belumDibayarRow = $scope(
+                Penjualan::whereIn('status', ['Pending', 'Approved'])
+            )->selectRaw('COALESCE(SUM(grand_total),0) as total')->first();
 
-        $nominalTelatBayar = $scope(
-            Penjualan::where('status', 'Approved')
-                ->whereNotNull('tgl_jatuh_tempo')
-                ->where('tgl_jatuh_tempo', '<', today())
-        )->sum('grand_total');
+            $telatBayarRow = $scope(
+                Penjualan::where('status', 'Approved')
+                    ->whereNotNull('tgl_jatuh_tempo')
+                    ->where('tgl_jatuh_tempo', '<', today())
+            )->selectRaw('COALESCE(SUM(grand_total),0) as total, COUNT(*) as cnt')->first();
 
-        // Pelunasan 30 hari terakhir (Lunas)
-        $pelunasan30Hari = $scope(
-            Penjualan::where('status', 'Lunas')
-                ->where('updated_at', '>=', $now->copy()->subDays(30))
-        )->sum('grand_total');
+            $pelunasanRow = $scope(
+                Penjualan::where('status', 'Lunas')
+                    ->where('updated_at', '>=', $now->copy()->subDays(30))
+            )->selectRaw('COALESCE(SUM(grand_total),0) as total')->first();
 
-        // Total Canceled
-        $totalCanceled = $scope(
-            Penjualan::where('status', 'Canceled')
-        )->count();
+            $totalCanceled = $scope(
+                Penjualan::where('status', 'Canceled')
+            )->count();
 
-        return [
-            Stat::make('Belum Dibayar', format_rupiah($totalBelumDibayar))
-                ->description('Pending + Approved')
-                ->descriptionIcon('heroicon-o-banknotes')
-                ->color('warning'),
+            return [
+                Stat::make('Belum Dibayar', format_rupiah($belumDibayarRow->total))
+                    ->description('Pending + Approved')
+                    ->descriptionIcon('heroicon-o-banknotes')
+                    ->color('warning'),
 
-            Stat::make('Telat Bayar', number_format($totalTelatBayar).' invoice')
-                ->description(format_rupiah($nominalTelatBayar))
-                ->descriptionIcon('heroicon-o-exclamation-triangle')
-                ->color($totalTelatBayar > 0 ? 'danger' : 'success'),
+                Stat::make('Telat Bayar', number_format($telatBayarRow->cnt).' invoice')
+                    ->description(format_rupiah($telatBayarRow->total))
+                    ->descriptionIcon('heroicon-o-exclamation-triangle')
+                    ->color($telatBayarRow->cnt > 0 ? 'danger' : 'success'),
 
-            Stat::make('Pelunasan 30 Hari', format_rupiah($pelunasan30Hari))
-                ->description('Lunas dalam 30 hari terakhir')
-                ->descriptionIcon('heroicon-o-check-badge')
-                ->color('success'),
+                Stat::make('Pelunasan 30 Hari', format_rupiah($pelunasanRow->total))
+                    ->description('Lunas dalam 30 hari terakhir')
+                    ->descriptionIcon('heroicon-o-check-badge')
+                    ->color('success'),
 
-            Stat::make('Total Canceled', number_format($totalCanceled).' transaksi')
-                ->description('Semua periode')
-                ->descriptionIcon('heroicon-o-x-circle')
-                ->color($totalCanceled > 0 ? 'gray' : 'success'),
-        ];
+                Stat::make('Total Canceled', number_format($totalCanceled).' transaksi')
+                    ->description('Semua periode')
+                    ->descriptionIcon('heroicon-o-x-circle')
+                    ->color($totalCanceled > 0 ? 'gray' : 'success'),
+            ];
+        });
     }
 }

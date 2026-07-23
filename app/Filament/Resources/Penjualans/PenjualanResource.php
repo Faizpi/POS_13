@@ -47,7 +47,8 @@ class PenjualanResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return static::applyRoleScope(parent::getEloquentQuery());
+        return static::applyRoleScope(parent::getEloquentQuery())
+            ->with(['user:id,name', 'approver:id,name', 'gudang:id,nama_gudang']);
     }
 
     public static function canCreate(): bool

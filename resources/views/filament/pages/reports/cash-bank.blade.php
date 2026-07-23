@@ -12,19 +12,19 @@
                 <div class="space-y-2">
                     <label for="cash-from" class="text-sm font-medium text-gray-950 dark:text-white">Dari tanggal</label>
                     <x-filament::input.wrapper>
-                        <x-filament::input id="cash-from" wire:model.live="filter_from" type="date" />
+                        <x-filament::input id="cash-from" wire:model.live.debounce.500ms="filter_from" type="date" />
                     </x-filament::input.wrapper>
                 </div>
                 <div class="space-y-2">
                     <label for="cash-to" class="text-sm font-medium text-gray-950 dark:text-white">Sampai tanggal</label>
                     <x-filament::input.wrapper>
-                        <x-filament::input id="cash-to" wire:model.live="filter_to" type="date" />
+                        <x-filament::input id="cash-to" wire:model.live.debounce.500ms="filter_to" type="date" />
                     </x-filament::input.wrapper>
                 </div>
                 <div class="space-y-2 sm:col-span-2 xl:col-span-1">
                     <label for="cash-account" class="text-sm font-medium text-gray-950 dark:text-white">Kas / bank</label>
                     <x-filament::input.wrapper>
-                        <x-filament::input.select id="cash-account" wire:model.live="filter_cash_bank_account_id">
+                        <x-filament::input.select id="cash-account" wire:model.live.debounce.500ms="filter_cash_bank_account_id">
                             <option value="">Pilih Kas / Bank</option>
                             @foreach ($this->cashBankOptions() as $id => $name)
                                 <option value="{{ $id }}">{{ $name }}</option>

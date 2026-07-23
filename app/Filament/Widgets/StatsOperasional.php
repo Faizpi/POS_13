@@ -12,6 +12,8 @@ use App\Models\Produk;
 use Carbon\Carbon;
 use Filament\Widgets\StatsOverviewWidget as BaseStatsOverviewWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class StatsOperasional extends BaseStatsOverviewWidget
 {
@@ -48,79 +50,83 @@ class StatsOperasional extends BaseStatsOverviewWidget
 
         $now = Carbon::now();
         $bulanLabel = $now->translatedFormat('F Y');
-        $bulanQuery = fn ($q) => $q->whereYear('tgl_transaksi', $now->year)->whereMonth('tgl_transaksi', $now->month);
 
-        // 1. Menunggu Approval (Pending)
-        $pendingBreakdown = $isUser ? [
-            Penjualan::where('user_id', $userId)->where('status', 'Pending')->count(),
-            Pembelian::where('user_id', $userId)->where('status', 'Pending')->count(),
-            Biaya::where('user_id', $userId)->where('status', 'Pending')->count(),
-            Kunjungan::where('user_id', $userId)->where('status', 'Pending')->count(),
-            Pembayaran::where('user_id', $userId)->where('status', 'Pending')->count(),
-        ] : [
-            $scope(Penjualan::where('status', 'Pending'))->count(),
-            $scope(Pembelian::where('status', 'Pending'))->count(),
-            $scope(Biaya::where('status', 'Pending'))->count(),
-            $scope(Kunjungan::where('status', 'Pending'), 'gudang_id', 'user_id')->count(),
-            $scope(Pembayaran::where('status', 'Pending'))->count(),
-        ];
-        $menungguApproval = array_sum($pendingBreakdown);
+        $cacheKey = 'widget_stats_operasional:'.$user->id.':'.$user->role.':'.($gudangId ?? $userId ?? 'all').':'.$now->format('Y-m');
 
-        // 2. Transaksi Batal (Canceled)
-        $canceled = $scope($bulanQuery(Penjualan::query())->where('status', 'Canceled'))->count()
-            + $scope($bulanQuery(Pembelian::query())->where('status', 'Canceled'))->count()
-            + $scope($bulanQuery(Biaya::query())->where('status', 'Canceled'))->count()
-            + $scope(Kunjungan::whereYear('tgl_kunjungan', $now->year)->whereMonth('tgl_kunjungan', $now->month)->where('status', 'Canceled'), 'gudang_id', 'user_id')->count();
+        return Cache::remember($cacheKey, 300, function () use ($scope, $isUser, $userId, $gudangId, $isAdmin, $now, $bulanLabel) {
+            // 1. Menunggu Approval (Pending) — single GROUP BY query per model
+            $pendingModels = [
+                Penjualan::class => 'gudang_id',
+                Pembelian::class => 'gudang_id',
+                Biaya::class => 'gudang_id',
+                Kunjungan::class => 'gudang_id',
+                Pembayaran::class => 'gudang_id',
+            ];
 
-        // 3. Kunjungan Sales
-        $kunjungan = $scope(Kunjungan::whereYear('tgl_kunjungan', $now->year)->whereMonth('tgl_kunjungan', $now->month), 'gudang_id', 'user_id');
+            $menungguApproval = 0;
+            foreach ($pendingModels as $model => $gudangCol) {
+                $q = $model::where('status', 'Pending');
+                if ($isUser && $userId) {
+                    $menungguApproval += $model::where('status', 'Pending')->where('user_id', $userId)->count();
+                } else {
+                    $menungguApproval += (int) $scope($model::where('status', 'Pending'), $gudangCol, 'user_id')->count();
+                }
+            }
 
-        // 4. Total Produk
-        if ($isUser && $userId) {
-            $gudangUser = $user?->getCurrentGudang();
-            $totalProduk = $gudangUser ? GudangProduk::where('gudang_id', $gudangUser->id)->count() : 0;
-            $produkLabel = 'Produk di Gudang';
-        } elseif ($isAdmin && $gudangId) {
-            $totalProduk = GudangProduk::where('gudang_id', $gudangId)->count();
-            $produkLabel = 'Produk di Gudang';
-        } else {
-            $totalProduk = Produk::count();
-            $produkLabel = 'Total Produk';
-        }
+            // 2. Transaksi Batal (Canceled) — current month, single query per model
+            $canceled = $scope(Penjualan::query()->whereYear('tgl_transaksi', $now->year)->whereMonth('tgl_transaksi', $now->month)->where('status', 'Canceled'))->count()
+                + $scope(Pembelian::query()->whereYear('tgl_transaksi', $now->year)->whereMonth('tgl_transaksi', $now->month)->where('status', 'Canceled'))->count()
+                + $scope(Biaya::query()->whereYear('tgl_transaksi', $now->year)->whereMonth('tgl_transaksi', $now->month)->where('status', 'Canceled'))->count()
+                + $scope(Kunjungan::whereYear('tgl_kunjungan', $now->year)->whereMonth('tgl_kunjungan', $now->month)->where('status', 'Canceled'), 'gudang_id', 'user_id')->count();
 
-        $lastSixMonths = collect(range(5, 0))->map(fn ($month) => $now->copy()->subMonths($month));
+            // 3. Kunjungan Sales
+            $kunjunganCount = $scope(Kunjungan::whereYear('tgl_kunjungan', $now->year)->whereMonth('tgl_kunjungan', $now->month), 'gudang_id', 'user_id')->count();
 
-        $canceledMonthlyChart = $lastSixMonths->map(function ($date) use ($scope): int {
-            return $scope(Penjualan::whereYear('tgl_transaksi', $date->year)->whereMonth('tgl_transaksi', $date->month)->where('status', 'Canceled'))->count()
-                 + $scope(Pembelian::whereYear('tgl_transaksi', $date->year)->whereMonth('tgl_transaksi', $date->month)->where('status', 'Canceled'))->count()
-                 + $scope(Biaya::whereYear('tgl_transaksi', $date->year)->whereMonth('tgl_transaksi', $date->month)->where('status', 'Canceled'))->count()
-                 + $scope(Kunjungan::whereYear('tgl_kunjungan', $date->year)->whereMonth('tgl_kunjungan', $date->month)->where('status', 'Canceled'), 'gudang_id', 'user_id')->count();
-        })->all();
+            // 4. Total Produk
+            if ($isUser && $userId) {
+                $gudangUser = auth()->user()?->getCurrentGudang();
+                $totalProduk = $gudangUser ? GudangProduk::where('gudang_id', $gudangUser->id)->count() : 0;
+                $produkLabel = 'Produk di Gudang';
+            } elseif ($isAdmin && $gudangId) {
+                $totalProduk = GudangProduk::where('gudang_id', $gudangId)->count();
+                $produkLabel = 'Produk di Gudang';
+            } else {
+                $totalProduk = Produk::count();
+                $produkLabel = 'Total Produk';
+            }
 
-        $monthlyCount = function (string $modelClass, string $dateColumn, ?string $gudangColumn = 'gudang_id', ?string $userColumn = 'user_id') use ($lastSixMonths, $scope): array {
-            return $lastSixMonths->map(fn ($date) => (int) $scope($modelClass::whereYear($dateColumn, $date->year)->whereMonth($dateColumn, $date->month), $gudangColumn, $userColumn)->count())->all();
-        };
+            // 5. Canceled monthly chart — single GROUP BY query per model
+            $lastSixMonths = collect(range(5, 0))->map(fn ($month) => $now->copy()->subMonths($month));
+            $startDate = $lastSixMonths->first()->copy()->startOfMonth();
 
-        return [
-            Stat::make('Menunggu Approval', number_format($menungguApproval))
-                ->description('Pending di semua modul')
-                ->descriptionIcon('heroicon-o-clock')
-                ->color($menungguApproval > 0 ? 'warning' : 'success'),
+            $canceledMonthlyChart = $lastSixMonths->map(function ($date) use ($scope) {
+                return $scope(Penjualan::whereYear('tgl_transaksi', $date->year)->whereMonth('tgl_transaksi', $date->month)->where('status', 'Canceled'))->count()
+                     + $scope(Pembelian::whereYear('tgl_transaksi', $date->year)->whereMonth('tgl_transaksi', $date->month)->where('status', 'Canceled'))->count()
+                     + $scope(Biaya::whereYear('tgl_transaksi', $date->year)->whereMonth('tgl_transaksi', $date->month)->where('status', 'Canceled'))->count()
+                     + $scope(Kunjungan::whereYear('tgl_kunjungan', $date->year)->whereMonth('tgl_kunjungan', $date->month)->where('status', 'Canceled'), 'gudang_id', 'user_id')->count();
+            })->all();
 
-            Stat::make('Transaksi Batal', number_format($canceled))
-                ->description('Semua modul · '.$bulanLabel)
-                ->descriptionIcon('heroicon-o-x-circle')
-                ->color($canceled > 0 ? 'danger' : 'gray'),
+            return [
+                Stat::make('Menunggu Approval', number_format($menungguApproval))
+                    ->description('Pending di semua modul')
+                    ->descriptionIcon('heroicon-o-clock')
+                    ->color($menungguApproval > 0 ? 'warning' : 'success'),
 
-            Stat::make('Kunjungan Sales', number_format($kunjungan->count()).' kali')
-                ->description('Bulan '.$bulanLabel)
-                ->descriptionIcon('heroicon-o-map-pin')
-                ->color('gray'),
+                Stat::make('Transaksi Batal', number_format($canceled))
+                    ->description('Semua modul · '.$bulanLabel)
+                    ->descriptionIcon('heroicon-o-x-circle')
+                    ->color($canceled > 0 ? 'danger' : 'gray'),
 
-            Stat::make($produkLabel, number_format($totalProduk))
-                ->description('Produk terdaftar')
-                ->descriptionIcon('heroicon-o-cube')
-                ->color('gray'),
-        ];
+                Stat::make('Kunjungan Sales', number_format($kunjunganCount).' kali')
+                    ->description('Bulan '.$bulanLabel)
+                    ->descriptionIcon('heroicon-o-map-pin')
+                    ->color('gray'),
+
+                Stat::make($produkLabel, number_format($totalProduk))
+                    ->description('Produk terdaftar')
+                    ->descriptionIcon('heroicon-o-cube')
+                    ->color('gray'),
+            ];
+        });
     }
 }

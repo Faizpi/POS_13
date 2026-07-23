@@ -15,6 +15,7 @@ use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use UnitEnum;
 
 final class AccountResource extends Resource
@@ -45,6 +46,11 @@ final class AccountResource extends Resource
     public static function table(Table $table): Table
     {
         return AccountsTable::configure($table);
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->with(['parent:id,code,name']);
     }
 
     public static function canViewAny(): bool

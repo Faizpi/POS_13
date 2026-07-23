@@ -12,19 +12,19 @@
                 <div class="space-y-2">
                     <label for="ledger-from" class="text-sm font-medium text-gray-950 dark:text-white">Dari tanggal</label>
                     <x-filament::input.wrapper>
-                        <x-filament::input id="ledger-from" wire:model.live="filter_from" type="date" />
+                        <x-filament::input id="ledger-from" wire:model.live.debounce.500ms="filter_from" type="date" />
                     </x-filament::input.wrapper>
                 </div>
                 <div class="space-y-2">
                     <label for="ledger-to" class="text-sm font-medium text-gray-950 dark:text-white">Sampai tanggal</label>
                     <x-filament::input.wrapper>
-                        <x-filament::input id="ledger-to" wire:model.live="filter_to" type="date" />
+                        <x-filament::input id="ledger-to" wire:model.live.debounce.500ms="filter_to" type="date" />
                     </x-filament::input.wrapper>
                 </div>
                 <div class="space-y-2">
                     <label for="ledger-account" class="text-sm font-medium text-gray-950 dark:text-white">Akun</label>
                     <x-filament::input.wrapper>
-                        <x-filament::input.select id="ledger-account" wire:model.live="filter_account_id">
+                        <x-filament::input.select id="ledger-account" wire:model.live.debounce.500ms="filter_account_id">
                             <option value="">Pilih akun</option>
                             @foreach ($this->accountOptions() as $id => $name)
                                 <option value="{{ $id }}">{{ $name }}</option>
@@ -35,7 +35,7 @@
                 <div class="space-y-2">
                     <label for="ledger-warehouse" class="text-sm font-medium text-gray-950 dark:text-white">Gudang</label>
                     <x-filament::input.wrapper>
-                        <x-filament::input.select id="ledger-warehouse" wire:model.live="filter_gudang_id">
+                        <x-filament::input.select id="ledger-warehouse" wire:model.live.debounce.500ms="filter_gudang_id">
                             <option value="">Semua gudang</option>
                             @foreach ($this->warehouseOptions() as $id => $name)
                                 <option value="{{ $id }}">{{ $name }}</option>

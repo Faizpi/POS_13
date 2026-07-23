@@ -47,7 +47,8 @@ class KunjunganResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return static::applyRoleScope(parent::getEloquentQuery());
+        return static::applyRoleScope(parent::getEloquentQuery())
+            ->with(['user:id,name', 'kontak:id,nama', 'gudang:id,nama_gudang']);
     }
 
     public static function canCreate(): bool

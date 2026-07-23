@@ -47,7 +47,8 @@ class BiayaResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return static::applyRoleScope(parent::getEloquentQuery());
+        return static::applyRoleScope(parent::getEloquentQuery())
+            ->with(['user:id,name']);
     }
 
     public static function canCreate(): bool

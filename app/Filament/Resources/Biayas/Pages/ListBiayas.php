@@ -33,12 +33,21 @@ class ListBiayas extends ListRecords
     {
         $query = BiayaResource::getEloquentQuery();
 
+        // Single GROUP BY query instead of 5 separate COUNT queries
+        $statusCounts = (clone $query)
+            ->selectRaw('status, COUNT(*) as cnt')
+            ->groupBy('status')
+            ->pluck('cnt', 'status')
+            ->toArray();
+
+        $total = array_sum($statusCounts);
+
         return [
-            'semua' => Tab::make('Semua')->badge($query->count()),
-            'pending' => Tab::make('Pending')->badge($query->clone()->where('status', 'Pending')->count())->badgeColor('warning')->modifyQueryUsing(fn (Builder $query) => $query->where('status', 'Pending')),
-            'approved' => Tab::make('Approved')->badge($query->clone()->where('status', 'Approved')->count())->badgeColor('primary')->modifyQueryUsing(fn (Builder $query) => $query->where('status', 'Approved')),
-            'rejected' => Tab::make('Rejected')->badge($query->clone()->where('status', 'Rejected')->count())->badgeColor('danger')->modifyQueryUsing(fn (Builder $query) => $query->where('status', 'Rejected')),
-            'canceled' => Tab::make('Canceled')->badge($query->clone()->where('status', 'Canceled')->count())->badgeColor('gray')->modifyQueryUsing(fn (Builder $query) => $query->where('status', 'Canceled')),
+            'semua' => Tab::make('Semua')->badge($total),
+            'pending' => Tab::make('Pending')->badge($statusCounts['Pending'] ?? 0)->badgeColor('warning')->modifyQueryUsing(fn (Builder $query) => $query->where('status', 'Pending')),
+            'approved' => Tab::make('Approved')->badge($statusCounts['Approved'] ?? 0)->badgeColor('primary')->modifyQueryUsing(fn (Builder $query) => $query->where('status', 'Approved')),
+            'rejected' => Tab::make('Rejected')->badge($statusCounts['Rejected'] ?? 0)->badgeColor('danger')->modifyQueryUsing(fn (Builder $query) => $query->where('status', 'Rejected')),
+            'canceled' => Tab::make('Canceled')->badge($statusCounts['Canceled'] ?? 0)->badgeColor('gray')->modifyQueryUsing(fn (Builder $query) => $query->where('status', 'Canceled')),
         ];
     }
 }

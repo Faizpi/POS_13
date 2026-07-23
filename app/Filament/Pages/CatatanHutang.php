@@ -40,9 +40,12 @@ class CatatanHutang extends Page
         }
 
         // Ambil semua kontak yang memiliki pembelian Approved yang belum lunas
+        // Eager load pembelians + gudang untuk eliminasi N+1
         $query = Kontak::whereHas('pembelians', function ($q) {
             $q->whereIn('status', ['Approved']);
-        });
+        })->with(['pembelians' => function ($q) {
+            $q->whereIn('status', ['Approved'])->with('gudang:id,nama_gudang');
+        }]);
 
         // Scoping by role
         if ($user->role === 'admin') {
@@ -60,20 +63,31 @@ class CatatanHutang extends Page
         }
 
         $kontaks = $query->orderBy('nama')->get();
+
+        // Batch query: ambil semua total pembayaran untuk semua pembelian sekaligus
+        $allPembelianIds = $kontaks->flatMap->pembelians->pluck('id')->toArray();
+
+        $paymentTotals = [];
+        if ($allPembelianIds) {
+            $paymentTotals = Pembayaran::where('status', 'Approved')
+                ->whereIn('pembelian_id', $allPembelianIds)
+                ->selectRaw('pembelian_id, SUM(jumlah_bayar) as total')
+                ->groupBy('pembelian_id')
+                ->pluck('total', 'pembelian_id')
+                ->toArray();
+        }
+
         $result = [];
 
         foreach ($kontaks as $kontak) {
-            $pembelians = $kontak->pembelians()
-                ->whereIn('status', ['Approved'])
-                ->get();
+            $pembelians = $kontak->pembelians;
 
             $totalHutang = 0;
             $totalSisa = 0;
             $detailItems = [];
 
             foreach ($pembelians as $p) {
-                $totalBayar = (float) Pembayaran::where('pembelian_id', $p->id)
-                    ->where('status', 'Approved')->sum('jumlah_bayar');
+                $totalBayar = (float) ($paymentTotals[$p->id] ?? 0);
                 $sisa = max(0, (float) $p->grand_total - $totalBayar);
                 $totalHutang += (float) $p->grand_total;
                 $totalSisa += $sisa;

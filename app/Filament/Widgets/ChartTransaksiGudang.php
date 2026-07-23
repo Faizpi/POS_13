@@ -7,6 +7,7 @@ use App\Models\Pembelian;
 use App\Models\Penjualan;
 use Filament\Support\RawJs;
 use Filament\Widgets\ChartWidget;
+use Illuminate\Support\Facades\Cache;
 
 class ChartTransaksiGudang extends ChartWidget
 {
@@ -27,37 +28,60 @@ class ChartTransaksiGudang extends ChartWidget
     {
         $user = auth()->user();
 
-        if ($user?->isSuperAdmin()) {
-            $gudangs = Gudang::pluck('nama_gudang', 'id');
-        } elseif ($user?->isAdmin()) {
-            $gudangs = collect($user->gudangs()->pluck('nama_gudang', 'gudangs.id')->toArray());
-            if ($user->gudang_id && ! $gudangs->has($user->gudang_id)) {
-                $mainGudang = Gudang::find($user->gudang_id);
-                if ($mainGudang) {
-                    $gudangs->put($mainGudang->id, $mainGudang->nama_gudang);
+        $cacheKey = 'widget_chart_gudang:'.$user->id.':'.$user->role.':'.now()->format('Y-m-d');
+
+        $data = Cache::remember($cacheKey, 300, function () use ($user) {
+            if ($user?->isSuperAdmin()) {
+                $gudangs = Gudang::pluck('nama_gudang', 'id');
+            } elseif ($user?->isAdmin()) {
+                $gudangs = collect($user->gudangs()->pluck('nama_gudang', 'gudangs.id')->toArray());
+                if ($user->gudang_id && ! $gudangs->has($user->gudang_id)) {
+                    $mainGudang = Gudang::find($user->gudang_id);
+                    if ($mainGudang) {
+                        $gudangs->put($mainGudang->id, $mainGudang->nama_gudang);
+                    }
                 }
+            } elseif ($user?->isSpectator()) {
+                $gudangs = collect($user->spectatorGudangs()->pluck('nama_gudang', 'gudangs.id')->toArray());
+            } else {
+                $gudangs = collect();
             }
-        } elseif ($user?->isSpectator()) {
-            $gudangs = collect($user->spectatorGudangs()->pluck('nama_gudang', 'gudangs.id')->toArray());
-        } else {
-            $gudangs = collect();
-        }
 
-        $labels = $gudangs->values()->toArray();
+            $gudangIds = $gudangs->keys()->toArray();
 
-        $penjualanData = [];
-        $pembelianData = [];
+            // Single GROUP BY query per model instead of N×2 queries
+            $penjualanMap = Penjualan::whereIn('gudang_id', $gudangIds)
+                ->selectRaw('gudang_id, COUNT(*) as cnt')
+                ->groupBy('gudang_id')
+                ->pluck('cnt', 'gudang_id')
+                ->toArray();
 
-        foreach ($gudangs as $id => $nama) {
-            $penjualanData[] = Penjualan::where('gudang_id', $id)->count();
-            $pembelianData[] = Pembelian::where('gudang_id', $id)->count();
-        }
+            $pembelianMap = Pembelian::whereIn('gudang_id', $gudangIds)
+                ->selectRaw('gudang_id, COUNT(*) as cnt')
+                ->groupBy('gudang_id')
+                ->pluck('cnt', 'gudang_id')
+                ->toArray();
+
+            $penjualanData = [];
+            $pembelianData = [];
+
+            foreach ($gudangIds as $id) {
+                $penjualanData[] = (int) ($penjualanMap[$id] ?? 0);
+                $pembelianData[] = (int) ($pembelianMap[$id] ?? 0);
+            }
+
+            return [
+                'labels' => $gudangs->values()->toArray(),
+                'penjualanData' => $penjualanData,
+                'pembelianData' => $pembelianData,
+            ];
+        });
 
         return [
             'datasets' => [
                 [
                     'label' => 'Penjualan',
-                    'data' => $penjualanData,
+                    'data' => $data['penjualanData'],
                     'backgroundColor' => 'rgba(15, 159, 143, 0.85)',
                     'hoverBackgroundColor' => '#0D8A7C',
                     'borderColor' => '#0F9F8F',
@@ -68,7 +92,7 @@ class ChartTransaksiGudang extends ChartWidget
                 ],
                 [
                     'label' => 'Pembelian',
-                    'data' => $pembelianData,
+                    'data' => $data['pembelianData'],
                     'backgroundColor' => 'rgba(217, 139, 22, 0.85)',
                     'hoverBackgroundColor' => '#C07A10',
                     'borderColor' => '#D98B16',
@@ -78,7 +102,7 @@ class ChartTransaksiGudang extends ChartWidget
                     'barThickness' => 16,
                 ],
             ],
-            'labels' => $labels,
+            'labels' => $data['labels'],
         ];
     }
 

@@ -4,13 +4,17 @@
 --}}
 @php
     try {
-        $kontakData = \App\Models\Kontak::select('id', 'nama', 'kode_kontak')->get()
-            ->map(fn($k) => ['id' => $k->id, 'kode' => $k->kode_kontak ?? '', 'nama' => $k->nama])
-            ->values()->toArray();
+        $kontakData = \Illuminate\Support\Facades\Cache::remember('pos_scanner_kontak', 300, function () {
+            return \App\Models\Kontak::select('id', 'nama', 'kode_kontak')->get()
+                ->map(fn($k) => ['id' => $k->id, 'kode' => $k->kode_kontak ?? '', 'nama' => $k->nama])
+                ->values()->toArray();
+        });
 
-        $produkData = \App\Models\Produk::select('id', 'nama_produk', 'item_code')->get()
-            ->map(fn($p) => ['id' => $p->id, 'kode' => $p->item_code ?? '', 'nama' => $p->nama_produk ?? ''])
-            ->values()->toArray();
+        $produkData = \Illuminate\Support\Facades\Cache::remember('pos_scanner_produk', 300, function () {
+            return \App\Models\Produk::select('id', 'nama_produk', 'item_code')->get()
+                ->map(fn($p) => ['id' => $p->id, 'kode' => $p->item_code ?? '', 'nama' => $p->nama_produk ?? ''])
+                ->values()->toArray();
+        });
     } catch (\Throwable $e) {
         $kontakData = [];
         $produkData = [];

@@ -315,11 +315,11 @@ class ReportNavigationTest extends TestCase
 
         $response = $this->actingAs($user)->get('/app/jurnal');
         $response->assertDontSee('Halaman ini masih dalam tahap pengembangan');
-        $response->assertSee('Tidak ada jurnal posted untuk filter ini.');
+        $response->assertSee('Belum ada jurnal posted');
 
         $response = $this->actingAs($user)->get('/app/neraca-saldo');
         $response->assertDontSee('Halaman ini masih dalam tahap pengembangan');
-        $response->assertSee('Consolidated view only.');
+        $response->assertSee('Consolidated view');
     }
 
     public function test_ringkasan_bisnis_is_not_placeholder(): void

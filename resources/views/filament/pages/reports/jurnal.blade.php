@@ -53,7 +53,7 @@
         </x-filament::section>
 
         @if ($data['is_management_view'])
-            <div class="rounded-xl bg-warning-50 p-4 text-sm text-warning-900 ring-1 ring-inset ring-warning-200 dark:bg-warning-400/10 dark:text-warning-100 dark:ring-warning-400/20">
+            <div class="he-callout rounded-xl bg-warning-50 p-4 text-sm text-warning-900 dark:bg-warning-400/10 dark:text-warning-100">
                 <div class="flex gap-3">
                     <x-filament::icon icon="heroicon-o-information-circle" class="mt-0.5 size-5 shrink-0" />
                     <p><span class="font-semibold">Management view.</span> {{ $data['warehouse_treatment'] }}</p>

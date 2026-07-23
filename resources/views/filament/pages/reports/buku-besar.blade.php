@@ -47,7 +47,7 @@
         </x-filament::section>
 
         @if ($data['is_management_view'])
-            <div class="rounded-xl bg-warning-50 p-4 text-sm text-warning-900 ring-1 ring-inset ring-warning-200 dark:bg-warning-400/10 dark:text-warning-100 dark:ring-warning-400/20">
+            <div class="he-callout rounded-xl bg-warning-50 p-4 text-sm text-warning-900 dark:bg-warning-400/10 dark:text-warning-100">
                 <div class="flex gap-3">
                     <x-filament::icon icon="heroicon-o-information-circle" class="mt-0.5 size-5 shrink-0" />
                     <p><span class="font-semibold">Management view.</span> {{ $data['warehouse_treatment'] }}</p>
@@ -55,7 +55,7 @@
             </div>
         @endif
 
-        <div class="he-summary-surface overflow-hidden rounded-xl bg-white dark:bg-gray-900">
+        <div class="overflow-hidden rounded-xl bg-white ring-1 ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10">
             <dl class="grid divide-y divide-gray-100 sm:grid-cols-2 sm:divide-x sm:divide-y-0 xl:grid-cols-4 dark:divide-white/5">
                 <div class="px-5 py-4">
                     <dt class="text-xs font-medium text-gray-500 dark:text-gray-400">Saldo awal</dt>

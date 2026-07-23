@@ -47,13 +47,8 @@
     }
 
     /* ===== Shared Admin Card Surface ===== */
-    .fi-section {
-        border: 0;
-        box-shadow: 0 0 0 1px var(--admin-border-subtle);
-    }
-
-    .he-summary-surface {
-        box-shadow: 0 0 0 1px var(--admin-border-subtle);
+    .he-callout {
+        border: 1px solid var(--admin-border-subtle);
     }
 
     .fi-wi-stats-overview-stat,

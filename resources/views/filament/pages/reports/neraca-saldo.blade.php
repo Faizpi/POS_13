@@ -25,7 +25,7 @@
             </div>
         </x-filament::section>
 
-        <div class="flex flex-col gap-3 rounded-xl bg-primary-50 p-4 ring-1 ring-inset ring-primary-200 sm:flex-row sm:items-center sm:justify-between dark:bg-primary-400/10 dark:ring-primary-400/20">
+        <div class="he-callout flex flex-col gap-3 rounded-xl bg-primary-50 p-4 sm:flex-row sm:items-center sm:justify-between dark:bg-primary-400/10">
             <div class="flex gap-3 text-sm text-primary-900 dark:text-primary-100">
                 <x-filament::icon icon="heroicon-o-building-office-2" class="mt-0.5 size-5 shrink-0" />
                 <div>

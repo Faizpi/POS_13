@@ -22,15 +22,15 @@
     {{-- Summary cards --}}
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
         <x-filament::section class="he-finance-section">
-            <p class="text-sm text-gray-500">Total Piutang Belum Lunas</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Total Piutang Belum Lunas</p>
             <p class="text-2xl font-bold text-danger-600">Rp {{ number_format($totalPiutang, 0, ',', '.') }}</p>
         </x-filament::section>
         <x-filament::section class="he-finance-section">
-            <p class="text-sm text-gray-500">Total Piutang Lunas</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Total Piutang Lunas</p>
             <p class="text-2xl font-bold text-success-600">Rp {{ number_format($totalLunas, 0, ',', '.') }}</p>
         </x-filament::section>
         <x-filament::section class="he-finance-section">
-            <p class="text-sm text-gray-500">Total Transaksi Tempo</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Total Transaksi Tempo</p>
             <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ $listToko->total() }} transaksi</p>
         </x-filament::section>
     </div>
@@ -38,7 +38,7 @@
     <x-filament::section heading="Aging Piutang (Posted Ledger)" class="he-finance-section mb-6">
         <div class="grid grid-cols-2 gap-3 sm:grid-cols-5">
             @foreach (['current' => 'Current', '1-30' => '1–30', '31-60' => '31–60', '61-90' => '61–90', '90+' => '90+'] as $key => $label)
-                <div><p class="text-xs text-gray-500">{{ $label }}</p><p class="font-semibold">Rp {{ number_format($aging['buckets'][$key], 0, ',', '.') }}</p></div>
+                <div><p class="text-xs text-gray-500">{{ $label }}</p><p class="font-semibold tabular-nums text-gray-950 dark:text-white">Rp {{ number_format($aging['buckets'][$key], 0, ',', '.') }}</p></div>
             @endforeach
         </div>
     </x-filament::section>

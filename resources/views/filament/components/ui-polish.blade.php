@@ -360,6 +360,29 @@
     }
 
     /* ===== General table / resource page polish ===== */
+
+    /* ===== Force 2-column grid on form sections ===== */
+    .fi-form .fi-section-content > .fi-section-content-inner {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 1rem !important;
+    }
+
+    .fi-form .fi-section-content > .fi-section-content-inner > * {
+        grid-column: span 1;
+    }
+
+    .fi-form .fi-section-content > .fi-section-content-inner > .fi-full-width,
+    .fi-form .fi-section-content > .fi-section-content-inner > [data-full-width="true"] {
+        grid-column: 1 / -1;
+    }
+
+    @media (max-width: 640px) {
+        .fi-form .fi-section-content > .fi-section-content-inner {
+            grid-template-columns: 1fr !important;
+        }
+    }
+
     .fi-ta-table,
     .he-finance-table {
         border-radius: 0.75rem;

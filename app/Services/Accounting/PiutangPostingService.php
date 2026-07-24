@@ -117,6 +117,13 @@ final readonly class PiutangPostingService
             throw new DomainException('No posted credit-sale journal exists for this sale.');
         }
 
+        $reversal = JournalEntry::query()
+            ->where('original_journal_entry_id', $journal->id)
+            ->exists();
+        if ($reversal) {
+            throw new DomainException('The sale journal has already been reversed.');
+        }
+
         return $this->reversal->reverse($this->postingActor($actor), $journal, $reason);
     }
 

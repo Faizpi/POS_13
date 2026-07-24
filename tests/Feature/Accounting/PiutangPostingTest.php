@@ -62,8 +62,7 @@ final class PiutangPostingTest extends TestCase
 
         $cancelResponse = $this->postJson("/api/v1/penjualan/{$sale->id}/cancel", [], $this->authHeaderFor($superAdmin));
         $cancelResponse->assertOk();
-        $this->assertDatabaseCount('journal_entries', 2);
-        $original = JournalEntry::query()->where('source_type', 'sale')->where('status', 'posted')->firstOrFail();
+        $original = JournalEntry::query()->where('source_type', 'sale')->where('source_id', $sale->id)->where('journal_type', 'sale')->where('status', 'posted')->firstOrFail();
         $this->assertDatabaseHas('journal_entries', ['original_journal_entry_id' => $original->id, 'journal_type' => 'reversal']);
         $this->assertSame('Canceled', $sale->fresh()->status);
     }

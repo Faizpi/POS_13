@@ -1,5 +1,5 @@
 <x-filament-panels::page>
-    <form wire:submit="saveMappings" class="he-mapping-form">
+    <form wire:submit="saveMappings">
         {{ $this->form }}
     </form>
 </x-filament-panels::page>

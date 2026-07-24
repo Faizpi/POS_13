@@ -360,26 +360,6 @@
     }
 
     /* ===== General table / resource page polish ===== */
-
-    /* ===== Account Mapping: masonry 2-column ===== */
-    .he-mapping-form {
-        column-count: 2;
-        column-gap: 1.5rem;
-    }
-
-    .he-mapping-form > .fi-section {
-        break-inside: avoid;
-        display: inline-block;
-        width: 100%;
-        margin-bottom: 1.5rem;
-    }
-
-    @media (max-width: 1024px) {
-        .he-mapping-form {
-            column-count: 1;
-        }
-    }
-
     .fi-ta-table,
     .he-finance-table {
         border-radius: 0.75rem;

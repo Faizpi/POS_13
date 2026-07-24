@@ -69,7 +69,7 @@ class ViewBiaya extends ViewRecord
                             ->placeholder('—')
                             ->url(fn ($record) => $record->koordinat ? 'https://www.google.com/maps?q='.urlencode($record->koordinat) : null, true),
                     ])
-                    ->columns(3),
+                    ->columns(['default' => 3]),
 
                 Section::make('Rincian Biaya')
                     ->icon('heroicon-o-list-bullet')
@@ -81,7 +81,7 @@ class ViewBiaya extends ViewRecord
                                 TextEntry::make('deskripsi')->label('Deskripsi')->placeholder('—'),
                                 TextEntry::make('jumlah')->label('Jumlah')->money('IDR'),
                             ])
-                            ->columns(3),
+                            ->columns(['default' => 3]),
                     ]),
 
                 Section::make('Catatan')

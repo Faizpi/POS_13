@@ -72,7 +72,7 @@ class ViewKunjungan extends ViewRecord
                                 ? 'https://www.google.com/maps?q='.urlencode($record->koordinat)
                                 : null, true),
                     ])
-                    ->columns(3),
+                    ->columns(['default' => 3]),
 
                 Section::make('Produk Terkait')
                     ->icon('heroicon-o-archive-box')

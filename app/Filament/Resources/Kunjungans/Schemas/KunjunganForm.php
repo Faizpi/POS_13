@@ -163,7 +163,7 @@ class KunjunganForm
                                     ->openUrlInNewTab(),
                             ]),
                     ])
-                    ->columns(2)
+                    ->columns(['default' => 2])
                     ->columnSpanFull(),
 
                 Section::make('Item Kunjungan')
@@ -273,7 +273,7 @@ class KunjunganForm
                                     ->rows(1)
                                     ->columnSpanFull(),
                             ])
-                            ->columns(3)
+                            ->columns(['default' => 3])
                             ->defaultItems(1),
                     ])
                     ->columnSpanFull(),

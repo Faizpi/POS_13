@@ -68,7 +68,7 @@ class ViewPembelian extends ViewRecord
                             ->placeholder('—')
                             ->url(fn ($record) => $record->koordinat ? 'https://www.google.com/maps?q='.urlencode($record->koordinat) : null, true),
                     ])
-                    ->columns(3),
+                    ->columns(['default' => 3]),
 
                 Section::make('Item Pembelian')
                     ->icon('heroicon-o-shopping-cart')
@@ -108,7 +108,7 @@ class ViewPembelian extends ViewRecord
                             ->weight('bold')
                             ->color('primary'),
                     ])
-                    ->columns(4),
+                    ->columns(['default' => 4]),
 
                 Section::make('Catatan')
                     ->icon('heroicon-o-paper-clip')

@@ -41,7 +41,7 @@ class StockOpnameForm
                             ->rows(3)
                             ->columnSpanFull(),
                     ])
-                    ->columns(2)
+                    ->columns(['default' => 2])
                     ->columnSpanFull(),
 
                 Section::make('Item Opname')
@@ -126,7 +126,7 @@ class StockOpnameForm
                                     ->rows(1)
                                     ->columnSpanFull(),
                             ])
-                            ->columns(3)
+                            ->columns(['default' => 3])
                             ->defaultItems(1)
                             ->collapsible()
                             ->reorderableWithButtons()

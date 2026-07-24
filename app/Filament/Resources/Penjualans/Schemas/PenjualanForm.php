@@ -99,7 +99,7 @@ class PenjualanForm
                             ->rows(2)
                             ->columnSpanFull(),
                     ])
-                    ->columns(2)
+                    ->columns(['default' => 2])
                     ->columnSpanFull(),
 
                 Section::make('Detail Transaksi')
@@ -220,7 +220,7 @@ class PenjualanForm
                                     ->openUrlInNewTab(),
                             ]),
                     ])
-                    ->columns(2)
+                    ->columns(['default' => 2])
                     ->columnSpanFull(),
 
                 Section::make('Item Penjualan')
@@ -340,7 +340,7 @@ class PenjualanForm
                                     ->prefix('Rp')
                                     ->columnSpanFull(),
                             ])
-                            ->columns(4)
+                            ->columns(['default' => 4])
                             ->defaultItems(1)
                             ->reorderableWithButtons()
                             ->collapsible()
@@ -385,7 +385,7 @@ class PenjualanForm
                             ->prefix('Rp')
                             ->extraInputAttributes(['class' => 'text-2xl font-bold text-primary-600']),
                     ])
-                    ->columns(3)
+                    ->columns(['default' => 3])
                     ->columnSpanFull(),
 
                 Section::make('Catatan & Lampiran')
@@ -430,7 +430,7 @@ class PenjualanForm
                             ->maxSize(5120)
                             ->columnSpanFull(),
                     ])
-                    ->columns(2)
+                    ->columns(['default' => 2])
                     ->columnSpanFull(),
             ]);
     }

@@ -64,7 +64,7 @@ class ViewPenjualan extends ViewRecord
                         TextEntry::make('gudang.nama_gudang')->label('Gudang'),
                         TextEntry::make('no_referensi')->label('No. Referensi')->placeholder('—'),
                     ])
-                    ->columns(3),
+                    ->columns(['default' => 3]),
 
                 Section::make('Item Penjualan')
                     ->icon('heroicon-o-shopping-cart')
@@ -101,7 +101,7 @@ class ViewPenjualan extends ViewRecord
                             ->weight('bold')
                             ->color('primary'),
                     ])
-                    ->columns(4),
+                    ->columns(['default' => 4]),
 
                 Section::make('Catatan & Lampiran')
                     ->icon('heroicon-o-paper-clip')

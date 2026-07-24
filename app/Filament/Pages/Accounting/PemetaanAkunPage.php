@@ -62,6 +62,7 @@ final class PemetaanAkunPage extends Page
     {
         return $schema
             ->components($this->mappingSections())
+            ->columns(2)
             ->statePath('data');
     }
 
@@ -177,8 +178,19 @@ final class PemetaanAkunPage extends Page
     /** @return array<int, Section> */
     private function mappingSections(): array
     {
+        $order = [
+            'Penjualan' => 0,
+            'Kas & Bank' => 1,
+            'Pembelian' => 2,
+            'AR / AP' => 3,
+            'Persediaan' => 4,
+            'Biaya' => 5,
+            'Ekuitas & Lainnya' => 6,
+        ];
+
         return collect($this->mappingCatalog())
             ->groupBy('section')
+            ->sortBy(fn ($items, string $section): int => $order[$section] ?? 99)
             ->map(function ($items, string $section): Section {
                 $runtimeCount = $items->filter(fn (array $item): bool => $item['key']->isRuntimeRequired())->count();
 

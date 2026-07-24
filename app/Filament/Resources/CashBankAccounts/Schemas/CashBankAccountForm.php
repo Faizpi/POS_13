@@ -71,7 +71,7 @@ class CashBankAccountForm
                         ->default(true)
                         ->required(),
                 ])
-                ->columns(['default' => 2]),
+                ->columns(2),
 
             Section::make('Informasi Bank')
                 ->schema([
@@ -85,7 +85,7 @@ class CashBankAccountForm
                         ->label('Atas Nama')
                         ->maxLength(255),
                 ])
-                ->columns(['default' => 3])
+                ->columns(3)
                 ->visible(fn (Get $get): bool => $get('type') === CashAccountType::Bank->value),
         ]);
     }

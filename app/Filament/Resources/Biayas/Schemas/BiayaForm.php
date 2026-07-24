@@ -149,7 +149,7 @@ class BiayaForm
                             ->rows(2)
                             ->columnSpanFull(),
                     ])
-                    ->columns(['default' => 2])
+                    ->columns(2)
                     ->columnSpanFull(),
 
                 Section::make('Item Biaya')
@@ -178,7 +178,7 @@ class BiayaForm
                                     ->live(onBlur: true)
                                     ->afterStateUpdated(fn ($set, $get) => self::recalcGrandTotal($set, $get)),
                             ])
-                            ->columns(['default' => 3])
+                            ->columns(3)
                             ->defaultItems(1)
                             ->collapsible()
                             ->reorderableWithButtons()
@@ -210,7 +210,7 @@ class BiayaForm
                             ->prefix('Rp')
                             ->extraInputAttributes(['class' => 'text-2xl font-bold text-primary-600']),
                     ])
-                    ->columns(['default' => 2])
+                    ->columns(2)
                     ->columnSpanFull(),
 
                 Section::make('Catatan & Lampiran')

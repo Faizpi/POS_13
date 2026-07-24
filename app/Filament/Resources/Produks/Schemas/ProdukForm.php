@@ -43,7 +43,7 @@ class ProdukForm
                             ->default('Pcs')
                             ->native(false),
                     ])
-                    ->columns(['default' => 2]),
+                    ->columns(2),
 
                 Section::make('Harga')
                     ->description('Harga retail dan grosir produk.')
@@ -65,7 +65,7 @@ class ProdukForm
                             ->minValue(0)
                             ->helperText('Berlaku jika tipe harga "Grosir" dipilih saat transaksi'),
                     ])
-                    ->columns(['default' => 2]),
+                    ->columns(2),
 
                 Section::make('Deskripsi')
                     ->collapsible()

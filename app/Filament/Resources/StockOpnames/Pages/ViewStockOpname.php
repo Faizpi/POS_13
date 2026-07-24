@@ -60,7 +60,7 @@ class ViewStockOpname extends ViewRecord
                             ->placeholder('Tidak ada memo')
                             ->columnSpanFull(),
                     ])
-                    ->columns(['default' => 3]),
+                    ->columns(3),
 
                 Section::make('Item Opname')
                     ->icon('heroicon-o-list-bullet')
@@ -98,7 +98,7 @@ class ViewStockOpname extends ViewRecord
                                     ->placeholder('—')
                                     ->columnSpanFull(),
                             ])
-                            ->columns(['default' => 3]),
+                            ->columns(3),
                     ]),
             ]);
     }

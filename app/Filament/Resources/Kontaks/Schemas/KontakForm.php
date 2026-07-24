@@ -55,7 +55,7 @@ class KontakForm
                             ->placeholder('Untuk login portal customer')
                             ->disabled(fn () => ! in_array(auth()->user()?->role, ['admin', 'super_admin'])),
                     ])
-                    ->columns(['default' => 3]),
+                    ->columns(3),
 
                 Section::make('Detail Tambahan')
                     ->schema([
@@ -85,7 +85,7 @@ class KontakForm
                             ->visible(fn () => auth()->user()?->isSuperAdmin())
                             ->disabled(fn () => ! auth()->user()?->isSuperAdmin()),
                     ])
-                    ->columns(['default' => 2]),
+                    ->columns(2),
             ]);
     }
 }

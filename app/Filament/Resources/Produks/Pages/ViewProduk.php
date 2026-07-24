@@ -22,7 +22,7 @@ class ViewProduk extends ViewRecord
             ->components([
                 Section::make('Informasi Produk')
                     ->icon('heroicon-o-cube')
-                    ->columns(['default' => 2])
+                    ->columns(2)
                     ->schema([
                         TextEntry::make('item_code')
                             ->label('Kode Produk')
@@ -62,7 +62,7 @@ class ViewProduk extends ViewRecord
                     ->schema([
                         RepeatableEntry::make('stokDiGudang')
                             ->label('')
-                            ->columns(['default' => 2])
+                            ->columns(2)
                             ->schema([
                                 TextEntry::make('gudang.nama_gudang')
                                     ->label('Gudang')

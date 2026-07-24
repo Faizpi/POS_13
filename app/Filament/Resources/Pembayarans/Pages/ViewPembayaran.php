@@ -27,7 +27,7 @@ class ViewPembayaran extends ViewRecord
             ->components([
                 Section::make('Informasi Pembayaran')
                     ->icon('heroicon-o-banknotes')
-                    ->columns(['default' => 2])
+                    ->columns(2)
                     ->schema([
                         // Left column
                         TextEntry::make('nomor')
@@ -66,7 +66,7 @@ class ViewPembayaran extends ViewRecord
 
                 Section::make('Referensi Invoice Penjualan')
                     ->icon('heroicon-o-document-text')
-                    ->columns(['default' => 2])
+                    ->columns(2)
                     ->schema([
                         TextEntry::make('penjualan.nomor')
                             ->label('Invoice')

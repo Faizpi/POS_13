@@ -92,7 +92,7 @@ final class AccountForm
                         ->columnSpanFull()
                         ->disabled(fn (?Account $record): bool => self::isLocked($record)),
                 ])
-                ->columns(['default' => 2]),
+                ->columns(2),
 
             Section::make('Klasifikasi dan Opsi')
                 ->schema([
@@ -158,7 +158,7 @@ final class AccountForm
                         ->required()
                         ->disabled(fn (?Account $record): bool => self::isLocked($record)),
                 ])
-                ->columns(['default' => 2]),
+                ->columns(2),
         ]);
     }
 

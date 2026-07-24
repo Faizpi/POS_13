@@ -183,7 +183,7 @@ class PembelianForm
                                     ->openUrlInNewTab(),
                             ]),
                     ])
-                    ->columns(['default' => 2])
+                    ->columns(2)
                     ->columnSpanFull(),
 
                 Section::make('Item Pembelian')
@@ -279,7 +279,7 @@ class PembelianForm
                                 TextInput::make('batch_number')->label('Batch'),
                                 DatePicker::make('expired_date')->label('Exp'),
                             ])
-                            ->columns(['default' => 3])
+                            ->columns(3)
                             ->defaultItems(1)
                             ->collapsible()
                             ->reorderableWithButtons()
@@ -323,7 +323,7 @@ class PembelianForm
                             ->prefix('Rp')
                             ->extraInputAttributes(['class' => 'text-2xl font-bold text-primary-600']),
                     ])
-                    ->columns(['default' => 3])
+                    ->columns(3)
                     ->columnSpanFull(),
 
                 Section::make('Catatan & Lampiran')

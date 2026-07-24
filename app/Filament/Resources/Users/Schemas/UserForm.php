@@ -55,7 +55,7 @@ class UserForm
                             ->rows(2)
                             ->columnSpanFull(),
                     ])
-                    ->columns(['default' => 2]),
+                    ->columns(2),
 
                 Section::make('Akses & Role')
                     ->description('Tentukan role dan gudang yang bisa diakses.')
@@ -89,7 +89,7 @@ class UserForm
                             ->bulkToggleable()
                             ->required(fn (callable $get) => in_array($get('role'), ['admin', 'spectator']))
                             ->visible(fn (callable $get) => $get('role') === 'admin')
-                            ->columns(['default' => 2])
+                            ->columns(2)
                             ->helperText('Pilih satu atau lebih gudang yang akan dikelola admin ini'),
 
                         CheckboxList::make('spectatorGudangs')
@@ -98,7 +98,7 @@ class UserForm
                             ->bulkToggleable()
                             ->required(fn (callable $get) => $get('role') === 'spectator')
                             ->visible(fn (callable $get) => $get('role') === 'spectator')
-                            ->columns(['default' => 2])
+                            ->columns(2)
                             ->helperText('Spectator hanya bisa melihat (read-only) data dari gudang yang dipilih'),
                     ])
                     ->columns(1),
@@ -128,7 +128,7 @@ class UserForm
                             ->visible(fn (callable $get) => $get('role') === 'admin')
                             ->default(false),
                     ])
-                    ->columns(['default' => 3]),
+                    ->columns(3),
 
                 Section::make('Password')
                     ->description('Atur password login.')
@@ -152,7 +152,7 @@ class UserForm
                             ->required(fn (string $operation): bool => $operation === 'create')
                             ->dehydrated(false),
                     ])
-                    ->columns(['default' => 2]),
+                    ->columns(2),
             ]);
     }
 }

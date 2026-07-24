@@ -43,7 +43,7 @@ class ViewKontak extends ViewRecord
             ->components([
                 Section::make('Informasi Kontak')
                     ->icon('heroicon-o-user')
-                    ->columns(['default' => 2])
+                    ->columns(2)
                     ->schema([
                         TextEntry::make('kode_kontak')
                             ->label('Kode Kontak')

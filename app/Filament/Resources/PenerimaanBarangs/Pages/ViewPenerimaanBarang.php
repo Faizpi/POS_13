@@ -59,7 +59,7 @@ class ViewPenerimaanBarang extends ViewRecord
                                         default => 'gray',
                                     }),
                             ])
-                            ->columns(['default' => 2]),
+                            ->columns(2),
                         Grid::make()
                             ->schema([
                                 TextEntry::make('user.name')
@@ -75,9 +75,9 @@ class ViewPenerimaanBarang extends ViewRecord
                                     ->label('Dibuat')
                                     ->dateTime('d M Y, H:i'),
                             ])
-                            ->columns(['default' => 2]),
+                            ->columns(2),
                     ])
-                    ->columns(['default' => 2]),
+                    ->columns(2),
 
                 Section::make('Referensi Invoice Pembelian')
                     ->icon('heroicon-o-document-text')
@@ -94,7 +94,7 @@ class ViewPenerimaanBarang extends ViewRecord
                                     ->label('Supplier')
                                     ->placeholder('—'),
                             ])
-                            ->columns(['default' => 2]),
+                            ->columns(2),
                     ]),
 
                 Section::make('Detail Barang Diterima')

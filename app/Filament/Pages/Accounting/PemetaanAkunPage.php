@@ -62,6 +62,7 @@ final class PemetaanAkunPage extends Page
     {
         return $schema
             ->components($this->mappingSections())
+            ->columns(2)
             ->statePath('data');
     }
 

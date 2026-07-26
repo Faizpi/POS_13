@@ -27,6 +27,7 @@ class BiayaForm
         return $schema
             ->components([
                 Grid::make(['default' => 1, 'md' => 12])
+                    ->columnSpanFull()
                     ->schema([
                 Section::make('Detail Biaya')
                     ->icon('heroicon-o-wallet')

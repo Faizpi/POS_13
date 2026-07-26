@@ -29,6 +29,7 @@ class PenjualanForm
         return $schema
             ->components([
                 Grid::make(['default' => 1, 'md' => 12])
+                    ->columnSpanFull()
                     ->schema([
                 Section::make('Informasi Pelanggan')
                     ->icon('heroicon-o-user')

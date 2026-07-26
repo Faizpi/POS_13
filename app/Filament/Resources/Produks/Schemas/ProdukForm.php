@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Produks\Schemas;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
@@ -13,8 +14,10 @@ class ProdukForm
     public static function configure(Schema $schema): Schema
     {
         return $schema
-            ->columns(['default' => 1, 'md' => 2])
             ->components([
+                Grid::make(['default' => 1, 'md' => 2])
+                    ->columnSpanFull()
+                    ->schema([
                 Section::make('Informasi Produk')
                     ->description('Master data produk untuk transaksi penjualan dan pembelian.')
                     ->icon('heroicon-o-cube')
@@ -76,6 +79,7 @@ class ProdukForm
                             ->label('Deskripsi Produk')
                             ->rows(3)
                             ->columnSpanFull(),
+                    ]),
                     ]),
             ]);
     }

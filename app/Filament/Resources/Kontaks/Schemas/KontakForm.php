@@ -6,6 +6,7 @@ use App\Models\Kontak;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
@@ -14,8 +15,10 @@ class KontakForm
     public static function configure(Schema $schema): Schema
     {
         return $schema
-            ->columns(['default' => 1, 'md' => 2])
             ->components([
+                Grid::make(['default' => 1, 'md' => 2])
+                    ->columnSpanFull()
+                    ->schema([
                 Section::make('Informasi Kontak')
                     ->description('Data customer atau supplier untuk transaksi.')
                     ->icon('heroicon-o-user-circle')
@@ -87,6 +90,7 @@ class KontakForm
                             ->disabled(fn () => ! auth()->user()?->isSuperAdmin()),
                     ])
                     ->columns(['default' => 1, 'md' => 2]),
+                    ]),
             ]);
     }
 }

@@ -12,6 +12,7 @@ use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
@@ -21,8 +22,10 @@ class PembayaranHutangForm
     public static function configure(Schema $schema): Schema
     {
         return $schema
-            ->columns(['default' => 1, 'md' => 2])
             ->components([
+                Grid::make(['default' => 1, 'md' => 2])
+                    ->columnSpanFull()
+                    ->schema([
                 Section::make('Detail Pembayaran Hutang')
                     ->icon('heroicon-o-credit-card')
                     ->schema([
@@ -162,6 +165,7 @@ class PembayaranHutangForm
                             ->acceptedFileTypes(['image/*', 'application/pdf'])
                             ->maxSize(5120)
                             ->columnSpanFull(),
+                    ]),
                     ]),
             ]);
     }

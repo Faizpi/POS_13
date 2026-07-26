@@ -8,6 +8,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
+use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Hash;
@@ -18,8 +19,10 @@ class UserForm
     public static function configure(Schema $schema): Schema
     {
         return $schema
-            ->columns(['default' => 1, 'md' => 2])
             ->components([
+                Grid::make(['default' => 1, 'md' => 2])
+                    ->columnSpanFull()
+                    ->schema([
                 Section::make('Informasi Pengguna')
                     ->description('Data dasar pengguna sistem.')
                     ->icon('heroicon-o-user-circle')
@@ -154,6 +157,7 @@ class UserForm
                             ->dehydrated(false),
                     ])
                     ->columns(['default' => 1, 'md' => 2]),
+                    ]),
             ]);
     }
 }

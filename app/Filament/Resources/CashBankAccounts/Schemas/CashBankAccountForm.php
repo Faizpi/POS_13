@@ -12,6 +12,7 @@ use App\Models\Gudang;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
+use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
@@ -22,9 +23,11 @@ class CashBankAccountForm
     public static function configure(Schema $schema): Schema
     {
         return $schema
-            ->columns(['default' => 1, 'md' => 2])
             ->components([
-            Section::make('Master Kas & Bank')
+                Grid::make(['default' => 1, 'md' => 2])
+                    ->columnSpanFull()
+                    ->schema([
+                Section::make('Master Kas & Bank')
                 ->schema([
                     TextInput::make('name')
                         ->label('Nama')
@@ -89,6 +92,7 @@ class CashBankAccountForm
                 ])
                 ->columns(['default' => 1, 'md' => 2])
                 ->visible(fn (Get $get): bool => $get('type') === CashAccountType::Bank->value),
+                    ]),
         ]);
     }
 }

@@ -16,6 +16,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Set;
+use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
@@ -25,8 +26,10 @@ class KunjunganForm
     public static function configure(Schema $schema): Schema
     {
         return $schema
-            ->columns(['default' => 1, 'md' => 2])
             ->components([
+                Grid::make(['default' => 1, 'md' => 2])
+                    ->columnSpanFull()
+                    ->schema([
                 Section::make('Informasi Kunjungan')
                     ->icon('heroicon-o-map-pin')
                     ->schema([
@@ -308,6 +311,7 @@ class KunjunganForm
                             ->columnSpanFull(),
                     ])
                     ->columnSpanFull(),
+                    ]),
             ]);
     }
 }

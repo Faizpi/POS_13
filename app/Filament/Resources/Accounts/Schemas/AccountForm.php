@@ -13,6 +13,7 @@ use App\Services\Accounting\AccountCodeGenerator;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
+use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
@@ -24,9 +25,11 @@ final class AccountForm
     public static function configure(Schema $schema): Schema
     {
         return $schema
-            ->columns(['default' => 1, 'md' => 2])
             ->components([
-            Section::make('Struktur Akun')
+                Grid::make(['default' => 1, 'md' => 2])
+                    ->columnSpanFull()
+                    ->schema([
+                Section::make('Struktur Akun')
                 ->description('Pilih kategori, subkategori, lalu akun induk sebelum mengisi detail akun.')
                 ->schema([
                     Select::make('category')
@@ -160,7 +163,8 @@ final class AccountForm
                         ->required()
                         ->disabled(fn (?Account $record): bool => self::isLocked($record)),
                 ])
-                ->columns(['default' => 1, 'md' => 2]),
+                    ->columns(['default' => 1, 'md' => 2]),
+                    ]),
         ]);
     }
 

@@ -20,6 +20,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
@@ -31,8 +32,10 @@ class PenerimaanBarangForm
     public static function configure(Schema $schema): Schema
     {
         return $schema
-            ->columns(['default' => 1, 'md' => 2])
             ->components([
+                Grid::make(['default' => 1, 'md' => 2])
+                    ->columnSpanFull()
+                    ->schema([
                 Section::make('Detail Penerimaan')
                     ->icon('heroicon-o-truck')
                     ->schema([
@@ -323,6 +326,7 @@ class PenerimaanBarangForm
                             ->columnSpanFull(),
                     ])
                     ->columnSpanFull(),
+                    ]),
             ]);
     }
 }

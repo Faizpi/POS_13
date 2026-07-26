@@ -41,9 +41,7 @@ class AppPanelProvider extends PanelProvider
                     ->label('Profil Saya')
                     ->url(fn (): string => ProfilePage::getUrl()),
             ])
-            ->brandName('Hibiscus Efsya')
-            ->brandLogo(asset('hibiscusefsya.png'))
-            ->brandLogoHeight('2.5rem')
+            ->brandName('Hibiscus Efsya POS')
             ->favicon(asset('assets/img/logoHE1.png'))
             ->font('Instrument Sans')
             ->colors([

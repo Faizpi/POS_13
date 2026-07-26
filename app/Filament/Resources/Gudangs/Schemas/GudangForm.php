@@ -28,7 +28,7 @@ class GudangForm
                             ->rows(3)
                             ->placeholder('Alamat lengkap gudang'),
                     ])
-                    ->columns(1),
+                    ->columns(['default' => 1, 'md' => 2]),
             ]);
     }
 }

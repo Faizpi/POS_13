@@ -32,6 +32,7 @@ class PembayaransRelationManager extends RelationManager
     public function form(Schema $schema): Schema
     {
         return $schema
+            ->columns(['default' => 1, 'md' => 2])
             ->components([
                 TextInput::make('nomor')
                     ->label('No Transaksi')

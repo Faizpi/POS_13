@@ -147,7 +147,7 @@ class PenerimaanBarangForm
                             ->label('No. Surat Jalan')
                             ->maxLength(100),
                     ])
-                    ->columns(2)
+                    ->columns(['default' => 1, 'md' => 2])
                     ->columnSpanFull(),
 
                 Section::make('Item Penerimaan')
@@ -241,7 +241,7 @@ class PenerimaanBarangForm
                                     ->searchable()
                                     ->disabled() // Auto-filled dari PO, tidak boleh diubah manual
                                     ->dehydrated()
-                                    ->columnSpan(2),
+                                    ->columnSpan(['default' => 1, 'md' => 2]),
 
                                 TextInput::make('qty_diterima')
                                     ->label('Qty Diterima')
@@ -270,7 +270,7 @@ class PenerimaanBarangForm
                                 DatePicker::make('expired_date')->label('Exp'),
                                 TextInput::make('keterangan')->label('Keterangan')->columnSpanFull(),
                             ])
-                            ->columns(3)
+                            ->columns(['default' => 1, 'md' => 2])
                             ->defaultItems(0)
                             ->addable(false)   // Tambah item hanya via pilih PO
                             ->deletable(true)  // Bisa hapus item tertentu jika tidak perlu diterima

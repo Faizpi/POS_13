@@ -115,7 +115,7 @@ class KunjunganForm
                                 'required' => 'Tujuan kunjungan wajib diisi.',
                                 'in' => 'Pilih tujuan yang valid.',
                             ])
-                            ->columnSpan(2),
+                            ->columnSpan(['default' => 1, 'md' => 2]),
 
                         TextInput::make('sales_nama')
                             ->label('Nama Sales')
@@ -163,7 +163,7 @@ class KunjunganForm
                                     ->openUrlInNewTab(),
                             ]),
                     ])
-                    ->columns(2)
+                    ->columns(['default' => 1, 'md' => 2])
                     ->columnSpanFull(),
 
                 Section::make('Item Kunjungan')
@@ -220,7 +220,7 @@ class KunjunganForm
                                                 // Handled by JS
                                             })
                                     )
-                                    ->columnSpan(2),
+                                    ->columnSpan(['default' => 1, 'md' => 2]),
 
                                 TextInput::make('jumlah')
                                     ->label('Qty')
@@ -273,7 +273,7 @@ class KunjunganForm
                                     ->rows(1)
                                     ->columnSpanFull(),
                             ])
-                            ->columns(3)
+                            ->columns(['default' => 1, 'md' => 2])
                             ->defaultItems(1),
                     ])
                     ->columnSpanFull(),

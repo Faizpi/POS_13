@@ -99,7 +99,7 @@ class PenjualanForm
                             ->rows(2)
                             ->columnSpanFull(),
                     ])
-                    ->columns(2)
+                    ->columns(['default' => 1, 'md' => 2])
                     ->columnSpanFull(),
 
                 Section::make('Detail Transaksi')
@@ -220,7 +220,7 @@ class PenjualanForm
                                     ->openUrlInNewTab(),
                             ]),
                     ])
-                    ->columns(2)
+                    ->columns(['default' => 1, 'md' => 2])
                     ->columnSpanFull(),
 
                 Section::make('Item Penjualan')
@@ -279,7 +279,7 @@ class PenjualanForm
                                                 'x-on:click' => 'event.preventDefault(); if(window.openPosScannerForField) openPosScannerForField($event, "produk", "Scan Kode Produk", "id")',
                                             ])
                                     )
-                                    ->columnSpan(2),
+                                    ->columnSpan(['default' => 1, 'md' => 2]),
 
                                 TextInput::make('kuantitas')
                                     ->label('Qty')
@@ -340,7 +340,7 @@ class PenjualanForm
                                     ->prefix('Rp')
                                     ->columnSpanFull(),
                             ])
-                            ->columns(4)
+                            ->columns(['default' => 1, 'md' => 2])
                             ->defaultItems(1)
                             ->reorderableWithButtons()
                             ->collapsible()
@@ -385,7 +385,7 @@ class PenjualanForm
                             ->prefix('Rp')
                             ->extraInputAttributes(['class' => 'text-2xl font-bold text-primary-600']),
                     ])
-                    ->columns(3)
+                    ->columns(['default' => 1, 'md' => 2])
                     ->columnSpanFull(),
 
                 Section::make('Catatan & Lampiran')
@@ -430,7 +430,7 @@ class PenjualanForm
                             ->maxSize(5120)
                             ->columnSpanFull(),
                     ])
-                    ->columns(2)
+                    ->columns(['default' => 1, 'md' => 2])
                     ->columnSpanFull(),
             ]);
     }

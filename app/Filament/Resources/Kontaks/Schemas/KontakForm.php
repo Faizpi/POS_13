@@ -30,7 +30,7 @@ class KontakForm
                             ->label('Nama Kontak')
                             ->required()
                             ->maxLength(255)
-                            ->columnSpan(2)
+                            ->columnSpan(['default' => 1, 'md' => 2])
                             ->disabled(fn () => ! in_array(auth()->user()?->role, ['admin', 'super_admin'])),
 
                         TextInput::make('email')
@@ -55,7 +55,7 @@ class KontakForm
                             ->placeholder('Untuk login portal customer')
                             ->disabled(fn () => ! in_array(auth()->user()?->role, ['admin', 'super_admin'])),
                     ])
-                    ->columns(3),
+                    ->columns(['default' => 1, 'md' => 2]),
 
                 Section::make('Detail Tambahan')
                     ->schema([
@@ -85,7 +85,7 @@ class KontakForm
                             ->visible(fn () => auth()->user()?->isSuperAdmin())
                             ->disabled(fn () => ! auth()->user()?->isSuperAdmin()),
                     ])
-                    ->columns(2),
+                    ->columns(['default' => 1, 'md' => 2]),
             ]);
     }
 }

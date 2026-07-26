@@ -133,7 +133,7 @@ class PembayaranHutangForm
                             ->rows(2)
                             ->columnSpanFull(),
                     ])
-                    ->columns(2)
+                    ->columns(['default' => 1, 'md' => 2])
                     ->columnSpanFull(),
 
                 Section::make('Bukti Pembayaran')

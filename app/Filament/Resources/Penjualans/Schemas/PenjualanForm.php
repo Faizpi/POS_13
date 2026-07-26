@@ -278,7 +278,7 @@ class PenjualanForm
                                                 'x-on:click' => 'event.preventDefault(); if(window.openPosScannerForField) openPosScannerForField($event, "produk", "Scan Kode Produk", "id")',
                                             ])
                                     )
-                                    ->columnSpan(['default' => 1, 'md' => 2]),
+                                    ->columnSpan(['default' => 1, 'md' => 6]),
 
                                 TextInput::make('kuantitas')
                                     ->label('Qty')
@@ -287,12 +287,14 @@ class PenjualanForm
                                     ->default(0)
                                     ->minValue(1)
                                     ->live()
-                                    ->afterStateUpdated(fn ($set, $get) => self::recalcRow($set, $get)),
+                                    ->afterStateUpdated(fn ($set, $get) => self::recalcRow($set, $get))
+                                    ->columnSpan(['default' => 1, 'md' => 2]),
 
                                 TextInput::make('unit')
                                     ->label('Unit')
                                     ->disabled()
-                                    ->dehydrated(),
+                                    ->dehydrated()
+                                    ->columnSpan(['default' => 1, 'md' => 2]),
 
                                 TextInput::make('harga_satuan')
                                     ->label('Harga')
@@ -300,7 +302,8 @@ class PenjualanForm
                                     ->numeric()
                                     ->prefix('Rp')
                                     ->live()
-                                    ->afterStateUpdated(fn ($set, $get) => self::recalcRow($set, $get)),
+                                    ->afterStateUpdated(fn ($set, $get) => self::recalcRow($set, $get))
+                                    ->columnSpan(['default' => 1, 'md' => 3]),
 
                                 TextInput::make('diskon')
                                     ->label('Disc %')
@@ -310,7 +313,8 @@ class PenjualanForm
                                     ->maxValue(100)
                                     ->suffix('%')
                                     ->live()
-                                    ->afterStateUpdated(fn ($set, $get) => self::recalcRow($set, $get)),
+                                    ->afterStateUpdated(fn ($set, $get) => self::recalcRow($set, $get))
+                                    ->columnSpan(['default' => 1, 'md' => 3]),
 
                                 TextInput::make('diskon_nominal')
                                     ->label('Disc Rp')
@@ -319,27 +323,30 @@ class PenjualanForm
                                     ->default(0)
                                     ->prefix('Rp')
                                     ->live()
-                                    ->afterStateUpdated(fn ($set, $get) => self::recalcRow($set, $get)),
+                                    ->afterStateUpdated(fn ($set, $get) => self::recalcRow($set, $get))
+                                    ->columnSpan(['default' => 1, 'md' => 3]),
 
                                 TextInput::make('batch_number')
-                                    ->label('Batch'),
+                                    ->label('Batch')
+                                    ->columnSpan(['default' => 1, 'md' => 3]),
 
                                 DatePicker::make('expired_date')
-                                    ->label('Exp'),
+                                    ->label('Exp')
+                                    ->columnSpan(['default' => 1, 'md' => 3]),
 
                                 Textarea::make('deskripsi')
                                     ->label('Deskripsi')
                                     ->rows(1)
-                                    ->columnSpanFull(),
+                                    ->columnSpan(['default' => 1, 'md' => 6]),
 
                                 TextInput::make('jumlah_baris')
                                     ->label('Jumlah')
                                     ->disabled()
                                     ->dehydrated()
                                     ->prefix('Rp')
-                                    ->columnSpanFull(),
+                                    ->columnSpan(['default' => 1, 'md' => 3]),
                             ])
-                            ->columns(['default' => 1, 'md' => 2])
+                            ->columns(['default' => 1, 'md' => 12])
                             ->defaultItems(1)
                             ->reorderableWithButtons()
                             ->collapsible()

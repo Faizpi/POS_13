@@ -242,20 +242,22 @@ class PenerimaanBarangForm
                                     ->searchable()
                                     ->disabled() // Auto-filled dari PO, tidak boleh diubah manual
                                     ->dehydrated()
-                                    ->columnSpan(['default' => 1, 'md' => 2]),
+                                    ->columnSpan(['default' => 1, 'md' => 5]),
 
                                 TextInput::make('qty_diterima')
                                     ->label('Qty Diterima')
                                     ->required()
                                     ->numeric()
                                     ->default(0)
-                                    ->minValue(0),
+                                    ->minValue(0)
+                                    ->columnSpan(['default' => 1, 'md' => 2]),
 
                                 TextInput::make('qty_reject')
                                     ->label('Qty Reject')
                                     ->numeric()
                                     ->default(0)
-                                    ->minValue(0),
+                                    ->minValue(0)
+                                    ->columnSpan(['default' => 1, 'md' => 2]),
 
                                 Select::make('tipe_stok')
                                     ->label('Tipe Stok')
@@ -265,13 +267,20 @@ class PenerimaanBarangForm
                                         'sample' => 'Sample',
                                     ])
                                     ->default('penjualan')
-                                    ->native(false),
+                                    ->native(false)
+                                    ->columnSpan(['default' => 1, 'md' => 3]),
 
-                                TextInput::make('batch_number')->label('Batch'),
-                                DatePicker::make('expired_date')->label('Exp'),
-                                TextInput::make('keterangan')->label('Keterangan')->columnSpanFull(),
+                                TextInput::make('batch_number')
+                                    ->label('Batch')
+                                    ->columnSpan(['default' => 1, 'md' => 3]),
+                                DatePicker::make('expired_date')
+                                    ->label('Exp')
+                                    ->columnSpan(['default' => 1, 'md' => 3]),
+                                TextInput::make('keterangan')
+                                    ->label('Keterangan')
+                                    ->columnSpan(['default' => 1, 'md' => 6]),
                             ])
-                            ->columns(['default' => 1, 'md' => 2])
+                            ->columns(['default' => 1, 'md' => 12])
                             ->defaultItems(0)
                             ->addable(false)   // Tambah item hanya via pilih PO
                             ->deletable(true)  // Bisa hapus item tertentu jika tidak perlu diterima

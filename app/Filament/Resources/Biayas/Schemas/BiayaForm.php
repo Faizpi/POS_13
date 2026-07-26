@@ -162,11 +162,13 @@ class BiayaForm
                                 TextInput::make('kategori')
                                     ->label('Kategori')
                                     ->required()
-                                    ->maxLength(255),
+                                    ->maxLength(255)
+                                    ->columnSpan(['default' => 1, 'md' => 4]),
 
                                 Textarea::make('deskripsi')
                                     ->label('Deskripsi')
-                                    ->rows(1),
+                                    ->rows(1)
+                                    ->columnSpan(['default' => 1, 'md' => 5]),
 
                                 TextInput::make('jumlah')
                                     ->label('Jumlah')
@@ -176,9 +178,10 @@ class BiayaForm
                                     ->minValue(0)
                                     ->prefix('Rp')
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(fn ($set, $get) => self::recalcGrandTotal($set, $get)),
+                                    ->afterStateUpdated(fn ($set, $get) => self::recalcGrandTotal($set, $get))
+                                    ->columnSpan(['default' => 1, 'md' => 3]),
                             ])
-                            ->columns(['default' => 1, 'md' => 2])
+                            ->columns(['default' => 1, 'md' => 12])
                             ->defaultItems(1)
                             ->collapsible()
                             ->reorderableWithButtons()

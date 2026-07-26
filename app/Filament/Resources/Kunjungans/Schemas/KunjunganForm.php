@@ -221,7 +221,7 @@ class KunjunganForm
                                                 // Handled by JS
                                             })
                                     )
-                                    ->columnSpan(['default' => 1, 'md' => 2]),
+                                    ->columnSpan(['default' => 1, 'md' => 6]),
 
                                 TextInput::make('jumlah')
                                     ->label('Qty')
@@ -234,6 +234,7 @@ class KunjunganForm
                                         'numeric' => 'Qty harus berupa angka.',
                                         'min' => 'Qty minimal 1.',
                                     ])
+                                    ->columnSpan(['default' => 1, 'md' => 2])
                                     ->rules([
                                         fn (callable $get): \Closure => function (string $attribute, $value, \Closure $fail) use ($get) {
                                             $tujuan = $get('../../tujuan');
@@ -265,16 +266,20 @@ class KunjunganForm
                                         },
                                     ]),
 
-                                TextInput::make('batch_number')->label('Batch'),
+                                TextInput::make('batch_number')
+                                    ->label('Batch')
+                                    ->columnSpan(['default' => 1, 'md' => 2]),
 
-                                DatePicker::make('expired_date')->label('Exp'),
+                                DatePicker::make('expired_date')
+                                    ->label('Exp')
+                                    ->columnSpan(['default' => 1, 'md' => 2]),
 
                                 Textarea::make('keterangan')
                                     ->label('Keterangan')
                                     ->rows(1)
                                     ->columnSpanFull(),
                             ])
-                            ->columns(['default' => 1, 'md' => 2])
+                            ->columns(['default' => 1, 'md' => 12])
                             ->defaultItems(1),
                     ])
                     ->columnSpanFull(),

@@ -69,6 +69,7 @@ class StockOpnameForm
                                         })->orderBy('nama_produk')->pluck('nama_produk', 'id');
                                     })
                                     ->searchable()
+                                    ->columnSpan(['default' => 1, 'md' => 5])
                                     ->live()
                                     ->afterStateUpdated(function ($state, callable $set, callable $get) {
                                         $gudangId = $get('../../gudang_id') ?? auth()->user()?->getCurrentGudang()?->id;
@@ -91,17 +92,20 @@ class StockOpnameForm
 
                                 TextInput::make('batch_number')
                                     ->label('No Batch')
-                                    ->maxLength(255),
+                                    ->maxLength(255)
+                                    ->columnSpan(['default' => 1, 'md' => 3]),
 
                                 DatePicker::make('expired_date')
-                                    ->label('Exp Date'),
+                                    ->label('Exp Date')
+                                    ->columnSpan(['default' => 1, 'md' => 4]),
 
                                 TextInput::make('qty_system')
                                     ->label('Qty System')
                                     ->numeric()
                                     ->default(0)
                                     ->disabled()
-                                    ->dehydrated(),
+                                    ->dehydrated()
+                                    ->columnSpan(['default' => 1, 'md' => 4]),
 
                                 TextInput::make('qty_aktual')
                                     ->label('Qty Aktual')
@@ -113,20 +117,22 @@ class StockOpnameForm
                                         $qtySystem = (float) ($get('qty_system') ?? 0);
                                         $qtyAktual = (float) ($state ?? 0);
                                         $set('selisih', $qtyAktual - $qtySystem);
-                                    }),
+                                    })
+                                    ->columnSpan(['default' => 1, 'md' => 4]),
 
                                 TextInput::make('selisih')
                                     ->label('Selisih')
                                     ->numeric()
                                     ->disabled()
-                                    ->dehydrated(),
+                                    ->dehydrated()
+                                    ->columnSpan(['default' => 1, 'md' => 4]),
 
                                 Textarea::make('keterangan')
                                     ->label('Keterangan')
                                     ->rows(1)
                                     ->columnSpanFull(),
                             ])
-                            ->columns(['default' => 1, 'md' => 2])
+                            ->columns(['default' => 1, 'md' => 12])
                             ->defaultItems(1)
                             ->collapsible()
                             ->reorderableWithButtons()

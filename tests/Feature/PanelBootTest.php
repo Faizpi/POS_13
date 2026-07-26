@@ -30,7 +30,7 @@ class PanelBootTest extends TestCase
     {
         $response = $this->get('/app/login');
         $response->assertStatus(200);
-        $response->assertSee('Hibiscus Efsya POS');
+        $response->assertSee('Hibiscus Efsya');
         $response->assertSee('Kelola Keuangan Bisnis');
         $response->assertSee('Real-time sales control');
         $response->assertSee('Masuk ke Hibiscus Efsya POS');

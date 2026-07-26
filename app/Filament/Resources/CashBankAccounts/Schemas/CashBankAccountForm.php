@@ -21,7 +21,9 @@ class CashBankAccountForm
 {
     public static function configure(Schema $schema): Schema
     {
-        return $schema->components([
+        return $schema
+            ->columns(['default' => 1, 'md' => 2])
+            ->components([
             Section::make('Master Kas & Bank')
                 ->schema([
                     TextInput::make('name')

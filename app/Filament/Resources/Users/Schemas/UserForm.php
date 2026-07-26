@@ -18,6 +18,7 @@ class UserForm
     public static function configure(Schema $schema): Schema
     {
         return $schema
+            ->columns(['default' => 1, 'md' => 2])
             ->components([
                 Section::make('Informasi Pengguna')
                     ->description('Data dasar pengguna sistem.')

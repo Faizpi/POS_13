@@ -21,6 +21,7 @@ class PembayaranHutangForm
     public static function configure(Schema $schema): Schema
     {
         return $schema
+            ->columns(['default' => 1, 'md' => 2])
             ->components([
                 Section::make('Detail Pembayaran Hutang')
                     ->icon('heroicon-o-credit-card')
@@ -133,8 +134,7 @@ class PembayaranHutangForm
                             ->rows(2)
                             ->columnSpanFull(),
                     ])
-                    ->columns(['default' => 1, 'md' => 2])
-                    ->columnSpanFull(),
+                    ->columns(['default' => 1, 'md' => 2]),
 
                 Section::make('Bukti Pembayaran')
                     ->icon('heroicon-o-paper-clip')
@@ -162,8 +162,7 @@ class PembayaranHutangForm
                             ->acceptedFileTypes(['image/*', 'application/pdf'])
                             ->maxSize(5120)
                             ->columnSpanFull(),
-                    ])
-                    ->columnSpanFull(),
+                    ]),
             ]);
     }
 }

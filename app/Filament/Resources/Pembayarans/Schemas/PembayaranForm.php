@@ -21,6 +21,7 @@ class PembayaranForm
     public static function configure(Schema $schema): Schema
     {
         return $schema
+            ->columns(['default' => 1, 'md' => 2])
             ->components([
                 Section::make('Detail Pembayaran')
                     ->icon('heroicon-o-banknotes')
@@ -139,8 +140,7 @@ class PembayaranForm
                             ->rows(2)
                             ->columnSpanFull(),
                     ])
-                    ->columns(['default' => 1, 'md' => 2])
-                    ->columnSpanFull(),
+                    ->columns(['default' => 1, 'md' => 2]),
 
                 Section::make('Bukti Pembayaran')
                     ->icon('heroicon-o-paper-clip')
@@ -168,8 +168,7 @@ class PembayaranForm
                             ->acceptedFileTypes(['image/*', 'application/pdf'])
                             ->maxSize(5120)
                             ->columnSpanFull(),
-                    ])
-                    ->columnSpanFull(),
+                    ]),
             ]);
     }
 }

@@ -14,6 +14,7 @@ class KontakForm
     public static function configure(Schema $schema): Schema
     {
         return $schema
+            ->columns(['default' => 1, 'md' => 2])
             ->components([
                 Section::make('Informasi Kontak')
                     ->description('Data customer atau supplier untuk transaksi.')

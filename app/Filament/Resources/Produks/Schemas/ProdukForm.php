@@ -13,6 +13,7 @@ class ProdukForm
     public static function configure(Schema $schema): Schema
     {
         return $schema
+            ->columns(['default' => 1, 'md' => 2])
             ->components([
                 Section::make('Informasi Produk')
                     ->description('Master data produk untuk transaksi penjualan dan pembelian.')

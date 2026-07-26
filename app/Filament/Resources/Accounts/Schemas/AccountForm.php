@@ -23,7 +23,9 @@ final class AccountForm
 {
     public static function configure(Schema $schema): Schema
     {
-        return $schema->components([
+        return $schema
+            ->columns(['default' => 1, 'md' => 2])
+            ->components([
             Section::make('Struktur Akun')
                 ->description('Pilih kategori, subkategori, lalu akun induk sebelum mengisi detail akun.')
                 ->schema([

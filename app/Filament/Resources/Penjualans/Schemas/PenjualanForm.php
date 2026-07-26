@@ -17,6 +17,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\ToggleButtons;
+use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
@@ -26,8 +27,9 @@ class PenjualanForm
     public static function configure(Schema $schema): Schema
     {
         return $schema
-            ->columns(['default' => 1, 'md' => 12])
             ->components([
+                Grid::make(['default' => 1, 'md' => 12])
+                    ->schema([
                 Section::make('Informasi Pelanggan')
                     ->icon('heroicon-o-user')
                     ->schema([
@@ -440,6 +442,7 @@ class PenjualanForm
                     ])
                     ->columns(1)
                     ->columnSpan(['default' => 1, 'md' => 8]),
+                    ]),
             ]);
     }
 

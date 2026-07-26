@@ -15,6 +15,7 @@ use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
@@ -24,8 +25,9 @@ class PembelianForm
     public static function configure(Schema $schema): Schema
     {
         return $schema
-            ->columns(['default' => 1, 'md' => 12])
             ->components([
+                Grid::make(['default' => 1, 'md' => 12])
+                    ->schema([
                 Section::make('Detail Pembelian')
                     ->icon('heroicon-o-shopping-bag')
                     ->schema([
@@ -366,6 +368,7 @@ class PembelianForm
                             ->columnSpanFull(),
                     ])
                     ->columnSpan(['default' => 1, 'md' => 8]),
+                    ]),
             ]);
     }
 

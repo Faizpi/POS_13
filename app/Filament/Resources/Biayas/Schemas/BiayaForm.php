@@ -24,7 +24,7 @@ class BiayaForm
     public static function configure(Schema $schema): Schema
     {
         return $schema
-            ->columns(['default' => 1, 'md' => 2])
+            ->columns(['default' => 1, 'md' => 12])
             ->components([
                 Section::make('Detail Biaya')
                     ->icon('heroicon-o-wallet')
@@ -150,7 +150,8 @@ class BiayaForm
                             ->rows(2)
                             ->columnSpanFull(),
                     ])
-                    ->columns(['default' => 1, 'md' => 2]),
+                    ->columns(['default' => 1, 'md' => 3])
+                    ->columnSpanFull(),
 
                 Section::make('Item Biaya')
                     ->icon('heroicon-o-list-bullet')
@@ -213,7 +214,8 @@ class BiayaForm
                             ->prefix('Rp')
                             ->extraInputAttributes(['class' => 'text-2xl font-bold text-primary-600']),
                     ])
-                    ->columns(['default' => 1, 'md' => 2]),
+                    ->columns(1)
+                    ->columnSpan(['default' => 1, 'md' => 4]),
 
                 Section::make('Catatan & Lampiran')
                     ->icon('heroicon-o-paper-clip')
@@ -243,7 +245,8 @@ class BiayaForm
                             ->acceptedFileTypes(['image/*', 'application/pdf', 'application/zip'])
                             ->maxSize(5120)
                             ->columnSpanFull(),
-                    ]),
+                    ])
+                    ->columnSpan(['default' => 1, 'md' => 8]),
             ]);
     }
 

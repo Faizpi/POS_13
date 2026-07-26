@@ -26,7 +26,7 @@ class PenjualanForm
     public static function configure(Schema $schema): Schema
     {
         return $schema
-            ->columns(['default' => 1, 'md' => 2])
+            ->columns(['default' => 1, 'md' => 12])
             ->components([
                 Section::make('Informasi Pelanggan')
                     ->icon('heroicon-o-user')
@@ -100,7 +100,8 @@ class PenjualanForm
                             ->rows(2)
                             ->columnSpanFull(),
                     ])
-                    ->columns(['default' => 1, 'md' => 2]),
+                    ->columns(['default' => 1, 'md' => 2])
+                    ->columnSpan(['default' => 1, 'md' => 6]),
 
                 Section::make('Detail Transaksi')
                     ->icon('heroicon-o-document-text')
@@ -220,7 +221,8 @@ class PenjualanForm
                                     ->openUrlInNewTab(),
                             ]),
                     ])
-                    ->columns(['default' => 1, 'md' => 2]),
+                    ->columns(['default' => 1, 'md' => 2])
+                    ->columnSpan(['default' => 1, 'md' => 6]),
 
                 Section::make('Item Penjualan')
                     ->icon('heroicon-o-shopping-cart')
@@ -391,7 +393,8 @@ class PenjualanForm
                             ->prefix('Rp')
                             ->extraInputAttributes(['class' => 'text-2xl font-bold text-primary-600']),
                     ])
-                    ->columns(['default' => 1, 'md' => 2]),
+                    ->columns(1)
+                    ->columnSpan(['default' => 1, 'md' => 4]),
 
                 Section::make('Catatan & Lampiran')
                     ->icon('heroicon-o-paper-clip')
@@ -435,7 +438,8 @@ class PenjualanForm
                             ->maxSize(5120)
                             ->columnSpanFull(),
                     ])
-                    ->columns(['default' => 1, 'md' => 2]),
+                    ->columns(1)
+                    ->columnSpan(['default' => 1, 'md' => 8]),
             ]);
     }
 

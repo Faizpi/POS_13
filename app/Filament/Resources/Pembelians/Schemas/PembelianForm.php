@@ -24,7 +24,7 @@ class PembelianForm
     public static function configure(Schema $schema): Schema
     {
         return $schema
-            ->columns(['default' => 1, 'md' => 2])
+            ->columns(['default' => 1, 'md' => 12])
             ->components([
                 Section::make('Detail Pembelian')
                     ->icon('heroicon-o-shopping-bag')
@@ -184,7 +184,8 @@ class PembelianForm
                                     ->openUrlInNewTab(),
                             ]),
                     ])
-                    ->columns(['default' => 1, 'md' => 2]),
+                    ->columns(['default' => 1, 'md' => 3])
+                    ->columnSpanFull(),
 
                 Section::make('Item Pembelian')
                     ->icon('heroicon-o-list-bullet')
@@ -331,7 +332,8 @@ class PembelianForm
                             ->prefix('Rp')
                             ->extraInputAttributes(['class' => 'text-2xl font-bold text-primary-600']),
                     ])
-                    ->columns(['default' => 1, 'md' => 2]),
+                    ->columns(1)
+                    ->columnSpan(['default' => 1, 'md' => 4]),
 
                 Section::make('Catatan & Lampiran')
                     ->icon('heroicon-o-paper-clip')
@@ -362,7 +364,8 @@ class PembelianForm
                             ->acceptedFileTypes(['image/*', 'application/pdf', 'application/zip', 'application/msword'])
                             ->maxSize(5120)
                             ->columnSpanFull(),
-                    ]),
+                    ])
+                    ->columnSpan(['default' => 1, 'md' => 8]),
             ]);
     }
 

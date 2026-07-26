@@ -36,6 +36,15 @@ class PanelBootTest extends TestCase
         $response->assertSee('Masuk ke Hibiscus Efsya POS');
     }
 
+    public function test_brand_component_constrains_logo_dimensions(): void
+    {
+        $brand = view('filament.components.brand')->render();
+
+        $this->assertStringContainsString('width="40"', $brand);
+        $this->assertStringContainsString('height="40"', $brand);
+        $this->assertStringContainsString('Hibiscus Efsya', $brand);
+    }
+
     public function test_login_form_authenticates_super_admin(): void
     {
         Livewire::test(Login::class)
